@@ -18,7 +18,7 @@ qiime classo classify \
     --i-weights data/wcovariates.qza \
     --m-y-file data/atacama-selected-covariates-veg.tsv \
     --m-y-column vegetation \
-    --p-huber \
+    --p-huber False \
     --p-stabsel \
     --p-cv \
     --p-path \
@@ -59,7 +59,7 @@ qiime classo summarize \
     --i-problem data/classifytaxa.qza \
     --i-taxa data/classification.qza \
     --i-predictions data/classify-predictions.qza \
-    --o-visualization data/classifytaxa_C2.qzv
+    --o-visualization data/classifytaxa_C1.qzv
 ```
 
 **Explanation:**
