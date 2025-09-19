@@ -14,7 +14,7 @@ qiime classo regress \
     --i-weights data/wcovariates.qza \
     --m-y-file data/atacama-selected-covariates-veg.tsv \
     --m-y-column average-soil-temperature \
-    --p-concomitant \
+    --p-concomitant False \
     --p-stabsel \
     --p-cv \
     --p-path \
@@ -51,7 +51,7 @@ qiime classo summarize \
     --i-problem data/regresstaxa.qza \
     --i-taxa data/classification.qza \
     --i-predictions data/regress-predictions.qza \
-    --o-visualization data/regresstaxa_R3.qzv
+    --o-visualization data/regresstaxa_R1.qzv
 ```
 
 The visualization will show selected taxa, model performance metrics, and prediction accuracy.
