@@ -353,6 +353,16 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-6-visualize-results">Step 6: Visualize Results</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#log-contrast-regression-with-trac-taxonomic-information">Log-Contrast Regression with TRAC (Taxonomic Information)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Step 1: Transform Features</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-add-taxonomic-information">Step 2: Add Taxonomic Information</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-add-covariates">Step 3: Add Covariates</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-split-data">Step 4: Split Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-train-the-regression-model">Step 5: Train the Regression Model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-6-make-predictions">Step 6: Make Predictions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-7-visualize-results">Step 7: Visualize Results</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -459,11 +469,108 @@ document.write(`
 </pre></div>
 </div>
 <p>The visualization will show selected taxa, model performance metrics, and prediction accuracy.</p>
-<p><strong>Explanation:</strong></p>
-<ul class="simple">
-<li><p>Generates an interactive QIIME 2 visualization of the estimated network.</p></li>
-<li><p>The output <code class="docutils literal notranslate"><span class="pre">.qzv</span></code> file can be viewed using <a class="reference external" href="https://view.qiime2.org/">QIIME 2 View</a>.</p></li>
-</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="log-contrast-regression-with-trac-taxonomic-information">
+<h2>Log-Contrast Regression with TRAC (Taxonomic Information)<a class="headerlink" href="#log-contrast-regression-with-trac-taxonomic-information" title="Link to this heading">#</a></h2>
+<p>This approach incorporates taxonomic hierarchical information to identify which taxonomic groups are most predictive of temperature.</p>
+<section id="id1">
+<h3>Step 1: Transform Features<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<p>Apply CLR transformation to the count data:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>classo<span class="w"> </span>transform-features<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-transformation<span class="w"> </span>clr<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-coef<span class="w"> </span><span class="m">0</span>.5<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-features<span class="w"> </span>data/atacama-counts.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-x<span class="w"> </span>data/xclr
+</pre></div>
+</div>
+</section>
+<section id="step-2-add-taxonomic-information">
+<h3>Step 2: Add Taxonomic Information<a class="headerlink" href="#step-2-add-taxonomic-information" title="Link to this heading">#</a></h3>
+<p>Incorporate taxonomic classifications and compute adaptive weights based on taxonomy:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>classo<span class="w"> </span>add-taxa<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-features<span class="w"> </span>data/xclr.qza<span class="w">  </span><span class="se">\</span>
+<span class="w">    </span>--i-taxa<span class="w"> </span>data/classification.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-x<span class="w"> </span>data/xtaxa<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-aweights<span class="w"> </span>data/wtaxa
+</pre></div>
+</div>
+</section>
+<section id="step-3-add-covariates">
+<h3>Step 3: Add Covariates<a class="headerlink" href="#step-3-add-covariates" title="Link to this heading">#</a></h3>
+<p>Include environmental metadata with custom weights, combined with taxonomic features:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>classo<span class="w"> </span>add-covariates<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-features<span class="w"> </span>data/xtaxa.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-weights<span class="w"> </span>data/wtaxa.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--m-covariates-file<span class="w"> </span>data/atacama-selected-covariates-veg.tsv<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-to-add<span class="w"> </span>ph<span class="w"> </span>average-soil-relative-humidity<span class="w"> </span>elevation<span class="w"> </span>average-soil-temperature<span class="w"> </span>vegetation<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-w-to-add<span class="w"> </span><span class="m">1</span>.<span class="w"> </span><span class="m">0</span>.1<span class="w"> </span><span class="m">0</span>.1<span class="w"> </span><span class="m">0</span>.1<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-new-features<span class="w"> </span>data/xcovariates_trac<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-new-c<span class="w"> </span>data/ccovariates_trac<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-new-w<span class="w"> </span>data/wcovariates_trac
+</pre></div>
+</div>
+</section>
+<section id="step-4-split-data">
+<h3>Step 4: Split Data<a class="headerlink" href="#step-4-split-data" title="Link to this heading">#</a></h3>
+<p>Create training and test sets for regression analysis:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>sample-classifier<span class="w"> </span>split-table<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-table<span class="w"> </span>data/xcovariates_trac.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--m-metadata-file<span class="w"> </span>data/atacama-selected-covariates-veg.tsv<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--m-metadata-column<span class="w"> </span>average-soil-temperature<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-test-size<span class="w"> </span><span class="m">0</span>.2<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-random-state<span class="w"> </span><span class="m">42</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-stratify<span class="w"> </span>False<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-training-table<span class="w"> </span>data/regress-xtraining_trac.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-test-table<span class="w"> </span>data/regress-xtest_trac.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-training-targets<span class="w"> </span>data/regress-training-targets_trac.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-test-targets<span class="w"> </span>data/regress-test-targets_trac.qza
+</pre></div>
+</div>
+</section>
+<section id="step-5-train-the-regression-model">
+<h3>Step 5: Train the Regression Model<a class="headerlink" href="#step-5-train-the-regression-model" title="Link to this heading">#</a></h3>
+<p>Use log-contrast regression with taxonomic information and stability selection:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>classo<span class="w"> </span>regress<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-features<span class="w"> </span>data/regress-xtraining_trac.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-c<span class="w"> </span>data/ccovariates_trac.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-weights<span class="w"> </span>data/wcovariates_trac.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--m-y-file<span class="w"> </span>data/atacama-selected-covariates-veg.tsv<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--m-y-column<span class="w"> </span>average-soil-temperature<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-concomitant<span class="w"> </span>False<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-stabsel<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-cv<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-path<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-lamfixed<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-stabsel-threshold<span class="w"> </span><span class="m">0</span>.5<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-cv-seed<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-no-cv-one-se<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-result<span class="w"> </span>data/regresstaxa_trac.qza
+</pre></div>
+</div>
+</section>
+<section id="step-6-make-predictions">
+<h3>Step 6: Make Predictions<a class="headerlink" href="#step-6-make-predictions" title="Link to this heading">#</a></h3>
+<p>Apply the trained model to test data:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>classo<span class="w"> </span>predict<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-features<span class="w"> </span>data/regress-xtest_trac.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-problem<span class="w"> </span>data/regresstaxa_trac.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-predictions<span class="w"> </span>data/regress-predictions_trac.qza
+</pre></div>
+</div>
+</section>
+<section id="step-7-visualize-results">
+<h3>Step 7: Visualize Results<a class="headerlink" href="#step-7-visualize-results" title="Link to this heading">#</a></h3>
+<p>Generate a comprehensive summary including taxonomic information:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>classo<span class="w"> </span>summarize<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-problem<span class="w"> </span>data/regresstaxa_trac.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-taxa<span class="w"> </span>data/classification.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-predictions<span class="w"> </span>data/regress-predictions_trac.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-visualization<span class="w"> </span>data/regresstaxa_R1_trac.qzv
+</pre></div>
+</div>
+<p>The visualization will show selected taxonomic groups, model performance metrics, and prediction accuracy, with taxonomic context for interpretation.</p>
 <p><strong>Note:</strong> The TRAC approach leverages the hierarchical structure of taxonomic information to improve feature selection and provides more interpretable results in terms of taxonomic relationships.</p>
 </section>
 </section>
@@ -540,6 +647,16 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-train-the-regression-model">Step 4: Train the Regression Model</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-make-predictions">Step 5: Make Predictions</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-6-visualize-results">Step 6: Visualize Results</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#log-contrast-regression-with-trac-taxonomic-information">Log-Contrast Regression with TRAC (Taxonomic Information)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Step 1: Transform Features</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-add-taxonomic-information">Step 2: Add Taxonomic Information</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-add-covariates">Step 3: Add Covariates</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-split-data">Step 4: Split Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-train-the-regression-model">Step 5: Train the Regression Model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-6-make-predictions">Step 6: Make Predictions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-7-visualize-results">Step 7: Visualize Results</a></li>
 </ul>
 </li>
 </ul>
