@@ -27,14 +27,28 @@ chapters:
       - file: chapters/02_graphical_models/05_interpretation
         title: Interpretation
 
-  - file: chapters/03_logcontrast_models/01_data_preparation
+  - file: chapters/03_logcontrast_models/00_overview
     title: Log-Contrast Models
     sections:
-      - file: chapters/03_logcontrast_models/02_regression
+      - file: chapters/03_logcontrast_models/01_data_preparation
+        title: Data Preparation
+      - file: chapters/03_logcontrast_models/02_regression/00_index
         title: Regression
-      - file: chapters/03_logcontrast_models/03_classification
+        sections:
+          - file: chapters/03_logcontrast_models/02_regression/01_simple_logcontrast
+            title: Simple Log-Contrast
+          - file: chapters/03_logcontrast_models/02_regression/02_trac
+            title: With TRAC
+      - file: chapters/03_logcontrast_models/03_classification/00_index
         title: Classification
-      - file: chapters/03_logcontrast_models/04_interpretation
+        sections:
+          - file: chapters/03_logcontrast_models/03_classification/01_simple_logcontrast
+            title: Simple Log-Contrast
+          - file: chapters/03_logcontrast_models/03_classification/02_trac
+            title: With TRAC
+      - file: chapters/03_logcontrast_models/04_advanced/01_concomitant_formulation
+        title: "Advanced: Concomitant Formulation"
+      - file: chapters/03_logcontrast_models/05_interpretation
         title: Interpretation
 
   - file: references
