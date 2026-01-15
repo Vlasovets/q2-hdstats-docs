@@ -1,6 +1,6 @@
-# Simple Log-Contrast Classification
+# Log-Contrast Classification
 
-This tutorial demonstrates how to use simple log-contrast classification to predict vegetation presence from microbial community data without incorporating taxonomic information.
+This tutorial demonstrates how to use log-contrast classification to predict vegetation presence from microbial community data without incorporating taxonomic information.
 
 ## Overview
 

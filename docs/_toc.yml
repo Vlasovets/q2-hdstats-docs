@@ -36,14 +36,14 @@ chapters:
         title: Regression
         sections:
           - file: chapters/03_logcontrast_models/02_regression/01_simple_logcontrast
-            title: Simple Log-Contrast
+            title: Log-Contrast
           - file: chapters/03_logcontrast_models/02_regression/02_trac
             title: With TRAC
       - file: chapters/03_logcontrast_models/03_classification/00_index
         title: Classification
         sections:
           - file: chapters/03_logcontrast_models/03_classification/01_simple_logcontrast
-            title: Simple Log-Contrast
+            title: Log-Contrast
           - file: chapters/03_logcontrast_models/03_classification/02_trac
             title: With TRAC
       - file: chapters/03_logcontrast_models/04_advanced/01_concomitant_formulation

@@ -18,12 +18,12 @@ Learn how to transform your microbiome data and prepare it for log-contrast mode
 
 ### 2. Regression Models
 Predict continuous outcomes (e.g., temperature, pH) from microbiome composition:
-- **Simple Log-Contrast**: Basic approach using CLR transformation
+- **Log-Contrast Regression**: Basic approach using CLR transformation
 - **TRAC**: Incorporates taxonomic hierarchical information for better feature selection
 
 ### 3. Classification Models
 Predict categorical outcomes (e.g., disease status, habitat type):
-- **Simple Log-Contrast**: Basic approach for classification tasks
+- **Log-Contrast Classification**: Basic approach for classification tasks
 - **TRAC**: Uses taxonomic structure to identify predictive taxonomic groups
 
 ### 4. Advanced Topics

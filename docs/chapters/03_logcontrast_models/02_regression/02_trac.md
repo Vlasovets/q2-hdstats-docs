@@ -130,9 +130,9 @@ The `.qzv` file contains:
 
 View the results at [QIIME 2 View](https://view.qiime2.org/).
 
-## Comparing Simple Log-Contrast vs TRAC
+## Comparing Log-Contrast vs TRAC
 
-**Simple Log-Contrast:**
+**Log-Contrast:**
 - Treats each taxon independently
 - Faster computation
 - Useful for exploratory analysis

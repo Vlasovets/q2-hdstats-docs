@@ -41,7 +41,7 @@ Use `--p-concomitant True` when:
 
 ## Regression with Concomitant Formulation
 
-### Simple Log-Contrast with Concomitant
+### Log-Contrast with Concomitant
 
 Replace the training step with:
 
@@ -91,7 +91,7 @@ Then proceed with prediction and visualization using `regresstaxa_trac_concomita
 
 ## Classification with Concomitant Formulation
 
-### Simple Log-Contrast with Concomitant
+### Log-Contrast with Huber Loss
 
 Replace the training step with:
 
