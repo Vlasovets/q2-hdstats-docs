@@ -93,7 +93,7 @@ Then proceed with prediction and visualization using `regresstaxa_trac_concomita
 
 ### Log-Contrast with Huber Loss
 
-Replace the training step with:
+For both [log-contrast classification](../03_classification/01_logcontrast.md) and [TRAC classification](../03_classification/02_trac.md), replace the training step with:
 
 ```bash
 qiime classo classify \

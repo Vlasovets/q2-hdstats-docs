@@ -56,5 +56,5 @@ Before working through this chapter, ensure you have:
 ## Getting Started
 
 Begin with [Data Preparation](01_data_preparation.md) to learn how to transform and prepare your data, then choose your analysis path:
-- For continuous outcomes → [Regression](02_regression/01_simple_logcontrast.md)
-- For categorical outcomes → [Classification](03_classification/01_simple_logcontrast.md)
+- For continuous outcomes → [Regression](02_regression/01_logcontrast.md)
+- For categorical outcomes → [Classification](03_classification/01_logcontrast.md)
