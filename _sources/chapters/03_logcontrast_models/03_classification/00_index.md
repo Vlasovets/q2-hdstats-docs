@@ -10,7 +10,7 @@ Log-contrast classification applies regularized logistic regression to log-trans
 
 We present two approaches:
 
-### [Simple Log-Contrast Classification](01_simple_logcontrast.md)
+### [Log-Contrast Classification](01_simple_logcontrast.md)
 - Uses CLR transformation and basic covariates
 - Faster computation
 - Good for exploratory analysis
@@ -37,6 +37,6 @@ Complete [Data Preparation](../01_data_preparation.md) before starting these tut
 
 ## Next Steps
 
-1. Start with [Simple Log-Contrast Classification](01_simple_logcontrast.md)
+1. Start with [Log-Contrast Classification](01_simple_logcontrast.md)
 2. Compare with [TRAC approach](02_trac.md)
-3. Interpret your results using the [Interpretation guide](../04_interpretation.md)
+3. Interpret your results using the [Interpretation guide](../05_interpretation.md)

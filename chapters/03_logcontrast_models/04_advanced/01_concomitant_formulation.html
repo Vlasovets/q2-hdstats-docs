@@ -192,12 +192,12 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../00_overview.html">Log-Contrast Models</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../01_data_preparation.html">Data Preparation</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../02_regression/00_index.html">Regression</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="../02_regression/01_simple_logcontrast.html">Simple Log-Contrast</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../02_regression/01_simple_logcontrast.html">Log-Contrast</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../02_regression/02_trac.html">With TRAC</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../03_classification/00_index.html">Classification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="../03_classification/01_simple_logcontrast.html">Simple Log-Contrast</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../03_classification/01_simple_logcontrast.html">Log-Contrast</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../03_classification/02_trac.html">With TRAC</a></li>
 </ul>
 </details></li>
@@ -361,13 +361,13 @@ document.write(`
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#when-to-use-concomitant-formulation">When to Use Concomitant Formulation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regression-with-concomitant-formulation">Regression with Concomitant Formulation</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-log-contrast-with-concomitant">Simple Log-Contrast with Concomitant</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#log-contrast-with-concomitant">Log-Contrast with Concomitant</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#trac-with-concomitant">TRAC with Concomitant</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classification-with-concomitant-formulation">Classification with Concomitant Formulation</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Simple Log-Contrast with Concomitant</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">TRAC with Concomitant</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#log-contrast-with-huber-loss">Log-Contrast with Huber Loss</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">TRAC with Concomitant</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-results-with-concomitant-formulation">Interpreting Results with Concomitant Formulation</a></li>
@@ -450,8 +450,8 @@ document.write(`
 </section>
 <section id="regression-with-concomitant-formulation">
 <h2>Regression with Concomitant Formulation<a class="headerlink" href="#regression-with-concomitant-formulation" title="Link to this heading">#</a></h2>
-<section id="simple-log-contrast-with-concomitant">
-<h3>Simple Log-Contrast with Concomitant<a class="headerlink" href="#simple-log-contrast-with-concomitant" title="Link to this heading">#</a></h3>
+<section id="log-contrast-with-concomitant">
+<h3>Log-Contrast with Concomitant<a class="headerlink" href="#log-contrast-with-concomitant" title="Link to this heading">#</a></h3>
 <p>Replace the training step with:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>classo<span class="w"> </span>regress<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--i-features<span class="w"> </span>data/regress-xtraining_lc.qza<span class="w"> </span><span class="se">\</span>
@@ -497,8 +497,8 @@ document.write(`
 </section>
 <section id="classification-with-concomitant-formulation">
 <h2>Classification with Concomitant Formulation<a class="headerlink" href="#classification-with-concomitant-formulation" title="Link to this heading">#</a></h2>
-<section id="id1">
-<h3>Simple Log-Contrast with Concomitant<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<section id="log-contrast-with-huber-loss">
+<h3>Log-Contrast with Huber Loss<a class="headerlink" href="#log-contrast-with-huber-loss" title="Link to this heading">#</a></h3>
 <p>Replace the training step with:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>classo<span class="w"> </span>classify<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--i-features<span class="w"> </span>data/classify-xtraining_lc.qza<span class="w"> </span><span class="se">\</span>
@@ -520,8 +520,8 @@ document.write(`
 </div>
 <p>Then proceed with prediction and visualization using <code class="docutils literal notranslate"><span class="pre">classifytaxa_lc_concomitant.qza</span></code>.</p>
 </section>
-<section id="id2">
-<h3>TRAC with Concomitant<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<section id="id1">
+<h3>TRAC with Concomitant<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
 <p>Replace the training step with:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>classo<span class="w"> </span>classify<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--i-features<span class="w"> </span>data/classify-xtraining_trac.qza<span class="w"> </span><span class="se">\</span>
@@ -645,13 +645,13 @@ document.write(`
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#when-to-use-concomitant-formulation">When to Use Concomitant Formulation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regression-with-concomitant-formulation">Regression with Concomitant Formulation</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-log-contrast-with-concomitant">Simple Log-Contrast with Concomitant</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#log-contrast-with-concomitant">Log-Contrast with Concomitant</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#trac-with-concomitant">TRAC with Concomitant</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classification-with-concomitant-formulation">Classification with Concomitant Formulation</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Simple Log-Contrast with Concomitant</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">TRAC with Concomitant</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#log-contrast-with-huber-loss">Log-Contrast with Huber Loss</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">TRAC with Concomitant</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-results-with-concomitant-formulation">Interpreting Results with Concomitant Formulation</a></li>

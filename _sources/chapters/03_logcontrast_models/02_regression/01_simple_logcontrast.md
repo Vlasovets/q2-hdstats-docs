@@ -1,10 +1,10 @@
-# Simple Log-Contrast Regression
+# Log-Contrast Regression
 
-This tutorial demonstrates how to use simple log-contrast regression to predict average soil temperature from microbial community data without incorporating taxonomic information.
+This tutorial demonstrates how to use log-contrast regression to predict average soil temperature from microbial community data without incorporating taxonomic information.
 
 ## Overview
 
-Simple log-contrast regression applies CLR transformation to your count data and uses regularized regression to identify predictive taxa. This is the most straightforward approach when you want to focus on raw compositional relationships without leveraging the taxonomic hierarchy.
+Log-contrast regression applies CLR transformation to your count data and uses regularized regression to identify predictive taxa. This is the most straightforward approach when you want to focus on raw compositional relationships without leveraging the taxonomic hierarchy.
 
 ## Step 1: Transform Features
 
