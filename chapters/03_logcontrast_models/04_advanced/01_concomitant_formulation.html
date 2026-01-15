@@ -1,0 +1,713 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Advanced: Using Concomitant Formulation &#8212; High-dimensional Statistics with QIIME 2</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles.css?v=3437f865" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/03_logcontrast_models/04_advanced/01_concomitant_formulation';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Models Interpretation and Analysis" href="../05_interpretation.html" />
+    <link rel="prev" title="Log-Contrast Classification with TRAC (Taxonomic Information)" href="../03_classification/02_trac.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/logo_light.svg" class="logo__image only-light" alt="High-dimensional Statistics with QIIME 2 - Home"/>
+    <script>document.write(`<img src="../../../_static/logo_dark.svg" class="logo__image only-dark" alt="High-dimensional Statistics with QIIME 2 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../00_getting_started/01_intro.html">Getting Started</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../00_getting_started/02_data.html">Atacama Soil Microbiome</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../01_installation/01_prerequisites.html">Prerequisites &amp; Installation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../01_installation/02_q2_gglasso.html">Installing q2-gglasso</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../01_installation/03_q2_classo.html">Installing q2-classo</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../02_graphical_models/01_data_preparation.html">Graphical Lasso Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../02_graphical_models/02_sgl.html">Single Graphical Lasso</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../02_graphical_models/03_slr.html">Single Graphical Lasso with Latent Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../02_graphical_models/04_adaptive_glasso.html">Adaptive Graphical Lasso</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../02_graphical_models/05_interpretation.html">Interpretation</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../00_overview.html">Log-Contrast Models</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01_data_preparation.html">Data Preparation</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../02_regression/00_index.html">Regression</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../02_regression/01_simple_logcontrast.html">Simple Log-Contrast</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../02_regression/02_trac.html">With TRAC</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../03_classification/00_index.html">Classification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../03_classification/01_simple_logcontrast.html">Simple Log-Contrast</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../03_classification/02_trac.html">With TRAC</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Advanced: Concomitant Formulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_interpretation.html">Interpretation</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/chapters/03_logcontrast_models/04_advanced/01_concomitant_formulation.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Advanced: Using Concomitant Formulation</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-concomitant-formulation">What is Concomitant Formulation?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mathematical-formulation">Mathematical Formulation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-differences">Key Differences</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#when-to-use-concomitant-formulation">When to Use Concomitant Formulation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regression-with-concomitant-formulation">Regression with Concomitant Formulation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-log-contrast-with-concomitant">Simple Log-Contrast with Concomitant</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#trac-with-concomitant">TRAC with Concomitant</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classification-with-concomitant-formulation">Classification with Concomitant Formulation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Simple Log-Contrast with Concomitant</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">TRAC with Concomitant</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-results-with-concomitant-formulation">Interpreting Results with Concomitant Formulation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tips-for-optimal-results">Tips for Optimal Results</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="advanced-using-concomitant-formulation">
+<h1>Advanced: Using Concomitant Formulation<a class="headerlink" href="#advanced-using-concomitant-formulation" title="Link to this heading">#</a></h1>
+<p>The concomitant formulation provides a more robust approach to both regression and classification by jointly estimating the model coefficients and the noise level (σ). This is particularly useful when variance is not homogeneous across your samples.</p>
+<section id="what-is-concomitant-formulation">
+<h2>What is Concomitant Formulation?<a class="headerlink" href="#what-is-concomitant-formulation" title="Link to this heading">#</a></h2>
+<p>By setting <code class="docutils literal notranslate"><span class="pre">--p-concomitant</span> <span class="pre">True</span></code>, you switch from standard formulation to the <strong>concomitant formulation (R3)</strong>:</p>
+<section id="mathematical-formulation">
+<h3>Mathematical Formulation<a class="headerlink" href="#mathematical-formulation" title="Link to this heading">#</a></h3>
+<p><strong>Standard Formulation (R1):</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>min ||y - X·β||² / σ + λ·||β||₁    s.t. C·β = 0
+</pre></div>
+</div>
+<p>Assumes a fixed noise level across all samples.</p>
+<p><strong>Concomitant Formulation (R3):</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>min ||y - X·β||² / σ + e·σ + λ·||β||₁    s.t. C·β = 0
+</pre></div>
+</div>
+<p>Where <code class="docutils literal notranslate"><span class="pre">e</span> <span class="pre">=</span> <span class="pre">20.0</span></code> is the penalty parameter for the standard deviation (σ).</p>
+</section>
+<section id="key-differences">
+<h3>Key Differences<a class="headerlink" href="#key-differences" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Aspect</p></th>
+<th class="head"><p>Standard (R1)</p></th>
+<th class="head"><p>Concomitant (R3)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Noise level</p></td>
+<td><p>Fixed</p></td>
+<td><p>Jointly estimated</p></td>
+</tr>
+<tr class="row-odd"><td><p>Heteroscedasticity</p></td>
+<td><p>Assumed equal variance</p></td>
+<td><p>Adaptive to varying noise</p></td>
+</tr>
+<tr class="row-even"><td><p>Uncertainty estimates</p></td>
+<td><p>May be inaccurate</p></td>
+<td><p>More reliable</p></td>
+</tr>
+<tr class="row-odd"><td><p>Computation</p></td>
+<td><p>Faster</p></td>
+<td><p>Slightly slower</p></td>
+</tr>
+<tr class="row-even"><td><p>Output label</p></td>
+<td><p>“Formulation: R1”</p></td>
+<td><p>“Formulation: R3 (concomitant with e = 20.0)”</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+<section id="when-to-use-concomitant-formulation">
+<h2>When to Use Concomitant Formulation<a class="headerlink" href="#when-to-use-concomitant-formulation" title="Link to this heading">#</a></h2>
+<p>Use <code class="docutils literal notranslate"><span class="pre">--p-concomitant</span> <span class="pre">True</span></code> when:</p>
+<ul class="simple">
+<li><p>Your <strong>residual plots show increasing variance</strong> with predicted values (heteroscedasticity)</p></li>
+<li><p>You have <strong>samples from different environments</strong> with potentially different noise levels</p></li>
+<li><p>You need <strong>more reliable confidence intervals</strong> for your predictions</p></li>
+<li><p>You want <strong>robust feature selection</strong> across diverse data</p></li>
+<li><p>Computation time is not a critical constraint</p></li>
+</ul>
+</section>
+<section id="regression-with-concomitant-formulation">
+<h2>Regression with Concomitant Formulation<a class="headerlink" href="#regression-with-concomitant-formulation" title="Link to this heading">#</a></h2>
+<section id="simple-log-contrast-with-concomitant">
+<h3>Simple Log-Contrast with Concomitant<a class="headerlink" href="#simple-log-contrast-with-concomitant" title="Link to this heading">#</a></h3>
+<p>Replace the training step with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>classo<span class="w"> </span>regress<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-features<span class="w"> </span>data/regress-xtraining_lc.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-c<span class="w"> </span>data/ccovariates_lc.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-weights<span class="w"> </span>data/wcovariates_lc.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--m-y-file<span class="w"> </span>data/atacama-selected-covariates-veg.tsv<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--m-y-column<span class="w"> </span>average-soil-temperature<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-concomitant<span class="w"> </span>True<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-stabsel<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-cv<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-path<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-lamfixed<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-stabsel-threshold<span class="w"> </span><span class="m">0</span>.5<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-cv-seed<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-no-cv-one-se<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-result<span class="w"> </span>data/regresstaxa_lc_concomitant.qza
+</pre></div>
+</div>
+<p>Then proceed with prediction and visualization using <code class="docutils literal notranslate"><span class="pre">regresstaxa_lc_concomitant.qza</span></code>.</p>
+</section>
+<section id="trac-with-concomitant">
+<h3>TRAC with Concomitant<a class="headerlink" href="#trac-with-concomitant" title="Link to this heading">#</a></h3>
+<p>Replace the training step with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>classo<span class="w"> </span>regress<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-features<span class="w"> </span>data/regress-xtraining_trac.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-c<span class="w"> </span>data/ccovariates_trac.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-weights<span class="w"> </span>data/wcovariates_trac.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--m-y-file<span class="w"> </span>data/atacama-selected-covariates-veg.tsv<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--m-y-column<span class="w"> </span>average-soil-temperature<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-concomitant<span class="w"> </span>True<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-stabsel<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-cv<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-path<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-lamfixed<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-stabsel-threshold<span class="w"> </span><span class="m">0</span>.5<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-cv-seed<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-no-cv-one-se<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-result<span class="w"> </span>data/regresstaxa_trac_concomitant.qza
+</pre></div>
+</div>
+<p>Then proceed with prediction and visualization using <code class="docutils literal notranslate"><span class="pre">regresstaxa_trac_concomitant.qza</span></code>.</p>
+</section>
+</section>
+<section id="classification-with-concomitant-formulation">
+<h2>Classification with Concomitant Formulation<a class="headerlink" href="#classification-with-concomitant-formulation" title="Link to this heading">#</a></h2>
+<section id="id1">
+<h3>Simple Log-Contrast with Concomitant<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<p>Replace the training step with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>classo<span class="w"> </span>classify<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-features<span class="w"> </span>data/classify-xtraining_lc.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-c<span class="w"> </span>data/ccovariates_lc.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-weights<span class="w"> </span>data/wcovariates_lc.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--m-y-file<span class="w"> </span>data/atacama-selected-covariates-veg.tsv<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--m-y-column<span class="w"> </span>vegetation<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-huber<span class="w"> </span>False<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-concomitant<span class="w"> </span>True<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-stabsel<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-cv<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-path<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-lamfixed<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-stabsel-threshold<span class="w"> </span><span class="m">0</span>.5<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-cv-seed<span class="w"> </span><span class="m">42</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-no-cv-one-se<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-result<span class="w"> </span>data/classifytaxa_lc_concomitant.qza
+</pre></div>
+</div>
+<p>Then proceed with prediction and visualization using <code class="docutils literal notranslate"><span class="pre">classifytaxa_lc_concomitant.qza</span></code>.</p>
+</section>
+<section id="id2">
+<h3>TRAC with Concomitant<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<p>Replace the training step with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>classo<span class="w"> </span>classify<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-features<span class="w"> </span>data/classify-xtraining_trac.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-c<span class="w"> </span>data/ccovariates_trac.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-weights<span class="w"> </span>data/wcovariates_trac.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--m-y-file<span class="w"> </span>data/atacama-selected-covariates-veg.tsv<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--m-y-column<span class="w"> </span>vegetation<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-huber<span class="w"> </span>False<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-concomitant<span class="w"> </span>True<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-stabsel<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-cv<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-path<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-lamfixed<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-stabsel-threshold<span class="w"> </span><span class="m">0</span>.5<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-cv-seed<span class="w"> </span><span class="m">42</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-no-cv-one-se<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-result<span class="w"> </span>data/classifytaxa_trac_concomitant.qza
+</pre></div>
+</div>
+<p>Then proceed with prediction and visualization using <code class="docutils literal notranslate"><span class="pre">classifytaxa_trac_concomitant.qza</span></code>.</p>
+</section>
+</section>
+<section id="interpreting-results-with-concomitant-formulation">
+<h2>Interpreting Results with Concomitant Formulation<a class="headerlink" href="#interpreting-results-with-concomitant-formulation" title="Link to this heading">#</a></h2>
+<p>When you run your pipeline with <code class="docutils literal notranslate"><span class="pre">--p-concomitant</span> <span class="pre">True</span></code>, the output will display:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Formulation</span><span class="p">:</span> <span class="n">R3</span> <span class="p">(</span><span class="n">concomitant</span> <span class="k">with</span> <span class="n">e</span> <span class="o">=</span> <span class="mf">20.0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This indicates:</p>
+<ul class="simple">
+<li><p>The model is using concomitant formulation</p></li>
+<li><p>The noise level parameter <code class="docutils literal notranslate"><span class="pre">e</span> <span class="pre">=</span> <span class="pre">20.0</span></code> controls the penalty strength</p></li>
+<li><p>Coefficients and predictions are more robust to heteroscedasticity</p></li>
+</ul>
+</section>
+<section id="tips-for-optimal-results">
+<h2>Tips for Optimal Results<a class="headerlink" href="#tips-for-optimal-results" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Compare Both Formulations</strong>: Run your analysis with both <code class="docutils literal notranslate"><span class="pre">--p-concomitant</span> <span class="pre">False</span></code> and <code class="docutils literal notranslate"><span class="pre">True</span></code> to see which produces better results for your data</p></li>
+<li><p><strong>Examine Residuals</strong>: Plot residuals vs. fitted values before deciding:</p>
+<ul class="simple">
+<li><p>If variance is constant → Standard formulation is sufficient</p></li>
+<li><p>If variance increases/decreases with fitted values → Use concomitant</p></li>
+</ul>
+</li>
+<li><p><strong>Cross-Validation Performance</strong>: Compare CV scores between formulations; concomitant often performs better on heteroscedastic data</p></li>
+<li><p><strong>Computational Budget</strong>: Concomitant requires ~1.5-2x more computation time, so consider this for large datasets</p></li>
+<li><p><strong>Parameter Tuning</strong>: The default <code class="docutils literal notranslate"><span class="pre">e</span> <span class="pre">=</span> <span class="pre">20.0</span></code> works well for most cases, but can be adjusted if needed</p></li>
+</ol>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters/03_logcontrast_models/04_advanced"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../03_classification/02_trac.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Log-Contrast Classification with TRAC (Taxonomic Information)</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../05_interpretation.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Models Interpretation and Analysis</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-concomitant-formulation">What is Concomitant Formulation?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mathematical-formulation">Mathematical Formulation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-differences">Key Differences</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#when-to-use-concomitant-formulation">When to Use Concomitant Formulation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regression-with-concomitant-formulation">Regression with Concomitant Formulation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-log-contrast-with-concomitant">Simple Log-Contrast with Concomitant</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#trac-with-concomitant">TRAC with Concomitant</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classification-with-concomitant-formulation">Classification with Concomitant Formulation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Simple Log-Contrast with Concomitant</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">TRAC with Concomitant</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-results-with-concomitant-formulation">Interpreting Results with Concomitant Formulation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tips-for-optimal-results">Tips for Optimal Results</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Biomedical Statistics and Data Science Group @ LMU & Helmholtz Munich
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

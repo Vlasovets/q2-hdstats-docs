@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Single Graphical Lasso with Latent Variables &#8212; High-dimensional Statistics with QIIME 2</title>
+    <title>Models Interpretation and Analysis &#8212; High-dimensional Statistics with QIIME 2</title>
   
   
   
@@ -58,11 +58,11 @@
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/02_graphical_models/03_slr';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/03_logcontrast_models/05_interpretation';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Adaptive Graphical Lasso" href="04_adaptive_glasso.html" />
-    <link rel="prev" title="Single Graphical Lasso" href="02_sgl.html" />
+    <link rel="next" title="References" href="../../references.html" />
+    <link rel="prev" title="Advanced: Using Concomitant Formulation" href="04_advanced/01_concomitant_formulation.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -182,27 +182,27 @@
 <li class="toctree-l2"><a class="reference internal" href="../01_installation/03_q2_classo.html">Installing q2-classo</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="01_data_preparation.html">Graphical Lasso Models</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="02_sgl.html">Single Graphical Lasso</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Single Graphical Lasso with Latent Variables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="04_adaptive_glasso.html">Adaptive Graphical Lasso</a></li>
-<li class="toctree-l2"><a class="reference internal" href="05_interpretation.html">Interpretation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../02_graphical_models/01_data_preparation.html">Graphical Lasso Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../02_graphical_models/02_sgl.html">Single Graphical Lasso</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_graphical_models/03_slr.html">Single Graphical Lasso with Latent Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_graphical_models/04_adaptive_glasso.html">Adaptive Graphical Lasso</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_graphical_models/05_interpretation.html">Interpretation</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../03_logcontrast_models/00_overview.html">Log-Contrast Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../03_logcontrast_models/01_data_preparation.html">Data Preparation</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../03_logcontrast_models/02_regression/00_index.html">Regression</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="../03_logcontrast_models/02_regression/01_simple_logcontrast.html">Simple Log-Contrast</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../03_logcontrast_models/02_regression/02_trac.html">With TRAC</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="00_overview.html">Log-Contrast Models</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="01_data_preparation.html">Data Preparation</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="02_regression/00_index.html">Regression</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="02_regression/01_simple_logcontrast.html">Simple Log-Contrast</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02_regression/02_trac.html">With TRAC</a></li>
 </ul>
 </details></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../03_logcontrast_models/03_classification/00_index.html">Classification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="../03_logcontrast_models/03_classification/01_simple_logcontrast.html">Simple Log-Contrast</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../03_logcontrast_models/03_classification/02_trac.html">With TRAC</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="03_classification/00_index.html">Classification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="03_classification/01_simple_logcontrast.html">Simple Log-Contrast</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03_classification/02_trac.html">With TRAC</a></li>
 </ul>
 </details></li>
-<li class="toctree-l2"><a class="reference internal" href="../03_logcontrast_models/04_advanced/01_concomitant_formulation.html">Advanced: Concomitant Formulation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../03_logcontrast_models/05_interpretation.html">Interpretation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_advanced/01_concomitant_formulation.html">Advanced: Concomitant Formulation</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Interpretation</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
@@ -260,7 +260,7 @@
       
       
       
-      <li><a href="../../_sources/chapters/02_graphical_models/03_slr.md" target="_blank"
+      <li><a href="../../_sources/chapters/03_logcontrast_models/05_interpretation.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -344,7 +344,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Single Graphical Lasso with Latent Variables</h1>
+    <h1>Models Interpretation and Analysis</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -354,8 +354,11 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-estimate-a-sparse-low-rank-model">Step 1: Estimate a Sparse + Low-Rank Model</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-visualize-the-estimated-network">Step 2: Visualize the Estimated Network</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-log-contrast-model-results">Understanding Log-Contrast Model Results</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regression-tasks">Regression Tasks</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#classification-tasks">Classification Tasks</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -367,74 +370,33 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="single-graphical-lasso-with-latent-variables">
-<h1>Single Graphical Lasso with Latent Variables<a class="headerlink" href="#single-graphical-lasso-with-latent-variables" title="Link to this heading">#</a></h1>
-<p>This tutorial demonstrates how to estimate a sparse inverse covariance matrix <strong>while accounting for latent variables</strong> using the <strong>Sparse + Low-Rank (SLR)</strong> Graphical Lasso model. This approach decomposes the inverse covariance matrix into a sparse component (direct dependencies) and a low-rank component (unobserved latent effects).</p>
-<p><strong>Purpose</strong>: Separates direct sparse interactions from systematic low-rank structure</p>
-<p><strong>Key characteristics</strong>:</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="models-interpretation-and-analysis">
+<h1>Models Interpretation and Analysis<a class="headerlink" href="#models-interpretation-and-analysis" title="Link to this heading">#</a></h1>
+<section id="understanding-log-contrast-model-results">
+<h2>Understanding Log-Contrast Model Results<a class="headerlink" href="#understanding-log-contrast-model-results" title="Link to this heading">#</a></h2>
+<p>Log-contrast models transform compositional data to overcome the challenges of working with constrained data that sums to a constant. The interpretation of results requires careful consideration of the log-ratio nature of the transformations.</p>
+<p><img alt="Log-contrast model interpretation" src="../../_images/slc_fig.png" /></p>
+<section id="regression-tasks">
+<h3>Regression Tasks<a class="headerlink" href="#regression-tasks" title="Link to this heading">#</a></h3>
+<p>In regression scenarios, log-contrast models predict continuous outcomes based on compositional predictors. The coefficients represent the effect of log-ratio changes in the composition on the response variable.</p>
+<p>Key interpretation points:</p>
 <ul class="simple">
-<li><p>Decomposes precision matrix into sparse + low-rank components</p></li>
-<li><p>Sparse component: direct microbial interactions</p></li>
-<li><p>Low-rank component: systematic variation (environmental gradients, batch effects)</p></li>
-<li><p>Uses both L1 penalty (λ₁) and nuclear norm penalty (μ₁)</p></li>
-</ul>
-<p><strong>Interpretation</strong>:</p>
-<ul class="simple">
-<li><p><strong>Sparse component</strong>: True direct microbial associations</p></li>
-<li><p><strong>Low-rank component</strong>: Global patterns affecting multiple taxa simultaneously</p></li>
-<li><p>Better separation of biological signal from confounding factors</p></li>
-<li><p>More conservative edge detection compared to SGL</p></li>
-</ul>
-<section id="step-1-estimate-a-sparse-low-rank-model">
-<h2>Step 1: Estimate a Sparse + Low-Rank Model<a class="headerlink" href="#step-1-estimate-a-sparse-low-rank-model" title="Link to this heading">#</a></h2>
-<p>We begin by fitting a model that includes both sparse and low-rank components to account for hidden (latent) structure:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># slr model</span>
-qiime<span class="w"> </span>gglasso<span class="w"> </span>solve-problem<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--p-n-samples<span class="w"> </span><span class="m">50</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--p-lambda1-min<span class="w"> </span><span class="m">0</span>.001<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--p-lambda1-max<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--p-mu1-min<span class="w"> </span><span class="m">0</span>.50118723<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--p-mu1-max<span class="w"> </span><span class="m">0</span>.79432823<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--p-n-lambda1<span class="w"> </span><span class="m">50</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--p-n-mu1<span class="w"> </span><span class="m">50</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--p-gamma<span class="w"> </span><span class="m">0</span>.01<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--p-latent<span class="w"> </span>True<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--i-covariance-matrix<span class="w"> </span>data/atacama-table-corr.qza<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--o-solution<span class="w"> </span>data/atacama-solution-slr.qza<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--verbose
-</pre></div>
-</div>
-<p><strong>Explanation:</strong></p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">--p-n-samples</span> <span class="pre">50</span></code>: Number of individuals used to compute the input covariance matrix.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--p-lambda1-min</span></code>: Lower-bound for the sparsity penalty (λ₁).</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--p-lambda1-max</span></code>: Upper-bound for the sparsity penalty (λ₁).</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--p-mu1-min</span></code>: Lower-bound for the low-rank penalty (μ₁).</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--p-mu1-max</span></code>: Upper-bound for the low-rank penalty (μ₁).</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--p-n-lambda1</span></code>: Number of grid points between the min and max lambda values.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--p-n-mu1</span></code>: Number of grid points for each penalty parameter.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--p-gamma</span> <span class="pre">0.01</span></code>: Controls the model selection criterion (e.g., eBIC).</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--p-latent</span> <span class="pre">True</span></code>: Enables the latent variable modeling (SLR).</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--i-covariance-matrix</span></code>: Input covariance matrix in QIIME 2 format.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--o-solution</span></code>: Output artifact containing the estimated sparse + low-rank decomposition of the inverse covariance matrix.</p></li>
+<li><p>Coefficients indicate how a unit change in the log-contrast affects the predicted outcome</p></li>
+<li><p>Positive coefficients suggest that increases in the numerator taxa relative to the denominator taxa are associated with higher predicted values</p></li>
+<li><p>The baseline (denominator) taxa serve as the reference for all comparisons</p></li>
 </ul>
 </section>
-<section id="step-2-visualize-the-estimated-network">
-<h2>Step 2: Visualize the Estimated Network<a class="headerlink" href="#step-2-visualize-the-estimated-network" title="Link to this heading">#</a></h2>
-<p>The estimated network, including effects of latent variables, can be visualized using:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># visualize the results</span>
-qiime<span class="w"> </span>gglasso<span class="w"> </span>summarize<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--i-solution<span class="w"> </span>data/atacama-solution-slr.qza<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--p-label-size<span class="w"> </span>25pt<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--o-visualization<span class="w"> </span>data/slr-summary.qzv
-</pre></div>
-</div>
-<p><strong>Explanation:</strong></p>
+<section id="classification-tasks">
+<h3>Classification Tasks<a class="headerlink" href="#classification-tasks" title="Link to this heading">#</a></h3>
+<p>For classification problems, log-contrast models use compositional features to predict categorical outcomes. The model learns decision boundaries in the log-ratio space.</p>
+<p>Important considerations:</p>
 <ul class="simple">
-<li><p>Generates an interactive QIIME 2 visualization of the inferred network structure.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--p-label-size</span> <span class="pre">25pt</span></code>: Sets the font size of node labels in the network plot.</p></li>
-<li><p>The output <code class="docutils literal notranslate"><span class="pre">.qzv</span></code> file can be viewed using <a class="reference external" href="https://view.qiime2.org/">QIIME 2 View</a>.</p></li>
+<li><p>Feature importance reflects which log-contrasts best discriminate between classes</p></li>
+<li><p>Class probabilities are based on the transformed compositional space</p></li>
+<li><p>Interpretation should focus on relative abundance changes rather than absolute values</p></li>
+<li><p>Model selection procedures help assess model reliability across different compositional profiles</p></li>
 </ul>
+</section>
 </section>
 </section>
 
@@ -451,7 +413,7 @@ qiime<span class="w"> </span>gglasso<span class="w"> </span>summarize<span class
         },
         kernelOptions: {
             name: "python3",
-            path: "./chapters/02_graphical_models"
+            path: "./chapters/03_logcontrast_models"
         },
         predefinedOutput: true
     }
@@ -469,20 +431,20 @@ qiime<span class="w"> </span>gglasso<span class="w"> </span>summarize<span class
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="02_sgl.html"
+       href="04_advanced/01_concomitant_formulation.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Single Graphical Lasso</p>
+        <p class="prev-next-title">Advanced: Using Concomitant Formulation</p>
       </div>
     </a>
     <a class="right-next"
-       href="04_adaptive_glasso.html"
+       href="../../references.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Adaptive Graphical Lasso</p>
+        <p class="prev-next-title">References</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -502,8 +464,11 @@ qiime<span class="w"> </span>gglasso<span class="w"> </span>summarize<span class
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-estimate-a-sparse-low-rank-model">Step 1: Estimate a Sparse + Low-Rank Model</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-visualize-the-estimated-network">Step 2: Visualize the Estimated Network</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-log-contrast-model-results">Understanding Log-Contrast Model Results</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regression-tasks">Regression Tasks</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#classification-tasks">Classification Tasks</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
