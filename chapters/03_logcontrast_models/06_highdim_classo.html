@@ -463,12 +463,26 @@ L2-normalized, covariate penalty weight <code class="docutils literal notranslat
 correlated</strong> with the outcome (Pearson <span class="math notranslate nohighlight">\(\lvert r\rvert &lt; 0.80\)</span>), so a covariate that is
 essentially a proxy for the outcome cannot leak it.</p></li>
 </ul>
+<p>This is a two-step workflow. <strong>First</strong>, build the augmented design by adding the
+chosen covariate(s) to the ASV design (this produces new features, constraint,
+and weights artifacts):</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>classo<span class="w"> </span>add-covariates<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--i-features<span class="w"> </span>atacama-top-300-clr-design.qza<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--m-covariates-file<span class="w"> </span>atacama-classo-outcomes-mean-imputed.tsv<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--p-to-add<span class="w"> </span>&lt;covariate&gt;<span class="w"> </span>--p-rescale<span class="w"> </span>--p-w-to-add<span class="w"> </span><span class="m">0</span>.162565105<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--o-new-features<span class="w"> </span>&lt;design&gt;.qza<span class="w"> </span>--o-new-c<span class="w"> </span>&lt;c&gt;.qza<span class="w"> </span>--o-new-w<span class="w"> </span>&lt;w&gt;.qza
-<span class="c1"># then: qiime classo regress --i-features &lt;design&gt; --i-c &lt;c&gt; --i-weights &lt;w&gt; ...</span>
+</pre></div>
+</div>
+<p><strong>Then</strong> run the same cross-validated regression as before, but on the augmented
+design (passing the constraint and weights from the previous step):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>classo<span class="w"> </span>regress<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-features<span class="w"> </span>&lt;design&gt;.qza<span class="w"> </span>--i-c<span class="w"> </span>&lt;c&gt;.qza<span class="w"> </span>--i-weights<span class="w"> </span>&lt;w&gt;.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--m-y-file<span class="w"> </span>atacama-classo-outcomes-mean-imputed.tsv<span class="w"> </span>--m-y-column<span class="w"> </span>&lt;outcome&gt;<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-do-yshift<span class="w"> </span>--p-path<span class="w"> </span>--p-path-nlam-log<span class="w"> </span><span class="m">120</span><span class="w"> </span>--p-path-lamin-log<span class="w"> </span><span class="m">0</span>.0001<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-cv<span class="w"> </span>--p-cv-subsets<span class="w"> </span><span class="m">5</span><span class="w"> </span>--p-cv-seed<span class="w"> </span><span class="m">1</span><span class="w"> </span>--p-cv-one-se<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-cv--nlam<span class="w"> </span><span class="m">120</span><span class="w"> </span>--p-cv-lamin<span class="w"> </span><span class="m">0</span>.0001<span class="w"> </span>--p-cv-logscale<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-no-stabsel<span class="w"> </span>--p-no-lamfixed<span class="w"> </span>--p-no-concomitant<span class="w"> </span>--p-no-huber<span class="w"> </span>--p-intercept<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-result<span class="w"> </span>&lt;outcome&gt;-joint-r1-cv5.qza
 </pre></div>
 </div>
 <p>Adding covariates sharply increases predictability of the physically-coupled
