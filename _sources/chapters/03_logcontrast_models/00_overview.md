@@ -19,12 +19,12 @@ Learn how to transform your microbiome data and prepare it for log-contrast mode
 ### 2. Regression Models
 Predict continuous outcomes (e.g., temperature, pH) from microbiome composition:
 - **Log-Contrast Regression**: Basic approach using CLR transformation
-- **TRAC**: Incorporates taxonomic hierarchical information for better feature selection
+- **trac**: Incorporates taxonomic hierarchical information for better feature selection
 
 ### 3. Classification Models
 Predict categorical outcomes (e.g., disease status, habitat type):
 - **Log-Contrast Classification**: Basic approach for classification tasks
-- **TRAC**: Uses taxonomic structure to identify predictive taxonomic groups
+- **trac**: Uses taxonomic structure to identify predictive taxonomic groups
 
 ### 4. Advanced Topics
 - **Concomitant Formulation**: Joint estimation of coefficients and noise level for heteroscedastic data
@@ -42,7 +42,7 @@ Understand how to interpret log-contrast model results and extract biological in
 - L1 penalty (Lasso): Encourages sparsity, selects subset of features
 - Stability selection: Identifies robust features across subsamples
 
-**Taxonomic Adaptivity (TRAC)**: Leverages phylogenetic structure
+**trac (tree-aggregation of compositional data)**: Leverages phylogenetic structure
 - Computes adaptive weights based on taxonomic hierarchy
 - Groups related taxa for more interpretable results
 

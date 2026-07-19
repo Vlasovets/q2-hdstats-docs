@@ -71,7 +71,7 @@ qiime classo regress \
 
 Then proceed with prediction and visualization using `regresstaxa_lc_concomitant.qza`.
 
-### TRAC with Concomitant
+### trac with Concomitant
 
 Replace the training step with:
 
@@ -99,7 +99,7 @@ Then proceed with prediction and visualization using `regresstaxa_trac_concomita
 
 ### Log-Contrast with Huber Loss
 
-For both [log-contrast classification](../03_classification/01_logcontrast.md) and [TRAC classification](../03_classification/02_trac.md), replace the training step with:
+For both [log-contrast classification](../03_classification/01_logcontrast.md) and [trac classification](../03_classification/02_trac.md), replace the training step with:
 
 ```bash
 qiime classo classify \
@@ -122,7 +122,7 @@ qiime classo classify \
 
 Then proceed with prediction and visualization using `classifytaxa_lc_concomitant.qza`.
 
-### TRAC with Concomitant
+### trac with Concomitant
 
 Replace the training step with:
 

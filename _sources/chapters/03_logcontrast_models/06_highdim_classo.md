@@ -58,7 +58,7 @@ L2-normalized, covariate penalty weight `0.1626`):
 
 - **Joint** — add **all** other covariates as predictors.
 - **Filtered adjustment** — add only covariates that are **not strongly
-  correlated** with the outcome (Pearson $|r| < 0.80$), so a covariate that is
+  correlated** with the outcome (Pearson $\lvert r\rvert < 0.80$), so a covariate that is
   essentially a proxy for the outcome cannot leak it.
 
 ```bash
@@ -77,7 +77,7 @@ covariates rather than the microbiome:
 
 ![Filtered-adjustment q2-classo R1 models: microbial and environmental predictors](../../images/png/atacama-full/atacama-filtered-r1-cv5-selected-predictors-heatmap.png)
 
-| Outcome | ASV-only | Joint (all cov.) | Filtered ($|r|<0.8$) |
+| Outcome | ASV-only | Joint (all cov.) | Filtered ($\lvert r\rvert<0.8$) |
 |---------|----------|------------------|----------------------|
 | average-soil-temperature | 0.20 | 0.98 | 0.54 |
 | temperature-soil-low | 0.13 | 0.96 | 0.51 |

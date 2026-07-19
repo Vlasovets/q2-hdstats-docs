@@ -4,7 +4,7 @@ This tutorial demonstrates how to leverage taxonomic hierarchical information in
 
 ## Overview
 
-TRAC classification incorporates taxonomic classifications and computes adaptive weights based on the taxonomic hierarchy. This approach can identify which taxonomic groups (not just individual taxa) are most predictive of your target variable, leading to more interpretable and potentially more accurate classifications.
+trac classification incorporates taxonomic classifications and computes adaptive weights based on the taxonomic hierarchy. This approach can identify which taxonomic groups (not just individual taxa) are most predictive of your target variable, leading to more interpretable and potentially more accurate classifications.
 
 ## Step 1: Transform Features
 
@@ -134,14 +134,14 @@ The `.qzv` file contains:
 
 View the results at [QIIME 2 View](https://view.qiime2.org/).
 
-## Comparing Log-Contrast vs TRAC
+## Comparing Log-Contrast vs trac
 
 **Log-Contrast:**
 - Treats each taxon independently
 - Faster computation
 - Useful for exploratory analysis
 
-**TRAC:**
+**trac:**
 - Leverages taxonomic relationships
 - More interpretable results
 - Better feature selection for hierarchically structured data

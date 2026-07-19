@@ -38,5 +38,5 @@ Complete [Data Preparation](../01_data_preparation.md) before starting these tut
 ## Next Steps
 
 1. Start with [Log-Contrast Regression](01_logcontrast.md)
-2. Compare with [TRAC approach](02_trac.md)
+2. Compare with [trac approach](02_trac.md)
 3. Interpret your results using the [Interpretation guide](../05_interpretation.md)

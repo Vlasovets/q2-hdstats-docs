@@ -194,12 +194,12 @@
 <li class="toctree-l2"><a class="reference internal" href="../01_data_preparation.html">Data Preparation</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../02_regression/00_index.html">Regression</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../02_regression/01_logcontrast.html">Log-Contrast</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../02_regression/02_trac.html">With TRAC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../02_regression/02_trac.html">With trac</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="00_index.html">Classification</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="01_logcontrast.html">Log-Contrast</a></li>
-<li class="toctree-l3 current active"><a class="current reference internal" href="#">With TRAC</a></li>
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">With trac</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2"><a class="reference internal" href="../04_advanced/01_concomitant_formulation.html">Advanced: Concomitant Formulation</a></li>
@@ -365,7 +365,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-train-the-classification-model">Step 5: Train the Classification Model</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-6-make-predictions">Step 6: Make Predictions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-7-generate-summary-visualization">Step 7: Generate Summary Visualization</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-log-contrast-vs-trac">Comparing Log-Contrast vs TRAC</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-log-contrast-vs-trac">Comparing Log-Contrast vs trac</a></li>
 </ul>
             </nav>
         </div>
@@ -382,7 +382,7 @@ document.write(`
 <p>This tutorial demonstrates how to leverage taxonomic hierarchical information in log-contrast classification to predict vegetation presence. trac (tree-aggregation of compositional data) <span id="id1">[<a class="reference internal" href="../../../references.html#id30" title="Jacob Bien, Xiaohan Yan, Léo Simpson, and Christian L Müller. Tree-aggregated predictive modeling of microbiome data. Scientific Reports, 11(1):14505, 2021.">12</a>]</span> improves feature selection by aggregating predictors along the taxonomic tree.</p>
 <section id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a></h2>
-<p>TRAC classification incorporates taxonomic classifications and computes adaptive weights based on the taxonomic hierarchy. This approach can identify which taxonomic groups (not just individual taxa) are most predictive of your target variable, leading to more interpretable and potentially more accurate classifications.</p>
+<p>trac classification incorporates taxonomic classifications and computes adaptive weights based on the taxonomic hierarchy. This approach can identify which taxonomic groups (not just individual taxa) are most predictive of your target variable, leading to more interpretable and potentially more accurate classifications.</p>
 </section>
 <section id="step-1-transform-features">
 <h2>Step 1: Transform Features<a class="headerlink" href="#step-1-transform-features" title="Link to this heading">#</a></h2>
@@ -508,14 +508,14 @@ The <code class="docutils literal notranslate"><span class="pre">.qzv</span></co
 <p>View the results at <a class="reference external" href="https://view.qiime2.org/">QIIME 2 View</a>.</p>
 </section>
 <section id="comparing-log-contrast-vs-trac">
-<h2>Comparing Log-Contrast vs TRAC<a class="headerlink" href="#comparing-log-contrast-vs-trac" title="Link to this heading">#</a></h2>
+<h2>Comparing Log-Contrast vs trac<a class="headerlink" href="#comparing-log-contrast-vs-trac" title="Link to this heading">#</a></h2>
 <p><strong>Log-Contrast:</strong></p>
 <ul class="simple">
 <li><p>Treats each taxon independently</p></li>
 <li><p>Faster computation</p></li>
 <li><p>Useful for exploratory analysis</p></li>
 </ul>
-<p><strong>TRAC:</strong></p>
+<p><strong>trac:</strong></p>
 <ul class="simple">
 <li><p>Leverages taxonomic relationships</p></li>
 <li><p>More interpretable results</p></li>
@@ -597,7 +597,7 @@ The <code class="docutils literal notranslate"><span class="pre">.qzv</span></co
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-train-the-classification-model">Step 5: Train the Classification Model</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-6-make-predictions">Step 6: Make Predictions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-7-generate-summary-visualization">Step 7: Generate Summary Visualization</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-log-contrast-vs-trac">Comparing Log-Contrast vs TRAC</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-log-contrast-vs-trac">Comparing Log-Contrast vs trac</a></li>
 </ul>
   </nav></div>
 
