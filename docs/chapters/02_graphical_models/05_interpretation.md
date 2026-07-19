@@ -8,6 +8,17 @@ This chapter explains how to interpret the results from previous chapters and di
 
 *Figure 1: Comparison of network structures obtained from different graphical lasso methods on the Atacama Desert microbiome dataset.*
 
+```{note}
+**Reading taxon labels.** Because `transform-features` now keeps the original
+feature identifiers (see `--p-keep-original-id`), network nodes and heatmap axes
+carry the ASV's real ID, so a selected feature can be traced directly back to its
+taxonomy. In the [high-dimensional 300-ASV analysis](06_highdim_atacama.md), for
+example, the first taxon selected by the log-contrast models is a
+*Pseudarthrobacter* ASV — a genus emblematic of the Atacama soil biota, known for
+desiccation- and oligotrophy-tolerant lifestyles, pigment production, and
+survival in deep, hyperarid subsurface soils {cite}`finger2018pseudarthrobacter,horstmann2025subsurface,neilson2017significant`.
+```
+
 ## Key Findings 
 
 - **Environmental mediation**: Some apparent microbial correlations are mediated by environmental factors (elevation, pH, soil humidity, temperature)

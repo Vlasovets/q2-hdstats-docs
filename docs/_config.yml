@@ -16,6 +16,12 @@ sphinx:
   extra_extensions:
     - sphinxcontrib.bibtex
 
+# Enable LaTeX math ($...$ and $$...$$) in Markdown chapters
+parse:
+  myst_enable_extensions:
+    - dollarmath
+    - amsmath
+
 # Force re-execution of notebooks on each build.
 # See https://jupyterbook.org/content/execute.html
 execute:

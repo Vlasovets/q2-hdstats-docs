@@ -26,6 +26,8 @@ chapters:
         title: Adaptive Graphical Lasso
       - file: chapters/02_graphical_models/05_interpretation
         title: Interpretation
+      - file: chapters/02_graphical_models/06_highdim_atacama
+        title: "High-Dimensional Example (300 ASVs)"
 
   - file: chapters/03_logcontrast_models/00_overview
     title: Log-Contrast Models
@@ -50,6 +52,11 @@ chapters:
         title: "Advanced: Concomitant Formulation"
       - file: chapters/03_logcontrast_models/05_interpretation
         title: Interpretation
+      - file: chapters/03_logcontrast_models/06_highdim_classo
+        title: "High-Dimensional Example (300 ASVs)"
+
+  - file: chapters/04_appendix/01_math
+    title: "Appendix: Mathematical Background"
 
   - file: references
     title: References
