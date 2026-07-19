@@ -16,7 +16,7 @@ We present two approaches:
 - Good for exploratory analysis
 - Best when taxonomic relationships are not critical
 
-### [TRAC: Classification with Taxonomic Information](02_trac.md)
+### [trac: Classification with taxonomic information](02_trac.md)
 - Incorporates taxonomic hierarchy via adaptive weights
 - More interpretable results with taxonomic context
 - Better feature selection through phylogenetic grouping

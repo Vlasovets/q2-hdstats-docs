@@ -1,6 +1,6 @@
-# Log-Contrast Classification with TRAC (Taxonomic Information)
+# Log-Contrast Classification with trac (tree-aggregation of compositional data)
 
-This tutorial demonstrates how to leverage taxonomic hierarchical information in log-contrast classification to predict vegetation presence. TRAC (Taxonomic Regularized Adaptive Contrasts) improves feature selection by incorporating the taxonomic structure.
+This tutorial demonstrates how to leverage taxonomic hierarchical information in log-contrast classification to predict vegetation presence. trac (tree-aggregation of compositional data) {cite}`bien2021tree` improves feature selection by aggregating predictors along the taxonomic tree.
 
 ## Overview
 
