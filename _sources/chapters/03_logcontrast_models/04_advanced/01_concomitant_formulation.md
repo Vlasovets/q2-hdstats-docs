@@ -4,21 +4,27 @@ The concomitant formulation provides a more robust approach to both regression a
 
 ## What is Concomitant Formulation?
 
-By setting `--p-concomitant True`, you switch from standard formulation to the **concomitant formulation (R3)**:
+By setting `--p-concomitant True`, you switch from the standard formulation to the **concomitant formulation** (R3 for least squares, R4 when combined with the Huber loss):
 
 ### Mathematical Formulation
 
 **Standard Formulation (R1):**
 ```
-min ||y - X·β||² / σ + λ·||β||₁    s.t. C·β = 0
+min ||y - X·β||² + λ·||β||₁    s.t. C·β = 0
 ```
-Assumes a fixed noise level across all samples.
+The noise level σ is treated as fixed and is not estimated.
 
-**Concomitant Formulation (R3):**
+**Concomitant Formulation (R3, least squares):**
 ```
-min ||y - X·β||² / σ + e·σ + λ·||β||₁    s.t. C·β = 0
+min ||y - X·β||² / (2σ) + (n/2)·σ + λ·||β||₁    s.t. C·β = 0
 ```
-Where `e = 20.0` is the penalty parameter for the standard deviation (σ).
+Here σ is estimated jointly with the coefficients β. The concomitant formulation has **no tuning parameter for σ**: the coefficient `n/2` (with `n` the number of samples) is a fixed constant that follows from the perspective function of the squared loss — it is not a hyperparameter and is not exposed to the user.
+
+**Concomitant Formulation with Huber loss (R4):**
+```
+min  h_{ρ,σ}(y - X·β) + n·σ + λ·||β||₁    s.t. C·β = 0
+```
+The robust (Huber) analogue, obtained by combining `--p-concomitant True` with `--p-huber True`. As in R3, σ is estimated with **no tuning parameter**; the σ-coefficient is `n` (rather than `n/2`), which again follows directly from the perspective function of the Huber loss.
 
 ### Key Differences
 
@@ -28,7 +34,7 @@ Where `e = 20.0` is the penalty parameter for the standard deviation (σ).
 | Heteroscedasticity | Assumed equal variance | Adaptive to varying noise |
 | Uncertainty estimates | May be inaccurate | More reliable |
 | Computation | Faster | Slightly slower |
-| Output label | "Formulation: R1" | "Formulation: R3 (concomitant with e = 20.0)" |
+| Output label | "Formulation: R1" | "Formulation: R3 (concomitant)" |
 
 ## When to Use Concomitant Formulation
 
@@ -146,12 +152,12 @@ Then proceed with prediction and visualization using `classifytaxa_trac_concomit
 When you run your pipeline with `--p-concomitant True`, the output will display:
 
 ```
-Formulation: R3 (concomitant with e = 20.0)
+Formulation: R3 (concomitant)
 ```
 
-This indicates:
-- The model is using concomitant formulation
-- The noise level parameter `e = 20.0` controls the penalty strength
+(or `Formulation: R4 (concomitant + Huber)` when `--p-huber True` is also set). This indicates:
+- The model is using the concomitant formulation, estimating the noise level σ jointly with the coefficients
+- σ is determined by the model, not by a hyperparameter — there is nothing to tune
 - Coefficients and predictions are more robust to heteroscedasticity
 
 ## Tips for Optimal Results
@@ -166,4 +172,4 @@ This indicates:
 
 4. **Computational Budget**: Concomitant requires ~1.5-2x more computation time, so consider this for large datasets
 
-5. **Parameter Tuning**: The default `e = 20.0` works well for most cases, but can be adjusted if needed
+5. **No σ Tuning**: The concomitant formulation estimates the noise level σ automatically — there is no penalty parameter for σ to set or tune

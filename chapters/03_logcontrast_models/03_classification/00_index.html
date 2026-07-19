@@ -62,7 +62,7 @@
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
     <link rel="next" title="Log-Contrast Classification" href="01_logcontrast.html" />
-    <link rel="prev" title="Log-Contrast Regression with TRAC (Taxonomic Information)" href="../02_regression/02_trac.html" />
+    <link rel="prev" title="Log-Contrast Regression with trac (tree-aggregation of compositional data)" href="../02_regression/02_trac.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -187,6 +187,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../02_graphical_models/03_slr.html">Single Graphical Lasso with Latent Variables</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../02_graphical_models/04_adaptive_glasso.html">Adaptive Graphical Lasso</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../02_graphical_models/05_interpretation.html">Interpretation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../02_graphical_models/06_highdim_atacama.html">High-Dimensional Example (300 ASVs)</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../00_overview.html">Log-Contrast Models</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
@@ -203,8 +204,10 @@
 </details></li>
 <li class="toctree-l2"><a class="reference internal" href="../04_advanced/01_concomitant_formulation.html">Advanced: Concomitant Formulation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../05_interpretation.html">Interpretation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06_highdim_classo.html">High-Dimensional Example (300 ASVs)</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04_appendix/01_math.html">Appendix: Mathematical Background</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../references.html">References</a></li>
 </ul>
 
@@ -357,7 +360,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#workflows">Workflows</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#log-contrast-classification"><span class="xref myst">Log-Contrast Classification</span></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#trac-classification-with-taxonomic-information"><span class="xref myst">TRAC: Classification with Taxonomic Information</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#trac-classification-with-taxonomic-information"><span class="xref myst">trac: Classification with taxonomic information</span></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-options">Advanced Options</a></li>
@@ -395,7 +398,7 @@ document.write(`
 </ul>
 </section>
 <section id="trac-classification-with-taxonomic-information">
-<h3><a class="reference internal" href="02_trac.html"><span class="std std-doc">TRAC: Classification with Taxonomic Information</span></a><a class="headerlink" href="#trac-classification-with-taxonomic-information" title="Link to this heading">#</a></h3>
+<h3><a class="reference internal" href="02_trac.html"><span class="std std-doc">trac: Classification with taxonomic information</span></a><a class="headerlink" href="#trac-classification-with-taxonomic-information" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Incorporates taxonomic hierarchy via adaptive weights</p></li>
 <li><p>More interpretable results with taxonomic context</p></li>
@@ -467,7 +470,7 @@ document.write(`
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Log-Contrast Regression with TRAC (Taxonomic Information)</p>
+        <p class="prev-next-title">Log-Contrast Regression with trac (tree-aggregation of compositional data)</p>
       </div>
     </a>
     <a class="right-next"
@@ -498,7 +501,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#workflows">Workflows</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#log-contrast-classification"><span class="xref myst">Log-Contrast Classification</span></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#trac-classification-with-taxonomic-information"><span class="xref myst">TRAC: Classification with Taxonomic Information</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#trac-classification-with-taxonomic-information"><span class="xref myst">trac: Classification with taxonomic information</span></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-options">Advanced Options</a></li>

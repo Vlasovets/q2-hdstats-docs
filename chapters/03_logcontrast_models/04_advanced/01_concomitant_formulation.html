@@ -62,7 +62,7 @@
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
     <link rel="next" title="Models Interpretation and Analysis" href="../05_interpretation.html" />
-    <link rel="prev" title="Log-Contrast Classification with TRAC (Taxonomic Information)" href="../03_classification/02_trac.html" />
+    <link rel="prev" title="Log-Contrast Classification with trac (tree-aggregation of compositional data)" href="../03_classification/02_trac.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -187,6 +187,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../02_graphical_models/03_slr.html">Single Graphical Lasso with Latent Variables</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../02_graphical_models/04_adaptive_glasso.html">Adaptive Graphical Lasso</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../02_graphical_models/05_interpretation.html">Interpretation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../02_graphical_models/06_highdim_atacama.html">High-Dimensional Example (300 ASVs)</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../00_overview.html">Log-Contrast Models</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
@@ -203,8 +204,10 @@
 </details></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Advanced: Concomitant Formulation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../05_interpretation.html">Interpretation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06_highdim_classo.html">High-Dimensional Example (300 ASVs)</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04_appendix/01_math.html">Appendix: Mathematical Background</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../references.html">References</a></li>
 </ul>
 
@@ -388,19 +391,24 @@ document.write(`
 <p>The concomitant formulation provides a more robust approach to both regression and classification by jointly estimating the model coefficients and the noise level (σ). This is particularly useful when variance is not homogeneous across your samples.</p>
 <section id="what-is-concomitant-formulation">
 <h2>What is Concomitant Formulation?<a class="headerlink" href="#what-is-concomitant-formulation" title="Link to this heading">#</a></h2>
-<p>By setting <code class="docutils literal notranslate"><span class="pre">--p-concomitant</span> <span class="pre">True</span></code>, you switch from standard formulation to the <strong>concomitant formulation (R3)</strong>:</p>
+<p>By setting <code class="docutils literal notranslate"><span class="pre">--p-concomitant</span> <span class="pre">True</span></code>, you switch from the standard formulation to the <strong>concomitant formulation</strong> (R3 for least squares, R4 when combined with the Huber loss):</p>
 <section id="mathematical-formulation">
 <h3>Mathematical Formulation<a class="headerlink" href="#mathematical-formulation" title="Link to this heading">#</a></h3>
 <p><strong>Standard Formulation (R1):</strong></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>min ||y - X·β||² / σ + λ·||β||₁    s.t. C·β = 0
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>min ||y - X·β||² + λ·||β||₁    s.t. C·β = 0
 </pre></div>
 </div>
-<p>Assumes a fixed noise level across all samples.</p>
-<p><strong>Concomitant Formulation (R3):</strong></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>min ||y - X·β||² / σ + e·σ + λ·||β||₁    s.t. C·β = 0
+<p>The noise level σ is treated as fixed and is not estimated.</p>
+<p><strong>Concomitant Formulation (R3, least squares):</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>min ||y - X·β||² / (2σ) + (n/2)·σ + λ·||β||₁    s.t. C·β = 0
 </pre></div>
 </div>
-<p>Where <code class="docutils literal notranslate"><span class="pre">e</span> <span class="pre">=</span> <span class="pre">20.0</span></code> is the penalty parameter for the standard deviation (σ).</p>
+<p>Here σ is estimated jointly with the coefficients β. The concomitant formulation has <strong>no tuning parameter for σ</strong>: the coefficient <code class="docutils literal notranslate"><span class="pre">n/2</span></code> (with <code class="docutils literal notranslate"><span class="pre">n</span></code> the number of samples) is a fixed constant that follows from the perspective function of the squared loss — it is not a hyperparameter and is not exposed to the user.</p>
+<p><strong>Concomitant Formulation with Huber loss (R4):</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>min  h_{ρ,σ}(y - X·β) + n·σ + λ·||β||₁    s.t. C·β = 0
+</pre></div>
+</div>
+<p>The robust (Huber) analogue, obtained by combining <code class="docutils literal notranslate"><span class="pre">--p-concomitant</span> <span class="pre">True</span></code> with <code class="docutils literal notranslate"><span class="pre">--p-huber</span> <span class="pre">True</span></code>. As in R3, σ is estimated with <strong>no tuning parameter</strong>; the σ-coefficient is <code class="docutils literal notranslate"><span class="pre">n</span></code> (rather than <code class="docutils literal notranslate"><span class="pre">n/2</span></code>), which again follows directly from the perspective function of the Huber loss.</p>
 </section>
 <section id="key-differences">
 <h3>Key Differences<a class="headerlink" href="#key-differences" title="Link to this heading">#</a></h3>
@@ -430,7 +438,7 @@ document.write(`
 </tr>
 <tr class="row-even"><td><p>Output label</p></td>
 <td><p>“Formulation: R1”</p></td>
-<td><p>“Formulation: R3 (concomitant with e = 20.0)”</p></td>
+<td><p>“Formulation: R3 (concomitant)”</p></td>
 </tr>
 </tbody>
 </table>
@@ -547,13 +555,13 @@ document.write(`
 <section id="interpreting-results-with-concomitant-formulation">
 <h2>Interpreting Results with Concomitant Formulation<a class="headerlink" href="#interpreting-results-with-concomitant-formulation" title="Link to this heading">#</a></h2>
 <p>When you run your pipeline with <code class="docutils literal notranslate"><span class="pre">--p-concomitant</span> <span class="pre">True</span></code>, the output will display:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Formulation</span><span class="p">:</span> <span class="n">R3</span> <span class="p">(</span><span class="n">concomitant</span> <span class="k">with</span> <span class="n">e</span> <span class="o">=</span> <span class="mf">20.0</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Formulation</span><span class="p">:</span> <span class="n">R3</span> <span class="p">(</span><span class="n">concomitant</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>This indicates:</p>
+<p>(or <code class="docutils literal notranslate"><span class="pre">Formulation:</span> <span class="pre">R4</span> <span class="pre">(concomitant</span> <span class="pre">+</span> <span class="pre">Huber)</span></code> when <code class="docutils literal notranslate"><span class="pre">--p-huber</span> <span class="pre">True</span></code> is also set). This indicates:</p>
 <ul class="simple">
-<li><p>The model is using concomitant formulation</p></li>
-<li><p>The noise level parameter <code class="docutils literal notranslate"><span class="pre">e</span> <span class="pre">=</span> <span class="pre">20.0</span></code> controls the penalty strength</p></li>
+<li><p>The model is using the concomitant formulation, estimating the noise level σ jointly with the coefficients</p></li>
+<li><p>σ is determined by the model, not by a hyperparameter — there is nothing to tune</p></li>
 <li><p>Coefficients and predictions are more robust to heteroscedasticity</p></li>
 </ul>
 </section>
@@ -569,7 +577,7 @@ document.write(`
 </li>
 <li><p><strong>Cross-Validation Performance</strong>: Compare CV scores between formulations; concomitant often performs better on heteroscedastic data</p></li>
 <li><p><strong>Computational Budget</strong>: Concomitant requires ~1.5-2x more computation time, so consider this for large datasets</p></li>
-<li><p><strong>Parameter Tuning</strong>: The default <code class="docutils literal notranslate"><span class="pre">e</span> <span class="pre">=</span> <span class="pre">20.0</span></code> works well for most cases, but can be adjusted if needed</p></li>
+<li><p><strong>No σ Tuning</strong>: The concomitant formulation estimates the noise level σ automatically — there is no penalty parameter for σ to set or tune</p></li>
 </ol>
 </section>
 </section>
@@ -610,7 +618,7 @@ document.write(`
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Log-Contrast Classification with TRAC (Taxonomic Information)</p>
+        <p class="prev-next-title">Log-Contrast Classification with trac (tree-aggregation of compositional data)</p>
       </div>
     </a>
     <a class="right-next"

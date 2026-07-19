@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Atacama Soil Microbiome &#8212; High-dimensional Statistics with QIIME 2</title>
+    <title>High-Dimensional Example: 300 Atacama ASVs &#8212; High-dimensional Statistics with QIIME 2</title>
   
   
   
@@ -58,11 +58,13 @@
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/00_getting_started/02_data';</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/02_graphical_models/06_highdim_atacama';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Installation" href="../01_installation/01_prerequisites.html" />
-    <link rel="prev" title="Getting Started" href="01_intro.html" />
+    <link rel="next" title="Log-Contrast Models Overview" href="../03_logcontrast_models/00_overview.html" />
+    <link rel="prev" title="Network Interpretation and Analysis" href="05_interpretation.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -173,8 +175,8 @@
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="01_intro.html">Getting Started</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Atacama Soil Microbiome</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../00_getting_started/01_intro.html">Getting Started</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../00_getting_started/02_data.html">Atacama Soil Microbiome</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../01_installation/01_prerequisites.html">Prerequisites &amp; Installation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -182,12 +184,12 @@
 <li class="toctree-l2"><a class="reference internal" href="../01_installation/03_q2_classo.html">Installing q2-classo</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../02_graphical_models/01_data_preparation.html">Graphical Lasso Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../02_graphical_models/02_sgl.html">Single Graphical Lasso</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../02_graphical_models/03_slr.html">Single Graphical Lasso with Latent Variables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../02_graphical_models/04_adaptive_glasso.html">Adaptive Graphical Lasso</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../02_graphical_models/05_interpretation.html">Interpretation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../02_graphical_models/06_highdim_atacama.html">High-Dimensional Example (300 ASVs)</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="01_data_preparation.html">Graphical Lasso Models</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="02_sgl.html">Single Graphical Lasso</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_slr.html">Single Graphical Lasso with Latent Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_adaptive_glasso.html">Adaptive Graphical Lasso</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05_interpretation.html">Interpretation</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">High-Dimensional Example (300 ASVs)</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../03_logcontrast_models/00_overview.html">Log-Contrast Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -263,7 +265,7 @@
       
       
       
-      <li><a href="../../_sources/chapters/00_getting_started/02_data.md" target="_blank"
+      <li><a href="../../_sources/chapters/02_graphical_models/06_highdim_atacama.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -347,7 +349,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Atacama Soil Microbiome</h1>
+    <h1>High-Dimensional Example: 300 Atacama ASVs</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -357,8 +359,9 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-preprocessing-pipeline">Data Preprocessing Pipeline</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-for-downstream-analysis">Data for Downstream analysis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data">Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#single-graphical-lasso-selecting-lambda-with-ebic">Single graphical lasso: selecting <span class="math notranslate nohighlight">\(\lambda\)</span> with eBIC</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sparse-low-rank-comparing-ranks-2-5-and-10">Sparse + low-rank: comparing ranks 2, 5 and 10</a></li>
 </ul>
             </nav>
         </div>
@@ -370,177 +373,156 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="atacama-soil-microbiome">
-<h1>Atacama Soil Microbiome<a class="headerlink" href="#atacama-soil-microbiome" title="Link to this heading">#</a></h1>
-<p>In our example, we showcase the application of our QIIME2 plugins for high-dimensional statistics using the Atacama soil microbiome dataset <span id="id1">[<a class="reference internal" href="../../references.html#id6" title="Julia W Neilson, Katy Califf, Cesar Cardona, Audrey Copeland, Will Van Treuren, Karen L Josephson, Rob Knight, Jack A Gilbert, Jay Quade, J Gregory Caporaso, and others. Significant impacts of increasing aridity on the arid soil microbiome. MSystems, 2(3):e00195–16, 2017.">6</a>]</span>. With q2-gglasso we solve various graphical lasso problems to identify microbial associations which we later assess by fitting sparse log-contrast models implemented in q2-classo. Microbiome bioinformatics analyses were conducted using QIIME 2 version 2022.4 <span id="id2">[<a class="reference internal" href="../../references.html#id4" title="Evan Bolyen, Jai Ram Rideout, Matthew R Dillon, Nicholas A Bokulich, Christian C Abnet, Gabriel A Al-Ghalith, Harriet Alexander, Eric J Alm, Manimozhiyan Arumugam, Francesco Asnicar, and others. Reproducible, interactive, scalable and extensible microbiome data science using qiime 2. Nature biotechnology, 37(8):852–857, 2019.">1</a>]</span>. The processing of raw sequence data involved demultiplexing and quality filtering, facilitated by the q2-demux plugin. Subsequent denoising was performed using DADA2 <span id="id3">[<a class="reference internal" href="../../references.html#id31" title="Benjamin J Callahan, Paul J McMurdie, Michael J Rosen, Andrew W Han, Amy Jo A Johnson, and Susan P Holmes. Dada2: high-resolution sample inference from illumina amplicon data. Nature methods, 13(7):581–583, 2016.">7</a>]</span> through the q2-dada2 plugin. Taxonomic assignments for Amplicon Sequence Variants (ASVs) were accomplished using the q2-feature-classifier <span id="id4">[<a class="reference internal" href="../../references.html#id42" title="Nicholas A Bokulich, Matthew R Dillon, Evan Bolyen, Benjamin D Kaehler, Gavin A Huttley, and J Gregory Caporaso. Q2-sample-classifier: machine-learning tools for microbiome classification and regression. Journal of open research software, 2018.">8</a>]</span> with the naive Bayes taxonomy classifier, trained on the Silva Database <span id="id5">[<a class="reference internal" href="../../references.html#id33" title="Christian Quast, Elmar Pruesse, Pelin Yilmaz, Jan Gerken, Timmy Schweer, Pablo Yarza, Jörg Peplies, and Frank Oliver Glöckner. The silva ribosomal rna gene database project: improved data processing and web-based tools. Nucleic acids research, 41(D1):D590–D596, 2012.">9</a>]</span>.</p>
-<section id="data-preprocessing-pipeline">
-<h2>Data Preprocessing Pipeline<a class="headerlink" href="#data-preprocessing-pipeline" title="Link to this heading">#</a></h2>
-<p>Here is the original code for Atacama example data <a class="reference external" href="https://docs.qiime2.org/2024.10/tutorials/atacama-soils/">preprocessing</a>. One can simply follow the original Atacama tutorial, but we wanted to give these ASVs meaningful names for the sake of this example. That’s why we rename the ASV keys as follows:</p>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>ASV label</p></th>
-<th class="head"><p>Real ASV ID</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>ASV-1</p></td>
-<td><p>89cb1ddf89dcf11d86f725dbcaa9a5ce</p></td>
-</tr>
-<tr class="row-odd"><td><p>ASV-2</p></td>
-<td><p>cdb9c0ee3bba4c3d8b9292eb575bd9e3</p></td>
-</tr>
-<tr class="row-even"><td><p>ASV-3</p></td>
-<td><p>4c8ff0ea98d2c0ebb486e33bd96c61f9</p></td>
-</tr>
-<tr class="row-odd"><td><p>ASV-4</p></td>
-<td><p>a56b903521b8ab33a7878b35582803a8</p></td>
-</tr>
-<tr class="row-even"><td><p>ASV-5</p></td>
-<td><p>5c78314ff92e6fec9aa07acc1fa0dc24</p></td>
-</tr>
-<tr class="row-odd"><td><p>ASV-6</p></td>
-<td><p>dc8a2f47b3d1dc2e1f5f805891976b29</p></td>
-</tr>
-<tr class="row-even"><td><p>ASV-7</p></td>
-<td><p>6b780e361cfc5f06def718518324bdcb</p></td>
-</tr>
-<tr class="row-odd"><td><p>ASV-8</p></td>
-<td><p>f6c10a04d57159c0d64d6bc30c677471</p></td>
-</tr>
-<tr class="row-even"><td><p>ASV-9</p></td>
-<td><p>ffd60d684f32e6fd5b47fe90095f9d34</p></td>
-</tr>
-<tr class="row-odd"><td><p>ASV-10</p></td>
-<td><p>ef3fdbe1dcde754d91130cde6a4b4d61</p></td>
-</tr>
-<tr class="row-even"><td><p>ASV-11</p></td>
-<td><p>a36b38f754f6abd278aeb9dbc7696343</p></td>
-</tr>
-<tr class="row-odd"><td><p>ASV-12</p></td>
-<td><p>a7b877ae6d2f079a15b6b192a4425620</p></td>
-</tr>
-<tr class="row-even"><td><p>ASV-13</p></td>
-<td><p>409faa5f5353e543bf6d99125c7c0e83</p></td>
-</tr>
-</tbody>
-</table>
-</div>
+  <section class="tex2jax_ignore mathjax_ignore" id="high-dimensional-example-300-atacama-asvs">
+<h1>High-Dimensional Example: 300 Atacama ASVs<a class="headerlink" href="#high-dimensional-example-300-atacama-asvs" title="Link to this heading">#</a></h1>
+<p>The chapters above use a small 13-ASV subset to keep every step easy to follow.
+This chapter scales the same q2-gglasso workflow to a <strong>high-dimensional</strong>
+setting — the <strong>300 most abundant ASVs</strong> across <strong>54 samples</strong> of the Atacama
+soil microbiome — and selects the regularization parameters with an explicit
+model-selection criterion. It reproduces the reference analysis prepared by
+Christian L. Müller.</p>
+<section id="data">
+<h2>Data<a class="headerlink" href="#data" title="Link to this heading">#</a></h2>
+<p>Starting from the full Atacama tutorial table, samples are matched and the
+<strong>300 ASVs with the greatest total abundance</strong> are retained (<span class="math notranslate nohighlight">\(n = 54\)</span> samples,
+<span class="math notranslate nohighlight">\(p = 300\)</span> features; the resulting table has 49,252 counts and is 5.9% non-zero).
+The empirical correlation matrix of the mclr-transformed table
+(<code class="docutils literal notranslate"><span class="pre">atacama-top-300-correlation.qza</span></code>) is the input to the graphical lasso.</p>
 </section>
-<section id="data-for-downstream-analysis">
-<h2>Data for Downstream analysis<a class="headerlink" href="#data-for-downstream-analysis" title="Link to this heading">#</a></h2>
-<p>We’ll use the Atacama soil microbiome dataset <span id="id6">[<a class="reference internal" href="../../references.html#id6" title="Julia W Neilson, Katy Califf, Cesar Cardona, Audrey Copeland, Will Van Treuren, Karen L Josephson, Rob Knight, Jack A Gilbert, Jay Quade, J Gregory Caporaso, and others. Significant impacts of increasing aridity on the arid soil microbiome. MSystems, 2(3):e00195–16, 2017.">6</a>]</span>, which contains:</p>
-<ul class="simple">
-<li><p>49 samples from Atacama Desert soil;</p></li>
-<li><p>13 microbial taxa (ASVs)</p></li>
-<li><p>Environmental covariates: pH, elevation, temperature, humidity, and vegetayion</p></li>
-</ul>
-<p>The original data is available through the European Nucleotide Archive under accession <a class="reference external" href="https://www.ebi.ac.uk/ena/browser/view/PRJEB17617">ERP019482</a>.</p>
+<section id="single-graphical-lasso-selecting-lambda-with-ebic">
+<h2>Single graphical lasso: selecting <span class="math notranslate nohighlight">\(\lambda\)</span> with eBIC<a class="headerlink" href="#single-graphical-lasso-selecting-lambda-with-ebic" title="Link to this heading">#</a></h2>
+<p>For a high-dimensional network we choose the sparsity penalty <span class="math notranslate nohighlight">\(\lambda_1\)</span> with
+the <strong>extended Bayesian Information Criterion</strong> (eBIC). The extra parameter
+<span class="math notranslate nohighlight">\(\gamma \in [0, 1]\)</span> controls how strongly extra edges are penalized: Foygel and
+Drton use <span class="math notranslate nohighlight">\(\gamma = 0.5\)</span> as the conventional choice, while the small-example
+default <code class="docutils literal notranslate"><span class="pre">--p-gamma</span> <span class="pre">0.01</span></code> is tailored to the toy table. For this analysis we use
+a moderate <strong><span class="math notranslate nohighlight">\(\gamma = 0.3\)</span></strong>, evaluated on a <strong>linear</strong> <span class="math notranslate nohighlight">\(\lambda\)</span> path
+<code class="docutils literal notranslate"><span class="pre">1.00,</span> <span class="pre">0.95,</span> <span class="pre">…,</span> <span class="pre">0.10</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>gglasso<span class="w"> </span>solve-problem<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-covariance-matrix<span class="w"> </span>atacama-top-300-correlation.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-n-samples<span class="w"> </span><span class="m">54</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-no-latent<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-lambda1-min<span class="w"> </span><span class="m">0</span>.8<span class="w"> </span>--p-lambda1-max<span class="w"> </span><span class="m">0</span>.8<span class="w"> </span>--p-n-lambda1<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-gamma<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-solution<span class="w"> </span>atacama-top-300-sgl-lambda0.8.qza
+</pre></div>
+</div>
+<p>(The linear path itself is available with the new
+<code class="docutils literal notranslate"><span class="pre">--p-path-scale</span> <span class="pre">linear</span></code> option, or by passing the exact grid via
+<code class="docutils literal notranslate"><span class="pre">--p-lambda1-path</span></code>.)</p>
+<p>Along this path the <strong>minimum eBIC of <code class="docutils literal notranslate"><span class="pre">16130.10</span></code> occurs at <span class="math notranslate nohighlight">\(\lambda = 0.8\)</span></strong>,
+which defines the sparse network with <strong>216 edges</strong>:</p>
+<p><img alt="Linear eBIC model selection for the 300-ASV single graphical lasso" src="../../_images/atacama-top-300-linear-model-selection.png" /></p>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
-<tr class="row-odd"><th class="head"><p>Sample ID</p></th>
-<th class="head"><p>ASV-1</p></th>
-<th class="head"><p>ASV-2</p></th>
-<th class="head"><p>ASV-3</p></th>
-<th class="head"><p>…</p></th>
-<th class="head"><p>ASV-11</p></th>
-<th class="head"><p>ASV-12</p></th>
-<th class="head"><p>ASV-13</p></th>
-<th class="head"><p>Elevation</p></th>
-<th class="head"><p>pH</p></th>
-<th class="head"><p>Avg Soil RH</p></th>
-<th class="head"><p>Avg Soil Temp</p></th>
-<th class="head"><p>Vegetation</p></th>
+<tr class="row-odd"><th class="head"><p><span class="math notranslate nohighlight">\(\lambda\)</span></p></th>
+<th class="head"><p>eBIC (<span class="math notranslate nohighlight">\(\gamma=0.3\)</span>)</p></th>
+<th class="head"><p>edges</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>BAQ2420.1.1</p></td>
-<td><p>0.0</p></td>
-<td><p>11.0</p></td>
-<td><p>0.0</p></td>
-<td><p>…</p></td>
-<td><p>115.0</p></td>
-<td><p>0.0</p></td>
-<td><p>0.0</p></td>
-<td><p>2420</p></td>
-<td><p>9.33</p></td>
-<td><p>82.54</p></td>
-<td><p>22.45</p></td>
-<td><p>no</p></td>
+<tr class="row-even"><td><p>1.00</p></td>
+<td><p>16200.00</p></td>
+<td><p>0</p></td>
 </tr>
-<tr class="row-odd"><td><p>BAQ2420.1.2</p></td>
-<td><p>0.0</p></td>
-<td><p>0.0</p></td>
-<td><p>0.0</p></td>
-<td><p>…</p></td>
-<td><p>0.0</p></td>
-<td><p>0.0</p></td>
-<td><p>0.0</p></td>
-<td><p>2420</p></td>
-<td><p>9.36</p></td>
-<td><p>82.54</p></td>
-<td><p>22.45</p></td>
-<td><p>no</p></td>
+<tr class="row-odd"><td><p>0.95</p></td>
+<td><p>17117.10</p></td>
+<td><p>145</p></td>
 </tr>
-<tr class="row-even"><td><p>BAQ2420.1.3</p></td>
-<td><p>0.0</p></td>
-<td><p>0.0</p></td>
-<td><p>0.0</p></td>
-<td><p>…</p></td>
-<td><p>0.0</p></td>
-<td><p>0.0</p></td>
-<td><p>0.0</p></td>
-<td><p>2420</p></td>
-<td><p>8.90</p></td>
-<td><p>82.54</p></td>
-<td><p>22.45</p></td>
-<td><p>no</p></td>
+<tr class="row-even"><td><p>0.90</p></td>
+<td><p>16619.90</p></td>
+<td><p>152</p></td>
 </tr>
-<tr class="row-odd"><td><p>…</p></td>
-<td><p>…</p></td>
-<td><p>…</p></td>
-<td><p>…</p></td>
-<td><p>…</p></td>
-<td><p>…</p></td>
-<td><p>…</p></td>
-<td><p>…</p></td>
-<td><p>…</p></td>
-<td><p>…</p></td>
-<td><p>…</p></td>
-<td><p>…</p></td>
-<td><p>…</p></td>
+<tr class="row-odd"><td><p>0.85</p></td>
+<td><p>16313.58</p></td>
+<td><p>176</p></td>
 </tr>
-<tr class="row-even"><td><p>YUN3856.2</p></td>
-<td><p>6.0</p></td>
-<td><p>13.0</p></td>
-<td><p>26.0</p></td>
-<td><p>…</p></td>
-<td><p>0.0</p></td>
-<td><p>0.0</p></td>
-<td><p>104.0</p></td>
-<td><p>3856</p></td>
-<td><p>7.43</p></td>
-<td><p>99.44</p></td>
-<td><p>9.51</p></td>
-<td><p>yes</p></td>
+<tr class="row-even"><td><p><strong>0.80</strong></p></td>
+<td><p><strong>16130.10</strong></p></td>
+<td><p><strong>216</strong></p></td>
 </tr>
-<tr class="row-odd"><td><p>YUN3856.3</p></td>
-<td><p>21.0</p></td>
-<td><p>36.0</p></td>
-<td><p>23.0</p></td>
-<td><p>…</p></td>
-<td><p>33.0</p></td>
-<td><p>0.0</p></td>
-<td><p>0.0</p></td>
-<td><p>3856</p></td>
-<td><p>7.43</p></td>
-<td><p>99.44</p></td>
-<td><p>9.51</p></td>
-<td><p>yes</p></td>
+<tr class="row-odd"><td><p>0.75</p></td>
+<td><p>16594.22</p></td>
+<td><p>329</p></td>
+</tr>
+<tr class="row-even"><td><p>0.70</p></td>
+<td><p>16719.57</p></td>
+<td><p>429</p></td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>QIIME2 .qza file can be downloaded from this <a class="reference external" href="https://github.com/bio-datascience/q2-gglasso/tree/master/data/atacama-counts.qza">link</a>, here is the snapshot of the count data and corresponding <a class="reference external" href="https://data.qiime2.org/2024.10/tutorials/atacama-soils/sample_metadata.tsv">metadata</a> we’re using in our example.</p>
+<p>The choice of <span class="math notranslate nohighlight">\(\gamma\)</span> matters: <span class="math notranslate nohighlight">\(\gamma \in [0.30, 0.31]\)</span> selects <span class="math notranslate nohighlight">\(\lambda = 0.8\)</span>
+(216 edges); <span class="math notranslate nohighlight">\(\gamma \le 0.29\)</span> selects the much denser <span class="math notranslate nohighlight">\(\lambda = 0.3\)</span>
+(1403 edges); and <span class="math notranslate nohighlight">\(\gamma \ge 0.32\)</span> selects the empty <span class="math notranslate nohighlight">\(\lambda = 1.0\)</span> network.</p>
+</section>
+<section id="sparse-low-rank-comparing-ranks-2-5-and-10">
+<h2>Sparse + low-rank: comparing ranks 2, 5 and 10<a class="headerlink" href="#sparse-low-rank-comparing-ranks-2-5-and-10" title="Link to this heading">#</a></h2>
+<p>At the selected <span class="math notranslate nohighlight">\(\lambda = 0.8\)</span> we add a low-rank latent component and compare
+target ranks <strong>2, 5 and 10</strong>. In the current release the rank is not set
+directly; it is controlled through the low-rank penalty <span class="math notranslate nohighlight">\(\mu_1\)</span> (a larger
+<span class="math notranslate nohighlight">\(\mu_1\)</span> yields a smaller rank). We therefore <strong>scout</strong> <span class="math notranslate nohighlight">\(\mu_1\)</span> until the fitted
+<code class="docutils literal notranslate"><span class="pre">rank(lowrank_)</span></code> matches each target:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Model</p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(\mu_1\)</span></p></th>
+<th class="head"><p>sparse edges</p></th>
+<th class="head"><p>connected nodes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Sparse only (rank 0)</p></td>
+<td><p>—</p></td>
+<td><p>216</p></td>
+<td><p>163</p></td>
+</tr>
+<tr class="row-odd"><td><p>Sparse + low-rank, rank 2</p></td>
+<td><p>15.0</p></td>
+<td><p>202</p></td>
+<td><p>162</p></td>
+</tr>
+<tr class="row-even"><td><p>Sparse + low-rank, rank 5</p></td>
+<td><p>10.0</p></td>
+<td><p>158</p></td>
+<td><p>124</p></td>
+</tr>
+<tr class="row-odd"><td><p>Sparse + low-rank, rank 10</p></td>
+<td><p>7.5</p></td>
+<td><p>110</p></td>
+<td><p>92</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># rank 2 (mu1 = 15); repeat with mu1 = 10 for rank 5, mu1 = 7.5 for rank 10</span>
+qiime<span class="w"> </span>gglasso<span class="w"> </span>solve-problem<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-covariance-matrix<span class="w"> </span>atacama-top-300-correlation.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-n-samples<span class="w"> </span><span class="m">54</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-latent<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-lambda1-min<span class="w"> </span><span class="m">0</span>.8<span class="w"> </span>--p-lambda1-max<span class="w"> </span><span class="m">0</span>.8<span class="w"> </span>--p-n-lambda1<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-mu1-min<span class="w"> </span><span class="m">15</span><span class="w"> </span>--p-mu1-max<span class="w"> </span><span class="m">15</span><span class="w"> </span>--p-n-mu1<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-solution<span class="w"> </span>atacama-top-300-slr-lambda0.8-rank2.qza
+</pre></div>
+</div>
+<p><img alt="Sparse and sparse + low-rank precision matrices at lambda = 0.8 for ranks 0, 2, 5, 10" src="../../_images/atacama-top-300-lambda0.8-rank-comparison-matrices.png" /></p>
+<p><strong>Rank 2 is the parsimonious choice.</strong> Its two latent components already capture
+the dominant measured-covariate structure, while ranks 5 and 10 mostly add
+higher-dimensional detail. Across the downstream prediction tasks, the strength
+of each task’s association with the robust principal components tracks the
+energy of its log-contrast coefficients in the rank-2 latent subspace (Spearman
+<span class="math notranslate nohighlight">\(\rho = 0.90\)</span>, <span class="math notranslate nohighlight">\(p = 6\times10^{-5}\)</span>), confirming that two latent dimensions are
+sufficient.</p>
+<p>The low-rank component’s eigenvectors give per-ASV loadings on the latent axes:</p>
+<p><img alt="Low-rank loading vectors at lambda = 0.8, rank 2" src="../../_images/atacama-top-300-lambda0.8-lowrank-vector-histograms.png" /></p>
+<blockquote>
+<div><p><strong>Choosing <span class="math notranslate nohighlight">\(\mu_1\)</span> / the low-rank rank.</strong> Until q2-gglasso exposes an explicit
+<code class="docutils literal notranslate"><span class="pre">--p-rank</span></code> (registered but currently guarded, pending upstream GGLasso
+support), select the rank indirectly: fit the SLR model for a few <span class="math notranslate nohighlight">\(\mu_1\)</span>
+values at the chosen <span class="math notranslate nohighlight">\(\lambda\)</span>, read the achieved <code class="docutils literal notranslate"><span class="pre">rank(lowrank_)</span></code> from each
+solution, and keep the <span class="math notranslate nohighlight">\(\mu_1\)</span> that reaches your target rank. For this dataset
+that yields <span class="math notranslate nohighlight">\(\mu_1 = 15, 10, 7.5\)</span> for ranks <span class="math notranslate nohighlight">\(2, 5, 10\)</span>, and rank 2 is enough.</p>
+</div></blockquote>
 </section>
 </section>
 
@@ -557,7 +539,7 @@ document.write(`
         },
         kernelOptions: {
             name: "python3",
-            path: "./chapters/00_getting_started"
+            path: "./chapters/02_graphical_models"
         },
         predefinedOutput: true
     }
@@ -575,20 +557,20 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="01_intro.html"
+       href="05_interpretation.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Getting Started</p>
+        <p class="prev-next-title">Network Interpretation and Analysis</p>
       </div>
     </a>
     <a class="right-next"
-       href="../01_installation/01_prerequisites.html"
+       href="../03_logcontrast_models/00_overview.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Installation</p>
+        <p class="prev-next-title">Log-Contrast Models Overview</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -608,8 +590,9 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-preprocessing-pipeline">Data Preprocessing Pipeline</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-for-downstream-analysis">Data for Downstream analysis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data">Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#single-graphical-lasso-selecting-lambda-with-ebic">Single graphical lasso: selecting <span class="math notranslate nohighlight">\(\lambda\)</span> with eBIC</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sparse-low-rank-comparing-ranks-2-5-and-10">Sparse + low-rank: comparing ranks 2, 5 and 10</a></li>
 </ul>
   </nav></div>
 

@@ -58,11 +58,13 @@
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/03_logcontrast_models/00_overview';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Data Preparation" href="01_data_preparation.html" />
-    <link rel="prev" title="Network Interpretation and Analysis" href="../02_graphical_models/05_interpretation.html" />
+    <link rel="prev" title="High-Dimensional Example: 300 Atacama ASVs" href="../02_graphical_models/06_highdim_atacama.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -187,6 +189,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../02_graphical_models/03_slr.html">Single Graphical Lasso with Latent Variables</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../02_graphical_models/04_adaptive_glasso.html">Adaptive Graphical Lasso</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../02_graphical_models/05_interpretation.html">Interpretation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_graphical_models/06_highdim_atacama.html">High-Dimensional Example (300 ASVs)</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Log-Contrast Models</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -203,8 +206,10 @@
 </details></li>
 <li class="toctree-l2"><a class="reference internal" href="04_advanced/01_concomitant_formulation.html">Advanced: Concomitant Formulation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="05_interpretation.html">Interpretation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06_highdim_classo.html">High-Dimensional Example (300 ASVs)</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1"><a class="reference internal" href="../04_appendix/01_math.html">Appendix: Mathematical Background</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
 </ul>
 
@@ -493,12 +498,12 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../02_graphical_models/05_interpretation.html"
+       href="../02_graphical_models/06_highdim_atacama.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Network Interpretation and Analysis</p>
+        <p class="prev-next-title">High-Dimensional Example: 300 Atacama ASVs</p>
       </div>
     </a>
     <a class="right-next"
