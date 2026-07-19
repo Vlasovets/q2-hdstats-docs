@@ -40,14 +40,14 @@ chapters:
           - file: chapters/03_logcontrast_models/02_regression/01_logcontrast
             title: Log-Contrast
           - file: chapters/03_logcontrast_models/02_regression/02_trac
-            title: With TRAC
+            title: With trac
       - file: chapters/03_logcontrast_models/03_classification/00_index
         title: Classification
         sections:
           - file: chapters/03_logcontrast_models/03_classification/01_logcontrast
             title: Log-Contrast
           - file: chapters/03_logcontrast_models/03_classification/02_trac
-            title: With TRAC
+            title: With trac
       - file: chapters/03_logcontrast_models/04_advanced/01_concomitant_formulation
         title: "Advanced: Concomitant Formulation"
       - file: chapters/03_logcontrast_models/05_interpretation
