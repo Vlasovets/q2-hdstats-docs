@@ -61,13 +61,30 @@ L2-normalized, covariate penalty weight `0.1626`):
   correlated** with the outcome (Pearson $\lvert r\rvert < 0.80$), so a covariate that is
   essentially a proxy for the outcome cannot leak it.
 
+This is a two-step workflow. **First**, build the augmented design by adding the
+chosen covariate(s) to the ASV design (this produces new features, constraint,
+and weights artifacts):
+
 ```bash
 qiime classo add-covariates \
     --i-features atacama-top-300-clr-design.qza \
     --m-covariates-file atacama-classo-outcomes-mean-imputed.tsv \
     --p-to-add <covariate> --p-rescale --p-w-to-add 0.162565105 \
     --o-new-features <design>.qza --o-new-c <c>.qza --o-new-w <w>.qza
-# then: qiime classo regress --i-features <design> --i-c <c> --i-weights <w> ...
+```
+
+**Then** run the same cross-validated regression as before, but on the augmented
+design (passing the constraint and weights from the previous step):
+
+```bash
+qiime classo regress \
+    --i-features <design>.qza --i-c <c>.qza --i-weights <w>.qza \
+    --m-y-file atacama-classo-outcomes-mean-imputed.tsv --m-y-column <outcome> \
+    --p-do-yshift --p-path --p-path-nlam-log 120 --p-path-lamin-log 0.0001 \
+    --p-cv --p-cv-subsets 5 --p-cv-seed 1 --p-cv-one-se \
+    --p-cv--nlam 120 --p-cv-lamin 0.0001 --p-cv-logscale \
+    --p-no-stabsel --p-no-lamfixed --p-no-concomitant --p-no-huber --p-intercept \
+    --o-result <outcome>-joint-r1-cv5.qza
 ```
 
 Adding covariates sharply increases predictability of the physically-coupled
