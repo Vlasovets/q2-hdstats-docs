@@ -1,3 +1,22 @@
-jupyter-book
-sphinx>=4.0.0
-sphinxcontrib-bibtex
+# Documentation toolchain.
+#
+# jupyter-book is pinned BELOW 2. Jupyter Book 2.x is not an upgrade of 1.x --
+# it is a different tool (the MyST-based rewrite) and does not read this book's
+# v1 `_config.yml` / `_toc.yml`. A bare `jupyter-book` requirement now resolves
+# to 2.1.6, which fails the build with
+#     EOFError: EOF when reading a line
+# Caught when a batch job provisioned a fresh toolchain from this file and got
+# 2.1.6, while the local environment had 1.0.4 from an explicit `<2` install --
+# i.e. the local build passed and CI would have failed. Do not relax this pin
+# without migrating the book to v2 first.
+jupyter-book>=1.0,<2
+
+# Pinned below 8 for the same reason: jupyter-book 1.x does not support Sphinx 8.
+sphinx>=5.0,<8
+sphinxcontrib-bibtex>=2.5
+
+# Emits redirect stubs for the ~19 chapters moved during the three-tier
+# restructure, so existing GitHub Pages URLs keep working. Declared in
+# docs/_config.yml under both `rediraffe_redirects` and `extra_extensions`; the
+# build fails outright without it.
+sphinxext-rediraffe>=0.2.7
