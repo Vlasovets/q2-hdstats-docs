@@ -1,11 +1,14 @@
 name: deploy-book
 
 on:
+  # Build on PRs and on the restructure branch too, so a broken book is caught
+  # before it reaches the branch that publishes. Only `main` actually deploys --
+  # the Pages step below is gated on the ref, not on this list -- so adding a
+  # branch here buys verification without any risk of publishing from it.
   push:
     branches:
     - main
-  # Build (but do not publish) on PRs and on the restructure branch, so a broken
-  # book is caught before it reaches the branch that publishes.
+    - tutorial-restructure
   pull_request:
     branches:
     - main
