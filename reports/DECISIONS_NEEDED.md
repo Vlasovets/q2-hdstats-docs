@@ -1,12 +1,16 @@
 # Decisions needed
 
-Six items surfaced during the 2026.7 migration that change **behaviour, artifact
-semantics, or a release commitment** rather than prose. Each is deliberately left
-unfixed. Evidence is recorded so the decision can be made without re-deriving it.
+Seven items surfaced during the 2026.7 migration that change **behaviour, artifact
+semantics, or a release commitment** rather than prose. Evidence is recorded so
+each decision can be made without re-deriving it. Items 1 and 7 have been acted
+on; the rest are deliberately left unfixed.
 
-Status of everything else: Gate A1 and Gate C1 both PASS, 57 plugin tests pass,
+Status of everything else: Gate A1 and Gate C1 both PASS, the plugin tests pass,
 the book builds with zero warnings. See `project_q2_hdstats_migration` in the
 Claude memory index for the full picture.
+
+**Read item 7 first if you are about to mint the Zenodo DOI** — it is the only
+one that becomes irreversible at that point.
 
 ---
 
@@ -27,15 +31,36 @@ expected result — `np.cov(A, rowvar=True)` on `(p, N)` and
 `np.cov(A.T, rowvar=False)` are the same computation. See
 `ORIENTATION_FIX_VERIFICATION.md`.
 
-**New finding, still open.** In the same run, the shipped
-`atacama-top-300-correlation.qza` differs from **both** old and new output by the
-same 1.147, so it was not produced by `transform-features -> calculate-covariance`
-at the documented parameters (clr, pseudo-count 1, no-keep-original-id). Some
-other transform setting — mclr, a different pseudo-count, appended metadata
-columns — produced it. Gate C1 consumes that matrix directly and is unaffected,
-but **the tier-2 chapter implies the chain regenerates it, and that claim is not
-currently true.** Either recover the original parameters from C. Müller or
-regenerate the matrix and re-run Gate C1 against the new one.
+**~~New finding, still open.~~ RETRACTED 2026-08-05 — the discrepancy was an
+artefact of my own comparison.** For two days the shipped
+`atacama-top-300-correlation.qza` appeared not to be reproducible by
+`transform-features -> calculate-covariance`: max|diff| 1.147, later refined to
+"18% of pairs differ by >= 0.1, median 2.6e-02". All of those numbers came from a
+comparison that aligned the two matrices **by label** (`df.loc[common, common]`)
+when the labels are assigned **by position**. It was comparing organism *i*'s row
+against organism *j*'s.
+
+The two matrices are the **same matrix, reordered**. Verified three ways:
+spectrum identical to 2.1e-14 with identical trace and Frobenius norm; the
+recovered permutation reproduces the matrix exactly (`A[perm][:,perm] == B`,
+residual **0.000e+00**); and the lambda path, eBIC at all 15 grid points and the
+216 edges are bit-identical, because the graphical-lasso objective is invariant
+under simultaneous row/column permutation.
+
+Cause: `rename_index_with_sum` ranks by ascending total abundance and
+`--p-no-keep-original-id` assigns `ASV-k` by position. Commit `9a4c08b`
+(2026-07-19) replaced `df.sort_index()` — quicksort, **unstable** — with a stable
+sort. The shipped matrix was written **2026-06-27**. 209 of 300 features share a
+total-abundance value, and exactly **158 features moved, all of them within their
+own abundance level** (0 crossed levels).
+
+**The documented chain does reproduce the shipped matrix.** Gate C1 stands. No
+question for C. Müller here; only the λ=0.8 item below remains.
+
+**What this did surface, and it is worse:** `ASV-k` is not a stable identifier,
+and the recovery procedure the tutorial documented is broken. See item 7.
+
+See `PERMUTATION_RECOVERED.md` and `ASV_MAPPING_VALIDATION.md`.
 
 <details><summary>Original write-up, kept for the record</summary>
 
@@ -156,3 +181,51 @@ amplicon, not shotgun metagenomics**. If the F1000 reviewer specifically wants
 shotgun data, that is not yet answered. The cocoa dataset (n=14) is too small for
 covariance estimation regardless, so the real alternative is asking Evan for a
 larger mOTU table.
+
+---
+
+## 7. `ASV-k` is a position, not an identifier — **FIXED in the plugin, decision needed on the artifacts**
+
+Surfaced by running down the "1.147 discrepancy" in item 1. `ASV-k` is assigned
+by **position** in an abundance ranking, so it names a different organism
+depending on which build produced the artifact. Two consequences, one already
+handled and one not.
+
+**Handled — the plugin.** `rename_index_with_sum` now breaks ties on the feature
+ID, so the ordering is a pure function of the table's contents rather than of the
+row order it happened to arrive in. Regression test added
+(`test_ties_break_on_feature_id_not_input_order`); confirmed to fail against the
+previous logic. Ties are not an edge case here — **209 of the 300** Atacama
+features share a total-abundance value (61 groups, largest 13).
+
+**Not handled — the published bundle, and this is the user-facing part.**
+`06_interpretation.md` told readers to recover feature identity from
+`top-300-asvs.tsv` via `ASV-n <-> abundance-rank = 301 - n`. **That procedure is
+broken.** Tested directly: permuting the correlation matrix by that mapping fails
+to reproduce the shipped matrix, off by **1.137**. Only the **91** features with a
+unique total abundance land correctly; the other 209 receive a neighbour's
+taxonomy and nothing raises. The chapters have been corrected to remove the
+procedure and to state that `--p-keep-original-id` is the only reliable route.
+
+**The decision.** Every tier-2 artifact in the bundle carries `ASV-k` labels from
+the pre-fix ordering. Options:
+
+- **(a) Regenerate the whole tier-2 chain with `--p-keep-original-id`.** Features
+  carry their real IDs, the taxonomy join works directly, and the labels stop
+  being version-dependent. Costs: node labels in every figure become 32-character
+  hashes unless shortened for display, and every tier-2 artifact is rebuilt.
+- **(b) Regenerate with `--p-no-keep-original-id` under the fixed tie-break.**
+  Keeps the readable `ASV-k` labels and they are now deterministic, but they still
+  cannot be joined to taxonomy without shipping the mapping alongside, and they
+  differ from the currently published ones.
+- **(c) Ship as is, document the hazard.** Cheapest, but leaves a published bundle
+  whose feature identities cannot be recovered by any documented means.
+
+Recommendation: **(a)**, with a short display-name helper for the figures. It is
+the only option that makes the taxonomy join work, and the recompute is happening
+anyway. Note the numbers do not change under any option — the objective is
+permutation-invariant, so λ = 0.8, 216 edges and eBIC 16130.0988 hold throughout.
+Only feature identity is at stake.
+
+**Must be decided before the Zenodo DOI is minted**, for the same reason the
+orientation fix was: once the record is citable, the labels are frozen.
