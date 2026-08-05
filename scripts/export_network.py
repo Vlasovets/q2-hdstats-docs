@@ -83,6 +83,30 @@ def _genus_of(taxon):
     return "Unassigned"
 
 
+def _display_name(label, genus, width=6):
+    """Readable node label that still identifies the feature exactly.
+
+    Real feature IDs are 32 hex characters, which are illegible as network node
+    labels or heatmap axis ticks. Prefixing the deepest informative rank and
+    keeping a short slice of the ID gives something like
+    ``Rubrobacter (a7b877)`` -- readable, and still resolvable back to one
+    feature.
+
+    A 5-character prefix is already unique across the 300-ASV Atacama table; 6
+    is used for margin. Uniqueness depends on the feature set, so the caller
+    asserts it rather than trusting this default.
+    """
+    # Case-insensitive: QIIME 2 emits lowercase MD5, but an uppercase hash or a
+    # hash from another pipeline would otherwise fall through and put the raw
+    # 32-character ID on the figure with no warning.
+    if len(label) == 32 and all(c in "0123456789abcdef" for c in label.lower()):
+        return f"{genus} ({label[:width]})"
+    if len(label) > 12:
+        # Not a recognised hash, but still too long to use as a tick label.
+        return f"{genus} ({label[:width]}…)"
+    return label  # already short: ASV-k, or a human-readable name
+
+
 def _palette(names):
     """Stable, evenly-spaced hues so the same genus keeps its colour across runs."""
     uniq = sorted(set(names))
@@ -194,8 +218,23 @@ def main():
         counts = pd.concat([edges["source"], edges["target"]]).value_counts()
         deg = counts.reindex(labels).fillna(0).astype(int).rename("degree")
 
+    # Readable labels for figures. The index stays the exact feature ID -- this
+    # column is for display only and must never be used as a join key.
+    display = pd.Series(
+        [_display_name(lab, genus[lab]) for lab in labels],
+        index=labels, name="display",
+    )
+    if display.duplicated().any():
+        dup = sorted(display[display.duplicated(keep=False)].unique())[:3]
+        raise SystemExit(
+            f"display names collide (e.g. {dup}). Widen the ID prefix in "
+            "_display_name; two features would otherwise be indistinguishable "
+            "on the figure."
+        )
+
     colours = _palette(list(genus))
     nodes = pd.DataFrame({
+        "display": display,
         "genus": genus,
         "mean_clr": mean_clr,
         "degree": deg,

@@ -24,8 +24,11 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 GG = pathlib.Path("/home/itg/oleg.vlasovets/slr_example/q2-gglasso/data")
 CL = pathlib.Path("/home/itg/oleg.vlasovets/slr_example/q2-classo/data")
 DOCS = pathlib.Path("/home/itg/oleg.vlasovets/slr_example/q2-hdstats-docs")
+REGEN = ROOT / "results" / "tier2-regen"
 
-# tier -> [(filename, source directory)]
+# tier -> [(published filename, source directory)] or
+#         [(published filename, source directory, source filename)] when the
+#         file is named differently at its source.
 LAYOUT = {
     1: [
         ("atacama-counts.qza", GG),
@@ -36,8 +39,15 @@ LAYOUT = {
     ],
     2: [
         ("atacama-top-300-table.qza", ROOT / "data"),
-        ("atacama-top-300-clr.qza", ROOT / "data"),
-        ("atacama-top-300-correlation.qza", ROOT / "data"),
+        # The two derived tier-2 artifacts come from the REGENERATION, not from
+        # data/. data/ still holds the June 2026 copies, whose features are
+        # positional ASV-k labels rather than real feature IDs; they are kept as
+        # the historical record and as the reference the permutation analysis was
+        # run against, and must not be republished. Sourcing these two from data/
+        # would silently revert the bundle and rewrite manifest.tsv back to the
+        # old checksums while still exiting 0.
+        ("atacama-top-300-clr.qza", REGEN, "clr.qza"),
+        ("atacama-top-300-correlation.qza", REGEN, "correlation.qza"),
         ("atacama-taxonomy-silva138.qza", ROOT / "data"),
         ("sample-metadata.tsv", ROOT / "data"),
         ("top-300-asvs.tsv", ROOT / "data"),
@@ -68,10 +78,12 @@ def main():
     for tier, entries in LAYOUT.items():
         dest = pub / f"tier{tier}"
         dest.mkdir(parents=True, exist_ok=True)
-        for name, src_dir in entries:
-            src = pathlib.Path(src_dir) / name
+        for entry in entries:
+            name, src_dir = entry[0], entry[1]
+            src_name = entry[2] if len(entry) > 2 else name
+            src = pathlib.Path(src_dir) / src_name
             if not src.is_file():
-                missing.append(f"tier{tier}/{name} (looked in {src_dir})")
+                missing.append(f"tier{tier}/{name} (looked for {src_name} in {src_dir})")
                 continue
             shutil.copy2(src, dest / name)
             collected[name] = (tier, (dest / name).stat().st_size, sha256(dest / name))

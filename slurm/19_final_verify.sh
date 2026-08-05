@@ -110,6 +110,58 @@ for f in "$DOCS/docs/_data/atacama-lambda-path.tsv" \
 done
 say ""
 
+# The manifest is described in the docs as "the machine-checkable index" and as
+# authoritative when it and the prose disagree -- but nothing was actually
+# checking it against the files. That gap let two real problems through: a
+# release tarball that still held the pre-regeneration artifacts, and a
+# packaging step that silently reverted them and rewrote the manifest back to
+# the old checksums while exiting 0. Verify it here.
+say "### Manifest agrees with the published files"
+say ""
+man_ok=0; man_bad=0; man_absent=0
+while IFS=$'\t' read -r fname tier bytes sha _rest; do
+  [[ "$fname" == "filename" || -z "$fname" ]] && continue
+  [[ "$tier" == "3" ]] && continue            # tier 3 is not packaged from here
+  p="$ROOT/publish/tier${tier}/${fname}"
+  if [[ ! -f "$p" ]]; then
+    say "- \`$fname\` — **NOT IN publish/tier${tier}/**"
+    man_absent=$((man_absent + 1)); continue
+  fi
+  ab=$(stat -c%s "$p"); as=$(sha256sum "$p" | cut -d' ' -f1)
+  if [[ "$ab" != "$bytes" || "$as" != "$sha" ]]; then
+    say "- \`$fname\` — **MISMATCH** (manifest ${bytes}b/${sha:0:12}, file ${ab}b/${as:0:12})"
+    man_bad=$((man_bad + 1))
+  else
+    man_ok=$((man_ok + 1))
+  fi
+done < "$DOCS/docs/_data/manifest.tsv"
+say ""
+say "**${man_ok} verified, ${man_bad} mismatched, ${man_absent} missing.**"
+if (( man_bad > 0 || man_absent > 0 )); then
+  say ""
+  say "Do not publish — the manifest does not describe the files in \`publish/\`."
+fi
+say ""
+
+# A tarball older than the files it contains is not hypothetical: publish/tier2/
+# was regenerated once while the tarball was not, so a reader running the
+# documented `sha256sum -c` would have failed on two of seven members.
+say "### Release tarballs are not stale"
+say ""
+shopt -s nullglob
+for t in "$ROOT"/publish/*.tar.gz; do
+  tier=$(basename "$t" | grep -oE 'tier[0-9]+' | grep -oE '[0-9]+')
+  [[ -z "$tier" || ! -d "$ROOT/publish/tier${tier}" ]] && continue
+  newer=$(find "$ROOT/publish/tier${tier}" -maxdepth 1 -type f -newer "$t" -printf '%f ' 2>/dev/null)
+  if [[ -n "$newer" ]]; then
+    say "- \`$(basename "$t")\` — **STALE**, older than: ${newer}"
+  else
+    say "- \`$(basename "$t")\` — current"
+  fi
+done
+shopt -u nullglob
+say ""
+
 # ---- 5. recompute artifacts --------------------------------------------------
 say "## Recompute artifacts"
 say ""

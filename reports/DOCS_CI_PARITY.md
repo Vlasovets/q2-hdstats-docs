@@ -1,4 +1,4 @@
-# Docs CI parity — 2026-08-05T15:43:01+02:00
+# Docs CI parity — 2026-08-05T22:32:50+02:00
 
 Built from a THROWAWAY venv via `pip install -r requirements.txt`, i.e.
 exactly the toolchain CI resolves — not a warm local environment.

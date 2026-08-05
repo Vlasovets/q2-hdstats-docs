@@ -1,6 +1,6 @@
-# Recompute status — 2026-08-05T10:36:59+02:00
+# Recompute status — 2026-08-05T22:32:05+02:00
 
-Written by `slurm/19_final_verify.sh` (job 39111921) on `cpusrv49.scidom.de`.
+Written by `slurm/19_final_verify.sh` (job 39135666) on `cpusrv28.scidom.de`.
 Everything below was re-run just now; nothing is carried over from an earlier report.
 
 ## Environment
@@ -19,22 +19,29 @@ c-lasso    1.0.11
 
 ## Test suites
 
-- q2-gglasso: `44 passed, 53 warnings in 168.27s (0:02:48)`
-- q2-classo:  `22 passed in 4.48s`
+- q2-gglasso: `45 passed, 51 warnings in 363.21s (0:06:03)`
+- q2-classo:  `22 passed in 11.61s`
 
 ## Documentation
 
-- build with `--warningiserror`: **FAIL** — see below
-```
-EOFError: EOF when reading a line
-```
+- build with `--warningiserror`: **PASS** (warning-clean)
 
 ## Generated tables (prose cannot drift from these)
 
 - `atacama-lambda-path.tsv` — 15 rows
 - `atacama-mu-rank-map.tsv` — 3 rows
 - `atacama-classo-cv.tsv` — 15 rows
-- `manifest.tsv` — 14 rows
+- `manifest.tsv` — 16 rows
+
+### Manifest agrees with the published files
+
+
+**11 verified, 0 mismatched, 0 missing.**
+
+### Release tarballs are not stale
+
+- `q2-hdstats-tutorial-data-tier1.tar.gz` — current
+- `q2-hdstats-tutorial-data-tier2.tar.gz` — current
 
 ## Recompute artifacts
 
@@ -58,24 +65,6 @@ EOFError: EOF when reading a line
 ## Job log index
 
 ```
-    39075333_9       q2-classo-cv     FAILED   00:05:47 
-   39075333_10       q2-classo-cv     FAILED   00:05:47 
-   39075333_11       q2-classo-cv     FAILED   00:05:47 
-   39075333_12       q2-classo-cv     FAILED   00:05:47 
-   39075333_13       q2-classo-cv     FAILED   00:05:47 
-   39075333_14       q2-classo-cv     FAILED   00:05:47 
-   39075333_15       q2-classo-cv     FAILED   00:05:47 
-    39111491_1        q2-cv-smoke  COMPLETED   00:07:55 
-      39111920      q2-classo-sum  COMPLETED   00:00:19 
-      39111921           q2-final    RUNNING   00:03:53 
-    39111919_1       q2-classo-cv  COMPLETED   00:00:11 
-    39111919_2       q2-classo-cv  COMPLETED   00:02:00 
-    39111919_3       q2-classo-cv  COMPLETED   00:02:00 
-    39111919_4       q2-classo-cv  COMPLETED   00:02:00 
-    39111919_5       q2-classo-cv  COMPLETED   00:02:00 
-    39111919_6       q2-classo-cv  COMPLETED   00:02:00 
-    39111919_7       q2-classo-cv  COMPLETED   00:02:00 
-    39111919_8       q2-classo-cv  COMPLETED   00:02:00 
     39111919_9       q2-classo-cv  COMPLETED   00:02:00 
    39111919_10       q2-classo-cv  COMPLETED   00:02:00 
    39111919_11       q2-classo-cv  COMPLETED   00:02:00 
@@ -83,4 +72,22 @@ EOFError: EOF when reading a line
    39111919_13       q2-classo-cv  COMPLETED   00:02:00 
    39111919_14       q2-classo-cv  COMPLETED   00:02:00 
    39111919_15       q2-classo-cv  COMPLETED   00:02:00 
+      39112941         q2-docs-ci  COMPLETED   00:00:50 
+      39113762      q2-orient-fix     FAILED   00:07:47 
+      39114457      q2-orient-fix     FAILED   00:03:13 
+      39115012        q2-oldvsnew  COMPLETED   00:05:01 
+      39115317           q2-tests  COMPLETED   00:11:43 
+      39116187        q2-regen-t2     FAILED   00:05:48 
+      39116619        q2-regen-t2  COMPLETED   00:06:58 
+      39117225        q2-corrdiff  COMPLETED   00:06:16 
+      39123093      q2-sidebyside  COMPLETED   00:11:49 
+      39123763            q2-perm  COMPLETED   00:08:27 
+      39124213         q2-recover  COMPLETED   00:05:20 
+      39124999           q2-tests  COMPLETED   00:16:06 
+      39125194         q2-docs-ci  COMPLETED   00:01:06 
+      39125825          q2-t2-ids  COMPLETED   00:11:16 
+      39126519          q2-t2-ids  COMPLETED   00:10:25 
+      39133812         q2-docs-ci  COMPLETED   00:01:00 
+      39135665         q2-docs-ci  COMPLETED   00:01:00 
+      39135666           q2-final    RUNNING   00:07:30 
 ```
