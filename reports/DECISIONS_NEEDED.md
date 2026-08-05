@@ -184,7 +184,7 @@ larger mOTU table.
 
 ---
 
-## 7. `ASV-k` is a position, not an identifier — **FIXED in the plugin, decision needed on the artifacts**
+## 7. `ASV-k` is a position, not an identifier — **DECIDED AND FIXED** (2026-08-05)
 
 Surfaced by running down the "1.147 discrepancy" in item 1. `ASV-k` is assigned
 by **position** in an abundance ranking, so it names a different organism
@@ -227,5 +227,37 @@ anyway. Note the numbers do not change under any option — the objective is
 permutation-invariant, so λ = 0.8, 216 edges and eBIC 16130.0988 hold throughout.
 Only feature identity is at stake.
 
-**Must be decided before the Zenodo DOI is minted**, for the same reason the
-orientation fix was: once the record is citable, the labels are frozen.
+**~~Must be decided before the Zenodo DOI is minted~~ — DECIDED AND EXECUTED
+2026-08-05: option (a).**
+
+The tier-2 chain was rebuilt with `--p-keep-original-id` (`slurm/28_regenerate_
+tier2_keep_ids.sh`) and promoted to `publish/tier2/`.
+
+Verified, not assumed:
+
+| check | result |
+|---|---|
+| Gate C1 | λ = 0.8, **216 edges**, eBIC 16130.0988 vs reference 16130.0995 |
+| feature IDs | **300/300** are real 32-hex IDs |
+| taxonomy join | **0 unresolved** against `atacama-taxonomy-silva138.qza` |
+| PCA outputs | 3/3, after deriving `n_components` from each achieved rank |
+| manifest vs files | 11 rows verified, 0 mismatched, 0 missing |
+
+Two things the pre-commit review caught that would have undone it:
+
+- `package_release.py` sourced the two derived tier-2 artifacts from `data/`,
+  which still holds the June `ASV-k` copies. As stage 8 of the documented
+  pipeline it would have reverted the bundle, rewritten the manifest to the old
+  checksums, and exited 0. Now sourced from `results/tier2-regen/`; `data/` is
+  deliberately left as the historical record.
+- Nothing verified the manifest against the files it describes. `19_final_verify`
+  now recomputes every tier-1/tier-2 size and sha256 and flags stale tarballs.
+
+Figure readability, the known cost of (a), is handled by a `display` column in
+`export_network.py` — deepest informative rank plus a short ID slice, e.g.
+`Rubrobacter (a7b877)` — with the full ID kept as the key and a hard failure if
+two display names would collide.
+
+Residual follow-up, not blocking: no command in the book demonstrates
+`--p-keep-original-id False`, so that half of the parameter is now undocumented
+by example. Logged as coverage debt in `90_reference/01_command_coverage.md`.
