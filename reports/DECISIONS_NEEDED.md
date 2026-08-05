@@ -10,7 +10,36 @@ Claude memory index for the full picture.
 
 ---
 
-## 1. `transform_features` stores its output with swapped axes  — HIGHEST IMPACT
+## 1. `transform_features` swapped axes — **DECIDED AND FIXED** (2026-08-05)
+
+**Fixed**, merged to `christian-review-fixes` as `1c295b7`. Two coupled edits:
+`transform_features` no longer transposes back to `(p, N)` before returning, and
+`calculate_covariance` takes `rowvar=False` (it had been relying on the swap —
+`np.cov` defaults to rows-as-variables, so the two bugs cancelled).
+
+**Why now rather than later:** the Zenodo DOI is not yet minted, so no published,
+citable artifact depended on the old orientation. That stops being true the
+moment the record goes live, which made this the cheapest possible moment.
+
+**Verified neutral, exactly.** Old code vs new code on identical inputs and
+parameters, run back to back: **max abs difference 0.000e+00**. This is the
+expected result — `np.cov(A, rowvar=True)` on `(p, N)` and
+`np.cov(A.T, rowvar=False)` are the same computation. See
+`ORIENTATION_FIX_VERIFICATION.md`.
+
+**New finding, still open.** In the same run, the shipped
+`atacama-top-300-correlation.qza` differs from **both** old and new output by the
+same 1.147, so it was not produced by `transform-features -> calculate-covariance`
+at the documented parameters (clr, pseudo-count 1, no-keep-original-id). Some
+other transform setting — mclr, a different pseudo-count, appended metadata
+columns — produced it. Gate C1 consumes that matrix directly and is unaffected,
+but **the tier-2 chapter implies the chain regenerates it, and that claim is not
+currently true.** Either recover the original parameters from C. Müller or
+regenerate the matrix and re-run Gate C1 against the new one.
+
+<details><summary>Original write-up, kept for the record</summary>
+
+### `transform_features` stores its output with swapped axes  — HIGHEST IMPACT
 
 **What happens.** `transform_features` returns a `(p, N)` DataFrame — features as
 rows, per the `# p, N` comment at `q2_gglasso/_func.py:68`. QIIME 2's
@@ -51,6 +80,8 @@ swap only becomes visible when something else reads the artifact.
 
 Recommendation: **(c)** if the recompute is happening anyway, since it removes the
 mixed-state risk that makes (a) unattractive.
+
+</details>
 
 ---
 
