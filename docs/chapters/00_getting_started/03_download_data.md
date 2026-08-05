@@ -106,7 +106,7 @@ curl -L -O "${ZENODO_BASE}/atacama-selected-covariates-veg.tsv"
 
 | File | What it is |
 |---|---|
-| `atacama-counts.qza` | `FeatureTable[Frequency]`, 13 ASVs × 50 samples. Feature IDs are MD5 hashes; the `ASV-1` … `ASV-13` labels used throughout the book are *produced* by `transform-features --p-keep-original-id False`, and the mapping is in [Atacama Soil Microbiome](02_datasets.md) |
+| `atacama-counts.qza` | `FeatureTable[Frequency]`, 13 ASVs × 50 samples. Feature IDs are MD5 hashes; the `ASV-1` … `ASV-13` labels used throughout the tier-1 chapters are a *presentational* renaming applied in the book, not something a command emits — the mapping table is in [Atacama Soil Microbiome](02_datasets.md). The tier-1 `transform-features` call keeps the real IDs, as the default `--p-keep-original-id` implies |
 | `classification.qza` | `FeatureData[Taxonomy]` for those 13 ASVs |
 | `selected-atacama-sample-metadata.tsv` | Sample metadata passed to `qiime gglasso transform-features` |
 | `atacama-selected-covariates-veg.tsv` | The five covariates used by q2-classo: `ph`, `elevation`, `average-soil-relative-humidity`, `average-soil-temperature`, `vegetation` |
@@ -148,6 +148,8 @@ curl -L -O "${ZENODO_BASE}/atacama-top-300-clr.qza"
 curl -L -O "${ZENODO_BASE}/atacama-top-300-correlation.qza"
 curl -L -O "${ZENODO_BASE}/atacama-taxonomy-silva138.qza"
 curl -L -O "${ZENODO_BASE}/sample-metadata.tsv"
+curl -L -O "${ZENODO_BASE}/top-300-asvs.tsv"
+curl -L -O "${ZENODO_BASE}/atacama-classo-outcomes-mean-imputed.tsv"
 ```
 
 | File | What it is |
@@ -157,6 +159,8 @@ curl -L -O "${ZENODO_BASE}/sample-metadata.tsv"
 | `atacama-top-300-correlation.qza` | `PairwiseFeatureData` — the direct input to `qiime gglasso solve-problem` |
 | `atacama-taxonomy-silva138.qza` | `FeatureData[Taxonomy]` for the 300 ASVs |
 | `sample-metadata.tsv` | Full sample metadata, including `transect-name` (Baquedano, Yungay) and `vegetation` (yes/no) — the two natural grouping variables for the multiple-graphical-lasso and PCA chapters |
+| `top-300-asvs.tsv` | Total abundance per feature, keyed on `feature-id`. Useful for filtering or for reporting how abundant a hub is. Its `abundance-rank` column is **not** an identifier: 209 of the 300 features are tied on total abundance, so the rank order within a tie is arbitrary. Do not use it to map `ASV-k` labels back to features — see [Interpretation](../04_highdim_atacama/06_interpretation.md) |
+| `atacama-classo-outcomes-mean-imputed.tsv` | The regression outcomes with missing values mean-imputed, as used by the q2-classo cross-validation chapter |
 
 Verify:
 

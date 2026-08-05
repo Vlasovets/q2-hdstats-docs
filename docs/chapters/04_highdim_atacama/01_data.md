@@ -173,27 +173,43 @@ earlier drafts, because some of the reference text describes an mclr-transformed
 table. The provenance of the shipped `atacama-top-300-correlation.qza` settles
 it: it records `calculate_covariance` with `method: scaled`, `bias: true`, run on
 `atacama-top-300-clr.qza`, whose own provenance records `transformation: clr`.
-The `calculate-covariance` command above is therefore exactly the one that
-produced it; the `transform-features` command above is not (see the next box).
+Both commands above are therefore exactly the ones that produced the shipped
+artifacts. That was not true of releases before the tier-2 regeneration, whose
+`clr` table was built without `--p-keep-original-id` — see the next box.
 
 That does not make the question uninteresting: `clr` and `mclr` do **not** give
 the same network. If you regenerate the correlation matrix yourself, regenerate
 it from the transformed table you intend to report, and say which one it was.
 ```
 
-```{warning}
-**The shipped `atacama-top-300-clr.qza` predates `--p-keep-original-id`.** Its
-provenance records no `keep_original_id` parameter at all, and its features are
-sequential `ASV-1` … `ASV-300` names rather than the original feature IDs. Every
-downstream artifact in the bundle inherits those names.
+```{note}
+**The bundle ships real feature IDs, and this was not always true.**
+`atacama-top-300-clr.qza` is built with `--p-keep-original-id`, so its features
+carry the original 32-character hexadecimal IDs;
+`atacama-top-300-correlation.qza` inherits them from it (`calculate-covariance`
+has no such parameter — it takes whatever labels its input carries). Both join
+directly against `atacama-taxonomy-silva138.qza`: all 300 features resolve, with
+no mapping step.
 
-Those names cannot be mapped back to feature IDs after the fact. `ASV-k` is
-assigned by **position** in the abundance ranking, and 209 of these 300 features
-share a total-abundance value with another feature, so the ranking does not
-determine which organism got which number — see the warning in
-[Interpretation](06_interpretation.md). The only way to get a working taxonomy
-join is to rebuild the transformed table with `--p-keep-original-id`, as the
-command above shows.
+Earlier releases of this bundle were produced *without* that flag, so their
+features were sequential `ASV-1` … `ASV-300` names. If you have an older copy,
+regenerate it rather than trying to map the names back. `ASV-k` is assigned by
+**position** in the abundance ranking, and 209 of these 300 features share a
+total-abundance value with another feature, so the ranking does not determine
+which organism got which number — see the warning in
+[Interpretation](06_interpretation.md).
+
+Relabelling changes nothing numerically. The graphical-lasso objective is
+invariant under simultaneous row/column permutation, so λ = 0.8, 216 edges and
+eBIC 16130.0988 are identical either way.
+
+It does change one visible thing: a 32-character ID is unusable as a network
+node label or a heatmap tick. Figures should render a short display name —
+the deepest informative rank plus a slice of the ID, e.g.
+`Rubrobacter (a7b877)` — while keeping the full ID as the key. A 5-character
+prefix is already unique across these 300 features. `scripts/export_network.py`
+emits exactly this as a `display` column and refuses to run if two display names
+would collide.
 ```
 
 ## Metadata
@@ -239,17 +255,18 @@ Two practical consequences of the metadata layout:
 | `sample-metadata.tsv` | metadata | sample metadata, including the regression outcomes |
 
 The three derived artifacts are shipped so that the modelling pages can be run
-without re-deriving them. The commands above describe the **intended recompute**,
-not byte-for-byte how the current bundle was built: the shipped
-`atacama-top-300-clr.qza` was made before `--p-keep-original-id` existed, as the
-warning further up records. Check each artifact's own provenance
-(`qiime tools peek` / the `provenance/` directory of the unzipped `.qza`) rather
-than assuming the prose and the bundle agree.
+without re-deriving them. The commands above are the ones that produced them, so
+running the chain yourself reproduces the bundle. Still, check each artifact's
+own provenance (`qiime tools peek` / the `provenance/` directory of the unzipped
+`.qza`) rather than assuming the prose and the bundle agree — that assumption is
+what let an earlier release ship with `ASV-k` labels while the prose described a
+chain that would have produced feature IDs.
 
 ```{note}
-File sizes, checksums and the exact contents of each artifact are **pending
-verification against QIIME 2 2026.7**; they will come from the pinned bundle
-manifest rather than being transcribed here.
+File sizes and checksums are not transcribed here — they live in the bundle
+manifest, which is generated from the published files rather than by hand and is
+authoritative if the two ever disagree. See
+[Download the tutorial data](../00_getting_started/03_download_data.md).
 ```
 
 ## Getting the files

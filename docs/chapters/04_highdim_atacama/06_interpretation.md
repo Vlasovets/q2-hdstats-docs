@@ -124,18 +124,18 @@ the assertion fires, do not silently reorder: a mismatched order relabels the
 whole network.
 ```
 
-```{warning}
-**The taxonomy join needs matching key spaces, and the shipped bundle does not
-have them.** `atacama-top-300-clr.qza` as shipped was produced *without*
-`--p-keep-original-id`, so its features — and therefore the `labels/` group of
-every solution derived from it — are sequential `ASV-1` … `ASV-300` names, while
-`atacama-taxonomy-silva138.qza` is keyed on the 32-character hexadecimal feature
-IDs. `tax.loc[hub, "Taxon"]` raises `KeyError` and the `.join` returns all-`NaN`.
+```{note}
+**The taxonomy join needs matching key spaces, and the current bundle has them.**
+`atacama-top-300-clr.qza` is built with `--p-keep-original-id`, so its features —
+and therefore the `labels/` group of every solution derived from it — are the
+same 32-character hexadecimal IDs that key
+`atacama-taxonomy-silva138.qza`. `tax.loc[hub, "Taxon"]` works directly, and all
+300 features resolve.
 
-**Rebuild the transformed table with `--p-keep-original-id`**, as
-[The 300-ASV Dataset](01_data.md) shows, and re-derive the correlation matrix and
-the solutions from it. The labels then *are* feature IDs and the join works
-directly. This is the only reliable route.
+If you are working from an older copy whose features are `ASV-1` … `ASV-300`, the
+join will not raise — it returns all-`NaN`, which is easy to miss. Rebuild with
+`--p-keep-original-id` as [The 300-ASV Dataset](01_data.md) shows rather than
+attempting to map the names back; the next box explains why mapping cannot work.
 ```
 
 ```{danger}

@@ -67,6 +67,46 @@ was solved with `--p-latent True`.
 **Workaround.** Run `solve-problem` with `--p-latent` first. A sparse-only (SGL)
 solution cannot be used with `pca`.
 
+### `pca` refuses: `n_components (3) exceeds the rank of the low-rank component (2)`
+
+**Cause.** `--p-n-components` defaults to 3, but the achieved rank of the
+low-rank component falls as `mu1` rises, and you cannot take more components
+than there are. On the 300-ASV Atacama data the map is μ = 15 → rank 2,
+μ = 10 → rank 5, μ = 7.5 → rank 10 — so the *headline* fit at μ = 15 is exactly
+the one the default breaks on.
+
+**Workaround.** Pass `--p-n-components 2` at μ = 15, or in a script derive it
+from the solution rather than hardcoding:
+
+```python
+rank = np.linalg.matrix_rank(np.asarray(root["solution/lowrank_"]), tol=1e-8)
+n_components = min(3, rank)
+```
+
+This is a guard doing its job, not a bug: earlier versions accepted the
+mismatch and failed later inside `utils.PCA` with an unrelated matmul error.
+
+### The taxonomy join returns all-`NaN` instead of raising
+
+**Cause.** The transformed table was built with `--p-no-keep-original-id`, so its
+features are `ASV-1` … `ASV-p` positional labels, while the taxonomy artifact is
+keyed on 32-character hexadecimal feature IDs. `df.join(tax)` finds no overlap
+and fills with `NaN`; `.reindex()` does the same. Nothing raises, so the failure
+reads as "this dataset has no taxonomy".
+
+**Workaround.** Rebuild with `--p-keep-original-id` (the default). Do **not**
+try to map `ASV-k` back through an abundance ranking — `ASV-k` is assigned by
+position, and ties in total abundance make the mapping ambiguous. On the 300-ASV
+table, 209 of 300 features share a total-abundance value and are therefore at
+risk; a rank-based mapping was measured to place **146 of 300** features
+differently from the plugin's own ordering. Within a tie group a feature can
+still land correctly by coincidence, which is why the measured count is below
+the at-risk count — but you cannot tell which ones did. See
+[Interpretation](../04_highdim_atacama/06_interpretation.md).
+
+**How to notice.** Assert rather than eyeball:
+`assert tax.reindex(features)["Taxon"].notna().all()`.
+
 ### `qiime gglasso pca` crashes with `AttributeError` on metadata
 
 **Cause.** `--m-sample-metadata-file` is optional in the signature but is

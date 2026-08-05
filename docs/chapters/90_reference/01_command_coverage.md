@@ -367,7 +367,7 @@ either a justified exception or work outstanding.
 | Group | Current primary | Why, or what is missing |
 |---|---|---|
 | `--p-pseudo-count` | `H-DATA` | Not exercised in tier 1. Zero handling only becomes visible on a sparse table, but tier 1 should still name it. **Outstanding.** |
-| `--p-keep-original-id` | `H-DATA` | The tier 1 table has only 13 features, so relabelling MD5 hashes to `ASV-n` buys little; relabelling 300 features is where it earns its place. Justified. |
+| `--p-keep-original-id` | `H-DATA` | Only the default (`True`) is demonstrated: tier 2 keeps real feature IDs because at 300 features identity matters, `ASV-k` is a position rather than an identifier, and only real IDs join to taxonomy. No command in the book passes `False` — tier 1's `ASV-1 … ASV-13` labels come from the hand-written mapping table in [Atacama Soil Microbiome](../00_getting_started/02_datasets.md), not from this parameter. A short `False` demonstration, next to the warning that its labels are positional, would close this. **Outstanding.** |
 | `--p-bias` | `H-DATA` | `N` versus `N-1` changes nothing structural about the network. It is discussed once, in the chapter where the covariance estimate itself is under scrutiny. Justified. |
 | `--p-rescale` | `H-CV` | Not exercised in tier 1, although the tier 1 covariates (`elevation`, `ph`) are exactly the case that needs it. **Outstanding.** |
 | `--p-rank` | `H-RANK` | The parameter always raises, so its owning chapter is the one about choosing a rank the working way. Justified. |
