@@ -1,0 +1,23 @@
+# Track the RECIPE, not the OUTPUT.
+#
+# Everything here regenerates from the committed scripts against the pinned
+# artifacts in data/, so committing 22 MB of solver output would bloat history
+# for no reproducibility gain. The generated tables the book renders are
+# committed in q2-hdstats-docs (docs/_data/), which is where they are consumed.
+
+results/
+publish/
+slurm/logs/
+
+# Input artifacts: unpacked from the two Atacama zips and the gut-to-soil
+# tutorial site by scripts/, and listed with checksums in
+# q2-hdstats-docs/docs/_data/manifest.tsv. Reproducible, and destined for Zenodo.
+data/
+
+# Conda lockfile is committed (it pins the environment); the distribution file
+# it derives from is downloaded.
+envs/rachis-qiime2-linux-64-conda.yml
+
+__pycache__/
+*.pyc
+.ipynb_checkpoints/

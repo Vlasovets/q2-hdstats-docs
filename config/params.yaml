@@ -1,0 +1,69 @@
+# Canonical parameterization for the tier-2 (300-ASV Atacama) recompute.
+#
+# WHY THESE VALUES: two parameterizations exist in the historical artifacts.
+# The shared bundle atacama-q2-gglasso-share.zip used lambda=0.95 / mu=10.5
+# (rank 5, 90 edges vs 145 for rank 0), but the file timestamps in
+# Atacama-q2-gglasso-q2-classo-tutorial.zip show those are the EARLIER
+# exploratory fits (06-27 19:28) and the lambda=0.8 models are later
+# (06-28 09:24). tutorial-notes.md and run_q2_gglasso_lambda08_models.sh both
+# use lambda=0.8. So lambda=0.8 is canonical and the share bundle is superseded.
+#
+# PENDING CONFIRMATION from C. Mueller before stage 2 runs.
+
+dataset:
+  name: atacama-top-300
+  n_samples: 54
+  n_features: 300
+
+# --- sparse graphical lasso ---------------------------------------------------
+sgl:
+  gamma: 0.3            # eBIC gamma; larger favours sparser solutions
+  path_scale: linear    # NOT the "log" default -- the published path is linear
+  # Grid read off the reference table shipped in the tutorial archive
+  # (outputs/atacama-q2-gglasso/atacama-top-300-linear-model-selection-path.tsv):
+  # 1.0 down to 0.3 in steps of 0.05, i.e. 15 points. An earlier draft of this
+  # file guessed 1.00-0.10 over 19 points, which would not have reproduced it.
+  lambda1_min: 0.30
+  lambda1_max: 1.00
+  n_lambda1: 15
+  selected_lambda: 0.80
+
+# --- sparse + low-rank --------------------------------------------------------
+slr:
+  lambda1: 0.80
+  # mu -> achieved rank. These are the TARGETS to reproduce, not assertions:
+  # stage 3 scouts mu and writes the observed mapping to
+  # results/tables/mu-rank-map.tsv.
+  mu_grid: [15.0, 10.0, 7.5]
+  headline_mu: 15.0     # expected to give rank 2
+  # Scouting grid for stage 3 (log-spaced between these bounds).
+  scout_mu_min: 5.0
+  scout_mu_max: 30.0
+  scout_n_mu: 12
+
+# --- Gate C1 ------------------------------------------------------------------
+# The published eBIC numbers were NOT produced by `qiime gglasso solve-problem`.
+# They came from an offline script (linear_lambda_model_selection.py) calling
+# raw GGLasso with do_scaling=False. Stage 1 must reproduce them THROUGH THE CLI
+# before any tier-2 chapter text is written. If it cannot, we either align the
+# scaling/eBIC convention in the plugin or cite the auxiliary script explicitly.
+# Reference values, exact, from
+# atacama-top-300-linear-model-selection-scores.tsv (lambda=0.8, gamma=0.3).
+gate_c1:
+  expect_selected_lambda: 0.80
+  expect_min_ebic: 16130.099453949091
+  expect_n_edges: 216
+  ebic_rel_tol: 0.001   # 0.1% -- generous, this is a reproduction not a rerun
+  edges_abs_tol: 0      # edge count must match exactly
+
+# --- classo -------------------------------------------------------------------
+classo:
+  cv_subsets: 5
+  cv_seed: 1
+  cv_one_se: true
+  cv_nlam: 100          # NB: renamed from cv__nlam; alias still accepted
+  cv_lamin: 0.001
+  path_nlam_log: 100
+  path_lamin_log: 0.001
+  variants: [base, joint, filtered]
+  filter_abs_r_max: 0.8   # drop covariates with |r| >= this against the outcome
