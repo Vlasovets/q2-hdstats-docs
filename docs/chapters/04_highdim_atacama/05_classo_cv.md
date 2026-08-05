@@ -10,16 +10,22 @@ Christian L. Müller.
 **Build the design with `qiime classo transform-features`, not with
 `qiime gglasso transform-features`.**
 
-The gglasso action stores its output with the axes swapped — it transposes to
-samples × features and then straight back before returning, and QIIME 2 stores a
-DataFrame's index as *samples*. So the stored table's "samples" are feature IDs.
-`regress` aligns the design against the outcome on the sample index, finds no
-overlap, and c-lasso fails deep inside with
+Not because the gglasso action is broken — it is not, any more — but because
+this keeps the two chains independent, so a change to the network side cannot
+quietly alter the regression results. It is also the shorter path: `classo`'s own
+transform takes the raw counts directly.
+
+Both are now valid inputs. Until QIIME 2 2026.7, only one was: `gglasso
+transform-features` stored its output with the axes swapped, so the table's
+"samples" were feature IDs, `regress` found no overlap with the outcome on the
+sample index, and c-lasso failed deep inside with
 
     IndexError: index 0 is out of bounds for axis 0 with size 0
 
-on a design of shape `(0, 54)`. Starting from the **raw count table** and
-CLR-transforming with q2-classo's own action avoids it entirely. See
+on a design of shape `(0, 54)`. If you hit that on an **older** artifact, that is
+the cause — regenerate it rather than transposing by hand, because
+`calculate-covariance` was compensating for the same swap and the two only give
+the right answer together. See
 [Troubleshooting](../90_reference/04_troubleshooting.md).
 ```
 
