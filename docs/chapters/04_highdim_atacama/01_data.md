@@ -185,10 +185,15 @@ it from the transformed table you intend to report, and say which one it was.
 **The shipped `atacama-top-300-clr.qza` predates `--p-keep-original-id`.** Its
 provenance records no `keep_original_id` parameter at all, and its features are
 sequential `ASV-1` … `ASV-300` names rather than the original feature IDs. Every
-downstream artifact in the bundle inherits those names, which is why the
-taxonomy join in [Interpretation](06_interpretation.md) needs an explicit
-mapping step. The recompute is expected to regenerate this artifact with
-`--p-keep-original-id`, as the command above shows.
+downstream artifact in the bundle inherits those names.
+
+Those names cannot be mapped back to feature IDs after the fact. `ASV-k` is
+assigned by **position** in the abundance ranking, and 209 of these 300 features
+share a total-abundance value with another feature, so the ranking does not
+determine which organism got which number — see the warning in
+[Interpretation](06_interpretation.md). The only way to get a working taxonomy
+join is to rebuild the transformed table with `--p-keep-original-id`, as the
+command above shows.
 ```
 
 ## Metadata

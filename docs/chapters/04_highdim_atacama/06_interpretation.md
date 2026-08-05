@@ -132,26 +132,41 @@ every solution derived from it — are sequential `ASV-1` … `ASV-300` names, w
 `atacama-taxonomy-silva138.qza` is keyed on the 32-character hexadecimal feature
 IDs. `tax.loc[hub, "Taxon"]` raises `KeyError` and the `.join` returns all-`NaN`.
 
-Two ways out:
+**Rebuild the transformed table with `--p-keep-original-id`**, as
+[The 300-ASV Dataset](01_data.md) shows, and re-derive the correlation matrix and
+the solutions from it. The labels then *are* feature IDs and the join works
+directly. This is the only reliable route.
+```
 
-1. Rebuild the transformed table with `--p-keep-original-id`, as
-   [The 300-ASV Dataset](01_data.md) shows, and re-derive the correlation matrix
-   and the solutions from it. The labels then *are* feature IDs and the join
-   works directly.
-2. Map the sequential names back with the bundle's `top-300-asvs.tsv`
-   (`feature-id` / `total-abundance` / `abundance-rank`).
+```{danger}
+**Do not recover the mapping from `top-300-asvs.tsv` by abundance rank.** It is
+tempting — the file has `feature-id` / `total-abundance` / `abundance-rank`, the
+relabelling helper sorts **ascending** by total abundance, so `ASV-1` is the
+*least* abundant and the mapping looks like
+$\texttt{ASV-}n \longleftrightarrow \texttt{abundance-rank} = 301 - n$.
 
-If you take route 2, get the direction right. The relabelling helper sorts
-**ascending** by total abundance before it numbers the features, so `ASV-1` is
-the *least* abundant of the 300 and the mapping is
+**It does not work, and it fails silently.** Total abundance is not unique:
+**209 of these 300 features share a total-abundance value with another feature**
+(61 tie groups, the largest holding 13). Within a tie group the rank order is
+arbitrary, so `abundance-rank` and the plugin's internal ordering are free to
+disagree — and they do. Permuting the correlation matrix by this mapping fails to
+reproduce the shipped one, off by 1.137. Only the **91** features with a unique
+total abundance are placed correctly; the rest get a neighbour's taxonomy, and
+nothing raises.
 
-$$
-\texttt{ASV-}n \;\longleftrightarrow\; \texttt{abundance-rank} = 301 - n .
-$$
+This is not a hypothetical drift. The helper originally ordered features with
+`df.sort_index()`, whose default quicksort is **not stable**; a later change to a
+stable sort moved **158 of the 300** features to different `ASV-k` labels. Every
+published number was unaffected — the graphical-lasso objective is invariant
+under permutation, so the λ path, the eBIC at every grid point and the 216 edges
+are bit-identical — but every *feature identity* shifted.
 
-Joining on `abundance-rank == n` reverses the entire network without raising
-anything.
+The lesson generalises: with `--p-no-keep-original-id`, `ASV-k` is a position, not
+an identifier. It is only meaningful within the single artifact that defines it,
+and it is never a key you can join on across artifacts.
+```
 
+```{note}
 The taxonomy file's columns are `Feature ID`, `Taxon` and `Consensus` — if you
 ever need the classifier's confidence, the column is `Consensus`, not
 `Confidence`.
