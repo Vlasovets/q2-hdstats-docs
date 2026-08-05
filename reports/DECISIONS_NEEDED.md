@@ -146,14 +146,27 @@ Fixing changes the registered signature. Low urgency, non-zero risk.
 
 ---
 
-## 4. Is `selected-atacama-sample-metadata.tsv` going on the Zenodo record?
+## 4. Is `selected-atacama-sample-metadata.tsv` going on the Zenodo record? — **RESOLVED** (2026-08-05)
 
-Six chapters depend on it. It exists only at
-`q2-gglasso/data/selected-atacama-sample-metadata.tsv` (2599 bytes) — not in
-q2-classo's data dir, and not in either Atacama bundle at the docs repo root.
-`docs/_data/manifest.tsv` lists it as a tier-1 row with `ZENODO_DOI_PENDING`.
+**Yes, and it already is.** `package_release.py` sources it from
+`q2-gglasso/data/` (the tier-1 `GG` entry) and it is present in
+`publish/tier1/`. Its manifest row carries real values, verified against the
+shipped copy rather than transcribed:
 
-This is a release decision: confirm it is deposited, then fill in bytes + sha256.
+| | |
+|---|---|
+| bytes | 2599 (matches) |
+| sha256 | `d0e1421c51097405…` (matches) |
+| shape | 76 rows × 5 columns — `sample-id`, `ph`, `average-soil-relative-humidity`, `elevation`, `average-soil-temperature` |
+| url | `ZENODO_DOI_PENDING` |
+
+Six chapters depend on it: `02_lowdim_gglasso/{01_data_preparation, 04_adaptive_glasso,
+06_multiple_graphical_lasso, 07_pca, 08_summarize}` and
+`00_getting_started/03_download_data`.
+
+The only thing outstanding is the URL, and that is true of **all 11** tier-1 and
+tier-2 rows — it is filled when the DOI is minted, not a decision. Nothing here
+blocks the release.
 
 ---
 

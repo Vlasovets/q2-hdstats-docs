@@ -24,19 +24,24 @@ ROOT=/home/itg/oleg.vlasovets/slr_example/q2-hdstats-recompute
 PREFIX=/home/itg/oleg.vlasovets/.conda/envs/q2-2026.7-slr
 CONDA=/home/itg/oleg.vlasovets/miniconda3/bin/conda
 
-# NOTE the input. The obvious choice -- atacama-top-300-clr.qza, produced by
-# `qiime gglasso transform-features` -- CANNOT be used here. That artifact has
-# its axes swapped: transform_features transposes to (N, p) and then transposes
-# straight back to (p, N) before returning (_func.py ~line 109), and QIIME 2
-# stores a DataFrame's index as SAMPLES. So the stored table's "samples" are
-# feature IDs. q2-classo aligns features against y on the sample index, finds no
-# overlap, and c-lasso dies with
-#     IndexError: index 0 is out of bounds for axis 0 with size 0
-# on an X of shape (0, 54). The first run of this array failed 15/15 that way.
+# NOTE the input: the RAW count table, CLR-transformed by q2-classo's own action
+# rather than the ready-made atacama-top-300-clr.qza from `qiime gglasso
+# transform-features`. Two reasons, one current and one historical.
 #
-# So: start from the RAW count table (canonically oriented, not produced by
-# transform_features) and CLR-transform it with q2-classo's own action. That is
-# also exactly what the tutorial chapter documents.
+# Current, and the reason to keep it: this is exactly what the tutorial chapter
+# documents, so the stage runs the commands a reader would run. It also keeps the
+# classo chain independent of the gglasso one -- notably, the 2026-08-05 tier-2
+# regeneration that switched features to real IDs does not touch these results.
+#
+# Historical: this used to be forced. transform_features transposed to (N, p) and
+# straight back to (p, N) before returning, and QIIME 2 stores a DataFrame's index
+# as SAMPLES, so the stored table's "samples" were feature IDs. q2-classo aligned
+# features against y on the sample index, found no overlap, and c-lasso died with
+#     IndexError: index 0 is out of bounds for axis 0 with size 0
+# on an X of shape (0, 54) -- the first run of this array failed 15/15 that way.
+# That bug is FIXED (q2-gglasso merge 1c295b7, coupled with rowvar=False in
+# calculate_covariance), so the gglasso artifact would work now. Do not "restore"
+# it on that basis: the reason above still stands.
 RAW="$ROOT/data/atacama-top-300-table.qza"
 OUTCOMES="$ROOT/data/atacama-classo-outcomes-mean-imputed.tsv"
 OUT="$ROOT/results/classo"

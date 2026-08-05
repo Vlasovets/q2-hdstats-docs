@@ -64,5 +64,11 @@ chapter rather than smoothed over.
 ## Read next
 
 - `reports/DECISIONS_NEEDED.md` — open decisions, evidence attached
-- `reports/ORIENTATION_FINDING.md` — why `transform_features` emits swapped axes
+- `reports/ORIENTATION_FINDING.md` — why `transform_features` **used to** emit
+  swapped axes. Fixed; kept for the record, with the proof of neutrality in
+  `reports/ORIENTATION_FIX_VERIFICATION.md`
+- `reports/PERMUTATION_RECOVERED.md` — why the shipped correlation matrix looked
+  unreproducible and was not. Read this before trusting any comparison of two
+  artifacts made by label
+- `reports/TIER2_KEEP_IDS.md` — the tier-2 rebuild with real feature IDs
 - `reports/STATUS.md` — written by the last job of the most recent run

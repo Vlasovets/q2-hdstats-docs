@@ -1,3 +1,15 @@
+> **RESOLVED 2026-08-05.** The orientation bug described here is FIXED
+> (q2-gglasso merge `1c295b7`: `transform_features` no longer transposes back,
+> and `calculate_covariance` takes `rowvar=False` — the two must change
+> together, since either alone is wrong). Verified exactly neutral: old code
+> vs new code on identical inputs, max abs difference **0.000e+00**. See
+> `ORIENTATION_FIX_VERIFICATION.md`.
+>
+> This document records the original diagnosis and is kept for the record.
+> Read it in the past tense.
+
+---
+
 # transform_features orientation — empirical finding
 
 ## 1. The transformer's convention
