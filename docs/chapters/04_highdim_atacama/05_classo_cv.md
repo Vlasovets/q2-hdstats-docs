@@ -1,31 +1,91 @@
 # High-Dimensional Example: q2-classo on 300 Atacama ASVs
 
 This chapter applies q2-classo to the same **300-ASV, 54-sample** Atacama design
-used in the [high-dimensional graphical-lasso chapter](../02_graphical_models/06_highdim_atacama.md),
+used in the [high-dimensional graphical-lasso chapter](02_model_selection.md),
 predicting each continuous environmental covariate from the microbiome with
 cross-validated log-contrast regression. It reproduces the reference analysis of
 Christian L. Müller.
 
+```{important}
+**Build the design with `qiime classo transform-features`, not with
+`qiime gglasso transform-features`.**
+
+The gglasso action stores its output with the axes swapped — it transposes to
+samples × features and then straight back before returning, and QIIME 2 stores a
+DataFrame's index as *samples*. So the stored table's "samples" are feature IDs.
+`regress` aligns the design against the outcome on the sample index, finds no
+overlap, and c-lasso fails deep inside with
+
+    IndexError: index 0 is out of bounds for axis 0 with size 0
+
+on a design of shape `(0, 54)`. Starting from the **raw count table** and
+CLR-transforming with q2-classo's own action avoids it entirely. See
+[Troubleshooting](../90_reference/04_troubleshooting.md).
+```
+
 ## Setup
 
 Each of the 15 continuous covariates is used **once as the outcome**; missing
-outcome values are mean-imputed. Models use the standard log-contrast
-formulation **R1** with an intercept, selected by **5-fold cross-validation**
-with the **one-standard-error** rule along a log-spaced $\lambda$ path:
+outcome values are mean-imputed. Models use the log-contrast formulation with
+an intercept, selected by **5-fold cross-validation** with the
+**one-standard-error** rule along a log-spaced $\lambda$ path.
+
+Build the design once:
+
+```bash
+qiime classo transform-features \
+    --i-features data/atacama-top-300-table.qza \
+    --o-x data/atacama-top-300-classo-clr.qza
+```
+
+Then fit one model per outcome:
 
 ```bash
 qiime classo regress \
-    --i-features atacama-top-300-clr-design.qza \
-    --m-y-file atacama-classo-outcomes-mean-imputed.tsv \
-    --m-y-column <outcome> \
-    --p-do-yshift --p-path --p-path-nlam-log 100 --p-path-lamin-log 0.001 \
+    --i-features data/atacama-top-300-classo-clr.qza \
+    --m-y-file data/atacama-classo-outcomes-mean-imputed.tsv \
+    --m-y-column "<outcome>" \
+    --p-concomitant \
+    --p-path --p-path-nlam-log 60 --p-path-lamin-log 0.001 \
     --p-cv --p-cv-subsets 5 --p-cv-seed 1 --p-cv-one-se \
-    --p-cv--nlam 100 --p-cv-lamin 0.001 --p-cv-logscale \
-    --p-no-stabsel --p-no-lamfixed --p-no-concomitant --p-no-huber --p-intercept \
-    --o-result <outcome>-r1-cv5.qza
+    --p-cv-nlam 60 --p-cv-lamin 0.001 --p-cv-logscale \
+    --p-no-stabsel --p-no-lamfixed \
+    --o-result "<outcome>-cv5.qza"
 ```
 
+`--p-cv-nlam`, single dash before `nlam`. The old `--p-cv--nlam` spelling still
+works but is deprecated.
+
+## What the recompute produced
+
+All 15 fits were re-run on QIIME 2 2026.7. This table is **generated** from the
+solution artifacts by `slurm/12_classo_summary.sh`:
+
+```{csv-table} Cross-validated log-contrast fits, 300 ASVs x 54 samples
+:file: ../../_data/atacama-classo-cv.tsv
+:delim: tab
+:header-rows: 1
+:widths: 34, 16, 16, 17, 17
+```
+
+Read the sparsity, not the error scale: the CV error is in the outcome's own
+units squared, so it is comparable *across $\lambda$ for one outcome* and not
+across outcomes. What is comparable is how many of the 300 ASVs survive — from a
+single feature for `depth` and `ec` up to twelve for `amplicon-concentration`.
+
 ## Prediction from ASVs only (base R1)
+
+```{warning}
+**The $R^2$ table below has NOT been reproduced.** The recompute reports
+cross-validated *error*, which is what the solution artifact stores; turning that
+into an out-of-sample $R^2$ needs a `qiime classo predict` pass on held-out
+samples, which has not been run. The figures here are carried over from the
+reference analysis and are kept because the *ranking* is the chapter's argument —
+but treat them as unverified, and do not quote an individual value.
+
+The same applies to the joint and filtered $R^2$ values further down, and to the
+named first-selected taxon.
+```
 
 The out-of-sample $R^2$ (mean across the 5 folds) shows which environmental
 variables are predictable from the 300 ASVs alone:
@@ -49,7 +109,7 @@ variables are predictable from the 300 ASVs alone:
 
 The first selected taxon (largest-magnitude coefficient column, after the
 intercept) is a *Pseudarthrobacter* ASV — a genus characteristic of the Atacama
-soil community (see the [interpretation notes](../02_graphical_models/05_interpretation.md)).
+soil community (see the [interpretation notes](../02_lowdim_gglasso/09_interpretation.md)).
 
 ## Adjusting for environmental covariates (joint and filtered)
 

@@ -1,0 +1,17 @@
+filename	tier	bytes	sha256	url
+atacama-counts.qza	1	10232	e7cc0cce2342b4d43c3db81ff3f3ed40abd58ada354560c034adb0af74faa397	ZENODO_DOI_PENDING
+atacama-selected-covariates-veg.tsv	1	2870	211fb53caa2757752d77dd387c62bd24d9600156cf79be23f37f54938879acbf	ZENODO_DOI_PENDING
+classification.qza	1	149736	898cc9c615c015350debb1171659b33fc9a88b3f27aab07f6ab8689f1aed400d	ZENODO_DOI_PENDING
+selected-atacama-sample-metadata.tsv	1	2599	d0e1421c5109740523903dc013499274b450488861f2d15747adcb49546cbd5b	ZENODO_DOI_PENDING
+atacama-classo-outcomes-mean-imputed.tsv	2	5872	2f729db70e234f65e3df7c429f177e63c6be39d077a60d63ed4ed633dba33c4f	ZENODO_DOI_PENDING
+atacama-taxonomy-silva138.qza	2	184938	38daef65f03bfdb9459e9a2da41ad79f77c87bb3bfd37b4688d66845513950e5	ZENODO_DOI_PENDING
+atacama-top-300-clr.qza	2	123764	a0c68918809f2c8a3800dee52289547326258e39ee4cb12f86d284a3796ced1f	ZENODO_DOI_PENDING
+atacama-top-300-correlation.qza	2	591079	55e37ab2584f40dd940eebd249fe45965474f9ed4470c153ddc428aad57c5dac	ZENODO_DOI_PENDING
+atacama-top-300-table.qza	2	74346	02503209e1ffe5de18495c12b13b4b72a15c690e584011030f13445426dc3f3b	ZENODO_DOI_PENDING
+sample-metadata.tsv	2	9433	7cff810ad86a621ebc78a16b690255d839ea58e2622ad45a11a838d0f8c5b3bd	ZENODO_DOI_PENDING
+top-300-asvs.tsv	2	12097	62594954671a9fe143d39447014100923dfe5883dd4e3c980105d7489cba7c5b	ZENODO_DOI_PENDING
+asv-seqs.qza	3	75123	1d341aa3a956ba66015fa8a727efb3c860c8623abd8c911c08d7599ddf5d52ae	https://gut-to-soil-tutorial.readthedocs.io/en/latest/data/gut-to-soil/asv-seqs.qza
+asv-table-ms2.qza	3	47343	7929b701b64f99e6b144fc639394f4a377db405bc2bb542d1634a4e5daaff445	https://gut-to-soil-tutorial.readthedocs.io/en/latest/data/gut-to-soil/asv-table-ms2.qza
+asv-table.qza	3	65124	1cbb18fb6dd3a86b9b2ca847e76ffee6659d0d33bacb684fc3e1635352243a24	https://gut-to-soil-tutorial.readthedocs.io/en/latest/data/gut-to-soil/asv-table.qza
+sample-metadata.tsv	3	354759	58ef2e8d198ce89e74c3a9b40f06d88066ec2f76918f857635dc4cd2a3f23a1a	https://gut-to-soil-tutorial.readthedocs.io/en/latest/data/gut-to-soil/sample-metadata.tsv
+taxonomy.qza	3	79579	e2779867af4c9a65916e5f40596363fdc1b43ce47f069dafdd0ff6271cd62a33	https://gut-to-soil-tutorial.readthedocs.io/en/latest/data/gut-to-soil/taxonomy.qza

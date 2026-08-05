@@ -1,11 +1,11 @@
 # Data Preparation
 
 We'll use the Atacama soil microbiome dataset {cite}`neilson2017significant`, which contains:
-- $N = 49$ samples from Atacama Desert soil
+- $N = 50$ samples from Atacama Desert soil
 - $p = 13$ microbial taxa (ASVs)
 - $q = 5$ environmental covariates: pH, elevation, temperature, humidity, and vegetation
 
-For more details about this dataset, see [Data Overview](../00_getting_started/02_data.md).
+For more details about this dataset, see [Data Overview](../00_getting_started/02_datasets.md).
 
 ## Data Transformation
 

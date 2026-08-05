@@ -25,7 +25,7 @@ We present two approaches:
 ## Advanced Options
 
 After mastering the basic workflows, explore:
-- [Concomitant Formulation](../04_advanced/01_concomitant_formulation.md): For data with heterogeneous variance
+- [Concomitant Formulation](../05_advanced/01_concomitant_formulation.md): For data with heterogeneous variance
 
 ## Example Use Case
 
@@ -33,10 +33,10 @@ In this tutorial, we predict **average soil temperature** from the Atacama deser
 
 ## Prerequisites
 
-Complete [Data Preparation](../01_data_preparation.md) before starting these tutorials.
+Complete [Data Preparation](../02_data_preparation.md) before starting these tutorials.
 
 ## Next Steps
 
 1. Start with [Log-Contrast Regression](01_logcontrast.md)
 2. Compare with [trac approach](02_trac.md)
-3. Interpret your results using the [Interpretation guide](../05_interpretation.md)
+3. Interpret your results using the [Interpretation guide](../07_interpretation.md)

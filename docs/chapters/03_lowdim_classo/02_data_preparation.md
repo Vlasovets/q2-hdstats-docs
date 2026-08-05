@@ -2,8 +2,6 @@
 
 This guide demonstrates how to prepare microbiome data for log-contrast analysis using q2-classo. We'll walk through transforming features, adding taxonomic information and covariates, and splitting data for machine learning tasks.
 
-In
-
 ## Data Transformation
 
 Transform count data using CLR transformation:

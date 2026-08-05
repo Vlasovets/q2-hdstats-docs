@@ -12,7 +12,7 @@ This chapter explains how to interpret the results from previous chapters and di
 **Reading taxon labels.** Because `transform-features` now keeps the original
 feature identifiers (see `--p-keep-original-id`), network nodes and heatmap axes
 carry the ASV's real ID, so a selected feature can be traced directly back to its
-taxonomy. In the [high-dimensional 300-ASV analysis](06_highdim_atacama.md), for
+taxonomy. In the [high-dimensional 300-ASV analysis](../04_highdim_atacama/02_model_selection.md), for
 example, the first taxon selected by the log-contrast models is a
 *Pseudarthrobacter* ASV — a genus emblematic of the Atacama soil biota, known for
 desiccation- and oligotrophy-tolerant lifestyles, pigment production, and
@@ -42,7 +42,7 @@ survival in deep, hyperarid subsurface soils {cite}`finger2018pseudarthrobacter,
 Once network associations are identified, use **q2-classo** for regression and classification tasks:
 
 1. **Feature selection**: Use identified microbial associations as candidate features for environmental or phenotype prediction
-2. **Regression analysis**: Model continuous outcomes with sparse microbial predictorss
+2. **Regression analysis**: Model continuous outcomes with sparse microbial predictors
 3. **Classification tasks**: Predict binary outcome using selected microbial features
 4. **Model selection**: Validate predictive performance using classo's built-in model selection methods
 

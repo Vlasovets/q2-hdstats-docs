@@ -50,11 +50,11 @@ Understand how to interpret log-contrast model results and extract biological in
 
 Before working through this chapter, ensure you have:
 - Completed the [Installation](../01_installation/01_prerequisites.md) section
-- Familiarized yourself with the [Atacama dataset](../00_getting_started/02_data.md)
+- Familiarized yourself with the [Atacama dataset](../00_getting_started/02_datasets.md)
 - Basic understanding of regression and classification concepts
 
 ## Getting Started
 
-Begin with [Data Preparation](01_data_preparation.md) to learn how to transform and prepare your data, then choose your analysis path:
-- For continuous outcomes → [Regression](02_regression/01_logcontrast.md)
-- For categorical outcomes → [Classification](03_classification/01_logcontrast.md)
+Begin with [Data Preparation](02_data_preparation.md) to learn how to transform and prepare your data, then choose your analysis path:
+- For continuous outcomes → [Regression](03_regression/01_logcontrast.md)
+- For categorical outcomes → [Classification](04_classification/01_logcontrast.md)

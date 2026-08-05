@@ -12,7 +12,7 @@ Christian L. Müller.
 Starting from the full Atacama tutorial table, samples are matched and the
 **300 ASVs with the greatest total abundance** are retained ($n = 54$ samples,
 $p = 300$ features; the resulting table has 49,252 counts and is 5.9% non-zero).
-The empirical correlation matrix of the mclr-transformed table
+The empirical correlation matrix of the clr-transformed table
 (`atacama-top-300-correlation.qza`) is the input to the graphical lasso.
 
 ## Single graphical lasso: selecting $\lambda$ with eBIC
@@ -22,41 +22,68 @@ the **extended Bayesian Information Criterion** (eBIC). The extra parameter
 $\gamma \in [0, 1]$ controls how strongly extra edges are penalized: Foygel and
 Drton use $\gamma = 0.5$ as the conventional choice, while the small-example
 default `--p-gamma 0.01` is tailored to the toy table. For this analysis we use
-a moderate **$\gamma = 0.3$**, evaluated on a **linear** $\lambda$ path
-`1.00, 0.95, …, 0.10`:
+a moderate **$\gamma = 0.3$**, evaluated on a **linear** $\lambda$ path running
+from `1.00` down to `0.30` in steps of `0.05` — 15 points:
 
 ```bash
 qiime gglasso solve-problem \
     --i-covariance-matrix atacama-top-300-correlation.qza \
     --p-n-samples 54 \
     --p-no-latent \
-    --p-lambda1-min 0.8 --p-lambda1-max 0.8 --p-n-lambda1 1 \
+    --p-path-scale linear \
+    --p-lambda1-min 0.30 --p-lambda1-max 1.00 --p-n-lambda1 15 \
     --p-gamma 0.3 \
-    --o-solution atacama-top-300-sgl-lambda0.8.qza
+    --o-solution atacama-top-300-sgl-linear-path.qza
 ```
 
-(The linear path itself is available with the new
-`--p-path-scale linear` option, or by passing the exact grid via
-`--p-lambda1-path`.)
+`--p-path-scale linear` is what makes this an evenly-spaced grid; the default is
+`log`. Passing the grid explicitly with `--p-lambda1-path` is equivalent.
 
-Along this path the **minimum eBIC of `16130.10` occurs at $\lambda = 0.8$**,
-which defines the sparse network with **216 edges**:
+Along this path the **minimum eBIC occurs at $\lambda = 0.8$**, which defines the
+sparse network with **216 edges**:
 
 ![Linear eBIC model selection for the 300-ASV single graphical lasso](../../images/png/atacama-full/atacama-top-300-linear-model-selection.png)
 
-| $\lambda$ | eBIC ($\gamma=0.3$) | edges |
-|-----------|---------------------|-------|
-| 1.00 | 16200.00 | 0 |
-| 0.95 | 17117.10 | 145 |
-| 0.90 | 16619.90 | 152 |
-| 0.85 | 16313.58 | 176 |
-| **0.80** | **16130.10** | **216** |
-| 0.75 | 16594.22 | 329 |
-| 0.70 | 16719.57 | 429 |
+```{csv-table} eBIC across the linear $\lambda$ path
+:file: ../../_data/atacama-lambda-path.tsv
+:delim: tab
+:header-rows: 1
+:widths: 20, 40, 20
+```
+
+```{note}
+This table is **generated**, not transcribed. The generator is not in this book:
+`slurm/01_lambda_path.sh` lives in the companion `q2-hdstats-recompute` tree and
+writes `results/tables/lambda-path.tsv` with columns `lambda1 / sparsity / ebic`
+straight out of the solution artifact. `docs/_data/atacama-lambda-path.tsv` is
+that file re-expressed as `lambda / eBIC (gamma=0.3) / edges`, with the edge
+counts derived from the reported sparsity as
+$\text{density} \times \binom{300}{2}$. That conversion is a hand step, so the
+prose above *can* drift from the numbers below — check both against
+`results/tables/lambda-path.tsv` after any re-run rather than trusting the
+pipeline to keep them in step.
+```
 
 The choice of $\gamma$ matters: $\gamma \in [0.30, 0.31]$ selects $\lambda = 0.8$
 (216 edges); $\gamma \le 0.29$ selects the much denser $\lambda = 0.3$
-(1403 edges); and $\gamma \ge 0.32$ selects the empty $\lambda = 1.0$ network.
+(1405 edges); and $\gamma \ge 0.32$ selects the empty $\lambda = 1.0$ network.
+
+```{note}
+**On reproducibility across the path.** The CLI run reproduces the original
+reference analysis exactly at 11 of the 14 non-empty grid points — including the
+whole sparse end and, critically, the selected $\lambda = 0.8$ at 216 edges. Three
+points at the dense end differ by one or two edges: $\lambda = 0.55$ (819 vs 820),
+$\lambda = 0.35$ (1350 vs 1348) and $\lambda = 0.3$ (1405 vs 1403). The numbers
+above and in the table are the **current** run.
+
+Two things could produce a difference that small in the dense regime, and the
+path artifact does not retain enough information to separate them: genuine solver
+variation where many entries sit near the sparsity threshold, or rounding in the
+edge counts, which are derived from the reported density rather than counted from
+each grid point's precision matrix. Neither affects the selection — the eBIC
+minimum is at $\lambda = 0.8$ either way, and agrees with the reference to eight
+significant figures.
+```
 
 ## Sparse + low-rank: comparing ranks 2, 5 and 10
 
@@ -80,9 +107,15 @@ qiime gglasso solve-problem \
     --p-n-samples 54 \
     --p-latent \
     --p-lambda1-min 0.8 --p-lambda1-max 0.8 --p-n-lambda1 1 \
+    --p-lambda2-min 0.1 --p-lambda2-max 0.1 --p-n-lambda2 1 \
     --p-mu1-min 15 --p-mu1-max 15 --p-n-mu1 1 \
     --o-solution atacama-top-300-slr-lambda0.8-rank2.qza
 ```
+
+The `--p-lambda2-*` triple pins the second penalty to a single value. It is
+inert for a single-graph problem, but omitting it leaves `lambda2` on a
+five-point default path, which turns this single fit into a model-selection run;
+see [Choosing the Latent Rank](03_slr_ranks.md).
 
 ![Sparse and sparse + low-rank precision matrices at lambda = 0.8 for ranks 0, 2, 5, 10](../../images/png/atacama-full/atacama-top-300-lambda0.8-rank-comparison-matrices.png)
 

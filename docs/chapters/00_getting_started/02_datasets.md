@@ -1,10 +1,10 @@
 # Atacama Soil Microbiome
 
-In our example, we showcase the application of our QIIME2 plugins for high-dimensional statistics using the Atacama soil microbiome dataset {cite}`neilson2017significant`. With q2-gglasso we solve various graphical lasso problems to identify microbial associations which we later assess by fitting sparse log-contrast models implemented in q2-classo. Microbiome bioinformatics analyses were conducted using QIIME 2 version 2022.4 {cite}`bolyen2019reproducible`. The processing of raw sequence data involved demultiplexing and quality filtering, facilitated by the q2-demux plugin. Subsequent denoising was performed using DADA2 {cite}`callahan2016dada2` through the q2-dada2 plugin. Taxonomic assignments for Amplicon Sequence Variants (ASVs) were accomplished using the q2-feature-classifier {cite}`bokulich2018q2` with the naive Bayes taxonomy classifier, trained on the Silva Database {cite}`quast2012silva`.
+In our example, we showcase the application of our QIIME2 plugins for high-dimensional statistics using the Atacama soil microbiome dataset {cite}`neilson2017significant`. With q2-gglasso we solve various graphical lasso problems to identify microbial associations which we later assess by fitting sparse log-contrast models implemented in q2-classo. Microbiome bioinformatics analyses were conducted using QIIME 2 version 2026.7 {cite}`bolyen2019reproducible`. The processing of raw sequence data involved demultiplexing and quality filtering, facilitated by the q2-demux plugin. Subsequent denoising was performed using DADA2 {cite}`callahan2016dada2` through the q2-dada2 plugin. Taxonomic assignments for Amplicon Sequence Variants (ASVs) were accomplished using the q2-feature-classifier {cite}`bokulich2018q2` with the naive Bayes taxonomy classifier, trained on the Silva Database {cite}`quast2012silva`.
 
 ## Data Preprocessing Pipeline
 
-Here is the original code for Atacama example data [preprocessing](https://docs.qiime2.org/2024.10/tutorials/atacama-soils/). One can simply follow the original Atacama tutorial, but we wanted to give these ASVs meaningful names for the sake of this example. That's why we rename the ASV keys as follows:
+Here is the original code for Atacama example data [preprocessing](https://amplicon-docs.qiime2.org/en/latest/tutorials/atacama-soils.html). One can simply follow the original Atacama tutorial, but we wanted to give these ASVs meaningful names for the sake of this example. That's why we rename the ASV keys as follows:
 
 | ASV label | Real ASV ID                      |
 | --------- | -------------------------------- |
@@ -25,9 +25,9 @@ Here is the original code for Atacama example data [preprocessing](https://docs.
 ## Data for Downstream analysis
 
 We'll use the Atacama soil microbiome dataset {cite}`neilson2017significant`, which contains:
-- 49 samples from Atacama Desert soil;
+- 50 samples from Atacama Desert soil;
 - 13 microbial taxa (ASVs)
-- Environmental covariates: pH, elevation, temperature, humidity, and vegetayion
+- Environmental covariates: pH, elevation, temperature, humidity, and vegetation
 
 The original data is available through the European Nucleotide Archive under accession [ERP019482](https://www.ebi.ac.uk/ena/browser/view/PRJEB17617).
 
@@ -40,4 +40,4 @@ The original data is available through the European Nucleotide Archive under acc
 | YUN3856.2 | 6.0 | 13.0 | 26.0 | ... | 0.0 | 0.0 | 104.0 | 3856 | 7.43 | 99.44 | 9.51 | yes |
 | YUN3856.3 | 21.0 | 36.0 | 23.0 | ... | 33.0 | 0.0 | 0.0 | 3856 | 7.43 | 99.44 | 9.51 | yes |
 
-QIIME2 .qza file can be downloaded from this [link](https://github.com/bio-datascience/q2-gglasso/tree/master/data/atacama-counts.qza), here is the snapshot of the count data and corresponding [metadata](https://data.qiime2.org/2024.10/tutorials/atacama-soils/sample_metadata.tsv) we're using in our example.
+QIIME2 .qza file can be downloaded from this [link](https://github.com/Vlasovets/q2-gglasso/blob/main/data/atacama-counts.qza), here is the snapshot of the count data and corresponding [metadata](https://data.qiime2.org/2026.7/tutorials/atacama-soils/sample_metadata.tsv) we're using in our example.

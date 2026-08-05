@@ -1,10 +1,16 @@
 # Advanced: Using Concomitant Formulation
 
-The concomitant formulation provides a more robust approach to both regression and classification by jointly estimating the model coefficients and the noise level (σ). This is particularly useful when variance is not homogeneous across your samples.
+The concomitant formulation provides a more robust approach to **regression** by
+jointly estimating the model coefficients and the noise level (σ). This is
+particularly useful when variance is not homogeneous across your samples.
+
+It applies to `qiime classo regress` only — see
+[Robust Classification with the Huber Loss](#robust-classification-with-the-huber-loss)
+below for the classification equivalent.
 
 ## What is Concomitant Formulation?
 
-By setting `--p-concomitant True`, you switch from the standard formulation to the **concomitant formulation** (R3 for least squares, R4 when combined with the Huber loss):
+By setting `--p-concomitant True` on `qiime classo regress`, you switch from the standard formulation to the **concomitant formulation** (R3 for least squares, R4 when combined with the Huber loss):
 
 ### Mathematical Formulation
 
@@ -95,11 +101,23 @@ qiime classo regress \
 
 Then proceed with prediction and visualization using `regresstaxa_trac_concomitant.qza`.
 
-## Classification with Concomitant Formulation
+## Robust Classification with the Huber Loss
 
-### Log-Contrast with Huber Loss
+```{important}
+**The concomitant formulation is not available for classification.**
+`qiime classo classify` has no `--p-concomitant` flag — the parameter is absent
+from its signature, and the underlying `classo_problem` forces
+`formulation.concomitant = False` for classification problems. Passing
+`--p-concomitant` to `classify` fails with an unrecognised-parameter error.
 
-For both [log-contrast classification](../03_classification/01_logcontrast.md) and [trac classification](../03_classification/02_trac.md), replace the training step with:
+The robust option for classification is the **Huber hinge loss**, enabled with
+`--p-huber True` and tuned through `--p-rho` (default `0.0` for classification,
+which is wired to `rho_classification`).
+```
+
+### Log-Contrast classification with Huber loss
+
+For both [log-contrast classification](../04_classification/01_logcontrast.md) and [trac classification](../04_classification/02_trac.md), replace the training step with:
 
 ```bash
 qiime classo classify \
@@ -108,8 +126,8 @@ qiime classo classify \
     --i-weights data/wcovariates_lc.qza \
     --m-y-file data/atacama-selected-covariates-veg.tsv \
     --m-y-column vegetation \
-    --p-huber False \
-    --p-concomitant True \
+    --p-huber True \
+    --p-rho 0.0 \
     --p-stabsel \
     --p-cv \
     --p-path \
@@ -117,12 +135,12 @@ qiime classo classify \
     --p-stabsel-threshold 0.5 \
     --p-cv-seed 42 \
     --p-no-cv-one-se \
-    --o-result data/classifytaxa_lc_concomitant.qza
+    --o-result data/classifytaxa_lc_huber.qza
 ```
 
-Then proceed with prediction and visualization using `classifytaxa_lc_concomitant.qza`.
+Then proceed with prediction and visualization using `classifytaxa_lc_huber.qza`.
 
-### trac with Concomitant
+### trac classification with Huber loss
 
 Replace the training step with:
 
@@ -133,8 +151,8 @@ qiime classo classify \
     --i-weights data/wcovariates_trac.qza \
     --m-y-file data/atacama-selected-covariates-veg.tsv \
     --m-y-column vegetation \
-    --p-huber False \
-    --p-concomitant True \
+    --p-huber True \
+    --p-rho 0.0 \
     --p-stabsel \
     --p-cv \
     --p-path \
@@ -142,14 +160,14 @@ qiime classo classify \
     --p-stabsel-threshold 0.5 \
     --p-cv-seed 42 \
     --p-no-cv-one-se \
-    --o-result data/classifytaxa_trac_concomitant.qza
+    --o-result data/classifytaxa_trac_huber.qza
 ```
 
-Then proceed with prediction and visualization using `classifytaxa_trac_concomitant.qza`.
+Then proceed with prediction and visualization using `classifytaxa_trac_huber.qza`.
 
 ## Interpreting Results with Concomitant Formulation
 
-When you run your pipeline with `--p-concomitant True`, the output will display:
+When you run a **regression** with `--p-concomitant True`, the output will display:
 
 ```
 Formulation: R3 (concomitant)
