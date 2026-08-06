@@ -1,0 +1,993 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Latent Components &amp; Covariates &#8212; High-dimensional Statistics with QIIME 2</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles.css?v=3437f865" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/04_highdim_atacama/04_latent_pca';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="High-Dimensional Example: q2-classo on 300 Atacama ASVs" href="05_classo_cv.html" />
+    <link rel="prev" title="Choosing the Latent Rank" href="03_slr_ranks.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo_light.svg" class="logo__image only-light" alt="High-dimensional Statistics with QIIME 2 - Home"/>
+    <img src="../../_static/logo_dark.svg" class="logo__image only-dark pst-js-only" alt="High-dimensional Statistics with QIIME 2 - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../00_getting_started/01_intro.html">Why High-Dimensional Statistics?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../00_getting_started/02_datasets.html">Atacama Soil Microbiome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../00_getting_started/03_download_data.html">Download the Tutorial Data</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../01_installation/01_prerequisites.html">Prerequisites &amp; Installation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../01_installation/02_q2_gglasso.html">Installing q2-gglasso</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_installation/03_q2_classo.html">Installing q2-classo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_installation/04_verify.html">Verifying Your Installation</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tier 1 — Low-dimensional example (Atacama, 13 ASVs)</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../02_lowdim_gglasso/00_index.html">Graphical Lasso Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/01_data_preparation.html">Data Preparation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/02_sgl.html">Single Graphical Lasso</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/03_slr.html">Sparse + Low-Rank (Latent Variables)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/04_adaptive_glasso.html">Adaptive Graphical Lasso</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/05_lambda_paths.html">Regularization Paths &amp; Model Selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/06_multiple_graphical_lasso.html">Multiple Graphical Lasso (GGL / FGL)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/07_pca.html">Latent-Component PCA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/08_summarize.html">Summarizing a Solution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/09_interpretation.html">Interpretation</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../03_lowdim_classo/00_overview.html">Log-Contrast Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/01_generate_data.html">Synthetic Data with Known Truth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/02_data_preparation.html">Data Preparation</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../03_lowdim_classo/03_regression/00_index.html">Regression</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../03_lowdim_classo/03_regression/01_logcontrast.html">Log-Contrast</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../03_lowdim_classo/03_regression/02_trac.html">With trac</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../03_lowdim_classo/04_classification/00_index.html">Classification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../03_lowdim_classo/04_classification/01_logcontrast.html">Log-Contrast</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../03_lowdim_classo/04_classification/02_trac.html">With trac</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/05_advanced/01_concomitant_formulation.html">Advanced: Concomitant Formulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/05_advanced/02_model_selection.html">Advanced: Choosing a Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/06_predict_and_summarize.html">Predict &amp; Summarize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/07_interpretation.html">Interpretation</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tier 2 — High-dimensional example (Atacama, 300 ASVs)</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="00_index.html">Overview</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="01_data.html">The 300-ASV Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_model_selection.html">Selecting lambda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_slr_ranks.html">Choosing the Latent Rank</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Latent Components &amp; Covariates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05_classo_cv.html">Log-Contrast Models at Scale</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06_interpretation.html">Interpretation</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tier 3 — Metagenomics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../05_metagenomics/00_index.html">Overview</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../05_metagenomics/01_gut_to_soil/00_index.html">Gut-to-Soil (16S, 335 ASVs x 99 samples)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../05_metagenomics/01_gut_to_soil/01_data.html">The Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_metagenomics/01_gut_to_soil/02_network.html">Network Inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_metagenomics/01_gut_to_soil/03_regression.html">Log-Contrast Regression</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../90_reference/01_command_coverage.html">Command Coverage Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../90_reference/02_gglasso_parameters.html">q2-gglasso Parameter Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../90_reference/03_classo_parameters.html">q2-classo Parameter Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../90_reference/04_troubleshooting.html">Troubleshooting &amp; Known Gotchas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../99_appendix/01_math.html">Appendix: Mathematical Background</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../99_appendix/02_moshpit_cocoa_note.html">Appendix: Shotgun Metagenomics (MOSHPIT cocoa)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/chapters/04_highdim_atacama/04_latent_pca.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Latent Components & Covariates</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#before-you-run-it">Before you run it</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#p-n-components-must-not-exceed-the-achieved-rank"><code class="docutils literal notranslate"><span class="pre">--p-n-components</span></code> must not exceed the achieved rank</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#first-run-the-default-seq-depth-colouring">First run: the default <code class="docutils literal notranslate"><span class="pre">seq-depth</span></code> colouring</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#then-colour-by-an-environmental-variable">Then: colour by an environmental variable</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#two-practical-points-about-the-metadata">Two practical points about the metadata</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#categorical-variables-have-to-be-recoded">Categorical variables have to be recoded</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#correlating-the-components-with-covariates-properly">Correlating the components with covariates properly</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-to-do-with-the-answer">What to do with the answer</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next">Next</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="latent-components-covariates">
+<h1>Latent Components &amp; Covariates<a class="headerlink" href="#latent-components-covariates" title="Link to this heading">#</a></h1>
+<p><a class="reference internal" href="03_slr_ranks.html"><span class="std std-doc">Choosing the Latent Rank</span></a> produced a low-rank block <span class="math notranslate nohighlight">\(\hat{L}\)</span>
+and an integer — its rank — and then argued about which integer to keep. That
+argument was made on parsimony and identifiability grounds, without once looking
+at what the latent dimensions actually <em>are</em>. This page looks.</p>
+<p><code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">gglasso</span> <span class="pre">pca</span></code> projects the samples onto the eigenvectors of <span class="math notranslate nohighlight">\(\hat{L}\)</span> and
+plots them. The mechanics were covered in
+<a class="reference internal" href="../02_lowdim_gglasso/07_pca.html"><span class="std std-doc">Latent-Component PCA</span></a> and are not repeated. What
+Tier 2 adds is the thing the 13-ASV example could not support: <strong>a real question
+with a checkable answer</strong>. Is the latent block modelling the Atacama aridity
+transect, or is it modelling sequencing depth? A rank-2 subspace has exactly two
+directions, the study has a small number of plausible global drivers, and there
+are measured covariates for most of them. That makes the correspondence testable
+rather than decorative.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>No figure, correlation or component-to-covariate assignment on this page has been
+computed; everything here is <strong>pending verification against QIIME 2 2026.7</strong>. The
+procedure is what is being documented — not its result.</p>
+</div>
+<section id="before-you-run-it">
+<h2>Before you run it<a class="headerlink" href="#before-you-run-it" title="Link to this heading">#</a></h2>
+<p>Two prerequisites, both of which fail unhelpfully:</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p><strong>The solution must come from <code class="docutils literal notranslate"><span class="pre">--p-latent</span></code>.</strong> <code class="docutils literal notranslate"><span class="pre">pca</span></code> reads <code class="docutils literal notranslate"><span class="pre">solution/lowrank_</span></code>,
+which exists only for a latent problem. The SGL solution from
+<a class="reference internal" href="02_model_selection.html"><span class="std std-doc">Selecting lambda</span></a> will not work.</p>
+<p><strong><code class="docutils literal notranslate"><span class="pre">--m-sample-metadata-file</span></code> is effectively required.</strong> It is registered as an
+optional <code class="docutils literal notranslate"><span class="pre">Metadata</span></code> parameter but is dereferenced unconditionally; omitting it
+raises an <code class="docutils literal notranslate"><span class="pre">AttributeError</span></code> on <code class="docutils literal notranslate"><span class="pre">NoneType</span></code>.</p>
+</div>
+<p>Both are in <a class="reference internal" href="../90_reference/04_troubleshooting.html"><span class="std std-doc">Troubleshooting</span></a>. A third
+constraint is specific to this tier and is worth its own section.</p>
+</section>
+<section id="p-n-components-must-not-exceed-the-achieved-rank">
+<h2><code class="docutils literal notranslate"><span class="pre">--p-n-components</span></code> must not exceed the achieved rank<a class="headerlink" href="#p-n-components-must-not-exceed-the-achieved-rank" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">pca</span></code> validates <code class="docutils literal notranslate"><span class="pre">n_components</span> <span class="pre">&lt;=</span> <span class="pre">rank(L)</span></code> up front and raises</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">n_components</span> <span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="n">exceeds</span> <span class="n">the</span> <span class="n">rank</span> <span class="n">of</span> <span class="n">the</span> <span class="n">low</span><span class="o">-</span><span class="n">rank</span> <span class="n">component</span> <span class="p">(</span><span class="n">R</span><span class="p">)</span><span class="o">.</span>
+<span class="n">Pass</span> <span class="o">--</span><span class="n">p</span><span class="o">-</span><span class="n">n</span><span class="o">-</span><span class="n">components</span> <span class="n">R</span> <span class="ow">or</span> <span class="n">lower</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>The pair-plot repeats the check as a defensive assertion, worded
+<code class="docutils literal notranslate"><span class="pre">n_components</span> <span class="pre">(N)</span> <span class="pre">is</span> <span class="pre">greater</span> <span class="pre">than</span> <span class="pre">the</span> <span class="pre">rank</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">low-rank</span> <span class="pre">component</span> <span class="pre">(R)</span></code>.
+Requesting exactly as many components as the achieved rank is legitimate — the
+limit is the rank itself, not one below it:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Solution</p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(\mu_1\)</span></p></th>
+<th class="head"><p>Achieved rank</p></th>
+<th class="head"><p>Largest usable <code class="docutils literal notranslate"><span class="pre">--p-n-components</span></code></p></th>
+<th class="head"><p>Pair-plot</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">atacama-top-300-slr-lambda0.8-rank2.qza</span></code></p></td>
+<td><p>15</p></td>
+<td><p>2</p></td>
+<td><p>2</p></td>
+<td><p>1 panel</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">atacama-top-300-slr-lambda0.8-mu10.qza</span></code></p></td>
+<td><p>10</p></td>
+<td><p>5</p></td>
+<td><p>5</p></td>
+<td><p>up to 10 panels</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">atacama-top-300-slr-lambda0.8-mu7.5.qza</span></code></p></td>
+<td><p>7.5</p></td>
+<td><p>10</p></td>
+<td><p>10</p></td>
+<td><p>up to 45 panels</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>These ranks are <strong>measured</strong>, not targets — each was read out of the fitted
+solution, and they are the same values the generated map in
+<a class="reference internal" href="03_slr_ranks.html"><span class="std std-doc">Choosing the Latent Rank</span></a> reports.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Still read the achieved rank out of <em>your own</em> solution before choosing
+<code class="docutils literal notranslate"><span class="pre">--p-n-components</span></code> rather than copying the table: a different <span class="math notranslate nohighlight">\(\lambda\)</span>, a
+different covariance matrix, or a different GGLasso build can all shift it. If the
+rank came back lower than expected, the command fails on the guard rather than on
+anything you can see in the CLI. Leave yourself a margin rather than sizing
+exactly to a reported rank: the guard uses <code class="docutils literal notranslate"><span class="pre">np.linalg.matrix_rank</span></code>, whose default
+tolerance is far finer than the <code class="docutils literal notranslate"><span class="pre">1e-9</span></code> eigenvalue cut the projection itself
+applies, so it can admit a value for which fewer components actually materialize.</p>
+</div>
+<p>The canonical rank-2 model is still the thin case. Rank 2 admits at most
+<code class="docutils literal notranslate"><span class="pre">--p-n-components</span> <span class="pre">2</span></code>, which fills exactly one panel of the pair-plot grid — PC1
+against PC2, the same scatter the <strong>Single plot</strong> tab draws by default. So at
+rank 2 the pair-plot tells you nothing the single plot does not, and the single
+plot shows you the entire latent subspace in one scatter. That is not a
+consolation prize — it is the whole model.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>At <code class="docutils literal notranslate"><span class="pre">--p-n-components</span> <span class="pre">1</span></code> there is no pair for the grid to draw at all. Whether
+that renders as blank panels or errors out is <strong>pending verification against
+QIIME 2 2026.7</strong>; either way, read the Single plot tab.</p>
+</div>
+</section>
+<section id="first-run-the-default-seq-depth-colouring">
+<h2>First run: the default <code class="docutils literal notranslate"><span class="pre">seq-depth</span></code> colouring<a class="headerlink" href="#first-run-the-default-seq-depth-colouring" title="Link to this heading">#</a></h2>
+<p>If you omit <code class="docutils literal notranslate"><span class="pre">--p-color-by</span></code>, the visualizer sums each sample’s row of the input
+table, rescales those sums to <span class="math notranslate nohighlight">\([0, 1]\)</span>, adds them as a <code class="docutils literal notranslate"><span class="pre">seq-depth</span></code> column and
+colours by that. On a count table that row sum is the library size. On the
+clr-transformed table used here it is not — read the warning below before you
+draw any conclusion from these colours.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>gglasso<span class="w"> </span>pca<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-table<span class="w"> </span>atacama-top-300-clr.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-solution<span class="w"> </span>atacama-top-300-slr-lambda0.8-rank2.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--m-sample-metadata-file<span class="w"> </span>sample-metadata.tsv<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-n-components<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-visualization<span class="w"> </span>atacama-top-300-rank2-pca-seqdepth.qzv
+</pre></div>
+</div>
+<p><strong>Explanation:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--i-table</span></code>: the <strong>transformed</strong> table — the same artifact that
+<code class="docutils literal notranslate"><span class="pre">calculate-covariance</span></code> consumed in <a class="reference internal" href="01_data.html"><span class="std std-doc">The 300-ASV Dataset</span></a>. The
+projection is a matrix product between this table and the eigenvectors of
+<span class="math notranslate nohighlight">\(\hat{L}\)</span>, so the features must be the same 300, in the same order. Raw counts
+give either a shape error or a silently meaningless plot.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--i-solution</span></code>: the canonical rank-2 SLR solution.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--m-sample-metadata-file</span></code>: mandatory in practice, as above.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--p-n-components</span> <span class="pre">1</span></code>: all this check needs. It reads off the <strong>Single plot</strong>
+tab, which always draws PC1 against PC2 regardless of this value. Rank 2 would
+admit <code class="docutils literal notranslate"><span class="pre">2</span></code>, but the extra component only buys the one pair-plot panel that the
+single plot already shows.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--o-visualization</span></code>: view with <code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">tools</span> <span class="pre">view</span></code> or at
+<a class="reference external" href="https://view.qiime2.org/">QIIME 2 View</a>.</p></li>
+</ul>
+<p>The question worth settling before any biological reading is whether the leading
+latent direction is a technical artefact. A low-rank block is exactly the sort of
+structure that library-size variation produces, and if PC1 lines up with library
+size then the first latent dimension is bookkeeping, not ecology, and every
+biological reading below is unsafe. Rule it out first, in writing, before moving
+on.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The default <code class="docutils literal notranslate"><span class="pre">seq-depth</span></code> colouring cannot settle it on a clr table. clr centres
+each sample across features, so every row of <code class="docutils literal notranslate"><span class="pre">atacama-top-300-clr.qza</span></code> sums to
+zero up to floating-point error; <code class="docutils literal notranslate"><span class="pre">seq-depth</span></code> then rescales that residual numerical
+noise to <span class="math notranslate nohighlight">\([0, 1]\)</span> and produces a full colour gradient that carries no information
+about library size. It looks like a depth gradient and is not one, and “PC1 does
+not track <code class="docutils literal notranslate"><span class="pre">seq-depth</span></code>” on this table is a guaranteed pass rather than a result.
+To run the check for real, add the per-sample total of the <strong>raw</strong> count table to
+<code class="docutils literal notranslate"><span class="pre">sample-metadata.tsv</span></code> as a numeric column and pass that column via
+<code class="docutils literal notranslate"><span class="pre">--p-color-by</span></code>. Treat the run above as a smoke test that the projection renders.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">seq-depth</span></code> fallback does not infer the sample axis from the table’s shape.
+<code class="docutils literal notranslate"><span class="pre">pca</span></code> orients the table against the low-rank component first — the axis with <span class="math notranslate nohighlight">\(p\)</span>
+entries is the feature axis — and the helper then sums over features
+unconditionally, so the column is per-sample whatever the <span class="math notranslate nohighlight">\(p/N\)</span> ratio. The same
+default is therefore safe to carry over to tables with more samples than
+features.</p>
+</div>
+</section>
+<section id="then-colour-by-an-environmental-variable">
+<h2>Then: colour by an environmental variable<a class="headerlink" href="#then-colour-by-an-environmental-variable" title="Link to this heading">#</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>gglasso<span class="w"> </span>pca<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-table<span class="w"> </span>atacama-top-300-clr.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-solution<span class="w"> </span>atacama-top-300-slr-lambda0.8-rank2.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--m-sample-metadata-file<span class="w"> </span>sample-metadata.tsv<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-n-components<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-color-by<span class="w"> </span>elevation<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-visualization<span class="w"> </span>atacama-top-300-rank2-pca-elevation.qzv
+</pre></div>
+</div>
+<p>Repeat with <code class="docutils literal notranslate"><span class="pre">--p-color-by</span> <span class="pre">ph</span></code> and
+<code class="docutils literal notranslate"><span class="pre">--p-color-by</span> <span class="pre">average-soil-relative-humidity</span></code>. Elevation is the natural first
+choice here because the Atacama sampling design is a transect
+<span class="bibtex-citation" id="id1">[<a class="reference internal" href="../../references.html#id6" title="Julia W Neilson, Katy Califf, Cesar Cardona, Audrey Copeland, Will Van Treuren, Karen L Josephson, Rob Knight, Jack A Gilbert, Jay Quade, J Gregory Caporaso, and others. Significant impacts of increasing aridity on the arid soil microbiome. MSystems, 2(3):e00195–16, 2017.">6</a>]</span>: elevation is a proxy for the aridity gradient
+that organises the whole study, and if any single measured variable is going to
+be standing behind a latent dimension, it is that one.</p>
+<p>The higher-rank fits are where the pair-plot earns its place:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>gglasso<span class="w"> </span>pca<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-table<span class="w"> </span>atacama-top-300-clr.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-solution<span class="w"> </span>atacama-top-300-slr-lambda0.8-mu10.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--m-sample-metadata-file<span class="w"> </span>sample-metadata.tsv<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-n-components<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-color-by<span class="w"> </span>elevation<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-visualization<span class="w"> </span>atacama-top-300-mu10-pca-elevation.qzv
+</pre></div>
+</div>
+<p>Use it to answer one question: <strong>do components 3 and 4 separate anything?</strong> If
+the rank-5 fit’s extra dimensions show no structure against any covariate you
+measured, that is direct support for the rank-2 choice made on other grounds in
+<a class="reference internal" href="03_slr_ranks.html"><span class="std std-doc">Choosing the Latent Rank</span></a>. If they do show structure, the
+rank-2 model is throwing away something real and the argument has to be reopened.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The rendered visualizations are not reproduced here, and no component has been
+matched to a covariate. Pending verification against QIIME 2 2026.7.</p>
+</div>
+<section id="two-practical-points-about-the-metadata">
+<h3>Two practical points about the metadata<a class="headerlink" href="#two-practical-points-about-the-metadata" title="Link to this heading">#</a></h3>
+<p>The visualizer builds a plot grid for <strong>every</strong> numeric metadata column and then
+displays the one named by <code class="docutils literal notranslate"><span class="pre">--p-color-by</span></code>. With the full Atacama metadata that is
+a lot of grids, at six panels each for the rank-5 fit above (<code class="docutils literal notranslate"><span class="pre">--p-n-components</span> <span class="pre">4</span></code>
+gives <span class="math notranslate nohighlight">\(\binom{4}{2} = 6\)</span> scatter panels, laid out on a 4 × 4 grid), and the run
+time scales with the number of numeric columns rather than with the number you
+asked to see. If it is slow, pass a reduced metadata TSV containing only the
+columns you care about.</p>
+<p>The colour scale is built from the plain minimum and maximum of the chosen
+column and is not missing-value aware. A column with <code class="docutils literal notranslate"><span class="pre">NaN</span></code> entries can produce a
+degenerate colour mapping. Prefer a complete column, or fill the gaps before
+plotting, and remember that the mean-imputed outcomes file used in
+<a class="reference internal" href="05_classo_cv.html"><span class="std std-doc">Log-Contrast Models at Scale</span></a> is a different file with a
+different treatment of missingness — do not mix the two and then compare plots.</p>
+</section>
+</section>
+<section id="categorical-variables-have-to-be-recoded">
+<h2>Categorical variables have to be recoded<a class="headerlink" href="#categorical-variables-have-to-be-recoded" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">--p-color-by</span></code> sees numeric columns only: the metadata is filtered with
+<code class="docutils literal notranslate"><span class="pre">filter_columns(column_type=&quot;numeric&quot;)</span></code> before anything is plotted, so
+<code class="docutils literal notranslate"><span class="pre">transect-name</span></code> and <code class="docutils literal notranslate"><span class="pre">vegetation</span></code> are gone by the time your string is looked up,
+and naming either one fails on a missing column. This is not a small loss —
+<code class="docutils literal notranslate"><span class="pre">transect-name</span></code> (Baquedano vs Yungay) is the top-level design variable of the
+study.</p>
+<p>Recode them into numeric indicators in a copy of the metadata:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">qiime2</span>
+
+<span class="n">md</span> <span class="o">=</span> <span class="n">qiime2</span><span class="o">.</span><span class="n">Metadata</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;sample-metadata.tsv&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to_dataframe</span><span class="p">()</span>
+<span class="n">md</span><span class="p">[</span><span class="s2">&quot;vegetation-numeric&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">md</span><span class="p">[</span><span class="s2">&quot;vegetation&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">({</span><span class="s2">&quot;no&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;yes&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
+<span class="n">md</span><span class="p">[</span><span class="s2">&quot;transect-numeric&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">md</span><span class="p">[</span><span class="s2">&quot;transect-name&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">({</span><span class="s2">&quot;Baquedano&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;Yungay&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
+<span class="n">qiime2</span><span class="o">.</span><span class="n">Metadata</span><span class="p">(</span><span class="n">md</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;sample-metadata-numeric.tsv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>gglasso<span class="w"> </span>pca<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-table<span class="w"> </span>atacama-top-300-clr.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-solution<span class="w"> </span>atacama-top-300-slr-lambda0.8-rank2.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--m-sample-metadata-file<span class="w"> </span>sample-metadata-numeric.tsv<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-n-components<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-color-by<span class="w"> </span>transect-numeric<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-visualization<span class="w"> </span>atacama-top-300-rank2-pca-transect.qzv
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>A 0/1 column drawn on a continuous colour scale is a crude two-colour plot, and
+that is all it should be used for: seeing whether the two groups fall in
+different regions of the latent plane. It is not a test. If the separation looks
+real, test it properly — a Mann–Whitney or permutation test on the component
+scores — rather than reporting the picture. The same recoding trick is what makes
+these variables usable as grouping factors in
+<a class="reference internal" href="../02_lowdim_gglasso/06_multiple_graphical_lasso.html"><span class="std std-doc">Multiple Graphical Lasso</span></a>.</p>
+</div>
+</section>
+<section id="correlating-the-components-with-covariates-properly">
+<h2>Correlating the components with covariates properly<a class="headerlink" href="#correlating-the-components-with-covariates-properly" title="Link to this heading">#</a></h2>
+<p>The plots tell you where to look. The number you report should come from a
+correlation computed outside the visualizer, over every component and every
+covariate at once. This is the quantity the appendix calls <span class="math notranslate nohighlight">\(m_t\)</span>: the strongest
+association between any robust principal component and outcome <span class="math notranslate nohighlight">\(t\)</span>
+(see <a class="reference internal" href="../99_appendix/01_math.html"><span class="std std-doc">Appendix: Mathematical Background</span></a>).</p>
+<p>Export the solution and the transformed table:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>tools<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--input-path<span class="w"> </span>atacama-top-300-slr-lambda0.8-rank2.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--output-path<span class="w"> </span>slr-rank2-export
+
+qiime<span class="w"> </span>tools<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--input-path<span class="w"> </span>atacama-top-300-clr.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--output-path<span class="w"> </span>clr-export
+</pre></div>
+</div>
+<p>Then compute the projection with the same helper the visualizer uses, so the
+components are identical to the ones you looked at:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">biom</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">qiime2</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">zarr</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">stats</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">q2_gglasso.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">PCA</span>
+
+<span class="n">store</span> <span class="o">=</span> <span class="n">zarr</span><span class="o">.</span><span class="n">ZipStore</span><span class="p">(</span><span class="s2">&quot;slr-rank2-export/problem.zip&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
+<span class="n">root</span> <span class="o">=</span> <span class="n">zarr</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">store</span><span class="o">=</span><span class="n">store</span><span class="p">)</span>
+<span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">root</span><span class="p">[</span><span class="s2">&quot;solution/lowrank_&quot;</span><span class="p">])</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">matrix_rank</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>  <span class="c1"># the reported rank; see the caveat below</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">biom</span><span class="o">.</span><span class="n">load_table</span><span class="p">(</span><span class="s2">&quot;clr-export/feature-table.biom&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to_dataframe</span><span class="p">(</span><span class="n">dense</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="n">L</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span>
+<span class="k">assert</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">L</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;table and low-rank block disagree on p&quot;</span>
+
+<span class="c1"># proj is n_samples x r: the robust principal components</span>
+<span class="n">proj</span><span class="p">,</span> <span class="n">loadings</span><span class="p">,</span> <span class="n">eigv</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">inverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">md</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">qiime2</span><span class="o">.</span><span class="n">Metadata</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;sample-metadata.tsv&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">filter_columns</span><span class="p">(</span><span class="n">column_type</span><span class="o">=</span><span class="s2">&quot;numeric&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">to_dataframe</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">md</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+    <span class="n">keep</span> <span class="o">=</span> <span class="n">md</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">notna</span><span class="p">()</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">keep</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">:</span>
+        <span class="k">continue</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">proj</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+        <span class="n">rho</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">spearmanr</span><span class="p">(</span><span class="n">md</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">keep</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="n">proj</span><span class="p">[</span><span class="n">keep</span><span class="p">,</span> <span class="n">j</span><span class="p">])</span>
+        <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;covariate&quot;</span><span class="p">:</span> <span class="n">col</span><span class="p">,</span> <span class="s2">&quot;component&quot;</span><span class="p">:</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;rho&quot;</span><span class="p">:</span> <span class="n">rho</span><span class="p">,</span> <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="n">p</span><span class="p">})</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span>
+<span class="n">m_t</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">abs_rho</span><span class="o">=</span><span class="n">res</span><span class="p">[</span><span class="s2">&quot;rho&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">abs</span><span class="p">())</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+    <span class="k">lambda</span> <span class="n">d</span><span class="p">:</span> <span class="n">d</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;covariate&quot;</span><span class="p">)[</span><span class="s2">&quot;abs_rho&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()</span>
+<span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">m_t</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;abs_rho&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The loop runs over <code class="docutils literal notranslate"><span class="pre">proj.shape[1]</span></code>, not over <code class="docutils literal notranslate"><span class="pre">r</span></code>. The two are usually the same
+number, but they are not the same threshold. <code class="docutils literal notranslate"><span class="pre">np.linalg.matrix_rank</span></code> counts
+singular values above <code class="docutils literal notranslate"><span class="pre">max(shape)</span> <span class="pre">*</span> <span class="pre">eps</span> <span class="pre">*</span> <span class="pre">sigma_max</span></code>, which for a 300 × 300 block
+with eigenvalues of order 1 is on the order of <span class="math notranslate nohighlight">\(10^{-13}\)</span>; <code class="docutils literal notranslate"><span class="pre">PCA</span></code> keeps only
+eigenvalues above a hard <code class="docutils literal notranslate"><span class="pre">1e-9</span></code>, and it drops the negative near-zero eigenvalues
+that <code class="docutils literal notranslate"><span class="pre">matrix_rank</span></code> counts as magnitudes. So <code class="docutils literal notranslate"><span class="pre">r</span> <span class="pre">&gt;=</span> <span class="pre">proj.shape[1]</span></code> always, and
+indexing <code class="docutils literal notranslate"><span class="pre">proj[:,</span> <span class="pre">j]</span></code> with <code class="docutils literal notranslate"><span class="pre">j</span></code> running up to <code class="docutils literal notranslate"><span class="pre">r</span></code> can over-run the array whenever
+an eigenvalue lands between the two cuts. Size the loop to the projection you
+actually got.</p>
+<p>The same <code class="docutils literal notranslate"><span class="pre">range(r)</span></code> pattern appears inside the plugin — <code class="docutils literal notranslate"><span class="pre">utils.correlated_PC</span></code>
+and the <code class="docutils literal notranslate"><span class="pre">pca</span></code> visualizer both build their component lists from the reported rank
+— so if you use those helpers instead, the same caveat applies.</p>
+</div>
+<p>Four things about that code deserve a comment, because they are where this
+analysis usually goes wrong.</p>
+<p><strong>The orientation check is not paranoia.</strong> <code class="docutils literal notranslate"><span class="pre">X</span></code> must have samples in rows and the
+<span class="math notranslate nohighlight">\(p\)</span> features in columns for the matrix product to mean anything, and the stored
+orientation of a transformed q2-gglasso table is not the one you would guess for
+a feature table. Checking the shape against <code class="docutils literal notranslate"><span class="pre">L</span></code> costs nothing and catches a
+transposition that would otherwise produce numbers rather than an error.</p>
+<p><strong>Spearman rather than Pearson.</strong> Environmental covariates in this study are not
+symmetric and the relationship between a latent axis and a gradient need not be
+linear. A rank correlation asks the question you actually mean: do samples order
+the same way on both.</p>
+<p><strong>Multiplicity.</strong> You are running <span class="math notranslate nohighlight">\(r \times\)</span> (number of numeric covariates)
+tests, which for the rank-5 fit against the full Atacama metadata is on the order
+of a hundred. Report Benjamini–Hochberg-adjusted values across the whole set, not
+the smallest raw <span class="math notranslate nohighlight">\(p\)</span> you find. With <span class="math notranslate nohighlight">\(n = 54\)</span> the confidence interval on any one
+<span class="math notranslate nohighlight">\(\rho\)</span> is wide; a <span class="math notranslate nohighlight">\(\rho\)</span> of 0.4 and a <span class="math notranslate nohighlight">\(\rho\)</span> of 0.6 are not distinguishable here.</p>
+<p><strong>Sign and rotation.</strong> Eigenvectors are defined up to sign, so the sign of <span class="math notranslate nohighlight">\(\rho\)</span>
+is not interpretable — only <span class="math notranslate nohighlight">\(|\rho|\)</span> is. And components with close eigenvalues
+are defined only up to rotation within their shared subspace, so at rank 2 with
+two similar eigenvalues, “PC1 is elevation, PC2 is humidity” is not a supportable
+claim; “the latent plane is spanned by the aridity gradient” may be. Check the
+eigenvalue separation (<code class="docutils literal notranslate"><span class="pre">eigv</span></code> above) before attributing anything to an individual
+axis.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><code class="docutils literal notranslate"><span class="pre">q2_gglasso.utils.correlated_PC</span></code> packages this loop and prints every
+component-covariate Spearman correlation as it goes. It is convenient for a first
+look, but read the printed lines rather than the returned dictionary: the
+dictionary holds one entry per covariate and later components overwrite earlier
+ones, so a covariate that correlates with two components is reported only for the
+last of them.</p>
+</div>
+</section>
+<section id="what-to-do-with-the-answer">
+<h2>What to do with the answer<a class="headerlink" href="#what-to-do-with-the-answer" title="Link to this heading">#</a></h2>
+<p>Three outcomes, three next steps.</p>
+<p><strong>A component tracks library size</strong> — the raw-count total you added to the
+metadata above, not the <code class="docutils literal notranslate"><span class="pre">seq-depth</span></code> column the visualizer derives from a clr
+table. The latent block is absorbing a technical gradient. That is the SLR model
+doing its job — those directions are no longer contaminating the sparse edges —
+but it also means that dimension carries no biology, and any statement of the
+form “there are two latent environmental factors” has to lose one.</p>
+<p><strong>A component tracks a measured covariate.</strong> You have identified a confounder
+that you actually measured, which means you no longer have to leave it latent.
+Append it to the table with <code class="docutils literal notranslate"><span class="pre">transform-features</span> <span class="pre">--p-add-metadata</span></code> and re-fit, as
+in <a class="reference internal" href="../02_lowdim_gglasso/04_adaptive_glasso.html"><span class="std std-doc">Adaptive Graphical Lasso</span></a>, so the
+variable is in the model explicitly and the remaining edges are conditional on
+it. Comparing the edge sets before and after is what turns “there is confounding”
+into “these specific edges were environment-mediated” —
+<a class="reference internal" href="06_interpretation.html"><span class="std std-doc">Interpretation</span></a> sets out that comparison.</p>
+<p><strong>A component tracks nothing you measured.</strong> A candidate unmeasured driver: an
+unrecorded gradient, a collection batch, an extraction run. It is a hypothesis to
+take back to the study design, not a finding. Note that this is the case the
+sparse + low-rank model exists for <span class="bibtex-citation" id="id2">[<a class="reference internal" href="../../references.html#id9" title="Venkat Chandrasekaran, Pablo A Parrilo, and Alan S Willsky. Latent variable graphical model selection via convex optimization. In 2010 48th Annual Allerton Conference on Communication, Control, and Computing (Allerton), 1610–1613. IEEE, 2010.">20</a>, <a class="reference internal" href="../../references.html#id17" title="Zachary D Kurtz, Richard Bonneau, and Christian L Müller. Disentangling microbial associations from hidden environmental and technical factors via latent graphical models. BioRxiv, pages 2019–12, 2019.">21</a>]</span>
+— being unable to name the axis does not mean the decomposition failed.</p>
+</section>
+<section id="next">
+<h2>Next<a class="headerlink" href="#next" title="Link to this heading">#</a></h2>
+<p><a class="reference internal" href="06_interpretation.html"><span class="std std-doc">Interpretation</span></a> puts the sparse block and the latent block
+back together, and asks whether the latent subspace found here is the same
+structure the log-contrast models in
+<a class="reference internal" href="05_classo_cv.html"><span class="std std-doc">Log-Contrast Models at Scale</span></a> are exploiting.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters/04_highdim_atacama"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="03_slr_ranks.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Choosing the Latent Rank</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="05_classo_cv.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">High-Dimensional Example: q2-classo on 300 Atacama ASVs</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#before-you-run-it">Before you run it</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#p-n-components-must-not-exceed-the-achieved-rank"><code class="docutils literal notranslate"><span class="pre">--p-n-components</span></code> must not exceed the achieved rank</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#first-run-the-default-seq-depth-colouring">First run: the default <code class="docutils literal notranslate"><span class="pre">seq-depth</span></code> colouring</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#then-colour-by-an-environmental-variable">Then: colour by an environmental variable</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#two-practical-points-about-the-metadata">Two practical points about the metadata</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#categorical-variables-have-to-be-recoded">Categorical variables have to be recoded</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#correlating-the-components-with-covariates-properly">Correlating the components with covariates properly</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-to-do-with-the-answer">What to do with the answer</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next">Next</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Biomedical Statistics and Data Science Group @ LMU & Helmholtz Munich
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

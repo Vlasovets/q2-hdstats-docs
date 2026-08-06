@@ -1,0 +1,950 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Download the Tutorial Data &#8212; High-dimensional Statistics with QIIME 2</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles.css?v=3437f865" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/00_getting_started/03_download_data';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Installation" href="../01_installation/01_prerequisites.html" />
+    <link rel="prev" title="Atacama Soil Microbiome" href="02_datasets.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo_light.svg" class="logo__image only-light" alt="High-dimensional Statistics with QIIME 2 - Home"/>
+    <img src="../../_static/logo_dark.svg" class="logo__image only-dark pst-js-only" alt="High-dimensional Statistics with QIIME 2 - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_intro.html">Why High-Dimensional Statistics?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_datasets.html">Atacama Soil Microbiome</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Download the Tutorial Data</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../01_installation/01_prerequisites.html">Prerequisites &amp; Installation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../01_installation/02_q2_gglasso.html">Installing q2-gglasso</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_installation/03_q2_classo.html">Installing q2-classo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_installation/04_verify.html">Verifying Your Installation</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tier 1 — Low-dimensional example (Atacama, 13 ASVs)</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../02_lowdim_gglasso/00_index.html">Graphical Lasso Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/01_data_preparation.html">Data Preparation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/02_sgl.html">Single Graphical Lasso</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/03_slr.html">Sparse + Low-Rank (Latent Variables)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/04_adaptive_glasso.html">Adaptive Graphical Lasso</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/05_lambda_paths.html">Regularization Paths &amp; Model Selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/06_multiple_graphical_lasso.html">Multiple Graphical Lasso (GGL / FGL)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/07_pca.html">Latent-Component PCA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/08_summarize.html">Summarizing a Solution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/09_interpretation.html">Interpretation</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../03_lowdim_classo/00_overview.html">Log-Contrast Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/01_generate_data.html">Synthetic Data with Known Truth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/02_data_preparation.html">Data Preparation</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../03_lowdim_classo/03_regression/00_index.html">Regression</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../03_lowdim_classo/03_regression/01_logcontrast.html">Log-Contrast</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../03_lowdim_classo/03_regression/02_trac.html">With trac</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../03_lowdim_classo/04_classification/00_index.html">Classification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../03_lowdim_classo/04_classification/01_logcontrast.html">Log-Contrast</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../03_lowdim_classo/04_classification/02_trac.html">With trac</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/05_advanced/01_concomitant_formulation.html">Advanced: Concomitant Formulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/05_advanced/02_model_selection.html">Advanced: Choosing a Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/06_predict_and_summarize.html">Predict &amp; Summarize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/07_interpretation.html">Interpretation</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tier 2 — High-dimensional example (Atacama, 300 ASVs)</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../04_highdim_atacama/00_index.html">Overview</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../04_highdim_atacama/01_data.html">The 300-ASV Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_highdim_atacama/02_model_selection.html">Selecting lambda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_highdim_atacama/03_slr_ranks.html">Choosing the Latent Rank</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_highdim_atacama/04_latent_pca.html">Latent Components &amp; Covariates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_highdim_atacama/05_classo_cv.html">Log-Contrast Models at Scale</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_highdim_atacama/06_interpretation.html">Interpretation</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tier 3 — Metagenomics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../05_metagenomics/00_index.html">Overview</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../05_metagenomics/01_gut_to_soil/00_index.html">Gut-to-Soil (16S, 335 ASVs x 99 samples)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../05_metagenomics/01_gut_to_soil/01_data.html">The Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_metagenomics/01_gut_to_soil/02_network.html">Network Inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_metagenomics/01_gut_to_soil/03_regression.html">Log-Contrast Regression</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../90_reference/01_command_coverage.html">Command Coverage Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../90_reference/02_gglasso_parameters.html">q2-gglasso Parameter Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../90_reference/03_classo_parameters.html">q2-classo Parameter Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../90_reference/04_troubleshooting.html">Troubleshooting &amp; Known Gotchas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../99_appendix/01_math.html">Appendix: Mathematical Background</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../99_appendix/02_moshpit_cocoa_note.html">Appendix: Shotgun Metagenomics (MOSHPIT cocoa)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/chapters/00_getting_started/03_download_data.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Download the Tutorial Data</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#where-the-files-go">Where the files go</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-zenodo-record">The Zenodo record</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-manifest">The manifest</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tier-1-atacama-13-asvs">Tier 1 — Atacama, 13 ASVs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tier-2-atacama-300-asvs">Tier 2 — Atacama, 300 ASVs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tier-3-gut-to-soil-16s">Tier 3 — Gut-to-soil (16S)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-cocoa-appendix-has-no-download">The cocoa appendix has no download</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-the-checksums-are-not-ceremony">Why the checksums are not ceremony</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-resulting-tree">The resulting tree</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next">Next</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="download-the-tutorial-data">
+<h1>Download the Tutorial Data<a class="headerlink" href="#download-the-tutorial-data" title="Link to this heading">#</a></h1>
+<p>This is the canonical place for download URLs. Every later chapter assumes the
+files are already on disk under a <code class="docutils literal notranslate"><span class="pre">data/</span></code> directory and refers to them by path
+alone. If a command in a later chapter cannot find its input, the fix is here,
+not there.</p>
+<p>What each dataset contains and why it is in the book is described alongside its
+download block below, tier by tier; the Tier 1 study itself, and the
+<code class="docutils literal notranslate"><span class="pre">ASV-1</span></code> … <code class="docutils literal notranslate"><span class="pre">ASV-13</span></code> labelling, are covered in
+<a class="reference internal" href="02_datasets.html"><span class="std std-doc">Atacama Soil Microbiome</span></a>. Otherwise this page is purely
+mechanical: fetch, verify, lay out.</p>
+<section id="where-the-files-go">
+<h2>Where the files go<a class="headerlink" href="#where-the-files-go" title="Link to this heading">#</a></h2>
+<p>Pick one project directory and stay in it. Every command in the tutorial is
+written relative to that directory, with a <code class="docutils literal notranslate"><span class="pre">data/</span></code> prefix:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>-p<span class="w"> </span>~/q2-hdstats-tutorial/data
+<span class="nb">cd</span><span class="w"> </span>~/q2-hdstats-tutorial
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>A few of the high-dimensional chapters show bare filenames
+(<code class="docutils literal notranslate"><span class="pre">atacama-top-300-correlation.qza</span></code> rather than <code class="docutils literal notranslate"><span class="pre">data/atacama-top-300-correlation.qza</span></code>).
+Either <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">data</span></code> before running those, or add the prefix. Nothing else changes.</p>
+</div>
+</section>
+<section id="the-zenodo-record">
+<h2>The Zenodo record<a class="headerlink" href="#the-zenodo-record" title="Link to this heading">#</a></h2>
+<p>The Atacama artifacts (tiers 1 and 2) are published as a single Zenodo record,
+<strong><code class="docutils literal notranslate"><span class="pre">q2-hdstats-tutorial-data</span></code> v1.0.0</strong>. Publishing them rather than pointing at
+the plugin repositories means the exact bytes used to build this book stay
+citable and stay put.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>The DOI has not been minted yet.</strong> Wherever a base URL is needed below, the
+literal placeholder <code class="docutils literal notranslate"><span class="pre">ZENODO_DOI_PENDING</span></code> stands in for it. The tier 1 and tier 2
+commands on this page therefore cannot be run as written yet — they are the
+shape of the final commands, with one substitution outstanding. Search the
+sources for <code class="docutils literal notranslate"><span class="pre">ZENODO_DOI_PENDING</span></code> to find every place that has to change when the
+record goes live. Tier 3 (below) is downloadable <strong>today</strong>, from its upstream
+tutorial site.</p>
+</div>
+<p>Set the base URL once and reuse it. Every tier 1 and tier 2 block on this page
+assumes this variable is exported in your shell:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Substitute the real record URL here once the DOI is minted.</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">ZENODO_BASE</span><span class="o">=</span>ZENODO_DOI_PENDING
+</pre></div>
+</div>
+</section>
+<section id="the-manifest">
+<h2>The manifest<a class="headerlink" href="#the-manifest" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">docs/_data/manifest.tsv</span></code> in this repository is the machine-checkable index of
+everything the tutorial downloads. It has five tab-separated columns:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Column</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">filename</span></code></p></td>
+<td><p>Basename as it lands on disk</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">tier</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">2</span></code> or <code class="docutils literal notranslate"><span class="pre">3</span></code> — which part of the book needs it</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">bytes</span></code></p></td>
+<td><p>Expected size</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sha256</span></code></p></td>
+<td><p>Expected checksum</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">url</span></code></p></td>
+<td><p>Where it came from (Zenodo for tiers 1–2, the gut-to-soil tutorial site for tier 3)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Prose can drift out of date; the manifest cannot, because it is what the
+verification steps below read. Treat it as authoritative when the two disagree,
+and open an issue.</p>
+<p>Define this helper once — every tier below uses it to turn the manifest into a
+checklist that <code class="docutils literal notranslate"><span class="pre">sha256sum</span> <span class="pre">-c</span></code> understands. It needs a checkout of this
+repository; point <code class="docutils literal notranslate"><span class="pre">MANIFEST</span></code> at wherever yours is:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">MANIFEST</span><span class="o">=</span>~/q2-hdstats-docs/docs/_data/manifest.tsv
+tier_checklist<span class="w"> </span><span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span>awk<span class="w"> </span>-F<span class="s1">&#39;\t&#39;</span><span class="w"> </span>-v<span class="w"> </span><span class="nv">tier</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span><span class="w"> </span><span class="s1">&#39;NR &gt; 1 &amp;&amp; $2 == tier { print $4 &quot;  &quot; $1 }&#39;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$MANIFEST</span><span class="s2">&quot;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Every <code class="docutils literal notranslate"><span class="pre">bytes</span></code> and <code class="docutils literal notranslate"><span class="pre">sha256</span></code> value in the manifest is real</strong> — all 16 rows — and
+each was verified against the file it describes. <code class="docutils literal notranslate"><span class="pre">tier_checklist</span> <span class="pre">N</span> <span class="pre">|</span> <span class="pre">sha256sum</span> <span class="pre">-c</span></code>
+reports <code class="docutils literal notranslate"><span class="pre">OK</span></code> for every tier, so the verification steps below work today.</p>
+<p>The one thing still outstanding is the <strong><code class="docutils literal notranslate"><span class="pre">url</span></code> column for tiers 1 and 2</strong>, which
+reads <code class="docutils literal notranslate"><span class="pre">ZENODO_DOI_PENDING</span></code> until the record is minted. So you can verify files you
+already have, but the <code class="docutils literal notranslate"><span class="pre">curl</span></code> commands for those two tiers cannot fetch them yet.
+Tier 3 downloads from its upstream tutorial site and works end to end.</p>
+</div>
+</section>
+<section id="tier-1-atacama-13-asvs">
+<h2>Tier 1 — Atacama, 13 ASVs<a class="headerlink" href="#tier-1-atacama-13-asvs" title="Link to this heading">#</a></h2>
+<p>The reference tier. Every action in both plugins gets its one canonical
+demonstration here, on a table small enough to print in full.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>~/q2-hdstats-tutorial/data
+curl<span class="w"> </span>-L<span class="w"> </span>-O<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">ZENODO_BASE</span><span class="si">}</span><span class="s2">/atacama-counts.qza&quot;</span>
+curl<span class="w"> </span>-L<span class="w"> </span>-O<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">ZENODO_BASE</span><span class="si">}</span><span class="s2">/classification.qza&quot;</span>
+curl<span class="w"> </span>-L<span class="w"> </span>-O<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">ZENODO_BASE</span><span class="si">}</span><span class="s2">/selected-atacama-sample-metadata.tsv&quot;</span>
+curl<span class="w"> </span>-L<span class="w"> </span>-O<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">ZENODO_BASE</span><span class="si">}</span><span class="s2">/atacama-selected-covariates-veg.tsv&quot;</span>
+</pre></div>
+</div>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>File</p></th>
+<th class="head"><p>What it is</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">atacama-counts.qza</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">FeatureTable[Frequency]</span></code>, 13 ASVs × 50 samples. Feature IDs are MD5 hashes; the <code class="docutils literal notranslate"><span class="pre">ASV-1</span></code> … <code class="docutils literal notranslate"><span class="pre">ASV-13</span></code> labels used throughout the tier-1 chapters are a <em>presentational</em> renaming applied in the book, not something a command emits — the mapping table is in <a class="reference internal" href="02_datasets.html"><span class="std std-doc">Atacama Soil Microbiome</span></a>. The tier-1 <code class="docutils literal notranslate"><span class="pre">transform-features</span></code> call keeps the real IDs, as the default <code class="docutils literal notranslate"><span class="pre">--p-keep-original-id</span></code> implies</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">classification.qza</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">FeatureData[Taxonomy]</span></code> for those 13 ASVs</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">selected-atacama-sample-metadata.tsv</span></code></p></td>
+<td><p>Sample metadata passed to <code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">gglasso</span> <span class="pre">transform-features</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">atacama-selected-covariates-veg.tsv</span></code></p></td>
+<td><p>The five covariates used by q2-classo: <code class="docutils literal notranslate"><span class="pre">ph</span></code>, <code class="docutils literal notranslate"><span class="pre">elevation</span></code>, <code class="docutils literal notranslate"><span class="pre">average-soil-relative-humidity</span></code>, <code class="docutils literal notranslate"><span class="pre">average-soil-temperature</span></code>, <code class="docutils literal notranslate"><span class="pre">vegetation</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Verify:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tier_checklist<span class="w"> </span><span class="m">1</span><span class="w"> </span>&gt;<span class="w"> </span>~/q2-hdstats-tutorial/data/SHA256SUMS.tier1
+<span class="nb">cd</span><span class="w"> </span>~/q2-hdstats-tutorial/data<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sha256sum<span class="w"> </span>--ignore-missing<span class="w"> </span>-c<span class="w"> </span>SHA256SUMS.tier1
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">--ignore-missing</span></code> matters: it lets you verify a partial download against a
+checklist that also names files you deliberately skipped, instead of failing on
+their absence.</p>
+<p>You need <code class="docutils literal notranslate"><span class="pre">classification.qza</span></code> even for the pure network chapters:
+<code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">gglasso</span> <span class="pre">transform-features</span></code> declares <code class="docutils literal notranslate"><span class="pre">--i-taxonomy</span></code> as a required input
+although its function body never reads it. See
+<a class="reference internal" href="../90_reference/04_troubleshooting.html"><span class="std std-doc">Troubleshooting</span></a> for that and the other
+registration warts.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>On the sample count.</strong> The tier 1 table is <strong>13 features × 50 samples</strong>, read
+directly from the artifact. Earlier drafts of this book said 49 in prose while
+every command passed <code class="docutils literal notranslate"><span class="pre">--p-n-samples</span> <span class="pre">50</span></code>; the commands were right and the prose
+was wrong. The metadata TSV has 75 rows because it covers the full Atacama
+tutorial, of which 50 samples appear in this table.</p>
+</div>
+</section>
+<section id="tier-2-atacama-300-asvs">
+<h2>Tier 2 — Atacama, 300 ASVs<a class="headerlink" href="#tier-2-atacama-300-asvs" title="Link to this heading">#</a></h2>
+<p>The same study, scaled up: the 300 most abundant ASVs, used to show model
+selection and latent-rank choice in a regime where you cannot eyeball the matrix.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>~/q2-hdstats-tutorial/data
+curl<span class="w"> </span>-L<span class="w"> </span>-O<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">ZENODO_BASE</span><span class="si">}</span><span class="s2">/atacama-top-300-table.qza&quot;</span>
+curl<span class="w"> </span>-L<span class="w"> </span>-O<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">ZENODO_BASE</span><span class="si">}</span><span class="s2">/atacama-top-300-clr.qza&quot;</span>
+curl<span class="w"> </span>-L<span class="w"> </span>-O<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">ZENODO_BASE</span><span class="si">}</span><span class="s2">/atacama-top-300-correlation.qza&quot;</span>
+curl<span class="w"> </span>-L<span class="w"> </span>-O<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">ZENODO_BASE</span><span class="si">}</span><span class="s2">/atacama-taxonomy-silva138.qza&quot;</span>
+curl<span class="w"> </span>-L<span class="w"> </span>-O<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">ZENODO_BASE</span><span class="si">}</span><span class="s2">/sample-metadata.tsv&quot;</span>
+curl<span class="w"> </span>-L<span class="w"> </span>-O<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">ZENODO_BASE</span><span class="si">}</span><span class="s2">/top-300-asvs.tsv&quot;</span>
+curl<span class="w"> </span>-L<span class="w"> </span>-O<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">ZENODO_BASE</span><span class="si">}</span><span class="s2">/atacama-classo-outcomes-mean-imputed.tsv&quot;</span>
+</pre></div>
+</div>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>File</p></th>
+<th class="head"><p>What it is</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">atacama-top-300-table.qza</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">FeatureTable[Frequency]</span></code>, the top-300-ASV counts</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">atacama-top-300-clr.qza</span></code></p></td>
+<td><p>The transformed table, shipped so you can skip the transform step</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">atacama-top-300-correlation.qza</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PairwiseFeatureData</span></code> — the direct input to <code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">gglasso</span> <span class="pre">solve-problem</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">atacama-taxonomy-silva138.qza</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">FeatureData[Taxonomy]</span></code> for the 300 ASVs</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sample-metadata.tsv</span></code></p></td>
+<td><p>Full sample metadata, including <code class="docutils literal notranslate"><span class="pre">transect-name</span></code> (Baquedano, Yungay) and <code class="docutils literal notranslate"><span class="pre">vegetation</span></code> (yes/no) — the two natural grouping variables for the multiple-graphical-lasso and PCA chapters</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">top-300-asvs.tsv</span></code></p></td>
+<td><p>Total abundance per feature, keyed on <code class="docutils literal notranslate"><span class="pre">feature-id</span></code>. Useful for filtering or for reporting how abundant a hub is. Its <code class="docutils literal notranslate"><span class="pre">abundance-rank</span></code> column is <strong>not</strong> an identifier: 209 of the 300 features are tied on total abundance, so the rank order within a tie is arbitrary. Do not use it to map <code class="docutils literal notranslate"><span class="pre">ASV-k</span></code> labels back to features — see <a class="reference internal" href="../04_highdim_atacama/06_interpretation.html"><span class="std std-doc">Interpretation</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">atacama-classo-outcomes-mean-imputed.tsv</span></code></p></td>
+<td><p>The regression outcomes with missing values mean-imputed, as used by the q2-classo cross-validation chapter</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Verify:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tier_checklist<span class="w"> </span><span class="m">2</span><span class="w"> </span>&gt;<span class="w"> </span>~/q2-hdstats-tutorial/data/SHA256SUMS.tier2
+<span class="nb">cd</span><span class="w"> </span>~/q2-hdstats-tutorial/data<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sha256sum<span class="w"> </span>--ignore-missing<span class="w"> </span>-c<span class="w"> </span>SHA256SUMS.tier2
+</pre></div>
+</div>
+<p>The transformed table and the correlation matrix are both included on purpose.
+Recomputing them from <code class="docutils literal notranslate"><span class="pre">atacama-top-300-table.qza</span></code> is the first exercise of the
+tier 2 chapters; having the reference versions on disk means a mismatch is
+visible immediately rather than propagating into the network.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><code class="docutils literal notranslate"><span class="pre">sample-metadata.tsv</span></code> is a generic name and the tier 3 dataset ships a file with
+exactly the same name. Keep tier 3 in its own subdirectory, as below, or one will
+overwrite the other.</p>
+</div>
+</section>
+<section id="tier-3-gut-to-soil-16s">
+<h2>Tier 3 — Gut-to-soil (16S)<a class="headerlink" href="#tier-3-gut-to-soil-16s" title="Link to this heading">#</a></h2>
+<p>Tier 3 is not on the Zenodo record. Its files belong to the gut-to-soil
+composting tutorial and are served from that tutorial’s own site, so we link them
+at the source rather than mirroring them. <strong>These URLs work today.</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>-p<span class="w"> </span>~/q2-hdstats-tutorial/data/gut-to-soil
+<span class="nb">cd</span><span class="w"> </span>~/q2-hdstats-tutorial/data/gut-to-soil
+
+<span class="nv">BASE</span><span class="o">=</span>https://gut-to-soil-tutorial.readthedocs.io/en/latest/data/gut-to-soil
+curl<span class="w"> </span>-L<span class="w"> </span>-O<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">BASE</span><span class="si">}</span><span class="s2">/asv-table-ms2.qza&quot;</span>
+curl<span class="w"> </span>-L<span class="w"> </span>-O<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">BASE</span><span class="si">}</span><span class="s2">/taxonomy.qza&quot;</span>
+curl<span class="w"> </span>-L<span class="w"> </span>-O<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">BASE</span><span class="si">}</span><span class="s2">/sample-metadata.tsv&quot;</span>
+</pre></div>
+</div>
+<p>Those three are what the tier 3 chapters use. Two more are available from the
+same location if you want to work outside the book:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>~/q2-hdstats-tutorial/data/gut-to-soil
+<span class="nv">BASE</span><span class="o">=</span>https://gut-to-soil-tutorial.readthedocs.io/en/latest/data/gut-to-soil
+curl<span class="w"> </span>-L<span class="w"> </span>-O<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">BASE</span><span class="si">}</span><span class="s2">/asv-table.qza&quot;</span>
+curl<span class="w"> </span>-L<span class="w"> </span>-O<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">BASE</span><span class="si">}</span><span class="s2">/asv-seqs.qza&quot;</span>
+</pre></div>
+</div>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>File</p></th>
+<th class="head"><p>What it is</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">asv-table-ms2.qza</span></code></p></td>
+<td><p>The tutorial subsample used here: 335 ASVs × 99 samples</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">taxonomy.qza</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">FeatureData[Taxonomy]</span></code> for the ASVs</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sample-metadata.tsv</span></code></p></td>
+<td><p>Full-study sample metadata (1,660 rows); only 99 rows match <code class="docutils literal notranslate"><span class="pre">asv-table-ms2.qza</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">asv-table.qza</span></code></p></td>
+<td><p>The other tutorial table, 1069 features × 104 samples (not used here)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">asv-seqs.qza</span></code></p></td>
+<td><p>Representative sequences (not used here)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Verify:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tier_checklist<span class="w"> </span><span class="m">3</span><span class="w"> </span>&gt;<span class="w"> </span>~/q2-hdstats-tutorial/data/gut-to-soil/SHA256SUMS.tier3
+<span class="nb">cd</span><span class="w"> </span>~/q2-hdstats-tutorial/data/gut-to-soil<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sha256sum<span class="w"> </span>--ignore-missing<span class="w"> </span>-c<span class="w"> </span>SHA256SUMS.tier3
+</pre></div>
+</div>
+<p>Because these are upstream artifacts we do not control, the manifest records
+their <code class="docutils literal notranslate"><span class="pre">sha256</span></code> <strong>as observed when the book was built</strong>. A mismatch does not
+necessarily mean a corrupt download — it may mean the upstream tutorial was
+regenerated. Check the upstream site before assuming the worst.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p><code class="docutils literal notranslate"><span class="pre">asv-table-ms2.qza</span></code> is a <strong>10% subsample</strong> of a much larger study and it is
+shallow: per-sample depth ranges from <strong>3 to 1218 reads, with a median of 261</strong>. A CLR-transformed covariance
+estimated from counts that small is noisy, and the resulting network should be
+read as a demonstration of the workflow, not as a biological result. The tier 3
+chapters say the same thing where it matters.</p>
+</div>
+<p>The full study — 1,660 samples, from the gut-to-soil composting work of Meilander
+and colleagues <span class="bibtex-citation" id="id1">[<a class="reference internal" href="../../references.html#id66" title="Jeff Meilander, Chloe Herman, Andrew Manley, Georgia Augustine, Dawn Birdsell, Evan Bolyen, Kimberly R Celona, Hayden Coffey, Jill Cocking, Teddy Donoghue, Alexis Draves, Daryn Erickson, Marissa Foley, Liz Gehret, Johannah Hagen, Crystal Hepp, Parker Ingram, David John, Katarina Kadar, Paul Keim, Victoria Lloyd, Christina Osterink, Victoria Monsaint-Queeney, Diego Ramirez, Antonio Romero, Megan C Ruby, Jason W Sahl, Sydni Soloway, Nathan E Stone, Shannon Trottier, Kaleb Van Orden, Alexis Painter, Sam Wallace, Larissa Wilcox, Colin V Wood, Jaiden Yancey, and J Gregory Caporaso. Upcycling human excrement: the gut microbiome to soil microbiome axis. ISME Communications, 5(1):ycaf089, 2025. doi:10.1093/ismeco/ycaf089.">10</a>]</span> — is Zenodo record <strong>15390940</strong>
+<span class="bibtex-citation" id="id2">[<a class="reference internal" href="../../references.html#id67" title="J Gregory Caporaso and Jeff Meilander. Upcycling human excrement: the gut microbiome to soil microbiome axis (supporting data). 2025. Zenodo record 15390940. doi:10.5281/zenodo.15390940.">11</a>]</span>. It is far too large for a tutorial run on a laptop,
+but it is the right starting point if you want to take the workflow somewhere
+real. Its feature count is pending verification and is not quoted here; see
+<a class="reference internal" href="../05_metagenomics/01_gut_to_soil/01_data.html"><span class="std std-doc">Gut-to-Soil: The Dataset</span></a> for how
+the scaling arithmetic is written conditionally on it.</p>
+</section>
+<section id="the-cocoa-appendix-has-no-download">
+<h2>The cocoa appendix has no download<a class="headerlink" href="#the-cocoa-appendix-has-no-download" title="Link to this heading">#</a></h2>
+<p>The MOSHPIT cocoa fermentation example (14 shotgun metagenomes, BioProject
+PRJNA552479) is an <strong>appendix</strong>, not a tier, precisely because there is nothing
+to download: no feature table is published for it. Reproducing one means running
+assembly and binning and holding local Kraken2/Kaiju databases. See
+<a class="reference internal" href="../99_appendix/02_moshpit_cocoa_note.html"><span class="std std-doc">Appendix: Shotgun Metagenomics (MOSHPIT cocoa)</span></a>
+for what that involves before you commit compute to it.</p>
+</section>
+<section id="why-the-checksums-are-not-ceremony">
+<h2>Why the checksums are not ceremony<a class="headerlink" href="#why-the-checksums-are-not-ceremony" title="Link to this heading">#</a></h2>
+<p>A truncated <code class="docutils literal notranslate"><span class="pre">.qza</span></code> is still a valid ZIP prefix. QIIME 2 will often load it
+without complaint and the failure will surface much later, inside a solver, as
+something that looks like a numerical problem rather than a broken file. Ten
+seconds of <code class="docutils literal notranslate"><span class="pre">sha256sum</span></code> saves an afternoon of debugging the wrong layer.</p>
+<p>Once the checksums pass, confirm that QIIME 2 agrees the artifacts are what the
+tutorial thinks they are:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>~/q2-hdstats-tutorial
+qiime<span class="w"> </span>tools<span class="w"> </span>peek<span class="w"> </span>data/atacama-counts.qza
+qiime<span class="w"> </span>tools<span class="w"> </span>peek<span class="w"> </span>data/classification.qza
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The expected <code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">tools</span> <span class="pre">peek</span></code> output — UUID, semantic type and format — is
+pending verification against QIIME 2 2026.7. Most of this book has not yet been
+re-run against that release, and the UUID is per-download in any case, so no
+captured output is shown here.</p>
+</div>
+</section>
+<section id="the-resulting-tree">
+<h2>The resulting tree<a class="headerlink" href="#the-resulting-tree" title="Link to this heading">#</a></h2>
+<p>After all three tiers:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>~/q2-hdstats-tutorial/
+└── data/
+    ├── atacama-counts.qza
+    ├── classification.qza
+    ├── selected-atacama-sample-metadata.tsv
+    ├── atacama-selected-covariates-veg.tsv
+    ├── atacama-top-300-table.qza
+    ├── atacama-top-300-clr.qza
+    ├── atacama-top-300-correlation.qza
+    ├── atacama-taxonomy-silva138.qza
+    ├── sample-metadata.tsv
+    └── gut-to-soil/
+        ├── asv-table-ms2.qza
+        ├── taxonomy.qza
+        └── sample-metadata.tsv
+</pre></div>
+</div>
+<p>Everything else the tutorial uses is <strong>derived</strong>: each chapter writes its
+transformed tables, covariance matrices, solutions and visualizations back into
+<code class="docutils literal notranslate"><span class="pre">data/</span></code>, so the directory grows as you work through the book. Only the files
+above have to be fetched.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The tier 2 chapters also build a design-matrix table and a mean-imputed outcomes
+TSV for the q2-classo section. Whether those ship on the Zenodo record or are
+produced by the chapter commands is being settled as the record is assembled; the
+manifest is the place that will say.</p>
+</div>
+</section>
+<section id="next">
+<h2>Next<a class="headerlink" href="#next" title="Link to this heading">#</a></h2>
+<p>With the data in place, continue to
+<a class="reference internal" href="../01_installation/01_prerequisites.html"><span class="std std-doc">Prerequisites &amp; Installation</span></a>, then
+<a class="reference internal" href="../01_installation/04_verify.html"><span class="std std-doc">Verifying Your Installation</span></a> — the last step of
+which reads one of the artifacts you just downloaded. If you want to see which
+chapter demonstrates which command before you start, the
+<a class="reference internal" href="../90_reference/01_command_coverage.html"><span class="std std-doc">Command Coverage Matrix</span></a> is the map.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters/00_getting_started"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="02_datasets.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Atacama Soil Microbiome</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../01_installation/01_prerequisites.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Installation</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#where-the-files-go">Where the files go</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-zenodo-record">The Zenodo record</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-manifest">The manifest</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tier-1-atacama-13-asvs">Tier 1 — Atacama, 13 ASVs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tier-2-atacama-300-asvs">Tier 2 — Atacama, 300 ASVs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tier-3-gut-to-soil-16s">Tier 3 — Gut-to-soil (16S)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-cocoa-appendix-has-no-download">The cocoa appendix has no download</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-the-checksums-are-not-ceremony">Why the checksums are not ceremony</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-resulting-tree">The resulting tree</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next">Next</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Biomedical Statistics and Data Science Group @ LMU & Helmholtz Munich
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -20,7 +20,7 @@ High-dimensional statistics with QIIME2.
 
 The pipeline depicted above outlines the functionality implemented in two QIIME2 plugins namely **q2-gglasso** for network learning and **q2-classo** for regression and classification tasks. Together, these plugins address gaps in the existing functionality within QIIME2, offering:
 
-- **Network inference** through sparse inverse covariance estimation to identify microbial associations (e.g., discovering which taxa co-occur thin communities)
+- **Network inference** through sparse inverse covariance estimation to identify microbial associations (e.g., discovering which taxa co-occur within communities)
 - **Sparse log-contrast models** for classification and regression tasks (e.g., predicting covariate information, such as disease status or environmental factors, from microbiome data)
 - **Compositionally-aware estimators** that properly handle microbiome data constraints and sparsity
 - **Interactive visualizations** with publication-ready network graphs and model performance plots

@@ -1,0 +1,846 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Troubleshooting &amp; Known Gotchas &#8212; High-dimensional Statistics with QIIME 2</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles.css?v=3437f865" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/90_reference/04_troubleshooting';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Appendix: Mathematical Background" href="../99_appendix/01_math.html" />
+    <link rel="prev" title="q2-classo Parameter Reference" href="03_classo_parameters.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo_light.svg" class="logo__image only-light" alt="High-dimensional Statistics with QIIME 2 - Home"/>
+    <img src="../../_static/logo_dark.svg" class="logo__image only-dark pst-js-only" alt="High-dimensional Statistics with QIIME 2 - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../00_getting_started/01_intro.html">Why High-Dimensional Statistics?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../00_getting_started/02_datasets.html">Atacama Soil Microbiome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../00_getting_started/03_download_data.html">Download the Tutorial Data</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../01_installation/01_prerequisites.html">Prerequisites &amp; Installation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../01_installation/02_q2_gglasso.html">Installing q2-gglasso</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_installation/03_q2_classo.html">Installing q2-classo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_installation/04_verify.html">Verifying Your Installation</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tier 1 — Low-dimensional example (Atacama, 13 ASVs)</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../02_lowdim_gglasso/00_index.html">Graphical Lasso Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/01_data_preparation.html">Data Preparation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/02_sgl.html">Single Graphical Lasso</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/03_slr.html">Sparse + Low-Rank (Latent Variables)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/04_adaptive_glasso.html">Adaptive Graphical Lasso</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/05_lambda_paths.html">Regularization Paths &amp; Model Selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/06_multiple_graphical_lasso.html">Multiple Graphical Lasso (GGL / FGL)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/07_pca.html">Latent-Component PCA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/08_summarize.html">Summarizing a Solution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/09_interpretation.html">Interpretation</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../03_lowdim_classo/00_overview.html">Log-Contrast Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/01_generate_data.html">Synthetic Data with Known Truth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/02_data_preparation.html">Data Preparation</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../03_lowdim_classo/03_regression/00_index.html">Regression</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../03_lowdim_classo/03_regression/01_logcontrast.html">Log-Contrast</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../03_lowdim_classo/03_regression/02_trac.html">With trac</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../03_lowdim_classo/04_classification/00_index.html">Classification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../03_lowdim_classo/04_classification/01_logcontrast.html">Log-Contrast</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../03_lowdim_classo/04_classification/02_trac.html">With trac</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/05_advanced/01_concomitant_formulation.html">Advanced: Concomitant Formulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/05_advanced/02_model_selection.html">Advanced: Choosing a Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/06_predict_and_summarize.html">Predict &amp; Summarize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/07_interpretation.html">Interpretation</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tier 2 — High-dimensional example (Atacama, 300 ASVs)</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../04_highdim_atacama/00_index.html">Overview</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../04_highdim_atacama/01_data.html">The 300-ASV Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_highdim_atacama/02_model_selection.html">Selecting lambda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_highdim_atacama/03_slr_ranks.html">Choosing the Latent Rank</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_highdim_atacama/04_latent_pca.html">Latent Components &amp; Covariates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_highdim_atacama/05_classo_cv.html">Log-Contrast Models at Scale</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_highdim_atacama/06_interpretation.html">Interpretation</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tier 3 — Metagenomics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../05_metagenomics/00_index.html">Overview</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../05_metagenomics/01_gut_to_soil/00_index.html">Gut-to-Soil (16S, 335 ASVs x 99 samples)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../05_metagenomics/01_gut_to_soil/01_data.html">The Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_metagenomics/01_gut_to_soil/02_network.html">Network Inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_metagenomics/01_gut_to_soil/03_regression.html">Log-Contrast Regression</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_command_coverage.html">Command Coverage Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_gglasso_parameters.html">q2-gglasso Parameter Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_classo_parameters.html">q2-classo Parameter Reference</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Troubleshooting &amp; Known Gotchas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../99_appendix/01_math.html">Appendix: Mathematical Background</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../99_appendix/02_moshpit_cocoa_note.html">Appendix: Shotgun Metagenomics (MOSHPIT cocoa)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/chapters/90_reference/04_troubleshooting.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Troubleshooting & Known Gotchas</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conda-env-create-fails-on-deblur-sortmerna"><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">env</span> <span class="pre">create</span></code> fails on <code class="docutils literal notranslate"><span class="pre">deblur</span></code> → <code class="docutils literal notranslate"><span class="pre">sortmerna</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qiime-gglasso-pca-fails-with-templatenotfound"><code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">gglasso</span> <span class="pre">pca</span></code> fails with <code class="docutils literal notranslate"><span class="pre">TemplateNotFound</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pip-silently-breaks-a-working-environment">pip silently breaks a working environment</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#q2-gglasso">q2-gglasso</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#p-rank-always-fails"><code class="docutils literal notranslate"><span class="pre">--p-rank</span></code> always fails</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qiime-gglasso-pca-crashes-on-a-solution-that-has-no-low-rank-part"><code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">gglasso</span> <span class="pre">pca</span></code> crashes on a solution that has no low-rank part</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pca-refuses-n-components-3-exceeds-the-rank-of-the-low-rank-component-2"><code class="docutils literal notranslate"><span class="pre">pca</span></code> refuses: <code class="docutils literal notranslate"><span class="pre">n_components</span> <span class="pre">(3)</span> <span class="pre">exceeds</span> <span class="pre">the</span> <span class="pre">rank</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">low-rank</span> <span class="pre">component</span> <span class="pre">(2)</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-taxonomy-join-returns-all-nan-instead-of-raising">The taxonomy join returns all-<code class="docutils literal notranslate"><span class="pre">NaN</span></code> instead of raising</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qiime-gglasso-pca-crashes-with-attributeerror-on-metadata"><code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">gglasso</span> <span class="pre">pca</span></code> crashes with <code class="docutils literal notranslate"><span class="pre">AttributeError</span></code> on metadata</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#transform-features-demands-a-taxonomy-i-don-t-have"><code class="docutils literal notranslate"><span class="pre">transform-features</span></code> demands a taxonomy I don’t have</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#build-groups-output-cannot-be-fed-to-solve-problem"><code class="docutils literal notranslate"><span class="pre">build-groups</span></code> output cannot be fed to <code class="docutils literal notranslate"><span class="pre">solve-problem</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-qzv-opens-as-a-blank-white-page">The <code class="docutils literal notranslate"><span class="pre">.qzv</span></code> opens as a blank white page</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-selection-ran-even-though-i-only-wanted-a-single-fit">Model selection ran even though I only wanted a single fit</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#q2-classo">q2-classo</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#p-cv-nlam-has-two-dashes-is-that-a-typo"><code class="docutils literal notranslate"><span class="pre">--p-cv--nlam</span></code> has two dashes — is that a typo?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qiime-classo-classify-p-concomitant-true-is-rejected"><code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">classo</span> <span class="pre">classify</span> <span class="pre">--p-concomitant</span> <span class="pre">True</span></code> is rejected</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qiime-classo-help-lists-two-actions-called-regress"><code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">classo</span> <span class="pre">--help</span></code> lists two actions called “regress”</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#every-plot-pane-in-the-summarize-qzv-is-blank">Every plot pane in the <code class="docutils literal notranslate"><span class="pre">summarize</span></code> <code class="docutils literal notranslate"><span class="pre">.qzv</span></code> is blank</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nameerror-name-xgraph-is-not-defined"><code class="docutils literal notranslate"><span class="pre">NameError:</span> <span class="pre">name</span> <span class="pre">'xGraph'</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">defined</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#both-plugins">Both plugins</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-misspelled-enum-value-fails-at-runtime-not-on-the-command-line">A misspelled enum value fails at runtime, not on the command line</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-clr-transform-produces-obviously-wrong-values">The CLR transform produces obviously wrong values</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="troubleshooting-known-gotchas">
+<h1>Troubleshooting &amp; Known Gotchas<a class="headerlink" href="#troubleshooting-known-gotchas" title="Link to this heading">#</a></h1>
+<p>Every trap in one place. Each entry gives the symptom you will actually see, the
+cause, and the workaround.</p>
+<hr class="docutils" />
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">#</a></h2>
+<section id="conda-env-create-fails-on-deblur-sortmerna">
+<h3><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">env</span> <span class="pre">create</span></code> fails on <code class="docutils literal notranslate"><span class="pre">deblur</span></code> → <code class="docutils literal notranslate"><span class="pre">sortmerna</span></code><a class="headerlink" href="#conda-env-create-fails-on-deblur-sortmerna" title="Link to this heading">#</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="n">deblur</span><span class="o">-</span><span class="mf">1.1.1</span> <span class="n">requires</span> <span class="n">sortmerna</span> <span class="mf">2.0</span><span class="p">,</span> <span class="n">but</span> <span class="n">none</span> <span class="n">of</span> <span class="n">the</span> <span class="n">providers</span>
+<span class="n">can</span> <span class="n">be</span> <span class="n">installed</span>
+</pre></div>
+</div>
+<p><strong>Cause.</strong> A defect in the upstream QIIME 2 2026.7 <code class="docutils literal notranslate"><span class="pre">linux-64</span></code> distribution file:
+it pins <code class="docutils literal notranslate"><span class="pre">zlib=1.3.2</span></code>, while every <code class="docutils literal notranslate"><span class="pre">sortmerna</span></code> 2.0 build in bioconda requires
+<code class="docutils literal notranslate"><span class="pre">zlib</span> <span class="pre">&gt;=1.2.11,&lt;1.3.0a0</span></code>. The two cannot be satisfied together.</p>
+<p><strong>Workaround.</strong> <code class="docutils literal notranslate"><span class="pre">deblur</span></code> is not used anywhere in this tutorial. Download the
+environment file, delete the <code class="docutils literal notranslate"><span class="pre">deblur</span></code>, <code class="docutils literal notranslate"><span class="pre">q2-deblur</span></code> and <code class="docutils literal notranslate"><span class="pre">sortmerna</span></code> lines, and
+create the environment from your edited copy.</p>
+</section>
+<section id="qiime-gglasso-pca-fails-with-templatenotfound">
+<h3><code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">gglasso</span> <span class="pre">pca</span></code> fails with <code class="docutils literal notranslate"><span class="pre">TemplateNotFound</span></code><a class="headerlink" href="#qiime-gglasso-pca-fails-with-templatenotfound" title="Link to this heading">#</a></h3>
+<p><strong>Cause.</strong> A non-editable install built before the fix did not ship
+<code class="docutils literal notranslate"><span class="pre">_pca/assets/index.html</span></code> — it was missing from <code class="docutils literal notranslate"><span class="pre">package_data</span></code>.</p>
+<p><strong>Workaround.</strong> Reinstall from a current checkout, or use <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">.</span></code>.</p>
+</section>
+<section id="pip-silently-breaks-a-working-environment">
+<h3>pip silently breaks a working environment<a class="headerlink" href="#pip-silently-breaks-a-working-environment" title="Link to this heading">#</a></h3>
+<p><strong>Cause.</strong> pip cannot see conda’s pins and will happily install a wheel over
+<code class="docutils literal notranslate"><span class="pre">numpy=2.4.2</span></code>.</p>
+<p><strong>Workaround.</strong> Always <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">--no-deps</span></code> inside a QIIME 2 environment.
+Check with <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">list</span> <span class="pre">numpy</span> <span class="pre">pandas</span> <span class="pre">scipy</span></code> afterwards.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="q2-gglasso">
+<h2>q2-gglasso<a class="headerlink" href="#q2-gglasso" title="Link to this heading">#</a></h2>
+<section id="p-rank-always-fails">
+<h3><code class="docutils literal notranslate"><span class="pre">--p-rank</span></code> always fails<a class="headerlink" href="#p-rank-always-fails" title="Link to this heading">#</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">NotImplementedError</span><span class="p">:</span> <span class="n">Explicit</span> <span class="n">rank</span> <span class="n">selection</span> <span class="n">requires</span> <span class="n">a</span> <span class="n">GGLasso</span> <span class="n">version</span> <span class="n">that</span>
+<span class="n">exposes</span> <span class="n">an</span> <span class="n">explicit</span> <span class="n">low</span><span class="o">-</span><span class="n">rank</span> <span class="n">rank</span> <span class="n">parameter</span><span class="o">...</span>
+</pre></div>
+</div>
+<p><strong>Cause.</strong> No released GGLasso (up to and including 0.3.0) can fix the rank of
+the low-rank component. It exposes only the continuous <code class="docutils literal notranslate"><span class="pre">mu1</span></code> penalty and reports
+the achieved rank as an <em>output</em>. The parameter is registered but guarded so it
+raises rather than being silently ignored.</p>
+<p><strong>Workaround.</strong> Size the low-rank block through <code class="docutils literal notranslate"><span class="pre">mu1</span></code>: a <strong>larger <code class="docutils literal notranslate"><span class="pre">mu1</span></code> gives a
+smaller rank</strong>. Scout a small <code class="docutils literal notranslate"><span class="pre">mu1</span></code> grid and read the achieved rank out of the
+solution — see <a class="reference internal" href="../04_highdim_atacama/03_slr_ranks.html"><span class="std std-doc">Choosing the Latent Rank</span></a>.
+Explicit rank selection becomes available when GGLasso PR #50
+(<code class="docutils literal notranslate"><span class="pre">fix_latent_rank</span></code>) is merged and released.</p>
+</section>
+<section id="qiime-gglasso-pca-crashes-on-a-solution-that-has-no-low-rank-part">
+<h3><code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">gglasso</span> <span class="pre">pca</span></code> crashes on a solution that has no low-rank part<a class="headerlink" href="#qiime-gglasso-pca-crashes-on-a-solution-that-has-no-low-rank-part" title="Link to this heading">#</a></h3>
+<p><strong>Cause.</strong> <code class="docutils literal notranslate"><span class="pre">pca</span></code> reads <code class="docutils literal notranslate"><span class="pre">solution/lowrank_</span></code>, which only exists when the problem
+was solved with <code class="docutils literal notranslate"><span class="pre">--p-latent</span> <span class="pre">True</span></code>.</p>
+<p><strong>Workaround.</strong> Run <code class="docutils literal notranslate"><span class="pre">solve-problem</span></code> with <code class="docutils literal notranslate"><span class="pre">--p-latent</span></code> first. A sparse-only (SGL)
+solution cannot be used with <code class="docutils literal notranslate"><span class="pre">pca</span></code>.</p>
+</section>
+<section id="pca-refuses-n-components-3-exceeds-the-rank-of-the-low-rank-component-2">
+<h3><code class="docutils literal notranslate"><span class="pre">pca</span></code> refuses: <code class="docutils literal notranslate"><span class="pre">n_components</span> <span class="pre">(3)</span> <span class="pre">exceeds</span> <span class="pre">the</span> <span class="pre">rank</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">low-rank</span> <span class="pre">component</span> <span class="pre">(2)</span></code><a class="headerlink" href="#pca-refuses-n-components-3-exceeds-the-rank-of-the-low-rank-component-2" title="Link to this heading">#</a></h3>
+<p><strong>Cause.</strong> <code class="docutils literal notranslate"><span class="pre">--p-n-components</span></code> defaults to 3, but the achieved rank of the
+low-rank component falls as <code class="docutils literal notranslate"><span class="pre">mu1</span></code> rises, and you cannot take more components
+than there are. On the 300-ASV Atacama data the map is μ = 15 → rank 2,
+μ = 10 → rank 5, μ = 7.5 → rank 10 — so the <em>headline</em> fit at μ = 15 is exactly
+the one the default breaks on.</p>
+<p><strong>Workaround.</strong> Pass <code class="docutils literal notranslate"><span class="pre">--p-n-components</span> <span class="pre">2</span></code> at μ = 15, or in a script derive it
+from the solution rather than hardcoding:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rank</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">matrix_rank</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">root</span><span class="p">[</span><span class="s2">&quot;solution/lowrank_&quot;</span><span class="p">]),</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">)</span>
+<span class="n">n_components</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">rank</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This is a guard doing its job, not a bug: earlier versions accepted the
+mismatch and failed later inside <code class="docutils literal notranslate"><span class="pre">utils.PCA</span></code> with an unrelated matmul error.</p>
+</section>
+<section id="the-taxonomy-join-returns-all-nan-instead-of-raising">
+<h3>The taxonomy join returns all-<code class="docutils literal notranslate"><span class="pre">NaN</span></code> instead of raising<a class="headerlink" href="#the-taxonomy-join-returns-all-nan-instead-of-raising" title="Link to this heading">#</a></h3>
+<p><strong>Cause.</strong> The transformed table was built with <code class="docutils literal notranslate"><span class="pre">--p-no-keep-original-id</span></code>, so its
+features are <code class="docutils literal notranslate"><span class="pre">ASV-1</span></code> … <code class="docutils literal notranslate"><span class="pre">ASV-p</span></code> positional labels, while the taxonomy artifact is
+keyed on 32-character hexadecimal feature IDs. <code class="docutils literal notranslate"><span class="pre">df.join(tax)</span></code> finds no overlap
+and fills with <code class="docutils literal notranslate"><span class="pre">NaN</span></code>; <code class="docutils literal notranslate"><span class="pre">.reindex()</span></code> does the same. Nothing raises, so the failure
+reads as “this dataset has no taxonomy”.</p>
+<p><strong>Workaround.</strong> Rebuild with <code class="docutils literal notranslate"><span class="pre">--p-keep-original-id</span></code> (the default). Do <strong>not</strong>
+try to map <code class="docutils literal notranslate"><span class="pre">ASV-k</span></code> back through an abundance ranking — <code class="docutils literal notranslate"><span class="pre">ASV-k</span></code> is assigned by
+position, and ties in total abundance make the mapping ambiguous. On the 300-ASV
+table, 209 of 300 features share a total-abundance value and are therefore at
+risk; a rank-based mapping was measured to place <strong>146 of 300</strong> features
+differently from the plugin’s own ordering. Within a tie group a feature can
+still land correctly by coincidence, which is why the measured count is below
+the at-risk count — but you cannot tell which ones did. See
+<a class="reference internal" href="../04_highdim_atacama/06_interpretation.html"><span class="std std-doc">Interpretation</span></a>.</p>
+<p><strong>How to notice.</strong> Assert rather than eyeball:
+<code class="docutils literal notranslate"><span class="pre">assert</span> <span class="pre">tax.reindex(features)[&quot;Taxon&quot;].notna().all()</span></code>.</p>
+</section>
+<section id="qiime-gglasso-pca-crashes-with-attributeerror-on-metadata">
+<h3><code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">gglasso</span> <span class="pre">pca</span></code> crashes with <code class="docutils literal notranslate"><span class="pre">AttributeError</span></code> on metadata<a class="headerlink" href="#qiime-gglasso-pca-crashes-with-attributeerror-on-metadata" title="Link to this heading">#</a></h3>
+<p><strong>Cause.</strong> <code class="docutils literal notranslate"><span class="pre">--m-sample-metadata-file</span></code> is optional in the signature but is
+dereferenced unconditionally.</p>
+<p><strong>Workaround.</strong> Always pass <code class="docutils literal notranslate"><span class="pre">--m-sample-metadata-file</span></code>. Treat it as required.</p>
+</section>
+<section id="transform-features-demands-a-taxonomy-i-don-t-have">
+<h3><code class="docutils literal notranslate"><span class="pre">transform-features</span></code> demands a taxonomy I don’t have<a class="headerlink" href="#transform-features-demands-a-taxonomy-i-don-t-have" title="Link to this heading">#</a></h3>
+<p><strong>Cause.</strong> <code class="docutils literal notranslate"><span class="pre">--i-taxonomy</span></code> is a required input but the function body never uses
+it. This is a registration wart, not a real dependency.</p>
+<p><strong>Workaround.</strong> Pass any valid <code class="docutils literal notranslate"><span class="pre">FeatureData[Taxonomy]</span></code> artifact; its contents do
+not affect the result.</p>
+</section>
+<section id="build-groups-output-cannot-be-fed-to-solve-problem">
+<h3><code class="docutils literal notranslate"><span class="pre">build-groups</span></code> output cannot be fed to <code class="docutils literal notranslate"><span class="pre">solve-problem</span></code><a class="headerlink" href="#build-groups-output-cannot-be-fed-to-solve-problem" title="Link to this heading">#</a></h3>
+<p><strong>Cause.</strong> <code class="docutils literal notranslate"><span class="pre">build-groups</span></code> emits a <code class="docutils literal notranslate"><span class="pre">TensorData</span></code> <strong>artifact</strong>, but <code class="docutils literal notranslate"><span class="pre">solve-problem</span></code>
+takes <code class="docutils literal notranslate"><span class="pre">group_array</span></code> as a <code class="docutils literal notranslate"><span class="pre">List[Int]</span></code> <strong>parameter</strong>. They do not chain through the
+QIIME 2 type system.</p>
+<p><strong>Workaround.</strong> Export the artifact and pass the group index explicitly as
+<code class="docutils literal notranslate"><span class="pre">--p-group-array</span></code>. See
+<a class="reference internal" href="../02_lowdim_gglasso/06_multiple_graphical_lasso.html"><span class="std std-doc">Multiple Graphical Lasso</span></a>.</p>
+</section>
+<section id="the-qzv-opens-as-a-blank-white-page">
+<h3>The <code class="docutils literal notranslate"><span class="pre">.qzv</span></code> opens as a blank white page<a class="headerlink" href="#the-qzv-opens-as-a-blank-white-page" title="Link to this heading">#</a></h3>
+<p><strong>Cause.</strong> A bokeh version mismatch: the visualizer emits a bokeh 3 document
+while the page loads a bokeh 2.4.3 runtime. There is no Python traceback — the
+failure is entirely client-side.</p>
+<p><strong>Workaround.</strong> Fixed in current q2-gglasso, which injects version-matched bokeh
+resources instead of hardcoding a CDN URL. If you see it, you are on an older
+build. Confirm by unzipping the <code class="docutils literal notranslate"><span class="pre">.qzv</span></code> and grepping <code class="docutils literal notranslate"><span class="pre">index.html</span></code> for <code class="docutils literal notranslate"><span class="pre">bokeh-2.</span></code>.</p>
+</section>
+<section id="model-selection-ran-even-though-i-only-wanted-a-single-fit">
+<h3>Model selection ran even though I only wanted a single fit<a class="headerlink" href="#model-selection-ran-even-though-i-only-wanted-a-single-fit" title="Link to this heading">#</a></h3>
+<p><strong>Cause.</strong> The solver performs model selection whenever at least one grid has
+more than one value, so a single fit requires <code class="docutils literal notranslate"><span class="pre">lambda1</span></code> <em>and</em> <code class="docutils literal notranslate"><span class="pre">lambda2</span></code> — plus
+<code class="docutils literal notranslate"><span class="pre">mu1</span></code> for a <strong>latent</strong> problem — to each resolve to exactly one value. Leaving
+<code class="docutils literal notranslate"><span class="pre">--p-lambda2-min</span></code> / <code class="docutils literal notranslate"><span class="pre">--p-lambda2-max</span></code> unset does not count as one value: an unset
+pair of bounds expands to the 5-point default <code class="docutils literal notranslate"><span class="pre">np.logspace(-1,</span> <span class="pre">-4,</span> <span class="pre">5)</span></code> and warns
+<code class="docutils literal notranslate"><span class="pre">Default</span> <span class="pre">values</span> <span class="pre">for</span> <span class="pre">lambda2</span> <span class="pre">have</span> <span class="pre">been</span> <span class="pre">used.</span></code>. That alone is enough to switch
+model selection on, which is why a lone <code class="docutils literal notranslate"><span class="pre">--p-lambda1-min</span> <span class="pre">0.5</span> <span class="pre">--p-lambda1-max</span> <span class="pre">0.5</span></code>
+still gives you a path. (<code class="docutils literal notranslate"><span class="pre">lambda2</span></code> is not used by the single-instance solver
+otherwise; it only decides this branch.)</p>
+<p><strong>Workaround.</strong> Pin <code class="docutils literal notranslate"><span class="pre">λ₂</span></code> explicitly — pass the same value to
+<code class="docutils literal notranslate"><span class="pre">--p-lambda2-min</span></code> and <code class="docutils literal notranslate"><span class="pre">--p-lambda2-max</span></code> — and do the same for <code class="docutils literal notranslate"><span class="pre">--p-mu1-min</span></code> /
+<code class="docutils literal notranslate"><span class="pre">--p-mu1-max</span></code> on a latent problem. Check the result by looking for a
+<code class="docutils literal notranslate"><span class="pre">modelselect_stats</span></code> group in the solution: a single fit has none, and <code class="docutils literal notranslate"><span class="pre">summarize</span></code>
+reduces its statistics tab accordingly.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="q2-classo">
+<h2>q2-classo<a class="headerlink" href="#q2-classo" title="Link to this heading">#</a></h2>
+<section id="p-cv-nlam-has-two-dashes-is-that-a-typo">
+<h3><code class="docutils literal notranslate"><span class="pre">--p-cv--nlam</span></code> has two dashes — is that a typo?<a class="headerlink" href="#p-cv-nlam-has-two-dashes-is-that-a-typo" title="Link to this heading">#</a></h3>
+<p><strong>No.</strong> The parameter really was named <code class="docutils literal notranslate"><span class="pre">cv__nlam</span></code> with a double underscore, which
+QIIME 2 renders as <code class="docutils literal notranslate"><span class="pre">--p-cv--nlam</span></code>.</p>
+<p>It is now spelled <strong><code class="docutils literal notranslate"><span class="pre">cv_nlam</span></code></strong> (<code class="docutils literal notranslate"><span class="pre">--p-cv-nlam</span></code>). The old spelling still works but
+emits a <code class="docutils literal notranslate"><span class="pre">DeprecationWarning</span></code>. Passing both with <em>different</em> values raises — but
+only if <code class="docutils literal notranslate"><span class="pre">cv_nlam</span></code> was changed from its registered default of <code class="docutils literal notranslate"><span class="pre">100</span></code>. QIIME 2 fills
+that default in whether or not you typed it, so <code class="docutils literal notranslate"><span class="pre">100</span></code> is indistinguishable from
+“not given” and is treated as unset: <code class="docutils literal notranslate"><span class="pre">--p-cv-nlam</span> <span class="pre">100</span> <span class="pre">--p-cv--nlam</span> <span class="pre">50</span></code> does <em>not</em>
+raise, it silently uses 50.</p>
+</section>
+<section id="qiime-classo-classify-p-concomitant-true-is-rejected">
+<h3><code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">classo</span> <span class="pre">classify</span> <span class="pre">--p-concomitant</span> <span class="pre">True</span></code> is rejected<a class="headerlink" href="#qiime-classo-classify-p-concomitant-true-is-rejected" title="Link to this heading">#</a></h3>
+<p><strong>Cause.</strong> The concomitant formulation is not available for classification.
+<code class="docutils literal notranslate"><span class="pre">classify</span></code> has no <code class="docutils literal notranslate"><span class="pre">concomitant</span></code> parameter, and the underlying solver forces
+<code class="docutils literal notranslate"><span class="pre">formulation.concomitant</span> <span class="pre">=</span> <span class="pre">False</span></code> for classification problems.</p>
+<p><strong>Workaround.</strong> Use the Huber hinge loss: <code class="docutils literal notranslate"><span class="pre">--p-huber</span> <span class="pre">True</span></code>, tuned via <code class="docutils literal notranslate"><span class="pre">--p-rho</span></code>.
+See <a class="reference internal" href="../03_lowdim_classo/05_advanced/01_concomitant_formulation.html"><span class="std std-doc">Concomitant Formulation</span></a>.</p>
+</section>
+<section id="qiime-classo-help-lists-two-actions-called-regress">
+<h3><code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">classo</span> <span class="pre">--help</span></code> lists two actions called “regress”<a class="headerlink" href="#qiime-classo-help-lists-two-actions-called-regress" title="Link to this heading">#</a></h3>
+<p><strong>Cause.</strong> <code class="docutils literal notranslate"><span class="pre">classify</span></code> was registered with <code class="docutils literal notranslate"><span class="pre">name=&quot;regress&quot;</span></code>.</p>
+<p><strong>Workaround.</strong> Fixed in current q2-classo. If you see it, your install predates
+the fix — the action still works, it is only mislabelled.</p>
+</section>
+<section id="every-plot-pane-in-the-summarize-qzv-is-blank">
+<h3>Every plot pane in the <code class="docutils literal notranslate"><span class="pre">summarize</span></code> <code class="docutils literal notranslate"><span class="pre">.qzv</span></code> is blank<a class="headerlink" href="#every-plot-pane-in-the-summarize-qzv-is-blank" title="Link to this heading">#</a></h3>
+<p><strong>Cause.</strong> The plot-writing calls were commented out while the templates still
+referenced 16 <code class="docutils literal notranslate"><span class="pre">&lt;iframe&gt;</span></code> files. No error was raised; the panes just rendered
+empty.</p>
+<p><strong>Workaround.</strong> Fixed in current q2-classo. A regression test now asserts that
+every iframe the templates reference has something that writes it.</p>
+</section>
+<section id="nameerror-name-xgraph-is-not-defined">
+<h3><code class="docutils literal notranslate"><span class="pre">NameError:</span> <span class="pre">name</span> <span class="pre">'xGraph'</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">defined</span></code><a class="headerlink" href="#nameerror-name-xgraph-is-not-defined" title="Link to this heading">#</a></h3>
+<p><strong>Cause.</strong> A typo (<code class="docutils literal notranslate"><span class="pre">xGrpah</span></code>) on the non-log-scale branch, reachable via
+<code class="docutils literal notranslate"><span class="pre">--p-cv-logscale</span> <span class="pre">False</span></code>.</p>
+<p><strong>Workaround.</strong> Fixed in current q2-classo.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="both-plugins">
+<h2>Both plugins<a class="headerlink" href="#both-plugins" title="Link to this heading">#</a></h2>
+<section id="a-misspelled-enum-value-fails-at-runtime-not-on-the-command-line">
+<h3>A misspelled enum value fails at runtime, not on the command line<a class="headerlink" href="#a-misspelled-enum-value-fails-at-runtime-not-on-the-command-line" title="Link to this heading">#</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">ValueError</span><span class="p">:</span> <span class="n">Unknown</span> <span class="n">transformation</span> <span class="n">name</span><span class="p">,</span> <span class="n">use</span> <span class="n">clr</span> <span class="ow">and</span> <span class="ow">not</span> <span class="s1">&#39;clrr&#39;</span>
+</pre></div>
+</div>
+<p><strong>Cause.</strong> Neither plugin declares <code class="docutils literal notranslate"><span class="pre">Choices()</span></code> on its string parameters, so QIIME 2
+accepts any string and the check happens inside the function. Affects
+<code class="docutils literal notranslate"><span class="pre">--p-transformation</span></code> (<code class="docutils literal notranslate"><span class="pre">clr</span></code>/<code class="docutils literal notranslate"><span class="pre">mclr</span></code>), <code class="docutils literal notranslate"><span class="pre">--p-method</span></code> (<code class="docutils literal notranslate"><span class="pre">scaled</span></code>/<code class="docutils literal notranslate"><span class="pre">unscaled</span></code>),
+<code class="docutils literal notranslate"><span class="pre">--p-reg</span></code> (<code class="docutils literal notranslate"><span class="pre">GGL</span></code>/<code class="docutils literal notranslate"><span class="pre">FGL</span></code>), <code class="docutils literal notranslate"><span class="pre">--p-path-scale</span></code> (<code class="docutils literal notranslate"><span class="pre">log</span></code>/<code class="docutils literal notranslate"><span class="pre">linear</span></code>) and the various
+<code class="docutils literal notranslate"><span class="pre">--p-*-numerical-method</span></code> parameters.</p>
+<p><strong>Workaround.</strong> Check spelling against the
+<a class="reference internal" href="02_gglasso_parameters.html"><span class="std std-doc">parameter reference</span></a>. Note that the
+<code class="docutils literal notranslate"><span class="pre">*_numerical_method</span></code> parameters default to the literal string
+<code class="docutils literal notranslate"><span class="pre">&quot;not</span> <span class="pre">specified&quot;</span></code>, so a typo there is silently accepted.</p>
+</section>
+<section id="the-clr-transform-produces-obviously-wrong-values">
+<h3>The CLR transform produces obviously wrong values<a class="headerlink" href="#the-clr-transform-produces-obviously-wrong-values" title="Link to this heading">#</a></h3>
+<p><strong>Cause (historical).</strong> Zero imputation used a chained pandas assignment that
+becomes a silent no-op under Copy-on-Write, so no pseudo count was ever added.
+The failure surfaced far from its origin, as
+<code class="docutils literal notranslate"><span class="pre">AssertionError:</span> <span class="pre">Add</span> <span class="pre">pseudo</span> <span class="pre">count</span> <span class="pre">before</span> <span class="pre">using</span> <span class="pre">clr</span></code>.</p>
+<p><strong>Workaround.</strong> Fixed in current q2-gglasso.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters/90_reference"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="03_classo_parameters.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">q2-classo Parameter Reference</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../99_appendix/01_math.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Appendix: Mathematical Background</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conda-env-create-fails-on-deblur-sortmerna"><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">env</span> <span class="pre">create</span></code> fails on <code class="docutils literal notranslate"><span class="pre">deblur</span></code> → <code class="docutils literal notranslate"><span class="pre">sortmerna</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qiime-gglasso-pca-fails-with-templatenotfound"><code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">gglasso</span> <span class="pre">pca</span></code> fails with <code class="docutils literal notranslate"><span class="pre">TemplateNotFound</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pip-silently-breaks-a-working-environment">pip silently breaks a working environment</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#q2-gglasso">q2-gglasso</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#p-rank-always-fails"><code class="docutils literal notranslate"><span class="pre">--p-rank</span></code> always fails</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qiime-gglasso-pca-crashes-on-a-solution-that-has-no-low-rank-part"><code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">gglasso</span> <span class="pre">pca</span></code> crashes on a solution that has no low-rank part</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pca-refuses-n-components-3-exceeds-the-rank-of-the-low-rank-component-2"><code class="docutils literal notranslate"><span class="pre">pca</span></code> refuses: <code class="docutils literal notranslate"><span class="pre">n_components</span> <span class="pre">(3)</span> <span class="pre">exceeds</span> <span class="pre">the</span> <span class="pre">rank</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">low-rank</span> <span class="pre">component</span> <span class="pre">(2)</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-taxonomy-join-returns-all-nan-instead-of-raising">The taxonomy join returns all-<code class="docutils literal notranslate"><span class="pre">NaN</span></code> instead of raising</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qiime-gglasso-pca-crashes-with-attributeerror-on-metadata"><code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">gglasso</span> <span class="pre">pca</span></code> crashes with <code class="docutils literal notranslate"><span class="pre">AttributeError</span></code> on metadata</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#transform-features-demands-a-taxonomy-i-don-t-have"><code class="docutils literal notranslate"><span class="pre">transform-features</span></code> demands a taxonomy I don’t have</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#build-groups-output-cannot-be-fed-to-solve-problem"><code class="docutils literal notranslate"><span class="pre">build-groups</span></code> output cannot be fed to <code class="docutils literal notranslate"><span class="pre">solve-problem</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-qzv-opens-as-a-blank-white-page">The <code class="docutils literal notranslate"><span class="pre">.qzv</span></code> opens as a blank white page</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-selection-ran-even-though-i-only-wanted-a-single-fit">Model selection ran even though I only wanted a single fit</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#q2-classo">q2-classo</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#p-cv-nlam-has-two-dashes-is-that-a-typo"><code class="docutils literal notranslate"><span class="pre">--p-cv--nlam</span></code> has two dashes — is that a typo?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qiime-classo-classify-p-concomitant-true-is-rejected"><code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">classo</span> <span class="pre">classify</span> <span class="pre">--p-concomitant</span> <span class="pre">True</span></code> is rejected</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qiime-classo-help-lists-two-actions-called-regress"><code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">classo</span> <span class="pre">--help</span></code> lists two actions called “regress”</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#every-plot-pane-in-the-summarize-qzv-is-blank">Every plot pane in the <code class="docutils literal notranslate"><span class="pre">summarize</span></code> <code class="docutils literal notranslate"><span class="pre">.qzv</span></code> is blank</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nameerror-name-xgraph-is-not-defined"><code class="docutils literal notranslate"><span class="pre">NameError:</span> <span class="pre">name</span> <span class="pre">'xGraph'</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">defined</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#both-plugins">Both plugins</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-misspelled-enum-value-fails-at-runtime-not-on-the-command-line">A misspelled enum value fails at runtime, not on the command line</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-clr-transform-produces-obviously-wrong-values">The CLR transform produces obviously wrong values</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Biomedical Statistics and Data Science Group @ LMU & Helmholtz Munich
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

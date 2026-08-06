@@ -1,0 +1,1132 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Advanced: Choosing a Model &#8212; High-dimensional Statistics with QIIME 2</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles.css?v=3437f865" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/03_lowdim_classo/05_advanced/02_model_selection';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Predict &amp; Summarize" href="../06_predict_and_summarize.html" />
+    <link rel="prev" title="Advanced: Using Concomitant Formulation" href="01_concomitant_formulation.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../../_static/searchtools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <script src="../../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/logo_light.svg" class="logo__image only-light" alt="High-dimensional Statistics with QIIME 2 - Home"/>
+    <img src="../../../_static/logo_dark.svg" class="logo__image only-dark pst-js-only" alt="High-dimensional Statistics with QIIME 2 - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../00_getting_started/01_intro.html">Why High-Dimensional Statistics?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../00_getting_started/02_datasets.html">Atacama Soil Microbiome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../00_getting_started/03_download_data.html">Download the Tutorial Data</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../01_installation/01_prerequisites.html">Prerequisites &amp; Installation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../01_installation/02_q2_gglasso.html">Installing q2-gglasso</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../01_installation/03_q2_classo.html">Installing q2-classo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../01_installation/04_verify.html">Verifying Your Installation</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tier 1 — Low-dimensional example (Atacama, 13 ASVs)</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../02_lowdim_gglasso/00_index.html">Graphical Lasso Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../02_lowdim_gglasso/01_data_preparation.html">Data Preparation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../02_lowdim_gglasso/02_sgl.html">Single Graphical Lasso</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../02_lowdim_gglasso/03_slr.html">Sparse + Low-Rank (Latent Variables)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../02_lowdim_gglasso/04_adaptive_glasso.html">Adaptive Graphical Lasso</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../02_lowdim_gglasso/05_lambda_paths.html">Regularization Paths &amp; Model Selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../02_lowdim_gglasso/06_multiple_graphical_lasso.html">Multiple Graphical Lasso (GGL / FGL)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../02_lowdim_gglasso/07_pca.html">Latent-Component PCA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../02_lowdim_gglasso/08_summarize.html">Summarizing a Solution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../02_lowdim_gglasso/09_interpretation.html">Interpretation</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../00_overview.html">Log-Contrast Models</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01_generate_data.html">Synthetic Data with Known Truth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_data_preparation.html">Data Preparation</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../03_regression/00_index.html">Regression</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../03_regression/01_logcontrast.html">Log-Contrast</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../03_regression/02_trac.html">With trac</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../04_classification/00_index.html">Classification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../04_classification/01_logcontrast.html">Log-Contrast</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../04_classification/02_trac.html">With trac</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="01_concomitant_formulation.html">Advanced: Concomitant Formulation</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Advanced: Choosing a Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06_predict_and_summarize.html">Predict &amp; Summarize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07_interpretation.html">Interpretation</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tier 2 — High-dimensional example (Atacama, 300 ASVs)</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../04_highdim_atacama/00_index.html">Overview</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../04_highdim_atacama/01_data.html">The 300-ASV Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../04_highdim_atacama/02_model_selection.html">Selecting lambda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../04_highdim_atacama/03_slr_ranks.html">Choosing the Latent Rank</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../04_highdim_atacama/04_latent_pca.html">Latent Components &amp; Covariates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../04_highdim_atacama/05_classo_cv.html">Log-Contrast Models at Scale</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../04_highdim_atacama/06_interpretation.html">Interpretation</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tier 3 — Metagenomics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../05_metagenomics/00_index.html">Overview</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../05_metagenomics/01_gut_to_soil/00_index.html">Gut-to-Soil (16S, 335 ASVs x 99 samples)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../05_metagenomics/01_gut_to_soil/01_data.html">The Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../05_metagenomics/01_gut_to_soil/02_network.html">Network Inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../05_metagenomics/01_gut_to_soil/03_regression.html">Log-Contrast Regression</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../90_reference/01_command_coverage.html">Command Coverage Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../90_reference/02_gglasso_parameters.html">q2-gglasso Parameter Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../90_reference/03_classo_parameters.html">q2-classo Parameter Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../90_reference/04_troubleshooting.html">Troubleshooting &amp; Known Gotchas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../99_appendix/01_math.html">Appendix: Mathematical Background</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../99_appendix/02_moshpit_cocoa_note.html">Appendix: Shotgun Metagenomics (MOSHPIT cocoa)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/chapters/03_lowdim_classo/05_advanced/02_model_selection.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Advanced: Choosing a Model</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-toy-problem">The toy problem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#which-one-to-use">Which one to use</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lambda-path-p-path">Lambda path — <code class="docutils literal notranslate"><span class="pre">--p-path</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-validation-p-cv">Cross-validation — <code class="docutils literal notranslate"><span class="pre">--p-cv</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#p-cv-nlam-and-the-deprecated-p-cv-nlam"><code class="docutils literal notranslate"><span class="pre">--p-cv-nlam</span></code> and the deprecated <code class="docutils literal notranslate"><span class="pre">--p-cv--nlam</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stability-selection-p-stabsel">Stability selection — <code class="docutils literal notranslate"><span class="pre">--p-stabsel</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fixed-lambda-p-lamfixed">Fixed lambda — <code class="docutils literal notranslate"><span class="pre">--p-lamfixed</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#formulation-parameters-that-change-what-you-are-selecting">Formulation parameters that change what you are selecting</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#p-intercept"><code class="docutils literal notranslate"><span class="pre">--p-intercept</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#p-do-yshift"><code class="docutils literal notranslate"><span class="pre">--p-do-yshift</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#p-rho"><code class="docutils literal notranslate"><span class="pre">--p-rho</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-all-four-at-once">Running all four at once</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#numerical-methods">Numerical methods</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gotchas">Gotchas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next">Next</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="advanced-choosing-a-model">
+<h1>Advanced: Choosing a Model<a class="headerlink" href="#advanced-choosing-a-model" title="Link to this heading">#</a></h1>
+<p>A constrained lasso fit is not one model, it is a family of models indexed by
+the penalty λ. <code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">classo</span> <span class="pre">regress</span></code> and <code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">classo</span> <span class="pre">classify</span></code> offer four
+independent ways to pick a member of that family — or to refuse to pick one and
+show you the whole family instead.</p>
+<p>The four are <strong>not</strong> alternatives you choose between at the command line. They
+are four switches, each with its own parameter block, and each writes its own
+tab into the <code class="docutils literal notranslate"><span class="pre">summarize</span></code> visualization. Turning all four on in a single call is
+the normal thing to do: they answer different questions, and running them
+together costs one solve each rather than four separate <code class="docutils literal notranslate"><span class="pre">regress</span></code> invocations.</p>
+<p>This chapter puts all four on the same toy problem so the outputs are directly
+comparable.</p>
+<section id="the-toy-problem">
+<h2>The toy problem<a class="headerlink" href="#the-toy-problem" title="Link to this heading">#</a></h2>
+<p>The synthetic design from
+<a class="reference internal" href="../01_generate_data.html"><span class="std std-doc">Synthetic Data with Known Truth</span></a> is used throughout,
+because it is the only Tier-1 problem where the correct answer is known: three
+planted non-zero coefficients out of twenty features. Every command below
+assumes you are in the <code class="docutils literal notranslate"><span class="pre">smoke-test/</span></code> directory created there and have
+<code class="docutils literal notranslate"><span class="pre">synthetic-xclr.qza</span></code>, <code class="docutils literal notranslate"><span class="pre">synthetic-c.qza</span></code> and <code class="docutils literal notranslate"><span class="pre">randomy.tsv</span></code> in it.</p>
+<p>Everything transfers unchanged to the Atacama artifacts of
+<a class="reference internal" href="../02_data_preparation.html"><span class="std std-doc">Data Preparation</span></a> — swap the three inputs and the
+<code class="docutils literal notranslate"><span class="pre">--m-y-file</span></code> / <code class="docutils literal notranslate"><span class="pre">--m-y-column</span></code> pair.</p>
+</section>
+<section id="which-one-to-use">
+<h2>Which one to use<a class="headerlink" href="#which-one-to-use" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Block</p></th>
+<th class="head"><p>Flag</p></th>
+<th class="head"><p>What it returns</p></th>
+<th class="head"><p>Roughly what it costs</p></th>
+<th class="head"><p>Reach for it when</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Lambda path</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-path</span></code></p></td>
+<td><p>β at every λ on a grid; <strong>no</strong> chosen λ</p></td>
+<td><p>one path solve</p></td>
+<td><p>you want to see the whole trajectory, or to pick λ by held-out error via <code class="docutils literal notranslate"><span class="pre">predict</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Cross-validation</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-cv</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lambda_min</span></code> and <code class="docutils literal notranslate"><span class="pre">lambda_1SE</span></code>, plus a refit β</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cv_subsets</span></code> path solves</p></td>
+<td><p>prediction accuracy is the goal and you have samples to spare for splitting</p></td>
+</tr>
+<tr class="row-even"><td><p>Stability selection</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-stabsel</span></code></p></td>
+<td><p>a selection probability per feature, plus a refit β</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">stabsel_b</span></code> subsample fits</p></td>
+<td><p><em>which features</em> is the question, and you want a frequency-based guard against false positives</p></td>
+</tr>
+<tr class="row-odd"><td><p>Fixed lambda</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-lamfixed</span></code></p></td>
+<td><p>β at one λ, before and after refit</p></td>
+<td><p>one solve</p></td>
+<td><p>you already know λ, or want the theoretical λ as a fixed reference</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The short version: <strong>cross-validation optimizes prediction, stability selection
+optimizes selection, and they routinely disagree.</strong> CV tends to keep a generous
+support because extra weakly-informative features rarely hurt held-out error;
+stability selection discards anything that is not reproducibly picked across
+resamples. If you intend to interpret the coefficients biologically, trust the
+stability-selection support and read the CV curve for context. If you intend to
+predict, do the opposite.</p>
+</section>
+<section id="lambda-path-p-path">
+<h2>Lambda path — <code class="docutils literal notranslate"><span class="pre">--p-path</span></code><a class="headerlink" href="#lambda-path-p-path" title="Link to this heading">#</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>classo<span class="w"> </span>regress<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-features<span class="w"> </span>synthetic-xclr.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-c<span class="w"> </span>synthetic-c.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--m-y-file<span class="w"> </span>randomy.tsv<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--m-y-column<span class="w"> </span>col<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-path<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-path-nlam-log<span class="w"> </span><span class="m">40</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-path-lamin-log<span class="w"> </span><span class="m">0</span>.01<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-path-n-active<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-no-cv<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-no-stabsel<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-no-lamfixed<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-result<span class="w"> </span>ms-path.qza
+</pre></div>
+</div>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>What it controls</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--p-path-nlam-log</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">40</span></code></p></td>
+<td><p>number of grid points</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--p-path-lamin-log</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1e-2</span></code></p></td>
+<td><p>smallest λ, <strong>as a fraction of λ_max</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--p-path-n-active</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0</span></code></p></td>
+<td><p>stop once this many coefficients are active; <code class="docutils literal notranslate"><span class="pre">0</span></code> disables early stopping</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--p-path-numerical-method</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">not</span> <span class="pre">specified</span></code></p></td>
+<td><p>solver; see <a class="reference internal" href="#numerical-methods">Numerical methods</a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The grid is always logarithmic. The plugin sets the path block’s <code class="docutils literal notranslate"><span class="pre">logscale</span></code>
+unconditionally, which is why there is no <code class="docutils literal notranslate"><span class="pre">--p-path-logscale</span></code> and why the two
+grid parameters carry <code class="docutils literal notranslate"><span class="pre">_log</span></code> in their names. <code class="docutils literal notranslate"><span class="pre">--p-path-lamin-log</span> <span class="pre">0.01</span></code> therefore
+means “span two decades below λ_max”, not “stop at λ = 0.01”.</p>
+<p><code class="docutils literal notranslate"><span class="pre">--p-path-n-active</span></code> is the parameter that makes paths affordable on wide
+problems. Setting it to, say, 30 tells the solver to stop descending once thirty
+coefficients have entered the model — everything below that λ is dense and
+usually uninteresting, and computing it is where the time goes. Leave it at <code class="docutils literal notranslate"><span class="pre">0</span></code>
+for a twenty-feature toy.</p>
+<p><strong>The path selects nothing.</strong> On its own it is a diagnostic: you look at the
+beta-path plot and see the order in which features enter and whether any
+coefficient changes sign. It becomes a selection rule only in combination with
+<code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">classo</span> <span class="pre">predict</span></code> on a held-out table, which adds a test-error-versus-λ
+curve to the same tab. That combination is covered in
+<a class="reference internal" href="../06_predict_and_summarize.html"><span class="std std-doc">Predict &amp; Summarize</span></a>, including the trap that
+the curve is degenerate if you predict on the training samples.</p>
+</section>
+<section id="cross-validation-p-cv">
+<h2>Cross-validation — <code class="docutils literal notranslate"><span class="pre">--p-cv</span></code><a class="headerlink" href="#cross-validation-p-cv" title="Link to this heading">#</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>classo<span class="w"> </span>regress<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-features<span class="w"> </span>synthetic-xclr.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-c<span class="w"> </span>synthetic-c.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--m-y-file<span class="w"> </span>randomy.tsv<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--m-y-column<span class="w"> </span>col<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-cv<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-cv-subsets<span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-cv-nlam<span class="w"> </span><span class="m">100</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-cv-lamin<span class="w"> </span><span class="m">0</span>.001<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-cv-seed<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-cv-one-se<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-no-path<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-no-stabsel<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-no-lamfixed<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-result<span class="w"> </span>ms-cv.qza
+</pre></div>
+</div>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>What it controls</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--p-cv-subsets</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">5</span></code></p></td>
+<td><p>number of CV folds</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--p-cv-nlam</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">100</span></code></p></td>
+<td><p>grid points on the CV λ grid</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--p-cv-lamin</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1e-3</span></code></p></td>
+<td><p>smallest λ as a fraction of λ_max</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--p-cv-logscale</span></code></p></td>
+<td><p>on</p></td>
+<td><p>log-spaced grid; <code class="docutils literal notranslate"><span class="pre">--p-no-cv-logscale</span></code> for linear</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--p-cv-seed</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1</span></code></p></td>
+<td><p>fold assignment</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--p-cv-one-se</span></code></p></td>
+<td><p>on</p></td>
+<td><p>use the one-standard-error λ instead of the error minimum</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--p-cv-numerical-method</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">not</span> <span class="pre">specified</span></code></p></td>
+<td><p>solver</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Two λ values come out of every CV run and <strong>both are always reported</strong> in the
+Cross-Validation tab: <code class="docutils literal notranslate"><span class="pre">lambda_min</span></code>, the grid point with the lowest mean error,
+and <code class="docutils literal notranslate"><span class="pre">lambda_1SE</span></code>, the largest λ whose mean error is still within one standard
+error of that minimum. <code class="docutils literal notranslate"><span class="pre">--p-cv-one-se</span></code> decides only which of the two the
+displayed refit and the exported <code class="docutils literal notranslate"><span class="pre">CV-beta.csv</span></code> are computed at.</p>
+<p>Prefer the default. The error curve near its minimum is usually flat and noisy,
+so <code class="docutils literal notranslate"><span class="pre">lambda_min</span></code> is chasing sampling noise; the one-standard-error rule buys a
+noticeably sparser model at a cost in mean error that is, by construction, within
+the noise. Switch to <code class="docutils literal notranslate"><span class="pre">--p-no-cv-one-se</span></code> when you are optimizing prediction and
+have enough samples that the curve has a genuine minimum — which is what the
+worked Atacama commands in <a class="reference internal" href="../03_regression/01_logcontrast.html"><span class="std std-doc">Log-Contrast Regression</span></a>
+do.</p>
+<p>Note that the CV grid and the path grid are configured separately and by default
+do not agree: 100 points down to <code class="docutils literal notranslate"><span class="pre">1e-3</span></code> for CV against 40 points down to <code class="docutils literal notranslate"><span class="pre">1e-2</span></code>
+for the path. If you want the CV-selected λ to land exactly on a point you can
+read off the beta-path plot, you have to say so explicitly.</p>
+<p><code class="docutils literal notranslate"><span class="pre">--p-cv-seed</span></code> matters more than it looks on small problems. With a hundred-odd
+samples split into five folds, each fold is small enough that a different fold
+assignment perturbs the error curve, and the selected λ can land on a different
+grid point — which changes the support you report. Pin the seed, and report it.</p>
+<section id="p-cv-nlam-and-the-deprecated-p-cv-nlam">
+<h3><code class="docutils literal notranslate"><span class="pre">--p-cv-nlam</span></code> and the deprecated <code class="docutils literal notranslate"><span class="pre">--p-cv--nlam</span></code><a class="headerlink" href="#p-cv-nlam-and-the-deprecated-p-cv-nlam" title="Link to this heading">#</a></h3>
+<p>The number of CV grid points is spelled <strong><code class="docutils literal notranslate"><span class="pre">--p-cv-nlam</span></code></strong>. That is the parameter
+to use.</p>
+<p>You will also find <code class="docutils literal notranslate"><span class="pre">--p-cv--nlam</span></code>, with two dashes, in older scripts and in
+published versions of these tutorials. It is not a typo: the parameter was
+originally registered as <code class="docutils literal notranslate"><span class="pre">cv__nlam</span></code> with a double underscore, which QIIME 2
+renders on the command line as <code class="docutils literal notranslate"><span class="pre">--p-cv--nlam</span></code>. The old spelling is still
+accepted so that existing pipelines and any command already printed in a paper
+keep working, but it emits a <code class="docutils literal notranslate"><span class="pre">DeprecationWarning</span></code> and will be removed.</p>
+<p>The resolution rule, if both are present:</p>
+<ul class="simple">
+<li><p>Both given with <strong>different</strong> values → <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>, refusing to guess.</p></li>
+<li><p>One given → that one is used; the deprecated spelling additionally warns.</p></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>There is one hole in that rule. The check treats <code class="docutils literal notranslate"><span class="pre">cv_nlam</span> <span class="pre">==</span> <span class="pre">100</span></code> as “not set”,
+because 100 is its default and the framework cannot distinguish an explicit
+<code class="docutils literal notranslate"><span class="pre">--p-cv-nlam</span> <span class="pre">100</span></code> from an omitted one. So
+<code class="docutils literal notranslate"><span class="pre">--p-cv-nlam</span> <span class="pre">100</span> <span class="pre">--p-cv--nlam</span> <span class="pre">50</span></code> does <strong>not</strong> raise — it silently uses 50.
+Pass only one of the two spellings, and make it <code class="docutils literal notranslate"><span class="pre">--p-cv-nlam</span></code>.</p>
+</div>
+</section>
+</section>
+<section id="stability-selection-p-stabsel">
+<h2>Stability selection — <code class="docutils literal notranslate"><span class="pre">--p-stabsel</span></code><a class="headerlink" href="#stability-selection-p-stabsel" title="Link to this heading">#</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>classo<span class="w"> </span>regress<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-features<span class="w"> </span>synthetic-xclr.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-c<span class="w"> </span>synthetic-c.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--m-y-file<span class="w"> </span>randomy.tsv<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--m-y-column<span class="w"> </span>col<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-stabsel<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-stabsel-method<span class="w"> </span>first<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-stabsel-b<span class="w"> </span><span class="m">50</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-stabsel-q<span class="w"> </span><span class="m">10</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-stabsel-percent-ns<span class="w"> </span><span class="m">0</span>.5<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-stabsel-threshold<span class="w"> </span><span class="m">0</span>.7<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-stabsel-seed<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-no-path<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-no-cv<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-no-lamfixed<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-result<span class="w"> </span>ms-stabsel.qza
+</pre></div>
+</div>
+<p>Stability selection refits the model on <code class="docutils literal notranslate"><span class="pre">--p-stabsel-b</span></code> random subsamples, each
+containing a <code class="docutils literal notranslate"><span class="pre">--p-stabsel-percent-ns</span></code> fraction of the samples, and records how
+often each feature is picked. A feature is called selected when that frequency
+clears <code class="docutils literal notranslate"><span class="pre">--p-stabsel-threshold</span></code>.</p>
+<p>What “picked” means on a single subsample depends on <code class="docutils literal notranslate"><span class="pre">--p-stabsel-method</span></code>:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p><code class="docutils literal notranslate"><span class="pre">--p-stabsel-method</span></code></p></th>
+<th class="head"><p>Per-subsample rule</p></th>
+<th class="head"><p>Parameters that apply</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">first</span></code> (default)</p></td>
+<td><p>run the path and take the first <code class="docutils literal notranslate"><span class="pre">q</span></code> variables to enter</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-stabsel-q</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">lam</span></code></p></td>
+<td><p>fit at one fixed λ and take its support</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-stabsel-lam</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-stabsel-true-lam</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">max</span></code></p></td>
+<td><p>run the path down to <code class="docutils literal notranslate"><span class="pre">lamin</span></code> and take the <code class="docutils literal notranslate"><span class="pre">q</span></code> largest coefficients</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-stabsel-q</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-stabsel-lamin</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The parameters that do not apply to your chosen method are simply ignored, with
+no diagnostic. Setting <code class="docutils literal notranslate"><span class="pre">--p-stabsel-lamin</span></code> while leaving the method at <code class="docutils literal notranslate"><span class="pre">first</span></code>
+does nothing at all, and that is the single most common way to be confused by
+this block.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--p-stabsel-b</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">50</span></code></p></td>
+<td><p>more subsamples, smoother probabilities, linearly more time</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--p-stabsel-q</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">10</span></code></p></td>
+<td><p>variables per subsample; the main sparsity dial for <code class="docutils literal notranslate"><span class="pre">first</span></code>/<code class="docutils literal notranslate"><span class="pre">max</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--p-stabsel-percent-ns</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0.5</span></code></p></td>
+<td><p>subsample size as a fraction of n</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--p-stabsel-threshold</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0.7</span></code></p></td>
+<td><p>selection frequency required; lower it to widen the support</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--p-stabsel-threshold-label</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0.4</span></code></p></td>
+<td><p>stored in the artifact but <strong>unused by the QIIME 2 visualization</strong> — no bar labels are drawn; it affects only c-lasso’s own matplotlib output</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--p-stabsel-lam</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">-1.0</span></code></p></td>
+<td><p>method <code class="docutils literal notranslate"><span class="pre">lam</span></code> only; any value ≤ 0 means “use the theoretical λ”</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--p-stabsel-true-lam</span></code></p></td>
+<td><p>on</p></td>
+<td><p>method <code class="docutils literal notranslate"><span class="pre">lam</span></code> only; on = the number you give is λ itself, <code class="docutils literal notranslate"><span class="pre">--p-no-stabsel-true-lam</span></code> = it is λ/λ_max in [0, 1]</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--p-stabsel-lamin</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1e-2</span></code></p></td>
+<td><p>method <code class="docutils literal notranslate"><span class="pre">max</span></code> only</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--p-stabsel-seed</span></code></p></td>
+<td><p><em>unset</em></p></td>
+<td><p>see below</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p><code class="docutils literal notranslate"><span class="pre">--p-stabsel-seed</span></code> has <strong>no default</strong>. Unlike <code class="docutils literal notranslate"><span class="pre">--p-cv-seed</span></code>, which defaults to
+<code class="docutils literal notranslate"><span class="pre">1</span></code>, leaving the stability-selection seed out means the subsamples are drawn
+pseudo-randomly and the selection probabilities — and therefore possibly the
+selected support — differ between two otherwise identical runs. Always set it.</p>
+</div>
+<p>The threshold and <code class="docutils literal notranslate"><span class="pre">q</span></code> are the two dials worth turning. <code class="docutils literal notranslate"><span class="pre">--p-stabsel-threshold</span> <span class="pre">0.7</span></code>
+is conservative and is the right starting point; the worked Atacama commands
+elsewhere in this tier relax it to <code class="docutils literal notranslate"><span class="pre">0.5</span></code>, which admits any feature picked in more
+than half the subsamples and so gives a wider support. Report whichever you
+used — a stability-selection support is meaningless without its threshold.</p>
+</section>
+<section id="fixed-lambda-p-lamfixed">
+<h2>Fixed lambda — <code class="docutils literal notranslate"><span class="pre">--p-lamfixed</span></code><a class="headerlink" href="#fixed-lambda-p-lamfixed" title="Link to this heading">#</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>classo<span class="w"> </span>regress<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-features<span class="w"> </span>synthetic-xclr.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-c<span class="w"> </span>synthetic-c.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--m-y-file<span class="w"> </span>randomy.tsv<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--m-y-column<span class="w"> </span>col<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-lamfixed<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-lamfixed-lam<span class="w"> </span>-1.0<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-lamfixed-true-lam<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-no-path<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-no-cv<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-no-stabsel<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-result<span class="w"> </span>ms-lamfixed.qza
+</pre></div>
+</div>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--p-lamfixed-lam</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">-1.0</span></code></p></td>
+<td><p>any value ≤ 0 means “use the theoretical λ”</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--p-lamfixed-true-lam</span></code></p></td>
+<td><p>on</p></td>
+<td><p>on = the number given is λ; <code class="docutils literal notranslate"><span class="pre">--p-no-lamfixed-true-lam</span></code> = it is λ/λ_max</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--p-lamfixed-numerical-method</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">not</span> <span class="pre">specified</span></code></p></td>
+<td><p>solver</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The theoretical λ is a distribution-derived penalty level that requires no
+resampling at all — no folds, no subsamples, one solve. It is the cheapest
+possible answer and a good sanity anchor: if CV and stability selection both
+land somewhere wildly different from it, look at your data before believing
+either.</p>
+<p>This block reports <strong>two</strong> coefficient vectors: the raw penalized β at that λ,
+and a refit β obtained by re-estimating on the selected support without the
+penalty. The refit removes the shrinkage bias that makes penalized coefficients
+systematically too small in magnitude, and it is what you should quote as an
+effect size. The raw β is what tells you how strongly the penalty is biting.</p>
+</section>
+<section id="formulation-parameters-that-change-what-you-are-selecting">
+<h2>Formulation parameters that change what you are selecting<a class="headerlink" href="#formulation-parameters-that-change-what-you-are-selecting" title="Link to this heading">#</a></h2>
+<p>These are not model-selection parameters, but they change the model that
+selection is applied to — and therefore change λ_max, and therefore change the
+meaning of every λ/λ_max fraction above. Two runs with different formulations
+are not comparable on the λ scale unless you work in true λ.</p>
+<section id="p-intercept">
+<h3><code class="docutils literal notranslate"><span class="pre">--p-intercept</span></code><a class="headerlink" href="#p-intercept" title="Link to this heading">#</a></h3>
+<p>On by default. c-lasso prepends an unpenalized <code class="docutils literal notranslate"><span class="pre">intercept</span></code> entry to the
+coefficient vector, so β has one more element than you have features. Three
+consequences you will actually notice: the beta bar plots skip the first entry,
+<code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">classo</span> <span class="pre">predict</span></code> fills that column with ones, and <code class="docutils literal notranslate"><span class="pre">--p-maxplot</span></code> needs to
+be at least <em>features + 1</em> to avoid truncation — see
+<a class="reference internal" href="../06_predict_and_summarize.html"><span class="std std-doc">Predict &amp; Summarize</span></a>.</p>
+<p>Use <code class="docutils literal notranslate"><span class="pre">--p-no-intercept</span></code> only if you have centered the response yourself and want
+the fit forced through the origin.</p>
+</section>
+<section id="p-do-yshift">
+<h3><code class="docutils literal notranslate"><span class="pre">--p-do-yshift</span></code><a class="headerlink" href="#p-do-yshift" title="Link to this heading">#</a></h3>
+<p>Off by default, and available on <code class="docutils literal notranslate"><span class="pre">regress</span></code> only — <code class="docutils literal notranslate"><span class="pre">classify</span></code> has no such
+parameter. It centers the response by subtracting its mean before solving.</p>
+<p>With <code class="docutils literal notranslate"><span class="pre">--p-intercept</span></code> on, this is close to a no-op: the intercept already absorbs
+any location shift in y. It earns its keep in the other combination, with
+<code class="docutils literal notranslate"><span class="pre">--p-no-intercept</span></code>, where an uncentered response forces the constrained
+coefficients to carry the mean and the penalty then distorts the whole fit.</p>
+</section>
+<section id="p-rho">
+<h3><code class="docutils literal notranslate"><span class="pre">--p-rho</span></code><a class="headerlink" href="#p-rho" title="Link to this heading">#</a></h3>
+<p>Defaults to <code class="docutils literal notranslate"><span class="pre">1.345</span></code> on <code class="docutils literal notranslate"><span class="pre">regress</span></code> and <code class="docutils literal notranslate"><span class="pre">0.0</span></code> on <code class="docutils literal notranslate"><span class="pre">classify</span></code>. It has <strong>no effect
+unless <code class="docutils literal notranslate"><span class="pre">--p-huber</span></code> is also set</strong> — it is the transition point of the Huber loss,
+in residual units, below which the loss is quadratic and above which it is
+linear. Small ρ means aggressive down-weighting of large residuals; large ρ
+approaches ordinary least squares. The regression default of 1.345 is the
+classical value giving 95% efficiency under Gaussian errors.</p>
+<p>On <code class="docutils literal notranslate"><span class="pre">classify</span></code> the value is wired to the separate <code class="docutils literal notranslate"><span class="pre">rho_classification</span></code> setting of
+the underlying solver, which is why its default differs. Robust classification
+is the topic of
+<a class="reference internal" href="01_concomitant_formulation.html"><span class="std std-doc">Advanced: Concomitant Formulation</span></a>, which also
+explains why <code class="docutils literal notranslate"><span class="pre">--p-concomitant</span></code> exists for <code class="docutils literal notranslate"><span class="pre">regress</span></code> and not for <code class="docutils literal notranslate"><span class="pre">classify</span></code>.</p>
+</section>
+</section>
+<section id="running-all-four-at-once">
+<h2>Running all four at once<a class="headerlink" href="#running-all-four-at-once" title="Link to this heading">#</a></h2>
+<p>This is the command the rest of the tier uses, and the one to start from:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>classo<span class="w"> </span>regress<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-features<span class="w"> </span>synthetic-xclr.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-c<span class="w"> </span>synthetic-c.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--m-y-file<span class="w"> </span>randomy.tsv<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--m-y-column<span class="w"> </span>col<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-path<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-cv<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-cv-seed<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-stabsel<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-stabsel-seed<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-stabsel-threshold<span class="w"> </span><span class="m">0</span>.7<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-lamfixed<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-result<span class="w"> </span>ms-all.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--verbose
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>classo<span class="w"> </span>summarize<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-problem<span class="w"> </span>ms-all.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-maxplot<span class="w"> </span><span class="m">25</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-visualization<span class="w"> </span>ms-all.qzv
+</pre></div>
+</div>
+<p>Each block adds a tab; each tab reports its own running time, so the <code class="docutils literal notranslate"><span class="pre">.qzv</span></code>
+itself tells you which of the four dominated the cost on your data.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>No timings, λ values, selected supports or error curves are quoted anywhere in
+this chapter. None of these commands has been re-run for this text, and the
+synthetic problem is unseeded, so a verified run would not reproduce for you
+regardless. Compare the four tabs <em>within your own run</em> against the planted
+support printed by <code class="docutils literal notranslate"><span class="pre">generate-data</span></code>.</p>
+</div>
+</section>
+<section id="numerical-methods">
+<h2>Numerical methods<a class="headerlink" href="#numerical-methods" title="Link to this heading">#</a></h2>
+<p>All four blocks take a <code class="docutils literal notranslate"><span class="pre">--p-*-numerical-method</span></code> parameter:
+<code class="docutils literal notranslate"><span class="pre">--p-path-numerical-method</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-cv-numerical-method</span></code>,
+<code class="docutils literal notranslate"><span class="pre">--p-stabsel-numerical-method</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-lamfixed-numerical-method</span></code>. The recognised
+values are <code class="docutils literal notranslate"><span class="pre">Path-Alg</span></code>, <code class="docutils literal notranslate"><span class="pre">P-PDS</span></code>, <code class="docutils literal notranslate"><span class="pre">PF-PDS</span></code> and <code class="docutils literal notranslate"><span class="pre">DR</span></code>.</p>
+<p>Leave them alone. The default is the literal string <code class="docutils literal notranslate"><span class="pre">not</span> <span class="pre">specified</span></code>, which the
+solver reads as “choose for me” and resolves against the formulation you asked
+for — and the formulation is a better guide to the right algorithm than intuition
+is.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Because the default is itself a non-canonical string, an unrecognised value here
+is silently accepted rather than rejected: a misspelled <code class="docutils literal notranslate"><span class="pre">--p-cv-numerical-method</span> <span class="pre">Path-Algo</span></code> does not raise, it just gives you the automatic choice. Neither plugin
+declares <code class="docutils literal notranslate"><span class="pre">Choices()</span></code> on any string parameter. See
+<a class="reference internal" href="../../90_reference/04_troubleshooting.html"><span class="std std-doc">Troubleshooting</span></a>.</p>
+</div>
+</section>
+<section id="gotchas">
+<h2>Gotchas<a class="headerlink" href="#gotchas" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">--p-stabsel-lamin</span></code> with the default method does nothing.</strong> It applies only
+to <code class="docutils literal notranslate"><span class="pre">--p-stabsel-method</span> <span class="pre">max</span></code>. The same holds for <code class="docutils literal notranslate"><span class="pre">--p-stabsel-lam</span></code> and
+<code class="docutils literal notranslate"><span class="pre">--p-stabsel-true-lam</span></code>, which apply only to method <code class="docutils literal notranslate"><span class="pre">lam</span></code>.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">--p-stabsel-threshold-label</span></code> is not a selection threshold.</strong> It changes
+nothing in the <code class="docutils literal notranslate"><span class="pre">.qzv</span></code>. Changing it will not change which features are
+selected, however much it looks like it should.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">--p-stabsel-seed</span></code> is unset by default</strong> — stability selection is not
+reproducible until you set it.</p></li>
+<li><p><strong>A misspelled <code class="docutils literal notranslate"><span class="pre">--p-stabsel-method</span></code> fails at runtime, not at parse time.</strong> No
+<code class="docutils literal notranslate"><span class="pre">Choices()</span></code> is declared.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">--p-no-cv-logscale</span></code> used to crash</strong> with <code class="docutils literal notranslate"><span class="pre">NameError:</span> <span class="pre">name</span> <span class="pre">'xGraph'</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">defined</span></code>, from a typo on the linear-scale branch of the CV plot. It is fixed in
+current q2-classo; if you hit it, your install predates the fix.</p></li>
+<li><p><strong>λ/λ_max fractions are not portable across formulations.</strong> Turning
+<code class="docutils literal notranslate"><span class="pre">--p-concomitant</span></code> or <code class="docutils literal notranslate"><span class="pre">--p-huber</span></code> on or off moves λ_max, so the same
+<code class="docutils literal notranslate"><span class="pre">--p-lamfixed-lam</span> <span class="pre">0.1</span></code> with <code class="docutils literal notranslate"><span class="pre">--p-no-lamfixed-true-lam</span></code> is a different penalty.</p></li>
+</ul>
+</section>
+<section id="next">
+<h2>Next<a class="headerlink" href="#next" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="../06_predict_and_summarize.html"><span class="std std-doc">Predict &amp; Summarize</span></a> — how each of these four
+blocks is rendered, and what <code class="docutils literal notranslate"><span class="pre">predict</span></code> adds to them.</p></li>
+<li><p><a class="reference internal" href="../07_interpretation.html"><span class="std std-doc">Interpretation</span></a> — turning a selected support into a
+statement about the data.</p></li>
+<li><p><a class="reference internal" href="../../90_reference/03_classo_parameters.html"><span class="std std-doc">q2-classo Parameter Reference</span></a> —
+the complete parameter list with types and defaults.</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters/03_lowdim_classo/05_advanced"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="01_concomitant_formulation.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Advanced: Using Concomitant Formulation</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../06_predict_and_summarize.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Predict &amp; Summarize</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-toy-problem">The toy problem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#which-one-to-use">Which one to use</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lambda-path-p-path">Lambda path — <code class="docutils literal notranslate"><span class="pre">--p-path</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-validation-p-cv">Cross-validation — <code class="docutils literal notranslate"><span class="pre">--p-cv</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#p-cv-nlam-and-the-deprecated-p-cv-nlam"><code class="docutils literal notranslate"><span class="pre">--p-cv-nlam</span></code> and the deprecated <code class="docutils literal notranslate"><span class="pre">--p-cv--nlam</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stability-selection-p-stabsel">Stability selection — <code class="docutils literal notranslate"><span class="pre">--p-stabsel</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fixed-lambda-p-lamfixed">Fixed lambda — <code class="docutils literal notranslate"><span class="pre">--p-lamfixed</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#formulation-parameters-that-change-what-you-are-selecting">Formulation parameters that change what you are selecting</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#p-intercept"><code class="docutils literal notranslate"><span class="pre">--p-intercept</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#p-do-yshift"><code class="docutils literal notranslate"><span class="pre">--p-do-yshift</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#p-rho"><code class="docutils literal notranslate"><span class="pre">--p-rho</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-all-four-at-once">Running all four at once</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#numerical-methods">Numerical methods</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gotchas">Gotchas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next">Next</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Biomedical Statistics and Data Science Group @ LMU & Helmholtz Munich
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

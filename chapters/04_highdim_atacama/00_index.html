@@ -1,0 +1,802 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Overview &#8212; High-dimensional Statistics with QIIME 2</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles.css?v=3437f865" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/04_highdim_atacama/00_index';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="The 300-ASV Dataset" href="01_data.html" />
+    <link rel="prev" title="Models Interpretation and Analysis" href="../03_lowdim_classo/07_interpretation.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo_light.svg" class="logo__image only-light" alt="High-dimensional Statistics with QIIME 2 - Home"/>
+    <img src="../../_static/logo_dark.svg" class="logo__image only-dark pst-js-only" alt="High-dimensional Statistics with QIIME 2 - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../00_getting_started/01_intro.html">Why High-Dimensional Statistics?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../00_getting_started/02_datasets.html">Atacama Soil Microbiome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../00_getting_started/03_download_data.html">Download the Tutorial Data</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../01_installation/01_prerequisites.html">Prerequisites &amp; Installation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../01_installation/02_q2_gglasso.html">Installing q2-gglasso</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_installation/03_q2_classo.html">Installing q2-classo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_installation/04_verify.html">Verifying Your Installation</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tier 1 — Low-dimensional example (Atacama, 13 ASVs)</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../02_lowdim_gglasso/00_index.html">Graphical Lasso Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/01_data_preparation.html">Data Preparation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/02_sgl.html">Single Graphical Lasso</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/03_slr.html">Sparse + Low-Rank (Latent Variables)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/04_adaptive_glasso.html">Adaptive Graphical Lasso</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/05_lambda_paths.html">Regularization Paths &amp; Model Selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/06_multiple_graphical_lasso.html">Multiple Graphical Lasso (GGL / FGL)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/07_pca.html">Latent-Component PCA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/08_summarize.html">Summarizing a Solution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/09_interpretation.html">Interpretation</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../03_lowdim_classo/00_overview.html">Log-Contrast Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/01_generate_data.html">Synthetic Data with Known Truth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/02_data_preparation.html">Data Preparation</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../03_lowdim_classo/03_regression/00_index.html">Regression</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../03_lowdim_classo/03_regression/01_logcontrast.html">Log-Contrast</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../03_lowdim_classo/03_regression/02_trac.html">With trac</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../03_lowdim_classo/04_classification/00_index.html">Classification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../03_lowdim_classo/04_classification/01_logcontrast.html">Log-Contrast</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../03_lowdim_classo/04_classification/02_trac.html">With trac</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/05_advanced/01_concomitant_formulation.html">Advanced: Concomitant Formulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/05_advanced/02_model_selection.html">Advanced: Choosing a Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/06_predict_and_summarize.html">Predict &amp; Summarize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/07_interpretation.html">Interpretation</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tier 2 — High-dimensional example (Atacama, 300 ASVs)</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Overview</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="01_data.html">The 300-ASV Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_model_selection.html">Selecting lambda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_slr_ranks.html">Choosing the Latent Rank</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_latent_pca.html">Latent Components &amp; Covariates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05_classo_cv.html">Log-Contrast Models at Scale</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06_interpretation.html">Interpretation</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tier 3 — Metagenomics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../05_metagenomics/00_index.html">Overview</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../05_metagenomics/01_gut_to_soil/00_index.html">Gut-to-Soil (16S, 335 ASVs x 99 samples)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../05_metagenomics/01_gut_to_soil/01_data.html">The Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_metagenomics/01_gut_to_soil/02_network.html">Network Inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_metagenomics/01_gut_to_soil/03_regression.html">Log-Contrast Regression</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../90_reference/01_command_coverage.html">Command Coverage Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../90_reference/02_gglasso_parameters.html">q2-gglasso Parameter Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../90_reference/03_classo_parameters.html">q2-classo Parameter Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../90_reference/04_troubleshooting.html">Troubleshooting &amp; Known Gotchas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../99_appendix/01_math.html">Appendix: Mathematical Background</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../99_appendix/02_moshpit_cocoa_note.html">Appendix: Shotgun Metagenomics (MOSHPIT cocoa)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/chapters/04_highdim_atacama/00_index.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Overview</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-canonical-parameterization">The canonical parameterization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#one-parameterization-not-two-closing-the-lambda-0-95-question">One parameterization, not two: closing the <span class="math notranslate nohighlight">\(\lambda = 0.95\)</span> question</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#most-numbers-in-this-tier-are-still-pending-recompute">Most numbers in this tier are still pending recompute</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-each-page-does">What each page does</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conventions-on-these-pages">Conventions on these pages</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="overview">
+<h1>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a></h1>
+<p>Tier 2 introduces <strong>no new action</strong>. Every command on the following pages has
+already been demonstrated in
+<a class="reference internal" href="../02_lowdim_gglasso/00_index.html"><span class="std std-doc">Tier 1</span></a> on a 13-ASV table you could read off
+the screen. What changes here is the size of the problem — <strong>300 ASVs across 54
+samples</strong> of the Atacama soil microbiome — and, with it, the fact that the
+parameter values stop being arbitrary. At <span class="math notranslate nohighlight">\(p = 13\)</span> you can pick <span class="math notranslate nohighlight">\(\lambda_1\)</span> by
+eye. At <span class="math notranslate nohighlight">\(p = 300\)</span>, with <span class="math notranslate nohighlight">\(p \gg n\)</span>, the penalty <em>is</em> the model: it decides how
+many of the 44,850 possible edges you are willing to believe.</p>
+<p>So this tier is about three things the small example cannot teach you:</p>
+<ol class="arabic simple">
+<li><p><strong>Choosing <span class="math notranslate nohighlight">\(\lambda_1\)</span> with a criterion</strong> rather than a guess
+(<a class="reference internal" href="02_model_selection.html"><span class="std std-doc">Selecting lambda</span></a>).</p></li>
+<li><p><strong>Sizing the latent block</strong> when you cannot set its rank directly
+(<a class="reference internal" href="03_slr_ranks.html"><span class="std std-doc">Choosing the Latent Rank</span></a>), and reading the resulting
+components against measured variables
+(<a class="reference internal" href="04_latent_pca.html"><span class="std std-doc">Latent Components &amp; Covariates</span></a>).</p></li>
+<li><p><strong>Asking whether the two plugins agree</strong> — whether the structure the network
+attributes to unobserved drivers is the same structure the log-contrast
+models are exploiting (<a class="reference internal" href="06_interpretation.html"><span class="std std-doc">Interpretation</span></a>).</p></li>
+</ol>
+<section id="the-canonical-parameterization">
+<h2>The canonical parameterization<a class="headerlink" href="#the-canonical-parameterization" title="Link to this heading">#</a></h2>
+<p>There is exactly <strong>one</strong> parameterization for this tier. Every page uses it, and
+any figure or artifact that does not carry these values belongs to an older
+bundle (see below).</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Setting</p></th>
+<th class="head"><p>Value</p></th>
+<th class="head"><p>Where it is argued</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--p-n-samples</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">54</span></code></p></td>
+<td><p>fixed by the table</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--p-lambda1-min</span></code> / <code class="docutils literal notranslate"><span class="pre">--p-lambda1-max</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0.8</span></code></p></td>
+<td><p><a class="reference internal" href="02_model_selection.html"><span class="std std-doc">Selecting lambda</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--p-gamma</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0.3</span></code></p></td>
+<td><p><a class="reference internal" href="02_model_selection.html"><span class="std std-doc">Selecting lambda</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--p-path-scale</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">linear</span></code></p></td>
+<td><p><a class="reference internal" href="02_model_selection.html"><span class="std std-doc">Selecting lambda</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--p-latent</span></code></p></td>
+<td><p>on, for the SLR models</p></td>
+<td><p><a class="reference internal" href="03_slr_ranks.html"><span class="std std-doc">Choosing the Latent Rank</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--p-mu1-min</span></code> / <code class="docutils literal notranslate"><span class="pre">--p-mu1-max</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">15</span></code>, giving <strong>rank 2</strong></p></td>
+<td><p><a class="reference internal" href="03_slr_ranks.html"><span class="std std-doc">Choosing the Latent Rank</span></a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Three of these deserve a sentence of <em>why</em>, because they are the ones people
+change first and regret later.</p>
+<p><strong><span class="math notranslate nohighlight">\(\lambda_1 = 0.8\)</span></strong> is not a round number someone liked; it is the minimiser of
+the extended BIC along a linear path. Move it down and the graph densifies fast —
+the edge count is a steep function of <span class="math notranslate nohighlight">\(\lambda_1\)</span> in this regime, so a value that
+looks “only slightly less conservative” can multiply the edge set several-fold.</p>
+<p><strong><span class="math notranslate nohighlight">\(\gamma = 0.3\)</span></strong> is the eBIC’s extra edge penalty. It is <em>not</em> a nuisance
+constant: <span class="math notranslate nohighlight">\(\gamma\)</span> and <span class="math notranslate nohighlight">\(\lambda_1\)</span> are selected jointly, in the sense that
+changing <span class="math notranslate nohighlight">\(\gamma\)</span> changes which <span class="math notranslate nohighlight">\(\lambda_1\)</span> wins. Foygel and Drton’s conventional
+<span class="math notranslate nohighlight">\(\gamma = 0.5\)</span> <span class="bibtex-citation" id="id1">[<a class="reference internal" href="../../references.html#id15" title="Rina Foygel and Mathias Drton. Extended bayesian information criteria for gaussian graphical models. Advances in neural information processing systems, 2010.">12</a>]</span> and the tier-1 default of <code class="docutils literal notranslate"><span class="pre">0.01</span></code> both
+select a different network on this table. If you report a network, report the
+<span class="math notranslate nohighlight">\(\gamma\)</span> that produced it.</p>
+<p><strong><span class="math notranslate nohighlight">\(\mu_1 = 15\)</span></strong> is the nuclear-norm penalty on the low-rank block, and it is the
+<em>only</em> way to influence the rank — <code class="docutils literal notranslate"><span class="pre">--p-rank</span></code> raises <code class="docutils literal notranslate"><span class="pre">NotImplementedError</span></code> on
+every released GGLasso. Larger <span class="math notranslate nohighlight">\(\mu_1\)</span> means a smaller rank. The value 15 was
+found by scouting, at <span class="math notranslate nohighlight">\(\lambda_1 = 0.8\)</span>; it does not transfer to another
+<span class="math notranslate nohighlight">\(\lambda_1\)</span> or another table.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Read the <code class="docutils literal notranslate"><span class="pre">--p-mu1-*</span></code> value as a <em>penalty</em>, never as a rank. The rank is an
+output. The procedure for turning a target rank into a <span class="math notranslate nohighlight">\(\mu_1\)</span> — and for reading
+the rank you actually got — is <a class="reference internal" href="03_slr_ranks.html"><span class="std std-doc">Choosing the Latent Rank</span></a>.</p>
+</div>
+<p>Two further SLR fits, at <span class="math notranslate nohighlight">\(\mu_1 = 10\)</span> and <span class="math notranslate nohighlight">\(\mu_1 = 7.5\)</span>, appear on pages
+<a class="reference internal" href="03_slr_ranks.html"><span class="std std-doc">03</span></a> and <a class="reference internal" href="04_latent_pca.html"><span class="std std-doc">04</span></a>. They are <strong>not</strong> alternative
+canonical models: they exist so that the rank-2 choice can be argued against
+something, and — because <code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">gglasso</span> <span class="pre">pca</span></code> caps <code class="docutils literal notranslate"><span class="pre">--p-n-components</span></code> at the
+achieved rank — so that there is a solution with room for more than the single
+pair-plot panel a rank-2 fit allows.</p>
+</section>
+<section id="one-parameterization-not-two-closing-the-lambda-0-95-question">
+<h2>One parameterization, not two: closing the <span class="math notranslate nohighlight">\(\lambda = 0.95\)</span> question<a class="headerlink" href="#one-parameterization-not-two-closing-the-lambda-0-95-question" title="Link to this heading">#</a></h2>
+<p>An earlier <strong>exploratory bundle</strong> of this analysis circulated with
+<span class="math notranslate nohighlight">\(\lambda = 0.95\)</span> and <span class="math notranslate nohighlight">\(\mu = 10.5\)</span>. Drafts, notebooks and slide figures carrying
+those values exist. <strong>They are superseded.</strong> Do not mix them with anything on
+these pages.</p>
+<p>The reason is not that 0.95 is wrong in isolation — it is that the two bundles
+answer different questions:</p>
+<ul class="simple">
+<li><p>The 0.95 bundle predates the linear-path eBIC sweep and the choice of
+<span class="math notranslate nohighlight">\(\gamma = 0.3\)</span>. Its <span class="math notranslate nohighlight">\(\lambda\)</span> was a hand-picked point on the conservative end
+of the path, not a selected one.</p></li>
+<li><p>Its <span class="math notranslate nohighlight">\(\mu = 10.5\)</span> was scouted <strong>against <span class="math notranslate nohighlight">\(\lambda = 0.95\)</span></strong>. Because the sparse
+and low-rank blocks compete for the same covariance structure, the
+<span class="math notranslate nohighlight">\(\mu \rightarrow \text{rank}\)</span> map is <span class="math notranslate nohighlight">\(\lambda\)</span>-specific. A rank obtained at
+<span class="math notranslate nohighlight">\(\lambda = 0.95\)</span> is not the rank you get from the same <span class="math notranslate nohighlight">\(\mu\)</span> at
+<span class="math notranslate nohighlight">\(\lambda = 0.8\)</span>, and the two are not comparable.</p></li>
+</ul>
+<p>Concretely: if you find an artifact, figure or table that mentions
+<span class="math notranslate nohighlight">\(\lambda = 0.95\)</span> or <span class="math notranslate nohighlight">\(\mu = 10.5\)</span>, it is from the exploratory bundle, and its edge
+counts, ranks and eBIC values cannot be quoted alongside the ones here. The
+canonical bundle is <span class="math notranslate nohighlight">\(\lambda_1 = 0.8\)</span>, <span class="math notranslate nohighlight">\(\gamma = 0.3\)</span>, <span class="math notranslate nohighlight">\(\mu_1 = 15\)</span>.</p>
+</section>
+<section id="most-numbers-in-this-tier-are-still-pending-recompute">
+<h2>Most numbers in this tier are still pending recompute<a class="headerlink" href="#most-numbers-in-this-tier-are-still-pending-recompute" title="Link to this heading">#</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>Recomputed and confirmed.</strong> The single-graphical-lasso <span class="math notranslate nohighlight">\(\lambda\)</span> path on
+<a class="reference internal" href="02_model_selection.html"><span class="std std-doc">Selecting lambda</span></a> has been re-run under QIIME 2 2026.7:
+the selected <span class="math notranslate nohighlight">\(\lambda = 0.8\)</span>, its 216 edges and the <span class="math notranslate nohighlight">\(\gamma\)</span> sensitivity are
+confirmed, and the eBIC table on that page is <strong>generated</strong> into
+<code class="docutils literal notranslate"><span class="pre">docs/_data/atacama-lambda-path.tsv</span></code> by the recompute script rather than typed in.
+The achieved ranks and the <span class="math notranslate nohighlight">\(\mu_1 \rightarrow \text{rank}\)</span> map
+(<a class="reference internal" href="03_slr_ranks.html"><span class="std std-doc">Choosing the Latent Rank</span></a>) have likewise been re-run at the
+selected <span class="math notranslate nohighlight">\(\lambda = 0.8\)</span>: <span class="math notranslate nohighlight">\(\mu_1 = 15/10/7.5\)</span> give rank <span class="math notranslate nohighlight">\(2/5/10\)</span>, and that table
+is generated into <code class="docutils literal notranslate"><span class="pre">docs/_data/atacama-mu-rank-map.tsv</span></code>.</p>
+<p><strong>Still pending.</strong> Nothing else has been re-run. The SLR rank-comparison edge
+counts and the <span class="math notranslate nohighlight">\(m_t\)</span>-versus-<span class="math notranslate nohighlight">\(q_t\)</span> Spearman
+correlation on <a class="reference internal" href="02_model_selection.html"><span class="std std-doc">Selecting lambda</span></a>, the
+component-to-covariate correlations
+(<a class="reference internal" href="04_latent_pca.html"><span class="std std-doc">Latent Components &amp; Covariates</span></a>), the cross-validated <span class="math notranslate nohighlight">\(R^2\)</span>
+values and selected features (<a class="reference internal" href="05_classo_cv.html"><span class="std std-doc">Log-Contrast Models at Scale</span></a>),
+and the SGL-versus-SLR edge-set comparison and named taxa
+(<a class="reference internal" href="06_interpretation.html"><span class="std std-doc">Interpretation</span></a>) are all <strong>pending verification against
+QIIME 2 2026.7</strong>.</p>
+<p>Treat the pending values as the <em>expected</em> result of the recompute, not as a
+confirmed one. Where such a page would naturally show output, it says so rather
+than printing a number.</p>
+</div>
+<p>Once the recompute has run, the numbers will not be typed into these pages by
+hand. Each figure comes from <strong>a pinned artifact bundle plus a recompute
+script</strong>: the bundle fixes the inputs (the count table, the taxonomy, the
+metadata, and their checksums), the script fixes the commands and the parameter
+values in the table above, and the page cites both. That is the only way a
+reader can tell whether a number they disagree with came from a different input
+or a different command.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The artifact bundle will be published as the Zenodo record
+<em>q2-hdstats-tutorial-data</em> v1.0.0. <strong>The DOI has not been minted yet.</strong> Wherever
+a download URL is required, these pages use the literal placeholder
+<code class="docutils literal notranslate"><span class="pre">ZENODO_DOI_PENDING</span></code>, so every occurrence can be found with <code class="docutils literal notranslate"><span class="pre">grep</span></code> and replaced
+in one pass when the record goes live.</p>
+</div>
+</section>
+<section id="what-each-page-does">
+<h2>What each page does<a class="headerlink" href="#what-each-page-does" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Page</p></th>
+<th class="head"><p>What it adds</p></th>
+<th class="head"><p>Actions used</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="01_data.html"><span class="std std-doc">The 300-ASV Dataset</span></a></p></td>
+<td><p>provenance of the table, taxonomy and transformed artifacts</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">transform-features</span></code>, <code class="docutils literal notranslate"><span class="pre">calculate-covariance</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="02_model_selection.html"><span class="std std-doc">Selecting lambda</span></a></p></td>
+<td><p>eBIC on a linear <span class="math notranslate nohighlight">\(\lambda\)</span> path; the <span class="math notranslate nohighlight">\(\gamma\)</span> sensitivity</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">solve-problem</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="03_slr_ranks.html"><span class="std std-doc">Choosing the Latent Rank</span></a></p></td>
+<td><p>the <span class="math notranslate nohighlight">\(\mu_1 \rightarrow\)</span> rank scouting procedure</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">solve-problem</span></code>, <code class="docutils literal notranslate"><span class="pre">summarize</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="04_latent_pca.html"><span class="std std-doc">Latent Components &amp; Covariates</span></a></p></td>
+<td><p>projecting samples on the latent axes and matching them to measured variables</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">pca</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="05_classo_cv.html"><span class="std std-doc">Log-Contrast Models at Scale</span></a></p></td>
+<td><p>cross-validated log-contrast regression for each covariate</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">regress</span></code>, <code class="docutils literal notranslate"><span class="pre">add-covariates</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="06_interpretation.html"><span class="std std-doc">Interpretation</span></a></p></td>
+<td><p>reading the sparse and low-rank parts together, and against the regression coefficients</p></td>
+<td><p>—</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="conventions-on-these-pages">
+<h2>Conventions on these pages<a class="headerlink" href="#conventions-on-these-pages" title="Link to this heading">#</a></h2>
+<p>Commands assume you are working in the directory where the Tier 2 bundle was
+unpacked, so artifacts are referred to by bare filename
+(<code class="docutils literal notranslate"><span class="pre">atacama-top-300-correlation.qza</span></code>, not <code class="docutils literal notranslate"><span class="pre">data/atacama-top-300-correlation.qza</span></code>).
+Adjust the paths if you keep them elsewhere; see
+<a class="reference internal" href="../00_getting_started/03_download_data.html"><span class="std std-doc">Download the Tutorial Data</span></a> for the
+layout the rest of the book assumes.</p>
+<p>Everything here assumes both plugins are installed and registered — see
+<a class="reference internal" href="../01_installation/04_verify.html"><span class="std std-doc">Verifying Your Installation</span></a> — and that you
+have already worked through at least
+<a class="reference internal" href="../02_lowdim_gglasso/02_sgl.html"><span class="std std-doc">Single Graphical Lasso</span></a>,
+<a class="reference internal" href="../02_lowdim_gglasso/03_slr.html"><span class="std std-doc">Sparse + Low-Rank</span></a> and
+<a class="reference internal" href="../02_lowdim_gglasso/07_pca.html"><span class="std std-doc">Latent-Component PCA</span></a>, since none of them is
+explained again here.</p>
+<p>The sharp edges you are most likely to hit at this scale — <code class="docutils literal notranslate"><span class="pre">--p-rank</span></code> raising,
+<code class="docutils literal notranslate"><span class="pre">pca</span></code> refusing a non-latent solution, a model-selection run that silently
+collapsed to a single fit — are collected in
+<a class="reference internal" href="../90_reference/04_troubleshooting.html"><span class="std std-doc">Troubleshooting</span></a>, and the full parameter
+lists are in the
+<a class="reference internal" href="../90_reference/02_gglasso_parameters.html"><span class="std std-doc">q2-gglasso</span></a> and
+<a class="reference internal" href="../90_reference/03_classo_parameters.html"><span class="std std-doc">q2-classo</span></a> references.</p>
+</section>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters/04_highdim_atacama"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../03_lowdim_classo/07_interpretation.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Models Interpretation and Analysis</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="01_data.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">The 300-ASV Dataset</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-canonical-parameterization">The canonical parameterization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#one-parameterization-not-two-closing-the-lambda-0-95-question">One parameterization, not two: closing the <span class="math notranslate nohighlight">\(\lambda = 0.95\)</span> question</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#most-numbers-in-this-tier-are-still-pending-recompute">Most numbers in this tier are still pending recompute</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-each-page-does">What each page does</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conventions-on-these-pages">Conventions on these pages</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Biomedical Statistics and Data Science Group @ LMU & Helmholtz Munich
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

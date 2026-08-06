@@ -1,0 +1,1655 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>q2-classo Parameter Reference &#8212; High-dimensional Statistics with QIIME 2</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles.css?v=3437f865" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/90_reference/03_classo_parameters';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Troubleshooting &amp; Known Gotchas" href="04_troubleshooting.html" />
+    <link rel="prev" title="q2-gglasso Parameter Reference" href="02_gglasso_parameters.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo_light.svg" class="logo__image only-light" alt="High-dimensional Statistics with QIIME 2 - Home"/>
+    <img src="../../_static/logo_dark.svg" class="logo__image only-dark pst-js-only" alt="High-dimensional Statistics with QIIME 2 - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../00_getting_started/01_intro.html">Why High-Dimensional Statistics?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../00_getting_started/02_datasets.html">Atacama Soil Microbiome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../00_getting_started/03_download_data.html">Download the Tutorial Data</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../01_installation/01_prerequisites.html">Prerequisites &amp; Installation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../01_installation/02_q2_gglasso.html">Installing q2-gglasso</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_installation/03_q2_classo.html">Installing q2-classo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_installation/04_verify.html">Verifying Your Installation</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tier 1 — Low-dimensional example (Atacama, 13 ASVs)</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../02_lowdim_gglasso/00_index.html">Graphical Lasso Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/01_data_preparation.html">Data Preparation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/02_sgl.html">Single Graphical Lasso</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/03_slr.html">Sparse + Low-Rank (Latent Variables)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/04_adaptive_glasso.html">Adaptive Graphical Lasso</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/05_lambda_paths.html">Regularization Paths &amp; Model Selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/06_multiple_graphical_lasso.html">Multiple Graphical Lasso (GGL / FGL)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/07_pca.html">Latent-Component PCA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/08_summarize.html">Summarizing a Solution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/09_interpretation.html">Interpretation</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../03_lowdim_classo/00_overview.html">Log-Contrast Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/01_generate_data.html">Synthetic Data with Known Truth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/02_data_preparation.html">Data Preparation</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../03_lowdim_classo/03_regression/00_index.html">Regression</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../03_lowdim_classo/03_regression/01_logcontrast.html">Log-Contrast</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../03_lowdim_classo/03_regression/02_trac.html">With trac</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../03_lowdim_classo/04_classification/00_index.html">Classification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../03_lowdim_classo/04_classification/01_logcontrast.html">Log-Contrast</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../03_lowdim_classo/04_classification/02_trac.html">With trac</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/05_advanced/01_concomitant_formulation.html">Advanced: Concomitant Formulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/05_advanced/02_model_selection.html">Advanced: Choosing a Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/06_predict_and_summarize.html">Predict &amp; Summarize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/07_interpretation.html">Interpretation</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tier 2 — High-dimensional example (Atacama, 300 ASVs)</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../04_highdim_atacama/00_index.html">Overview</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../04_highdim_atacama/01_data.html">The 300-ASV Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_highdim_atacama/02_model_selection.html">Selecting lambda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_highdim_atacama/03_slr_ranks.html">Choosing the Latent Rank</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_highdim_atacama/04_latent_pca.html">Latent Components &amp; Covariates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_highdim_atacama/05_classo_cv.html">Log-Contrast Models at Scale</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_highdim_atacama/06_interpretation.html">Interpretation</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tier 3 — Metagenomics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../05_metagenomics/00_index.html">Overview</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../05_metagenomics/01_gut_to_soil/00_index.html">Gut-to-Soil (16S, 335 ASVs x 99 samples)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../05_metagenomics/01_gut_to_soil/01_data.html">The Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_metagenomics/01_gut_to_soil/02_network.html">Network Inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_metagenomics/01_gut_to_soil/03_regression.html">Log-Contrast Regression</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_command_coverage.html">Command Coverage Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_gglasso_parameters.html">q2-gglasso Parameter Reference</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">q2-classo Parameter Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_troubleshooting.html">Troubleshooting &amp; Known Gotchas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../99_appendix/01_math.html">Appendix: Mathematical Background</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../99_appendix/02_moshpit_cocoa_note.html">Appendix: Shotgun Metagenomics (MOSHPIT cocoa)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/chapters/90_reference/03_classo_parameters.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>q2-classo Parameter Reference</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-read-the-tables">How to read the tables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-data"><code class="docutils literal notranslate"><span class="pre">generate-data</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transform-features"><code class="docutils literal notranslate"><span class="pre">transform-features</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#add-taxa"><code class="docutils literal notranslate"><span class="pre">add-taxa</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#add-covariates"><code class="docutils literal notranslate"><span class="pre">add-covariates</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regress"><code class="docutils literal notranslate"><span class="pre">regress</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#inputs-and-outputs">Inputs and outputs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#response-and-formulation">Response and formulation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#path-parameters">PATH parameters</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cv-parameters">CV parameters</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stabsel-parameters">StabSel parameters</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lamfixed-parameters">LAMfixed parameters</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classify"><code class="docutils literal notranslate"><span class="pre">classify</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Inputs and outputs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-differs-from-regress">What differs from <code class="docutils literal notranslate"><span class="pre">regress</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#predict"><code class="docutils literal notranslate"><span class="pre">predict</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summarize-visualizer"><code class="docutils literal notranslate"><span class="pre">summarize</span></code> (visualizer)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#string-parameters-have-no-validation">String parameters have no validation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#see-also">See also</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="q2-classo-parameter-reference">
+<h1>q2-classo Parameter Reference<a class="headerlink" href="#q2-classo-parameter-reference" title="Link to this heading">#</a></h1>
+<p>Every parameter of every registered <code class="docutils literal notranslate"><span class="pre">q2-classo</span></code> action, with its CLI spelling,
+its type as registered with QIIME 2, its default as declared in the function
+signature, and the chapter where the tutorial exercises it.</p>
+<p><code class="docutils literal notranslate"><span class="pre">regress</span></code> and <code class="docutils literal notranslate"><span class="pre">classify</span></code> carry most of the surface area — 36 and 34 registered
+parameters respectively — and almost none of them describe the model itself.
+They describe the four <strong>model-selection procedures</strong> c-lasso can run on the same
+fitted path: PATH, CV, StabSel and LAMfixed. Each procedure has its own
+independent prefix, its own on/off switch, and its own numerical method. Once you
+see that structure the parameter list stops being intimidating: you are reading
+five small tables, not one enormous one.</p>
+<p>Use <a class="reference internal" href="04_troubleshooting.html"><span class="std std-doc">Troubleshooting</span></a> when a flag misbehaves, and
+<a class="reference internal" href="01_command_coverage.html"><span class="std std-doc">Command Coverage Matrix</span></a> for which actions the tutorial
+covers.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>These tables are maintained <strong>by hand</strong> today, which means they can drift away
+from the plugin. The intended end state is to capture
+<code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">classo</span> <span class="pre">&lt;action&gt;</span> <span class="pre">--help</span></code> into <code class="docutils literal notranslate"><span class="pre">docs/_data/help/classo-&lt;action&gt;.txt</span></code> at
+build time, render it with <code class="docutils literal notranslate"><span class="pre">{literalinclude}</span></code>, and add a CI check that asserts
+the documented parameter set equals the set registered in
+<code class="docutils literal notranslate"><span class="pre">q2_classo/plugin_setup.py</span></code> and <code class="docutils literal notranslate"><span class="pre">q2_classo/_dict.py</span></code>. <strong>That generation step is
+not wired up yet.</strong> Until it is, treat <code class="docutils literal notranslate"><span class="pre">--help</span></code> on your own install as the final
+authority and open an issue if this page disagrees with it.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Every name, type and default below was read directly from
+<code class="docutils literal notranslate"><span class="pre">q2_classo/plugin_setup.py</span></code>, <code class="docutils literal notranslate"><span class="pre">q2_classo/_dict.py</span></code> and the function signatures in
+<code class="docutils literal notranslate"><span class="pre">q2_classo/_func.py</span></code>. They have <strong>not</strong> yet been checked against captured
+<code class="docutils literal notranslate"><span class="pre">--help</span></code> output from a QIIME 2 2026.7 build, because that environment does not
+exist yet. Nothing on this page is a recorded command output.</p>
+</div>
+<section id="how-to-read-the-tables">
+<h2>How to read the tables<a class="headerlink" href="#how-to-read-the-tables" title="Link to this heading">#</a></h2>
+<p>QIIME 2 derives every CLI flag mechanically: a parameter <code class="docutils literal notranslate"><span class="pre">foo_bar</span></code> becomes
+<code class="docutils literal notranslate"><span class="pre">--p-foo-bar</span></code>, an input <code class="docutils literal notranslate"><span class="pre">--i-foo-bar</span></code>, an output <code class="docutils literal notranslate"><span class="pre">--o-foo-bar</span></code>, a <code class="docutils literal notranslate"><span class="pre">Metadata</span></code>
+parameter <code class="docutils literal notranslate"><span class="pre">--m-foo-bar-file</span></code>, and a <code class="docutils literal notranslate"><span class="pre">MetadataColumn</span></code> parameter the <em>pair</em>
+<code class="docutils literal notranslate"><span class="pre">--m-foo-bar-file</span></code> plus <code class="docutils literal notranslate"><span class="pre">--m-foo-bar-column</span></code>. Underscores are not collapsed,
+which is exactly why the deprecated <code class="docutils literal notranslate"><span class="pre">cv__nlam</span></code> surfaces as <code class="docutils literal notranslate"><span class="pre">--p-cv--nlam</span></code> with
+two dashes.</p>
+<p>Conventions in the <strong>Notes</strong> column:</p>
+<ul class="simple">
+<li><p><strong>deprecated</strong> — still accepted, emits a <code class="docutils literal notranslate"><span class="pre">DeprecationWarning</span></code>, will be removed.</p></li>
+<li><p><strong>no <code class="docutils literal notranslate"><span class="pre">Choices()</span></code></strong> — the plugin does not constrain the accepted strings; see
+the last section.</p></li>
+</ul>
+<p>The <strong>Demonstrated in</strong> column names the chapter that exercises the parameter,
+or the closest chapter that discusses it. <code class="docutils literal notranslate"><span class="pre">not</span> <span class="pre">demonstrated</span></code> means the parameter
+is never passed in a runnable command in this tutorial — it may still be
+discussed in prose or listed in a chapter’s own parameter table; it is not a
+statement about whether the parameter works.</p>
+</section>
+<hr class="docutils" />
+<section id="generate-data">
+<h2><code class="docutils literal notranslate"><span class="pre">generate-data</span></code><a class="headerlink" href="#generate-data" title="Link to this heading">#</a></h2>
+<p>Builds a synthetic log-contrast problem with a known ground-truth support. Useful
+for checking that your invocation works before pointing it at real data.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>CLI flag</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Demonstrated in</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">taxa</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--i-taxa</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">FeatureData[Taxonomy]</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/01_generate_data.html"><span class="std std-doc">Generate Data</span></a></p></td>
+<td><p>If given, feature labels are drawn from the taxonomy and a tree matrix is built.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">n</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-n</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">100</span></code></p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/01_generate_data.html"><span class="std std-doc">Generate Data</span></a></p></td>
+<td><p>Number of samples.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">d</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-d</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">80</span></code></p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/01_generate_data.html"><span class="std std-doc">Generate Data</span></a></p></td>
+<td><p>Number of features.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">d_nonzero</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-d-nonzero</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">5</span></code></p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/01_generate_data.html"><span class="std std-doc">Generate Data</span></a></p></td>
+<td><p>Size of the true support.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">classification</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-classification</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Bool</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">False</span></code></p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/01_generate_data.html"><span class="std std-doc">Generate Data</span></a></p></td>
+<td><p>When <code class="docutils literal notranslate"><span class="pre">True</span></code>, the response is binary.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">x</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--o-x</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">FeatureTable[Design]</span></code></p></td>
+<td><p>required</p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/01_generate_data.html"><span class="std std-doc">Generate Data</span></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">c</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--o-c</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ConstraintMatrix</span></code></p></td>
+<td><p>required</p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/01_generate_data.html"><span class="std std-doc">Generate Data</span></a></p></td>
+<td><p>Zero-sum constraint.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>Known bug: <code class="docutils literal notranslate"><span class="pre">generate-data</span></code> writes <code class="docutils literal notranslate"><span class="pre">randomy.tsv</span></code> into your current working
+directory.</strong> The generated response vector is not returned as an artifact; it is
+dumped as a side effect to a fixed relative path. Run this action from a
+directory you do not mind writing into, and expect the file to be overwritten on
+every call. The response you then pass to <code class="docutils literal notranslate"><span class="pre">regress</span></code> comes from that file.</p>
+</div>
+</section>
+<hr class="docutils" />
+<section id="transform-features">
+<h2><code class="docutils literal notranslate"><span class="pre">transform-features</span></code><a class="headerlink" href="#transform-features" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>CLI flag</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Demonstrated in</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">features</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--i-features</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">FeatureTable[Composition</span> <span class="pre">|</span> <span class="pre">Frequency</span> <span class="pre">|</span> <span class="pre">Design]</span></code></p></td>
+<td><p>required</p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/02_data_preparation.html"><span class="std std-doc">Data Preparation</span></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">transformation</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-transformation</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Str</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">clr</span></code></p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/02_data_preparation.html"><span class="std std-doc">Data Preparation</span></a></p></td>
+<td><p><strong><code class="docutils literal notranslate"><span class="pre">clr</span></code> is the only accepted value.</strong> Anything else raises <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. <strong>No <code class="docutils literal notranslate"><span class="pre">Choices()</span></code></strong>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">coef</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-coef</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Float</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0.5</span></code></p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/02_data_preparation.html"><span class="std std-doc">Data Preparation</span></a></p></td>
+<td><p>Pseudocount substituted for non-positive entries before the log.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">x</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--o-x</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">FeatureTable[Design]</span></code></p></td>
+<td><p>required</p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/02_data_preparation.html"><span class="std std-doc">Data Preparation</span></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Note that this is a <em>different</em> CLR implementation from
+<a class="reference internal" href="02_gglasso_parameters.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">gglasso</span> <span class="pre">transform-features</span></code></span></a>: it takes a
+<code class="docutils literal notranslate"><span class="pre">coef</span></code> rather than a <code class="docutils literal notranslate"><span class="pre">pseudo_count</span></code>, has no <code class="docutils literal notranslate"><span class="pre">mclr</span></code> option, has no metadata
+handling, and preserves the orientation it is given, centring along rows — it
+assumes samples in rows, which is what the QIIME 2 <code class="docutils literal notranslate"><span class="pre">FeatureTable</span></code> view supplies
+and what <code class="docutils literal notranslate"><span class="pre">regress</span></code> expects. It does not transpose, so a feature-major input is
+silently CLR-ed along the wrong axis. The two are not interchangeable.</p>
+</section>
+<hr class="docutils" />
+<section id="add-taxa">
+<h2><code class="docutils literal notranslate"><span class="pre">add-taxa</span></code><a class="headerlink" href="#add-taxa" title="Link to this heading">#</a></h2>
+<p>Replaces the feature matrix <code class="docutils literal notranslate"><span class="pre">log(X)</span></code> with <code class="docutils literal notranslate"><span class="pre">log(X)A</span></code>, where <code class="docutils literal notranslate"><span class="pre">A</span></code> encodes the
+taxonomic tree — the change of basis that turns a plain log-contrast model into
+<code class="docutils literal notranslate"><span class="pre">trac</span></code>.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>CLI flag</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">features</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--i-features</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">FeatureTable[Design</span> <span class="pre">|</span> <span class="pre">Frequency]</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">weights</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--i-weights</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Weights</span></code></p></td>
+<td><p>Optional; defaults to the all-ones vector.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">taxa</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--i-taxa</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">FeatureData[Taxonomy]</span></code></p></td>
+<td><p>Converted to a tree internally.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">x</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--o-x</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">FeatureTable[Design]</span></code></p></td>
+<td><p>Columns are now internal nodes plus leaves.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">aweights</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--o-aweights</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Weights</span></code></p></td>
+<td><p>Each node’s weight divided by its number of leaves.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>This action has no parameters.</strong> The leaf-count rescaling of the weights is
+what makes coarse taxonomic ranks comparable with fine ones, and it is not
+optional.</p>
+</section>
+<hr class="docutils" />
+<section id="add-covariates">
+<h2><code class="docutils literal notranslate"><span class="pre">add-covariates</span></code><a class="headerlink" href="#add-covariates" title="Link to this heading">#</a></h2>
+<p>Appends metadata columns to the feature matrix and extends the constraint matrix
+and weight vector to match. This is how a covariate is admitted to the model
+<em>without</em> being subject to the zero-sum constraint.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>CLI flag</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Demonstrated in</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">features</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--i-features</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">FeatureTable[Design</span> <span class="pre">|</span> <span class="pre">Frequency]</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">None</span></code> (optional)</p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/02_data_preparation.html"><span class="std std-doc">Data Preparation</span></a></p></td>
+<td><p>Registered as optional, but required in practice — see the note below.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">c</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--i-c</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ConstraintMatrix</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">None</span></code> (optional)</p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/02_data_preparation.html"><span class="std std-doc">Data Preparation</span></a></p></td>
+<td><p>Genuinely optional; falls back to an all-ones constraint row.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">weights</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--i-weights</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Weights</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/02_data_preparation.html"><span class="std std-doc">Data Preparation</span></a></p></td>
+<td><p>Defaults to all ones, length = number of features.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">covariates</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--m-covariates-file</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Metadata</span></code></p></td>
+<td><p><strong>required</strong></p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/02_data_preparation.html"><span class="std std-doc">Data Preparation</span></a></p></td>
+<td><p>The metadata file the columns come from.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">to_add</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-to-add</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">List[Str]</span></code></p></td>
+<td><p><strong>required</strong></p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/02_data_preparation.html"><span class="std std-doc">Data Preparation</span></a></p></td>
+<td><p>Column names to append; repeat the flag once per column.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">rescale</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-rescale</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">List[Bool]</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p></td>
+<td><p><a class="reference internal" href="../04_highdim_atacama/05_classo_cv.html"><span class="std std-doc">Cross-Validation</span></a></p></td>
+<td><p>One value per entry of <code class="docutils literal notranslate"><span class="pre">to_add</span></code>, or a length mismatch raises <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Defaults to all <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">w_to_add</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-w-to-add</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">List[Float]</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/02_data_preparation.html"><span class="std std-doc">Data Preparation</span></a></p></td>
+<td><p>Penalty weight per added covariate; same length rule. Defaults to all <code class="docutils literal notranslate"><span class="pre">1.0</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">new_features</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--o-new-features</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">FeatureTable[Design]</span></code></p></td>
+<td><p>required</p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/02_data_preparation.html"><span class="std std-doc">Data Preparation</span></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">new_c</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--o-new-c</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ConstraintMatrix</span></code></p></td>
+<td><p>required</p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/02_data_preparation.html"><span class="std std-doc">Data Preparation</span></a></p></td>
+<td><p>Zeros in the new columns, i.e. the added covariates are exempt from the constraint.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">new_w</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--o-new-w</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Weights</span></code></p></td>
+<td><p>required</p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/02_data_preparation.html"><span class="std std-doc">Data Preparation</span></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">--i-features</span></code> and <code class="docutils literal notranslate"><span class="pre">--i-c</span></code> are both registered as <strong>optional</strong> inputs (<code class="docutils literal notranslate"><span class="pre">--help</span></code>
+prints <code class="docutils literal notranslate"><span class="pre">[optional]</span></code> for both), but only <code class="docutils literal notranslate"><span class="pre">--i-c</span></code> is genuinely optional: omitting
+it falls back to an all-ones constraint row. Omitting <code class="docutils literal notranslate"><span class="pre">--i-features</span></code> fails with
+<code class="docutils literal notranslate"><span class="pre">AttributeError:</span> <span class="pre">'NoneType'</span> <span class="pre">object</span> <span class="pre">has</span> <span class="pre">no</span> <span class="pre">attribute</span> <span class="pre">'columns'</span></code> rather than a CLI
+usage error, so treat it as required. Only <code class="docutils literal notranslate"><span class="pre">--m-covariates-file</span></code> and
+<code class="docutils literal notranslate"><span class="pre">--p-to-add</span></code> are marked <code class="docutils literal notranslate"><span class="pre">[required]</span></code>.</p>
+</div>
+<p>Two behaviours worth knowing before you build a design matrix:</p>
+<p><strong>Categorical columns are one-hot expanded</strong>, and the generated column labels
+have the form <code class="docutils literal notranslate"><span class="pre">&lt;name&gt;</span> <span class="pre">=</span> <span class="pre">&lt;value&gt;</span></code> — with spaces around the equals sign. Those
+labels are what appear in the <code class="docutils literal notranslate"><span class="pre">summarize</span></code> coefficient plots, so a categorical
+covariate contributes several rows to the output, not one.</p>
+<p><strong><code class="docutils literal notranslate"><span class="pre">rescale</span></code> only applies to numeric columns</strong>, where it centres the column and
+divides by its norm. Since the log-contrast features are CLR values of order
+one, an unrescaled covariate measured in metres or in cells per gram will
+dominate or vanish relative to them under a shared penalty. Setting the
+corresponding <code class="docutils literal notranslate"><span class="pre">w_to_add</span></code> entry is the other lever on the same problem.</p>
+</section>
+<hr class="docutils" />
+<section id="regress">
+<h2><code class="docutils literal notranslate"><span class="pre">regress</span></code><a class="headerlink" href="#regress" title="Link to this heading">#</a></h2>
+<p>Constrained sparse log-contrast <strong>regression</strong>. 36 registered parameters: 35
+current plus one deprecated alias.</p>
+<section id="inputs-and-outputs">
+<h3>Inputs and outputs<a class="headerlink" href="#inputs-and-outputs" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>CLI flag</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">features</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--i-features</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">FeatureTable[Design</span> <span class="pre">|</span> <span class="pre">Frequency]</span></code></p></td>
+<td><p>Samples in rows.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">c</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--i-c</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ConstraintMatrix</span></code></p></td>
+<td><p>Defaults to the zero-sum constraint when omitted.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">weights</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--i-weights</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Weights</span></code></p></td>
+<td><p>Per-feature penalty weights. Shorter than the feature count is padded with ones; longer is truncated.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">result</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--o-result</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">CLASSOProblem</span></code></p></td>
+<td><p>Zarr store with every model selection that was run.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="response-and-formulation">
+<h3>Response and formulation<a class="headerlink" href="#response-and-formulation" title="Link to this heading">#</a></h3>
+<p>These six choose the loss and the constraint structure — the actual statistical
+model. Everything after this section only affects how lambda is chosen.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>CLI flag</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Demonstrated in</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">y</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--m-y-file</span></code> / <code class="docutils literal notranslate"><span class="pre">--m-y-column</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">MetadataColumn[Numeric]</span></code></p></td>
+<td><p>required</p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/03_regression/01_logcontrast.html"><span class="std std-doc">Log-contrast Regression</span></a></p></td>
+<td><p>Samples missing from <code class="docutils literal notranslate"><span class="pre">y</span></code> are dropped after an inner join and reported.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">do_yshift</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-do-yshift</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Bool</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">False</span></code></p></td>
+<td><p><a class="reference internal" href="../04_highdim_atacama/05_classo_cv.html"><span class="std std-doc">Cross-Validation</span></a></p></td>
+<td><p>Centres <code class="docutils literal notranslate"><span class="pre">y</span></code> before fitting. Not present on <code class="docutils literal notranslate"><span class="pre">classify</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">concomitant</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-concomitant</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Bool</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">True</span></code></p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/05_advanced/01_concomitant_formulation.html"><span class="std std-doc">Concomitant Formulation</span></a></p></td>
+<td><p>Joint M-estimation of the noise level sigma. <strong>Not present on <code class="docutils literal notranslate"><span class="pre">classify</span></code>.</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">huber</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-huber</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Bool</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">False</span></code></p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/05_advanced/01_concomitant_formulation.html"><span class="std std-doc">Concomitant Formulation</span></a></p></td>
+<td><p>Robust loss; combine with <code class="docutils literal notranslate"><span class="pre">concomitant</span></code> for the Huber-concomitant formulation.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">rho</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-rho</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Float</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1.345</span></code></p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/05_advanced/01_concomitant_formulation.html"><span class="std std-doc">Concomitant Formulation</span></a></p></td>
+<td><p>Huber transition point. Only meaningful when <code class="docutils literal notranslate"><span class="pre">huber</span></code> is <code class="docutils literal notranslate"><span class="pre">True</span></code>. Note <code class="docutils literal notranslate"><span class="pre">classify</span></code> defaults this to <code class="docutils literal notranslate"><span class="pre">0.0</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">intercept</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-intercept</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Bool</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">True</span></code></p></td>
+<td><p><a class="reference internal" href="../04_highdim_atacama/05_classo_cv.html"><span class="std std-doc">Cross-Validation</span></a></p></td>
+<td><p>Adds an unpenalised intercept, which appears in the output as a coefficient labelled <code class="docutils literal notranslate"><span class="pre">intercept</span></code>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">concomitant</span></code> default of <code class="docutils literal notranslate"><span class="pre">True</span></code> is the one to be deliberate about. It
+estimates sigma jointly with beta, which makes the selected lambda scale-free
+with respect to the noise level — desirable, but it changes which numerical
+methods are available and therefore what <code class="docutils literal notranslate"><span class="pre">*_numerical_method</span></code> can legally be.</p>
+</section>
+<section id="path-parameters">
+<h3>PATH parameters<a class="headerlink" href="#path-parameters" title="Link to this heading">#</a></h3>
+<p>Computes the full regularization path. On by default.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>CLI flag</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Demonstrated in</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">path</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-path</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Bool</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">True</span></code></p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/05_advanced/02_model_selection.html"><span class="std std-doc">Model Selection</span></a></p></td>
+<td><p>Registered default is <code class="docutils literal notranslate"><span class="pre">True</span></code> despite the parameter description saying <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">path_numerical_method</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-path-numerical-method</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Str</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">not</span> <span class="pre">specified</span></code></p></td>
+<td><p>not demonstrated</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Path-Alg</span></code>, <code class="docutils literal notranslate"><span class="pre">P-PDS</span></code>, <code class="docutils literal notranslate"><span class="pre">PF-PDS</span></code> or <code class="docutils literal notranslate"><span class="pre">DR</span></code>. The default string means “let c-lasso choose”. <strong>No <code class="docutils literal notranslate"><span class="pre">Choices()</span></code></strong> — and because the default is itself an unrecognised literal, a typo is silently accepted.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">path_n_active</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-path-n-active</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0</span></code></p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/05_advanced/02_model_selection.html"><span class="std std-doc">Model Selection</span></a></p></td>
+<td><p>Stop once this many variables are active. <code class="docutils literal notranslate"><span class="pre">0</span></code> means no early stop.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">path_nlam_log</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-path-nlam-log</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">40</span></code></p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/05_advanced/02_model_selection.html"><span class="std std-doc">Model Selection</span></a></p></td>
+<td><p>Number of lambdas on the log-spaced path.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">path_lamin_log</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-path-lamin-log</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Float</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1e-2</span></code></p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/05_advanced/02_model_selection.html"><span class="std std-doc">Model Selection</span></a></p></td>
+<td><p>Smallest lambda as a fraction of lambda_max.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="cv-parameters">
+<h3>CV parameters<a class="headerlink" href="#cv-parameters" title="Link to this heading">#</a></h3>
+<p>K-fold cross-validation over the path. On by default.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>CLI flag</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Demonstrated in</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cv</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-cv</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Bool</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">True</span></code></p></td>
+<td><p><a class="reference internal" href="../04_highdim_atacama/05_classo_cv.html"><span class="std std-doc">Cross-Validation</span></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cv_numerical_method</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-cv-numerical-method</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Str</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">not</span> <span class="pre">specified</span></code></p></td>
+<td><p>not demonstrated</p></td>
+<td><p>As <code class="docutils literal notranslate"><span class="pre">path_numerical_method</span></code>. <strong>No <code class="docutils literal notranslate"><span class="pre">Choices()</span></code></strong>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cv_seed</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-cv-seed</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1</span></code></p></td>
+<td><p><a class="reference internal" href="../04_highdim_atacama/05_classo_cv.html"><span class="std std-doc">Cross-Validation</span></a></p></td>
+<td><p>Fold assignment seed. Fixed by default, so repeated runs agree — change it to check fold stability.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cv_one_se</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-cv-one-se</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Bool</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">True</span></code></p></td>
+<td><p><a class="reference internal" href="../04_highdim_atacama/05_classo_cv.html"><span class="std std-doc">Cross-Validation</span></a></p></td>
+<td><p>Select lambda by the one-standard-error rule rather than the CV minimum.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cv_subsets</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-cv-subsets</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">5</span></code></p></td>
+<td><p><a class="reference internal" href="../04_highdim_atacama/05_classo_cv.html"><span class="std std-doc">Cross-Validation</span></a></p></td>
+<td><p>Number of folds.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cv_nlam</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-cv-nlam</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">100</span></code></p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/05_advanced/02_model_selection.html"><span class="std std-doc">Model Selection</span></a></p></td>
+<td><p>Lambdas on the CV path. <strong>Current spelling.</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cv__nlam</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-cv--nlam</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p></td>
+<td><p><a class="reference internal" href="../04_highdim_atacama/05_classo_cv.html"><span class="std std-doc">Cross-Validation</span></a></p></td>
+<td><p><strong>Deprecated</strong> alias of <code class="docutils literal notranslate"><span class="pre">cv_nlam</span></code> — note the double underscore and the double dash. Still works, emits a <code class="docutils literal notranslate"><span class="pre">DeprecationWarning</span></code>. Passing both raises only when <code class="docutils literal notranslate"><span class="pre">cv_nlam</span></code> was changed from its default of 100 and the two values differ; <code class="docutils literal notranslate"><span class="pre">--p-cv-nlam</span> <span class="pre">100</span> <span class="pre">--p-cv--nlam</span> <span class="pre">50</span></code> does not raise — it silently uses 50.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cv_lamin</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-cv-lamin</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Float</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1e-3</span></code></p></td>
+<td><p><a class="reference internal" href="../04_highdim_atacama/05_classo_cv.html"><span class="std std-doc">Cross-Validation</span></a></p></td>
+<td><p>Smallest lambda on the CV path.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cv_logscale</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-cv-logscale</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Bool</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">True</span></code></p></td>
+<td><p><a class="reference internal" href="../04_highdim_atacama/05_classo_cv.html"><span class="std std-doc">Cross-Validation</span></a></p></td>
+<td><p>Log-spaced CV path.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">--p-cv-nlam</span></code> and <code class="docutils literal notranslate"><span class="pre">--p-cv-lamin</span></code> are a separate grid from <code class="docutils literal notranslate"><span class="pre">--p-path-nlam-log</span></code>
+and <code class="docutils literal notranslate"><span class="pre">--p-path-lamin-log</span></code>. Changing the PATH grid does not change what CV
+searches over, which is a common source of confusion when the CV-selected lambda
+does not appear on the plotted path.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>Open docs issue.</strong> The only runnable commands that pass this grid’s size use
+the <em>deprecated</em> spelling: <a class="reference internal" href="../04_highdim_atacama/05_classo_cv.html"><span class="std std-doc">Cross-Validation</span></a>
+invokes <code class="docutils literal notranslate"><span class="pre">--p-cv--nlam</span></code>, not <code class="docutils literal notranslate"><span class="pre">--p-cv-nlam</span></code>. Rule 5 of
+<a class="reference internal" href="01_command_coverage.html"><span class="std std-doc">Command Coverage Matrix</span></a> says <code class="docutils literal notranslate"><span class="pre">--p-cv--nlam</span></code> must not
+appear in a runnable command outside the quarantined chapters, so those two
+commands should be migrated to <code class="docutils literal notranslate"><span class="pre">--p-cv-nlam</span></code>.</p>
+</div>
+</section>
+<section id="stabsel-parameters">
+<h3>StabSel parameters<a class="headerlink" href="#stabsel-parameters" title="Link to this heading">#</a></h3>
+<p>Stability selection: refit on many subsamples and keep the features selected
+often enough. On by default, and generally the most trustworthy of the four
+procedures for microbiome data.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>CLI flag</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Demonstrated in</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">stabsel</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-stabsel</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Bool</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">True</span></code></p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/05_advanced/02_model_selection.html"><span class="std std-doc">Model Selection</span></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">stabsel_numerical_method</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-stabsel-numerical-method</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Str</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">not</span> <span class="pre">specified</span></code></p></td>
+<td><p>not demonstrated</p></td>
+<td><p>As above. <strong>No <code class="docutils literal notranslate"><span class="pre">Choices()</span></code></strong>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">stabsel_seed</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-stabsel-seed</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/05_advanced/02_model_selection.html"><span class="std std-doc">Model Selection</span></a></p></td>
+<td><p>Unlike <code class="docutils literal notranslate"><span class="pre">cv_seed</span></code>, this defaults to unset, so subsampling is <strong>not</strong> reproducible unless you set it. Set it for anything you intend to report.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">stabsel_method</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-stabsel-method</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Str</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">first</span></code></p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/05_advanced/02_model_selection.html"><span class="std std-doc">Model Selection</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">first</span></code>, <code class="docutils literal notranslate"><span class="pre">lam</span></code> or <code class="docutils literal notranslate"><span class="pre">max</span></code>. Decides what is recorded per subsample. <strong>No <code class="docutils literal notranslate"><span class="pre">Choices()</span></code></strong>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">stabsel_lam</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-stabsel-lam</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Float</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">-1.0</span></code></p></td>
+<td><p>not demonstrated</p></td>
+<td><p>Only used when <code class="docutils literal notranslate"><span class="pre">stabsel_method</span></code> is <code class="docutils literal notranslate"><span class="pre">lam</span></code>. A negative value means “use the theoretical lambda”.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">stabsel_true_lam</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-stabsel-true-lam</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Bool</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">True</span></code></p></td>
+<td><p>not demonstrated</p></td>
+<td><p>Only used when <code class="docutils literal notranslate"><span class="pre">stabsel_method</span></code> is <code class="docutils literal notranslate"><span class="pre">lam</span></code>. <code class="docutils literal notranslate"><span class="pre">True</span></code> = the value given is a real lambda; <code class="docutils literal notranslate"><span class="pre">False</span></code> = it is lambda/lambda_max in [0, 1].</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">stabsel_b</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-stabsel-b</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">50</span></code></p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/05_advanced/02_model_selection.html"><span class="std std-doc">Model Selection</span></a></p></td>
+<td><p>Number of subsamples. The main runtime knob of the whole action.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">stabsel_q</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-stabsel-q</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">10</span></code></p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/05_advanced/02_model_selection.html"><span class="std std-doc">Model Selection</span></a></p></td>
+<td><p>Variables selected per subsample.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">stabsel_percent_ns</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-stabsel-percent-ns</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Float</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0.5</span></code></p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/05_advanced/02_model_selection.html"><span class="std std-doc">Model Selection</span></a></p></td>
+<td><p>Subsample size as a fraction of n.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">stabsel_lamin</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-stabsel-lamin</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Float</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1e-2</span></code></p></td>
+<td><p>not demonstrated</p></td>
+<td><p>Only used when <code class="docutils literal notranslate"><span class="pre">stabsel_method</span></code> is <code class="docutils literal notranslate"><span class="pre">max</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">stabsel_threshold</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-stabsel-threshold</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Float</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0.7</span></code></p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/05_advanced/02_model_selection.html"><span class="std std-doc">Model Selection</span></a></p></td>
+<td><p>Selection frequency above which a feature is reported as selected.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">stabsel_threshold_label</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-stabsel-threshold-label</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Float</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0.4</span></code></p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/05_advanced/02_model_selection.html"><span class="std std-doc">Model Selection</span></a></p></td>
+<td><p>Frequency above which a feature is <em>labelled</em> in c-lasso’s own matplotlib plot. Recorded in the artifact; not used by the QIIME 2 visualization.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">stabsel_b</span></code>, <code class="docutils literal notranslate"><span class="pre">stabsel_q</span></code> and <code class="docutils literal notranslate"><span class="pre">stabsel_threshold</span></code> interact. Raising <code class="docutils literal notranslate"><span class="pre">q</span></code> makes each
+subsample select more variables, which raises everyone’s selection frequency, so
+a <code class="docutils literal notranslate"><span class="pre">threshold</span></code> that was strict at <code class="docutils literal notranslate"><span class="pre">q=10</span></code> becomes permissive at <code class="docutils literal notranslate"><span class="pre">q=30</span></code>. Change one
+at a time, and report all three alongside any selected feature set.</p>
+</section>
+<section id="lamfixed-parameters">
+<h3>LAMfixed parameters<a class="headerlink" href="#lamfixed-parameters" title="Link to this heading">#</a></h3>
+<p>A single fit at one fixed lambda. On by default.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>CLI flag</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Demonstrated in</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">lamfixed</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-lamfixed</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Bool</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">True</span></code></p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/05_advanced/02_model_selection.html"><span class="std std-doc">Model Selection</span></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">lamfixed_numerical_method</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-lamfixed-numerical-method</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Str</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">not</span> <span class="pre">specified</span></code></p></td>
+<td><p>not demonstrated</p></td>
+<td><p>As above. <strong>No <code class="docutils literal notranslate"><span class="pre">Choices()</span></code></strong>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">lamfixed_lam</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-lamfixed-lam</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Float</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">-1.0</span></code></p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/05_advanced/02_model_selection.html"><span class="std std-doc">Model Selection</span></a></p></td>
+<td><p>Negative means “use the theoretical lambda once it is computed”.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">lamfixed_true_lam</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-lamfixed-true-lam</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Bool</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">True</span></code></p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/05_advanced/02_model_selection.html"><span class="std std-doc">Model Selection</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">True</span></code> = the value is a real lambda; <code class="docutils literal notranslate"><span class="pre">False</span></code> = it is lambda/lambda_max in [0, 1]. With <code class="docutils literal notranslate"><span class="pre">True</span></code> and <code class="docutils literal notranslate"><span class="pre">lam</span> <span class="pre">=</span> <span class="pre">-1</span></code>, the value becomes <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">*</span> <span class="pre">theoretical_lam</span></code>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>All four procedures default to on, so a bare <code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">classo</span> <span class="pre">regress</span></code> runs PATH,
+CV, StabSel and LAMfixed in one call — StabSel refits the model <code class="docutils literal notranslate"><span class="pre">stabsel_b</span></code> times
+(50 by default), so it usually dominates the cost. Turn off what you are not
+going to read: <code class="docutils literal notranslate"><span class="pre">--p-cv</span> <span class="pre">False</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-stabsel</span> <span class="pre">False</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-lamfixed</span> <span class="pre">False</span></code>.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong><code class="docutils literal notranslate"><span class="pre">--help</span></code> misreports several of these defaults.</strong> QIIME 2 renders the
+registered description text verbatim, so <code class="docutils literal notranslate"><span class="pre">--help</span></code> contradicts its own
+<code class="docutils literal notranslate"><span class="pre">[default:</span> <span class="pre">...]</span></code> marker wherever the description in <code class="docutils literal notranslate"><span class="pre">q2_classo/_dict.py</span></code> has
+drifted from the function signature. The marker is right and the prose is wrong
+in every case below; the defaults in the tables above follow the signatures.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">--help</span></code> prose says</p></th>
+<th class="head"><p>Signature default</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">path</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Default</span> <span class="pre">Value</span> <span class="pre">=</span> <span class="pre">False</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">True</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cv</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Default</span> <span class="pre">Value</span> <span class="pre">=</span> <span class="pre">False</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">True</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">lamfixed</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Default</span> <span class="pre">Value</span> <span class="pre">=</span> <span class="pre">False</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">True</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cv_seed</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Default</span> <span class="pre">value</span> <span class="pre">:</span> <span class="pre">None</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">path_numerical_method</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Default</span> <span class="pre">value</span> <span class="pre">:</span> <span class="pre">'choose'</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">not</span> <span class="pre">specified</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cv_numerical_method</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Default</span> <span class="pre">value</span> <span class="pre">:</span> <span class="pre">'choose'</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">not</span> <span class="pre">specified</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">stabsel_numerical_method</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Default</span> <span class="pre">value</span> <span class="pre">:</span> <span class="pre">'choose'</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">not</span> <span class="pre">specified</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">lamfixed_numerical_method</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Default</span> <span class="pre">value</span> <span class="pre">:</span> <span class="pre">'choose'</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">not</span> <span class="pre">specified</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">path_n_active</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Dafault</span> <span class="pre">value</span> <span class="pre">:</span> <span class="pre">False</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="classify">
+<h2><code class="docutils literal notranslate"><span class="pre">classify</span></code><a class="headerlink" href="#classify" title="Link to this heading">#</a></h2>
+<p>Constrained sparse <strong>classification</strong>. 34 registered parameters: 33 current plus
+the same deprecated <code class="docutils literal notranslate"><span class="pre">cv__nlam</span></code> alias.</p>
+<p>The PATH, CV, StabSel and LAMfixed blocks are <strong>identical</strong> to <code class="docutils literal notranslate"><span class="pre">regress</span></code> — same
+names, same types, same defaults — so they are not repeated here. Read the four
+tables above and substitute <code class="docutils literal notranslate"><span class="pre">classify</span></code> for <code class="docutils literal notranslate"><span class="pre">regress</span></code>.</p>
+<section id="id1">
+<h3>Inputs and outputs<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<p>Identical to <code class="docutils literal notranslate"><span class="pre">regress</span></code>: <code class="docutils literal notranslate"><span class="pre">--i-features</span></code>, <code class="docutils literal notranslate"><span class="pre">--i-c</span></code>, <code class="docutils literal notranslate"><span class="pre">--i-weights</span></code>, <code class="docutils literal notranslate"><span class="pre">--o-result</span></code>.</p>
+</section>
+<section id="what-differs-from-regress">
+<h3>What differs from <code class="docutils literal notranslate"><span class="pre">regress</span></code><a class="headerlink" href="#what-differs-from-regress" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>CLI flag</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Demonstrated in</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">y</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--m-y-file</span></code> / <code class="docutils literal notranslate"><span class="pre">--m-y-column</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">MetadataColumn[Categorical]</span></code></p></td>
+<td><p>required</p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/04_classification/01_logcontrast.html"><span class="std std-doc">Log-contrast Classification</span></a></p></td>
+<td><p><strong>Categorical</strong>, not numeric. Must be binary; a non-binary column is rejected.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">huber</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-huber</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Bool</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">False</span></code></p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/04_classification/01_logcontrast.html"><span class="std std-doc">Log-contrast Classification</span></a></p></td>
+<td><p>Huber hinge loss.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">rho</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-rho</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Float</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0.0</span></code></p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/05_advanced/01_concomitant_formulation.html"><span class="std std-doc">Concomitant Formulation</span></a></p></td>
+<td><p><strong>Different default from <code class="docutils literal notranslate"><span class="pre">regress</span></code></strong> (<code class="docutils literal notranslate"><span class="pre">1.345</span></code>). Also passed on a <code class="docutils literal notranslate"><span class="pre">classify</span></code> call in <a class="reference internal" href="../05_metagenomics/01_gut_to_soil/03_regression.html"><span class="std std-doc">Gut-to-Soil Regression</span></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">intercept</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-intercept</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Bool</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">True</span></code></p></td>
+<td><p><a class="reference internal" href="../04_highdim_atacama/05_classo_cv.html"><span class="std std-doc">Cross-Validation</span></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">do_yshift</span></code></p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
+<td><p><strong>Does not exist on <code class="docutils literal notranslate"><span class="pre">classify</span></code>.</strong> Centring a categorical response is meaningless.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">concomitant</span></code></p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
+<td><p><strong>Does not exist on <code class="docutils literal notranslate"><span class="pre">classify</span></code>.</strong> See the warning below.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong><code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">classo</span> <span class="pre">classify</span> <span class="pre">--p-concomitant</span></code> does not exist.</strong> The concomitant
+formulation is unavailable for classification: the parameter is not registered,
+and the solver forces <code class="docutils literal notranslate"><span class="pre">formulation.concomitant</span> <span class="pre">=</span> <span class="pre">False</span></code> for classification
+problems regardless. Passing the flag is a CLI error, not a silently ignored
+option.</p>
+<p>If you wanted the robustness that motivated <code class="docutils literal notranslate"><span class="pre">concomitant</span></code>, use the Huber hinge
+loss instead — <code class="docutils literal notranslate"><span class="pre">--p-huber</span> <span class="pre">True</span></code>, tuned via <code class="docutils literal notranslate"><span class="pre">--p-rho</span></code>. Note that <code class="docutils literal notranslate"><span class="pre">rho</span></code> defaults to
+<code class="docutils literal notranslate"><span class="pre">0.0</span></code> here rather than <code class="docutils literal notranslate"><span class="pre">1.345</span></code> — it is wired to c-lasso’s
+<code class="docutils literal notranslate"><span class="pre">formulation.rho_classification</span></code>, a different field from <code class="docutils literal notranslate"><span class="pre">regress</span></code>’s
+<code class="docutils literal notranslate"><span class="pre">formulation.rho</span></code>, and <code class="docutils literal notranslate"><span class="pre">0.0</span></code> is a legal value for it (c-lasso requires only that
+it be strictly less than 1). The <code class="docutils literal notranslate"><span class="pre">--help</span></code> text for <code class="docutils literal notranslate"><span class="pre">classify</span></code> reports <code class="docutils literal notranslate"><span class="pre">1.345</span></code>
+(<code class="docutils literal notranslate"><span class="pre">_dict.py:286</span></code>) and is wrong; the registered default is <code class="docutils literal notranslate"><span class="pre">0.0</span></code>, which is what
+every worked <code class="docutils literal notranslate"><span class="pre">classify</span></code> command in this book runs with. See
+<a class="reference internal" href="../03_lowdim_classo/05_advanced/01_concomitant_formulation.html"><span class="std std-doc">Concomitant Formulation</span></a>.</p>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="predict">
+<h2><code class="docutils literal notranslate"><span class="pre">predict</span></code><a class="headerlink" href="#predict" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>CLI flag</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">features</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--i-features</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">FeatureTable[Design</span> <span class="pre">|</span> <span class="pre">Frequency]</span></code></p></td>
+<td><p>Columns are matched to the fitted model by label; an <code class="docutils literal notranslate"><span class="pre">intercept</span></code> column is synthesised.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">problem</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--i-problem</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">CLASSOProblem</span></code></p></td>
+<td><p>Output of <code class="docutils literal notranslate"><span class="pre">regress</span></code> or <code class="docutils literal notranslate"><span class="pre">classify</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">predictions</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--o-predictions</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">CLASSOProblem</span></code></p></td>
+<td><p>One prediction set per model selection that was computed.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>This action has no parameters.</strong> It emits a prediction for every model
+selection present in <code class="docutils literal notranslate"><span class="pre">problem</span></code>, so if you turned off CV and StabSel at fit time
+you get correspondingly fewer prediction sets here.</p>
+</section>
+<hr class="docutils" />
+<section id="summarize-visualizer">
+<h2><code class="docutils literal notranslate"><span class="pre">summarize</span></code> (visualizer)<a class="headerlink" href="#summarize-visualizer" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>CLI flag</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Demonstrated in</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">problem</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--i-problem</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">CLASSOProblem</span></code></p></td>
+<td><p>required</p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/06_predict_and_summarize.html"><span class="std std-doc">Predict and Summarize</span></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">taxa</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--i-taxa</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">FeatureData[Taxonomy]</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/06_predict_and_summarize.html"><span class="std std-doc">Predict and Summarize</span></a></p></td>
+<td><p>Used to label coefficients taxonomically.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">predictions</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--i-predictions</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">CLASSOProblem</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/06_predict_and_summarize.html"><span class="std std-doc">Predict and Summarize</span></a></p></td>
+<td><p>Output of <code class="docutils literal notranslate"><span class="pre">predict</span></code>. Omit it and the prediction panes are simply absent.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">maxplot</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-maxplot</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">200</span></code></p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/06_predict_and_summarize.html"><span class="std std-doc">Predict and Summarize</span></a></p></td>
+<td><p>Maximum number of coefficients drawn in a StabSel profile or beta bar plot. Raise it on wide problems or the plot silently truncates.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<hr class="docutils" />
+<section id="string-parameters-have-no-validation">
+<h2>String parameters have no validation<a class="headerlink" href="#string-parameters-have-no-validation" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">q2_classo/plugin_setup.py</span></code> imports <code class="docutils literal notranslate"><span class="pre">Choices</span></code> but never applies it. QIIME 2
+therefore accepts <strong>any</strong> string for the parameters below, and the check — if
+there is one — happens inside the function:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Flag</p></th>
+<th class="head"><p>Accepted values</p></th>
+<th class="head"><p>Behaviour on a typo</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--p-transformation</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">clr</span></code> only</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ValueError:</span> <span class="pre">Unknown</span> <span class="pre">transformation</span> <span class="pre">name,</span> <span class="pre">use</span> <span class="pre">clr</span> <span class="pre">and</span> <span class="pre">not</span> <span class="pre">'...'</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--p-path-numerical-method</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Path-Alg</span></code>, <code class="docutils literal notranslate"><span class="pre">P-PDS</span></code>, <code class="docutils literal notranslate"><span class="pre">PF-PDS</span></code>, <code class="docutils literal notranslate"><span class="pre">DR</span></code></p></td>
+<td><p><strong>Silently accepted</strong> — the default is itself the unrecognised literal <code class="docutils literal notranslate"><span class="pre">not</span> <span class="pre">specified</span></code>, which means “choose automatically”</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--p-cv-numerical-method</span></code></p></td>
+<td><p>same set</p></td>
+<td><p>Silently accepted</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--p-stabsel-numerical-method</span></code></p></td>
+<td><p>same set</p></td>
+<td><p>Silently accepted</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--p-lamfixed-numerical-method</span></code></p></td>
+<td><p>same set</p></td>
+<td><p>Silently accepted</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--p-stabsel-method</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">first</span></code>, <code class="docutils literal notranslate"><span class="pre">lam</span></code>, <code class="docutils literal notranslate"><span class="pre">max</span></code></p></td>
+<td><p>Reaches c-lasso; behaviour depends on the solver</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">*_numerical_method</span></code> family is the dangerous one. Because the sentinel
+default is not a valid method name, there is no way for the code to distinguish
+“user asked for automatic selection” from “user misspelled <code class="docutils literal notranslate"><span class="pre">Path-Alg</span></code>” — both are
+just strings that are not in the recognised set, and both fall through to
+automatic selection. You will get an answer, and it will not be the method you
+asked for.</p>
+</section>
+<hr class="docutils" />
+<section id="see-also">
+<h2>See also<a class="headerlink" href="#see-also" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="02_gglasso_parameters.html"><span class="std std-doc">q2-gglasso Parameter Reference</span></a></p></li>
+<li><p><a class="reference internal" href="04_troubleshooting.html"><span class="std std-doc">Troubleshooting &amp; Known Gotchas</span></a></p></li>
+<li><p><a class="reference internal" href="01_command_coverage.html"><span class="std std-doc">Command Coverage Matrix</span></a></p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters/90_reference"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="02_gglasso_parameters.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">q2-gglasso Parameter Reference</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="04_troubleshooting.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Troubleshooting &amp; Known Gotchas</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-read-the-tables">How to read the tables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-data"><code class="docutils literal notranslate"><span class="pre">generate-data</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transform-features"><code class="docutils literal notranslate"><span class="pre">transform-features</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#add-taxa"><code class="docutils literal notranslate"><span class="pre">add-taxa</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#add-covariates"><code class="docutils literal notranslate"><span class="pre">add-covariates</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regress"><code class="docutils literal notranslate"><span class="pre">regress</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#inputs-and-outputs">Inputs and outputs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#response-and-formulation">Response and formulation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#path-parameters">PATH parameters</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cv-parameters">CV parameters</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stabsel-parameters">StabSel parameters</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lamfixed-parameters">LAMfixed parameters</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classify"><code class="docutils literal notranslate"><span class="pre">classify</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Inputs and outputs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-differs-from-regress">What differs from <code class="docutils literal notranslate"><span class="pre">regress</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#predict"><code class="docutils literal notranslate"><span class="pre">predict</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summarize-visualizer"><code class="docutils literal notranslate"><span class="pre">summarize</span></code> (visualizer)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#string-parameters-have-no-validation">String parameters have no validation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#see-also">See also</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Biomedical Statistics and Data Science Group @ LMU & Helmholtz Munich
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

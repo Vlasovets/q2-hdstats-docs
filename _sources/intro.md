@@ -2,8 +2,8 @@
 
 We extend the [QIIME 2](https://qiime2.org/) microbiome multi-omics data science platform {cite}`bolyen2019reproducible` with advanced methods for high-dimensional statistical modeling. This suite currently features two powerful plugins:
 
-- [**q2-gglasso**](https://github.com/bio-datascience/q2-gglasso): Solves General Graphical Lasso problems via sparse inverse covariance estimation {cite}`Schaipp2021, friedman2008sparse`.
-- [**q2-classo**](https://github.com/bio-datascience/q2-classo): Implements sparse log-contrast regression and classification models {cite}`Simpson2021, combettes2021regression`.
+- [**q2-gglasso**](https://github.com/Vlasovets/q2-gglasso): Solves General Graphical Lasso problems via sparse inverse covariance estimation {cite}`Schaipp2021, friedman2008sparse`.
+- [**q2-classo**](https://github.com/Vlasovets/q2-classo): Implements sparse log-contrast regression and classification models {cite}`Simpson2021, combettes2021regression`.
 
 <!-- ```{figure} images/png/overview.png
 ---

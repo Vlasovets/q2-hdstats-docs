@@ -1,0 +1,1544 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Command Coverage Matrix &#8212; High-dimensional Statistics with QIIME 2</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles.css?v=3437f865" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/90_reference/01_command_coverage';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="q2-gglasso Parameter Reference" href="02_gglasso_parameters.html" />
+    <link rel="prev" title="Log-Contrast Regression" href="../05_metagenomics/01_gut_to_soil/03_regression.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo_light.svg" class="logo__image only-light" alt="High-dimensional Statistics with QIIME 2 - Home"/>
+    <img src="../../_static/logo_dark.svg" class="logo__image only-dark pst-js-only" alt="High-dimensional Statistics with QIIME 2 - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../00_getting_started/01_intro.html">Why High-Dimensional Statistics?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../00_getting_started/02_datasets.html">Atacama Soil Microbiome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../00_getting_started/03_download_data.html">Download the Tutorial Data</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../01_installation/01_prerequisites.html">Prerequisites &amp; Installation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../01_installation/02_q2_gglasso.html">Installing q2-gglasso</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_installation/03_q2_classo.html">Installing q2-classo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_installation/04_verify.html">Verifying Your Installation</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tier 1 — Low-dimensional example (Atacama, 13 ASVs)</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../02_lowdim_gglasso/00_index.html">Graphical Lasso Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/01_data_preparation.html">Data Preparation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/02_sgl.html">Single Graphical Lasso</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/03_slr.html">Sparse + Low-Rank (Latent Variables)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/04_adaptive_glasso.html">Adaptive Graphical Lasso</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/05_lambda_paths.html">Regularization Paths &amp; Model Selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/06_multiple_graphical_lasso.html">Multiple Graphical Lasso (GGL / FGL)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/07_pca.html">Latent-Component PCA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/08_summarize.html">Summarizing a Solution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/09_interpretation.html">Interpretation</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../03_lowdim_classo/00_overview.html">Log-Contrast Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/01_generate_data.html">Synthetic Data with Known Truth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/02_data_preparation.html">Data Preparation</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../03_lowdim_classo/03_regression/00_index.html">Regression</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../03_lowdim_classo/03_regression/01_logcontrast.html">Log-Contrast</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../03_lowdim_classo/03_regression/02_trac.html">With trac</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../03_lowdim_classo/04_classification/00_index.html">Classification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../03_lowdim_classo/04_classification/01_logcontrast.html">Log-Contrast</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../03_lowdim_classo/04_classification/02_trac.html">With trac</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/05_advanced/01_concomitant_formulation.html">Advanced: Concomitant Formulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/05_advanced/02_model_selection.html">Advanced: Choosing a Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/06_predict_and_summarize.html">Predict &amp; Summarize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/07_interpretation.html">Interpretation</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tier 2 — High-dimensional example (Atacama, 300 ASVs)</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../04_highdim_atacama/00_index.html">Overview</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../04_highdim_atacama/01_data.html">The 300-ASV Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_highdim_atacama/02_model_selection.html">Selecting lambda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_highdim_atacama/03_slr_ranks.html">Choosing the Latent Rank</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_highdim_atacama/04_latent_pca.html">Latent Components &amp; Covariates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_highdim_atacama/05_classo_cv.html">Log-Contrast Models at Scale</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_highdim_atacama/06_interpretation.html">Interpretation</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tier 3 — Metagenomics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../05_metagenomics/00_index.html">Overview</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../05_metagenomics/01_gut_to_soil/00_index.html">Gut-to-Soil (16S, 335 ASVs x 99 samples)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../05_metagenomics/01_gut_to_soil/01_data.html">The Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_metagenomics/01_gut_to_soil/02_network.html">Network Inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_metagenomics/01_gut_to_soil/03_regression.html">Log-Contrast Regression</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Command Coverage Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_gglasso_parameters.html">q2-gglasso Parameter Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_classo_parameters.html">q2-classo Parameter Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_troubleshooting.html">Troubleshooting &amp; Known Gotchas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../99_appendix/01_math.html">Appendix: Mathematical Background</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../99_appendix/02_moshpit_cocoa_note.html">Appendix: Shotgun Metagenomics (MOSHPIT cocoa)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/chapters/90_reference/01_command_coverage.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Command Coverage Matrix</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-read-the-matrix">How to read the matrix</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#chapter-keys">Chapter keys</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#q2-gglasso">q2-gglasso</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#transform-features"><code class="docutils literal notranslate"><span class="pre">transform-features</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#build-groups"><code class="docutils literal notranslate"><span class="pre">build-groups</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculate-covariance"><code class="docutils literal notranslate"><span class="pre">calculate-covariance</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solve-problem"><code class="docutils literal notranslate"><span class="pre">solve-problem</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pca-visualizer"><code class="docutils literal notranslate"><span class="pre">pca</span></code> (visualizer)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summarize-visualizer"><code class="docutils literal notranslate"><span class="pre">summarize</span></code> (visualizer)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#q2-classo">q2-classo</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-data"><code class="docutils literal notranslate"><span class="pre">generate-data</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><code class="docutils literal notranslate"><span class="pre">transform-features</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#add-taxa"><code class="docutils literal notranslate"><span class="pre">add-taxa</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#add-covariates"><code class="docutils literal notranslate"><span class="pre">add-covariates</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regress"><code class="docutils literal notranslate"><span class="pre">regress</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#classify"><code class="docutils literal notranslate"><span class="pre">classify</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#predict"><code class="docutils literal notranslate"><span class="pre">predict</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2"><code class="docutils literal notranslate"><span class="pre">summarize</span></code> (visualizer)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supporting-qiime-2-commands">Supporting QIIME 2 commands</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coverage-debt">Coverage debt</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-this-page-gets-checked">How this page gets checked</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#see-also">See also</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="command-coverage-matrix">
+<h1>Command Coverage Matrix<a class="headerlink" href="#command-coverage-matrix" title="Link to this heading">#</a></h1>
+<p>“Comprehensive coverage of every command” is a claim, and claims about
+documentation rot quietly. This page exists to make the claim <strong>checkable</strong>: it
+maps every registered action of both plugins, broken down by parameter group, to
+the one chapter that owns it and to the chapters that reuse it.</p>
+<p>Read it two ways. Forwards, it is a table of contents organised by command rather
+than by narrative — if you want to know where <code class="docutils literal notranslate"><span class="pre">--p-stabsel-b</span></code> is explained, look
+it up here. Backwards, it is the input to a CI check: if a new parameter is
+registered in a plugin and nothing here claims it, the build should fail.</p>
+<p>There are <strong>6 q2-gglasso actions</strong> and <strong>8 q2-classo actions</strong>. Every one appears
+below, together with every <strong>parameter</strong> (<code class="docutils literal notranslate"><span class="pre">--p-</span></code>) and <strong>input</strong> (<code class="docutils literal notranslate"><span class="pre">--i-</span></code>, <code class="docutils literal notranslate"><span class="pre">--m-</span></code>)
+group listed in <a class="reference internal" href="02_gglasso_parameters.html"><span class="std std-doc">q2-gglasso Parameter Reference</span></a> and
+<a class="reference internal" href="03_classo_parameters.html"><span class="std std-doc">q2-classo Parameter Reference</span></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Outputs are deliberately out of scope here.</strong> Each action has a fixed output
+signature that does not vary by chapter, so tracking <code class="docutils literal notranslate"><span class="pre">--o-</span></code> flags row by row adds
+noise without adding coverage. The one exception below (<code class="docutils literal notranslate"><span class="pre">--o-group-array</span></code>) is
+listed because the artifact it produces cannot be fed back into <code class="docutils literal notranslate"><span class="pre">solve-problem</span></code>
+through the type system, which is a fact about the workflow rather than about the
+output itself. Full output signatures live in the two reference pages, and CI
+check 2 below is scoped to parameters accordingly.</p>
+</div>
+<section id="how-to-read-the-matrix">
+<h2>How to read the matrix<a class="headerlink" href="#how-to-read-the-matrix" title="Link to this heading">#</a></h2>
+<p>Each row is an <strong>action x parameter group</strong> — not an action and not a single
+parameter. Grouping is what makes the table usable: <code class="docutils literal notranslate"><span class="pre">--p-stabsel-b</span></code>,
+<code class="docutils literal notranslate"><span class="pre">--p-stabsel-q</span></code> and <code class="docutils literal notranslate"><span class="pre">--p-stabsel-threshold</span></code> interact so tightly that documenting
+them apart would be worse than useless, so they share a row and a primary
+chapter.</p>
+<p>Two columns carry the traceability:</p>
+<ul class="simple">
+<li><p><strong>Primary</strong> — the single chapter that <em>introduces</em> the group, explains why the
+parameters matter, and is responsible for keeping the explanation correct.
+Exactly one chapter per row. If you are fixing an error about a parameter, fix
+it here first.</p></li>
+<li><p><strong>Also in</strong> — chapters that use the group again at a different scale or on a
+different dataset without re-explaining it. These should link back to the
+primary rather than duplicate it.</p></li>
+</ul>
+<p>The book’s structure intends tier 1 to be the reference tier: every action gets
+its canonical demonstration on the 13-ASV Atacama table, and the later tiers
+introduce new <em>values</em> and new <em>questions</em>, not new commands. Where a row’s
+primary chapter is not in tier 1, that is a deliberate exception or an outstanding
+gap — <a class="reference internal" href="#coverage-debt"><span class="std std-ref">Coverage debt</span></a> lists them all.</p>
+<section id="chapter-keys">
+<h3>Chapter keys<a class="headerlink" href="#chapter-keys" title="Link to this heading">#</a></h3>
+<p>The matrix uses short keys so the tables stay narrow.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Key</p></th>
+<th class="head"><p>Chapter</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">DL</span></code></p></td>
+<td><p><a class="reference internal" href="../00_getting_started/03_download_data.html"><span class="std std-doc">Download the Tutorial Data</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">INST-GG</span></code></p></td>
+<td><p><a class="reference internal" href="../01_installation/02_q2_gglasso.html"><span class="std std-doc">Installing q2-gglasso</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">INST-CL</span></code></p></td>
+<td><p><a class="reference internal" href="../01_installation/03_q2_classo.html"><span class="std std-doc">Installing q2-classo</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">VERIFY</span></code></p></td>
+<td><p><a class="reference internal" href="../01_installation/04_verify.html"><span class="std std-doc">Verifying Your Installation</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">G-PREP</span></code></p></td>
+<td><p><a class="reference internal" href="../02_lowdim_gglasso/01_data_preparation.html"><span class="std std-doc">Data Preparation</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">G-SGL</span></code></p></td>
+<td><p><a class="reference internal" href="../02_lowdim_gglasso/02_sgl.html"><span class="std std-doc">Single Graphical Lasso</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">G-SLR</span></code></p></td>
+<td><p><a class="reference internal" href="../02_lowdim_gglasso/03_slr.html"><span class="std std-doc">Sparse + Low-Rank</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">G-ADAPT</span></code></p></td>
+<td><p><a class="reference internal" href="../02_lowdim_gglasso/04_adaptive_glasso.html"><span class="std std-doc">Adaptive Graphical Lasso</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">G-PATH</span></code></p></td>
+<td><p><a class="reference internal" href="../02_lowdim_gglasso/05_lambda_paths.html"><span class="std std-doc">Regularization Paths &amp; Model Selection</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">G-MGL</span></code></p></td>
+<td><p><a class="reference internal" href="../02_lowdim_gglasso/06_multiple_graphical_lasso.html"><span class="std std-doc">Multiple Graphical Lasso</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">G-PCA</span></code></p></td>
+<td><p><a class="reference internal" href="../02_lowdim_gglasso/07_pca.html"><span class="std std-doc">Latent-Component PCA</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">G-SUM</span></code></p></td>
+<td><p><a class="reference internal" href="../02_lowdim_gglasso/08_summarize.html"><span class="std std-doc">Summarizing a Solution</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">G-INT</span></code></p></td>
+<td><p><a class="reference internal" href="../02_lowdim_gglasso/09_interpretation.html"><span class="std std-doc">Interpretation (gglasso)</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">C-GEN</span></code></p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/01_generate_data.html"><span class="std std-doc">Synthetic Data with Known Truth</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">C-PREP</span></code></p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/02_data_preparation.html"><span class="std std-doc">Data Preparation (classo)</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">C-REG</span></code></p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/03_regression/01_logcontrast.html"><span class="std std-doc">Log-Contrast Regression</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">C-RTRAC</span></code></p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/03_regression/02_trac.html"><span class="std std-doc">Regression with trac</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">C-CLF</span></code></p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/04_classification/01_logcontrast.html"><span class="std std-doc">Log-Contrast Classification</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">C-CTRAC</span></code></p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/04_classification/02_trac.html"><span class="std std-doc">Classification with trac</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">C-CONC</span></code></p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/05_advanced/01_concomitant_formulation.html"><span class="std std-doc">Concomitant Formulation</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">C-MSEL</span></code></p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/05_advanced/02_model_selection.html"><span class="std std-doc">Choosing a Model</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">C-PRED</span></code></p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/06_predict_and_summarize.html"><span class="std std-doc">Predict &amp; Summarize</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">C-INT</span></code></p></td>
+<td><p><a class="reference internal" href="../03_lowdim_classo/07_interpretation.html"><span class="std std-doc">Interpretation (classo)</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">H-DATA</span></code></p></td>
+<td><p><a class="reference internal" href="../04_highdim_atacama/01_data.html"><span class="std std-doc">The 300-ASV Dataset</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">H-LAM</span></code></p></td>
+<td><p><a class="reference internal" href="../04_highdim_atacama/02_model_selection.html"><span class="std std-doc">Selecting lambda</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">H-RANK</span></code></p></td>
+<td><p><a class="reference internal" href="../04_highdim_atacama/03_slr_ranks.html"><span class="std std-doc">Choosing the Latent Rank</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">H-PCA</span></code></p></td>
+<td><p><a class="reference internal" href="../04_highdim_atacama/04_latent_pca.html"><span class="std std-doc">Latent Components &amp; Covariates</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">H-CV</span></code></p></td>
+<td><p><a class="reference internal" href="../04_highdim_atacama/05_classo_cv.html"><span class="std std-doc">Log-Contrast Models at Scale</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">H-INT</span></code></p></td>
+<td><p><a class="reference internal" href="../04_highdim_atacama/06_interpretation.html"><span class="std std-doc">Interpretation (tier 2)</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">M-DATA</span></code></p></td>
+<td><p><a class="reference internal" href="../05_metagenomics/01_gut_to_soil/01_data.html"><span class="std std-doc">Gut-to-Soil: The Dataset</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">M-NET</span></code></p></td>
+<td><p><a class="reference internal" href="../05_metagenomics/01_gut_to_soil/02_network.html"><span class="std std-doc">Gut-to-Soil: Network Inference</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">M-REG</span></code></p></td>
+<td><p><a class="reference internal" href="../05_metagenomics/01_gut_to_soil/03_regression.html"><span class="std std-doc">Gut-to-Soil: Log-Contrast Regression</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">R-GG</span></code></p></td>
+<td><p><a class="reference internal" href="02_gglasso_parameters.html"><span class="std std-doc">q2-gglasso Parameter Reference</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">R-CL</span></code></p></td>
+<td><p><a class="reference internal" href="03_classo_parameters.html"><span class="std std-doc">q2-classo Parameter Reference</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">R-TS</span></code></p></td>
+<td><p><a class="reference internal" href="04_troubleshooting.html"><span class="std std-doc">Troubleshooting &amp; Known Gotchas</span></a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="q2-gglasso">
+<h2>q2-gglasso<a class="headerlink" href="#q2-gglasso" title="Link to this heading">#</a></h2>
+<section id="transform-features">
+<h3><code class="docutils literal notranslate"><span class="pre">transform-features</span></code><a class="headerlink" href="#transform-features" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter group</p></th>
+<th class="head"><p>Flags</p></th>
+<th class="head"><p>Primary</p></th>
+<th class="head"><p>Also in</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Input table</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--i-table</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">G-PREP</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">G-ADAPT</span></code>, <code class="docutils literal notranslate"><span class="pre">G-MGL</span></code>, <code class="docutils literal notranslate"><span class="pre">H-DATA</span></code>, <code class="docutils literal notranslate"><span class="pre">M-DATA</span></code>, <code class="docutils literal notranslate"><span class="pre">VERIFY</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Choice of transform</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-transformation</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">G-PREP</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">G-ADAPT</span></code>, <code class="docutils literal notranslate"><span class="pre">G-MGL</span></code>, <code class="docutils literal notranslate"><span class="pre">H-DATA</span></code>, <code class="docutils literal notranslate"><span class="pre">M-DATA</span></code>, <code class="docutils literal notranslate"><span class="pre">VERIFY</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Zero handling</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-pseudo-count</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">H-DATA</span></code></p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-odd"><td><p>Metadata as network nodes</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--m-sample-metadata-file</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-add-metadata</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-scale-metadata</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">G-PREP</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">G-ADAPT</span></code>, <code class="docutils literal notranslate"><span class="pre">G-MGL</span></code>, <code class="docutils literal notranslate"><span class="pre">H-DATA</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Feature relabelling</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-keep-original-id</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">H-DATA</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">G-INT</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>The unused required input</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--i-taxonomy</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">G-PREP</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">DL</span></code>, <code class="docutils literal notranslate"><span class="pre">R-TS</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">--p-transformation</span></code> and the metadata switches are the two decisions that change
+what the network <em>means</em>, which is why both are owned by <code class="docutils literal notranslate"><span class="pre">G-PREP</span></code> rather than
+being scattered. <code class="docutils literal notranslate"><span class="pre">--i-taxonomy</span></code> gets a row of its own because it is a trap, not a
+parameter: it is required by the registration and never read by the function, so
+readers hit it before they hit anything statistical.</p>
+</section>
+<section id="build-groups">
+<h3><code class="docutils literal notranslate"><span class="pre">build-groups</span></code><a class="headerlink" href="#build-groups" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter group</p></th>
+<th class="head"><p>Flags</p></th>
+<th class="head"><p>Primary</p></th>
+<th class="head"><p>Also in</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Instance tables and validation</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--i-tables</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-check-groups</span></code>, <code class="docutils literal notranslate"><span class="pre">--o-group-array</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">G-MGL</span></code></p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-odd"><td><p>The <code class="docutils literal notranslate"><span class="pre">TensorData</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">List[Int]</span></code> gap</p></td>
+<td><p>(export workaround)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">G-MGL</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">R-GG</span></code>, <code class="docutils literal notranslate"><span class="pre">R-TS</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><code class="docutils literal notranslate"><span class="pre">build-groups</span></code> emits a <code class="docutils literal notranslate"><span class="pre">TensorData</span></code> <strong>artifact</strong> while <code class="docutils literal notranslate"><span class="pre">solve-problem</span></code> accepts
+<code class="docutils literal notranslate"><span class="pre">group_array</span></code> as a <code class="docutils literal notranslate"><span class="pre">List[Int]</span></code> <strong>parameter</strong>. They do not chain through the QIIME 2
+type system, so the only way to connect them is to export the artifact and pass
+the indices by hand with <code class="docutils literal notranslate"><span class="pre">--p-group-array</span></code>. This is a <strong>known gap</strong>, not a
+documentation shortcut, and <code class="docutils literal notranslate"><span class="pre">G-MGL</span></code> is the one chapter responsible for spelling
+out the workaround.</p>
+</div>
+</section>
+<section id="calculate-covariance">
+<h3><code class="docutils literal notranslate"><span class="pre">calculate-covariance</span></code><a class="headerlink" href="#calculate-covariance" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter group</p></th>
+<th class="head"><p>Flags</p></th>
+<th class="head"><p>Primary</p></th>
+<th class="head"><p>Also in</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Input table (the p x n transform output)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--i-table</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">G-PREP</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">G-ADAPT</span></code>, <code class="docutils literal notranslate"><span class="pre">G-MGL</span></code>, <code class="docutils literal notranslate"><span class="pre">H-DATA</span></code>, <code class="docutils literal notranslate"><span class="pre">M-NET</span></code>, <code class="docutils literal notranslate"><span class="pre">VERIFY</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Scaling</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-method</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">G-PREP</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">G-ADAPT</span></code>, <code class="docutils literal notranslate"><span class="pre">G-MGL</span></code>, <code class="docutils literal notranslate"><span class="pre">H-DATA</span></code>, <code class="docutils literal notranslate"><span class="pre">M-NET</span></code>, <code class="docutils literal notranslate"><span class="pre">VERIFY</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Normalisation denominator</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-bias</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">H-DATA</span></code></p></td>
+<td><p>—</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="solve-problem">
+<h3><code class="docutils literal notranslate"><span class="pre">solve-problem</span></code><a class="headerlink" href="#solve-problem" title="Link to this heading">#</a></h3>
+<p>The largest surface in either plugin, and the reason this page is organised by
+group. Its twenty parameters divide into eight concerns, and no chapter tries to
+cover more than two of them at once.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter group</p></th>
+<th class="head"><p>Flags</p></th>
+<th class="head"><p>Primary</p></th>
+<th class="head"><p>Also in</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Input covariance</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--i-covariance-matrix</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">G-SGL</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">G-SLR</span></code>, <code class="docutils literal notranslate"><span class="pre">G-ADAPT</span></code>, <code class="docutils literal notranslate"><span class="pre">G-PATH</span></code>, <code class="docutils literal notranslate"><span class="pre">G-MGL</span></code>, <code class="docutils literal notranslate"><span class="pre">H-LAM</span></code>, <code class="docutils literal notranslate"><span class="pre">H-RANK</span></code>, <code class="docutils literal notranslate"><span class="pre">M-NET</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Problem size</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-n-samples</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">G-SGL</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">G-SLR</span></code>, <code class="docutils literal notranslate"><span class="pre">G-ADAPT</span></code>, <code class="docutils literal notranslate"><span class="pre">G-PATH</span></code>, <code class="docutils literal notranslate"><span class="pre">G-MGL</span></code>, <code class="docutils literal notranslate"><span class="pre">H-LAM</span></code>, <code class="docutils literal notranslate"><span class="pre">H-RANK</span></code>, <code class="docutils literal notranslate"><span class="pre">M-NET</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Sparsity grid</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-lambda1-min</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-lambda1-max</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-n-lambda1</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">G-SGL</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">G-SLR</span></code>, <code class="docutils literal notranslate"><span class="pre">G-ADAPT</span></code>, <code class="docutils literal notranslate"><span class="pre">G-PATH</span></code>, <code class="docutils literal notranslate"><span class="pre">G-MGL</span></code>, <code class="docutils literal notranslate"><span class="pre">H-LAM</span></code>, <code class="docutils literal notranslate"><span class="pre">H-RANK</span></code>, <code class="docutils literal notranslate"><span class="pre">M-NET</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Explicit grids and spacing</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-lambda1-path</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-mu1-path</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-path-scale</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">G-PATH</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">G-MGL</span></code>, <code class="docutils literal notranslate"><span class="pre">H-LAM</span></code>, <code class="docutils literal notranslate"><span class="pre">H-RANK</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Low-rank block</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-latent</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-mu1-min</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-mu1-max</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-n-mu1</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">G-SLR</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">G-PATH</span></code>, <code class="docutils literal notranslate"><span class="pre">G-PCA</span></code>, <code class="docutils literal notranslate"><span class="pre">H-LAM</span></code>, <code class="docutils literal notranslate"><span class="pre">H-RANK</span></code>, <code class="docutils literal notranslate"><span class="pre">H-PCA</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Explicit rank (always raises)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-rank</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">H-RANK</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">G-PATH</span></code>, <code class="docutils literal notranslate"><span class="pre">G-PCA</span></code>, <code class="docutils literal notranslate"><span class="pre">R-TS</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Adaptive penalty weights</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-weights</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">G-ADAPT</span></code></p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-odd"><td><p>Multiple instances</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-reg</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-lambda2-min</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-lambda2-max</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-n-lambda2</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-non-conforming</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-group-array</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">G-MGL</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">G-PATH</span></code>, <code class="docutils literal notranslate"><span class="pre">VERIFY</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Model-selection criterion</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-gamma</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">G-PATH</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">G-SGL</span></code>, <code class="docutils literal notranslate"><span class="pre">G-SLR</span></code>, <code class="docutils literal notranslate"><span class="pre">G-ADAPT</span></code>, <code class="docutils literal notranslate"><span class="pre">G-MGL</span></code>, <code class="docutils literal notranslate"><span class="pre">H-LAM</span></code>, <code class="docutils literal notranslate"><span class="pre">H-RANK</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Two behaviours cut across the grid rows above and must be repeated wherever a
+grid is set, because getting them wrong produces a plausible-looking result
+rather than an error.</p>
+<p><strong>Defaults appear silently.</strong> Leaving a grid entirely unset substitutes a
+built-in path and emits a warning; setting only one bound substitutes the other
+one with no warning at all.</p>
+<p><strong>Model selection runs only if at least one grid has more than one value</strong> — and
+for a latent problem, <code class="docutils literal notranslate"><span class="pre">lambda1</span></code>, <code class="docutils literal notranslate"><span class="pre">lambda2</span></code> <em>and</em> <code class="docutils literal notranslate"><span class="pre">mu1</span></code> must all be singletons
+before the run counts as a single fit. <code class="docutils literal notranslate"><span class="pre">G-PATH</span></code> owns the full explanation;
+<code class="docutils literal notranslate"><span class="pre">H-LAM</span></code> and <code class="docutils literal notranslate"><span class="pre">H-RANK</span></code> reuse it.</p>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">--p-rank</span></code> is the one row whose primary chapter exists mainly to talk you out of
+the parameter. It <strong>always raises</strong> on every released GGLasso up to and including
+0.3.0 — <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> if <code class="docutils literal notranslate"><span class="pre">--p-latent</span></code> is not set, <code class="docutils literal notranslate"><span class="pre">NotImplementedError</span></code>
+otherwise — because no release can fix the rank of the low-rank component.
+<code class="docutils literal notranslate"><span class="pre">H-RANK</span></code> therefore documents the alternative — steer the rank through <code class="docutils literal notranslate"><span class="pre">mu1</span></code>,
+where a <strong>larger <code class="docutils literal notranslate"><span class="pre">mu1</span></code> gives a smaller rank</strong> — and reads the achieved rank back
+out of the solution.</p>
+</section>
+<section id="pca-visualizer">
+<h3><code class="docutils literal notranslate"><span class="pre">pca</span></code> (visualizer)<a class="headerlink" href="#pca-visualizer" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter group</p></th>
+<th class="head"><p>Flags</p></th>
+<th class="head"><p>Primary</p></th>
+<th class="head"><p>Also in</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Inputs and the required metadata file</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--i-table</span></code>, <code class="docutils literal notranslate"><span class="pre">--i-solution</span></code>, <code class="docutils literal notranslate"><span class="pre">--m-sample-metadata-file</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">G-PCA</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">H-PCA</span></code>, <code class="docutils literal notranslate"><span class="pre">R-TS</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Projection and colouring</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-n-components</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-color-by</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">G-PCA</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">H-PCA</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><code class="docutils literal notranslate"><span class="pre">pca</span></code> has two prerequisites that the signature does not state.</p>
+<p>The solution must have been produced with <code class="docutils literal notranslate"><span class="pre">--p-latent</span> <span class="pre">True</span></code> — the visualizer
+reads <code class="docutils literal notranslate"><span class="pre">solution/lowrank_</span></code>, which a sparse-only SGL solution does not have.</p>
+<p>And <code class="docutils literal notranslate"><span class="pre">--m-sample-metadata-file</span></code> is <strong>optional in the signature but required in
+practice</strong>: it is dereferenced unconditionally, so omitting it crashes with an
+<code class="docutils literal notranslate"><span class="pre">AttributeError</span></code>. <code class="docutils literal notranslate"><span class="pre">G-PCA</span></code> states both before its first command.</p>
+</div>
+</section>
+<section id="summarize-visualizer">
+<h3><code class="docutils literal notranslate"><span class="pre">summarize</span></code> (visualizer)<a class="headerlink" href="#summarize-visualizer" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter group</p></th>
+<th class="head"><p>Flags</p></th>
+<th class="head"><p>Primary</p></th>
+<th class="head"><p>Also in</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Input solution</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--i-solution</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">G-SUM</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">G-SGL</span></code>, <code class="docutils literal notranslate"><span class="pre">G-SLR</span></code>, <code class="docutils literal notranslate"><span class="pre">G-ADAPT</span></code>, <code class="docutils literal notranslate"><span class="pre">G-PATH</span></code>, <code class="docutils literal notranslate"><span class="pre">H-RANK</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Label sizing</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-label-size</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">G-SUM</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">G-SGL</span></code>, <code class="docutils literal notranslate"><span class="pre">G-SLR</span></code>, <code class="docutils literal notranslate"><span class="pre">G-ADAPT</span></code>, <code class="docutils literal notranslate"><span class="pre">G-PATH</span></code>, <code class="docutils literal notranslate"><span class="pre">H-RANK</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Canvas size</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-width</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-height</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">G-SUM</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">H-RANK</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Covariate block separation</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-n-cov</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">G-SUM</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">G-ADAPT</span></code>, <code class="docutils literal notranslate"><span class="pre">G-INT</span></code>, <code class="docutils literal notranslate"><span class="pre">H-DATA</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">--p-n-cov</span></code> is paired with <code class="docutils literal notranslate"><span class="pre">--p-add-metadata</span></code>: it tells the heatmaps how many
+<em>trailing</em> variables are covariates rather than taxa, so the two blocks cluster
+separately. Anyone who turned metadata into nodes in <code class="docutils literal notranslate"><span class="pre">G-PREP</span></code> needs it here.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="q2-classo">
+<h2>q2-classo<a class="headerlink" href="#q2-classo" title="Link to this heading">#</a></h2>
+<section id="generate-data">
+<h3><code class="docutils literal notranslate"><span class="pre">generate-data</span></code><a class="headerlink" href="#generate-data" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter group</p></th>
+<th class="head"><p>Flags</p></th>
+<th class="head"><p>Primary</p></th>
+<th class="head"><p>Also in</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Problem shape</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-n</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-d</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-d-nonzero</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-GEN</span></code></p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-odd"><td><p>Response type</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-classification</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-GEN</span></code></p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p>Taxonomy-derived labels and tree</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--i-taxa</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-GEN</span></code></p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-odd"><td><p>The <code class="docutils literal notranslate"><span class="pre">randomy.tsv</span></code> side effect</p></td>
+<td><p>(no flag)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-GEN</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">R-CL</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><code class="docutils literal notranslate"><span class="pre">generate-data</span></code> writes <code class="docutils literal notranslate"><span class="pre">randomy.tsv</span></code> into the <strong>current working directory</strong> — the
+generated response is not returned as an artifact. It is overwritten on every
+call. <code class="docutils literal notranslate"><span class="pre">C-GEN</span></code> is the only chapter that runs this action, and it says where to run
+it from.</p>
+</div>
+</section>
+<section id="id1">
+<h3><code class="docutils literal notranslate"><span class="pre">transform-features</span></code><a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter group</p></th>
+<th class="head"><p>Flags</p></th>
+<th class="head"><p>Primary</p></th>
+<th class="head"><p>Also in</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Input features</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--i-features</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-PREP</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-GEN</span></code>, <code class="docutils literal notranslate"><span class="pre">C-REG</span></code>, <code class="docutils literal notranslate"><span class="pre">C-RTRAC</span></code>, <code class="docutils literal notranslate"><span class="pre">C-CLF</span></code>, <code class="docutils literal notranslate"><span class="pre">C-CTRAC</span></code>, <code class="docutils literal notranslate"><span class="pre">M-REG</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>CLR transform and pseudocount</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-transformation</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-coef</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-PREP</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-GEN</span></code>, <code class="docutils literal notranslate"><span class="pre">C-REG</span></code>, <code class="docutils literal notranslate"><span class="pre">C-RTRAC</span></code>, <code class="docutils literal notranslate"><span class="pre">C-CLF</span></code>, <code class="docutils literal notranslate"><span class="pre">C-CTRAC</span></code>, <code class="docutils literal notranslate"><span class="pre">M-REG</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>This is a <strong>different</strong> implementation from <code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">gglasso</span> <span class="pre">transform-features</span></code>:
+<code class="docutils literal notranslate"><span class="pre">coef</span></code> rather than <code class="docutils literal notranslate"><span class="pre">pseudo_count</span></code>, no <code class="docutils literal notranslate"><span class="pre">mclr</span></code>, no metadata handling, and a
+sample-major output because <code class="docutils literal notranslate"><span class="pre">regress</span></code> wants samples in rows. <code class="docutils literal notranslate"><span class="pre">C-PREP</span></code> says so
+explicitly, because the shared action name is the single most common source of
+confusion between the two plugins.</p>
+</section>
+<section id="add-taxa">
+<h3><code class="docutils literal notranslate"><span class="pre">add-taxa</span></code><a class="headerlink" href="#add-taxa" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter group</p></th>
+<th class="head"><p>Flags</p></th>
+<th class="head"><p>Primary</p></th>
+<th class="head"><p>Also in</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Tree change of basis</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--i-features</span></code>, <code class="docutils literal notranslate"><span class="pre">--i-weights</span></code>, <code class="docutils literal notranslate"><span class="pre">--i-taxa</span></code> (no parameters)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-RTRAC</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-PREP</span></code>, <code class="docutils literal notranslate"><span class="pre">C-CTRAC</span></code>, <code class="docutils literal notranslate"><span class="pre">C-PRED</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="add-covariates">
+<h3><code class="docutils literal notranslate"><span class="pre">add-covariates</span></code><a class="headerlink" href="#add-covariates" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter group</p></th>
+<th class="head"><p>Flags</p></th>
+<th class="head"><p>Primary</p></th>
+<th class="head"><p>Also in</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Inputs, column selection and one-hot expansion</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--i-features</span></code>, <code class="docutils literal notranslate"><span class="pre">--i-c</span></code>, <code class="docutils literal notranslate"><span class="pre">--i-weights</span></code>, <code class="docutils literal notranslate"><span class="pre">--m-covariates-file</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-to-add</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-PREP</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-REG</span></code>, <code class="docutils literal notranslate"><span class="pre">C-RTRAC</span></code>, <code class="docutils literal notranslate"><span class="pre">C-CLF</span></code>, <code class="docutils literal notranslate"><span class="pre">C-CTRAC</span></code>, <code class="docutils literal notranslate"><span class="pre">H-CV</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Per-covariate penalty weight</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-w-to-add</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-PREP</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-REG</span></code>, <code class="docutils literal notranslate"><span class="pre">C-RTRAC</span></code>, <code class="docutils literal notranslate"><span class="pre">C-CLF</span></code>, <code class="docutils literal notranslate"><span class="pre">C-CTRAC</span></code>, <code class="docutils literal notranslate"><span class="pre">H-CV</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Rescaling numeric covariates</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-rescale</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">H-CV</span></code></p></td>
+<td><p>—</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Categorical columns are expanded to one-hot indicators labelled
+<code class="docutils literal notranslate"><span class="pre">&lt;name&gt;</span> <span class="pre">=</span> <span class="pre">&lt;value&gt;</span></code>, spaces included, and those labels are what appear in the
+<code class="docutils literal notranslate"><span class="pre">summarize</span></code> coefficient plots — so one categorical covariate contributes several
+rows to the output. <code class="docutils literal notranslate"><span class="pre">C-PREP</span></code> owns that fact.</p>
+</section>
+<section id="regress">
+<h3><code class="docutils literal notranslate"><span class="pre">regress</span></code><a class="headerlink" href="#regress" title="Link to this heading">#</a></h3>
+<p>The four model-selection procedures — PATH, CV, StabSel, LAMfixed — are all <strong>on
+by default</strong>, each has its own prefix, and each has its own numerical method. That
+structure is why the rows below look repetitive: they are genuinely four parallel
+blocks over the same fitted path.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter group</p></th>
+<th class="head"><p>Flags</p></th>
+<th class="head"><p>Primary</p></th>
+<th class="head"><p>Also in</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Inputs</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--i-features</span></code>, <code class="docutils literal notranslate"><span class="pre">--i-c</span></code>, <code class="docutils literal notranslate"><span class="pre">--i-weights</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-REG</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-RTRAC</span></code>, <code class="docutils literal notranslate"><span class="pre">C-CLF</span></code>, <code class="docutils literal notranslate"><span class="pre">C-CTRAC</span></code>, <code class="docutils literal notranslate"><span class="pre">C-CONC</span></code>, <code class="docutils literal notranslate"><span class="pre">C-MSEL</span></code>, <code class="docutils literal notranslate"><span class="pre">H-CV</span></code>, <code class="docutils literal notranslate"><span class="pre">M-REG</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Numeric response</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--m-y-file</span></code>, <code class="docutils literal notranslate"><span class="pre">--m-y-column</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-REG</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-RTRAC</span></code>, <code class="docutils literal notranslate"><span class="pre">C-CONC</span></code>, <code class="docutils literal notranslate"><span class="pre">C-MSEL</span></code>, <code class="docutils literal notranslate"><span class="pre">H-CV</span></code>, <code class="docutils literal notranslate"><span class="pre">M-REG</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Response shift</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-do-yshift</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-MSEL</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">H-CV</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Intercept</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-intercept</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-MSEL</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-PRED</span></code>, <code class="docutils literal notranslate"><span class="pre">H-CV</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Loss and noise model</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-concomitant</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-huber</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-rho</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-CONC</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-GEN</span></code>, <code class="docutils literal notranslate"><span class="pre">C-REG</span></code>, <code class="docutils literal notranslate"><span class="pre">C-RTRAC</span></code>, <code class="docutils literal notranslate"><span class="pre">C-PRED</span></code>, <code class="docutils literal notranslate"><span class="pre">H-CV</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>PATH</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-path</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-path-nlam-log</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-path-lamin-log</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-path-n-active</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-path-numerical-method</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-MSEL</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-GEN</span></code>, <code class="docutils literal notranslate"><span class="pre">C-REG</span></code>, <code class="docutils literal notranslate"><span class="pre">C-RTRAC</span></code>, <code class="docutils literal notranslate"><span class="pre">C-CLF</span></code>, <code class="docutils literal notranslate"><span class="pre">C-CTRAC</span></code>, <code class="docutils literal notranslate"><span class="pre">C-PRED</span></code>, <code class="docutils literal notranslate"><span class="pre">H-CV</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>CV</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-cv</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-cv-subsets</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-cv-nlam</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-cv-lamin</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-cv-logscale</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-cv-one-se</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-cv-seed</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-cv-numerical-method</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-MSEL</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-GEN</span></code>, <code class="docutils literal notranslate"><span class="pre">C-REG</span></code>, <code class="docutils literal notranslate"><span class="pre">C-RTRAC</span></code>, <code class="docutils literal notranslate"><span class="pre">C-CLF</span></code>, <code class="docutils literal notranslate"><span class="pre">C-CTRAC</span></code>, <code class="docutils literal notranslate"><span class="pre">C-PRED</span></code>, <code class="docutils literal notranslate"><span class="pre">H-CV</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Deprecated CV alias</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-cv--nlam</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-MSEL</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">R-CL</span></code>, <code class="docutils literal notranslate"><span class="pre">R-TS</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>StabSel</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-stabsel</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-stabsel-b</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-stabsel-q</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-stabsel-threshold</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-stabsel-threshold-label</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-stabsel-seed</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-stabsel-method</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-stabsel-lam</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-stabsel-true-lam</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-stabsel-lamin</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-stabsel-percent-ns</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-stabsel-numerical-method</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-MSEL</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-GEN</span></code>, <code class="docutils literal notranslate"><span class="pre">C-REG</span></code>, <code class="docutils literal notranslate"><span class="pre">C-RTRAC</span></code>, <code class="docutils literal notranslate"><span class="pre">C-CLF</span></code>, <code class="docutils literal notranslate"><span class="pre">C-CTRAC</span></code>, <code class="docutils literal notranslate"><span class="pre">C-PRED</span></code>, <code class="docutils literal notranslate"><span class="pre">H-CV</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>LAMfixed</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-lamfixed</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-lamfixed-lam</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-lamfixed-true-lam</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-lamfixed-numerical-method</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-MSEL</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-GEN</span></code>, <code class="docutils literal notranslate"><span class="pre">C-REG</span></code>, <code class="docutils literal notranslate"><span class="pre">C-RTRAC</span></code>, <code class="docutils literal notranslate"><span class="pre">C-CLF</span></code>, <code class="docutils literal notranslate"><span class="pre">C-CTRAC</span></code>, <code class="docutils literal notranslate"><span class="pre">H-CV</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">--p-cv--nlam</span></code> — two dashes — is not a typo in this book. The parameter was
+originally registered as <code class="docutils literal notranslate"><span class="pre">cv__nlam</span></code> with a double underscore, which QIIME 2
+renders literally. <strong><code class="docutils literal notranslate"><span class="pre">--p-cv-nlam</span></code> is the current spelling</strong>; the old one still
+works and emits a <code class="docutils literal notranslate"><span class="pre">DeprecationWarning</span></code>. New commands should use <code class="docutils literal notranslate"><span class="pre">--p-cv-nlam</span></code>,
+and the deprecated form should appear only where it is being explained.</p>
+</div>
+</section>
+<section id="classify">
+<h3><code class="docutils literal notranslate"><span class="pre">classify</span></code><a class="headerlink" href="#classify" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">classify</span></code> shares the PATH, CV, StabSel and LAMfixed blocks with <code class="docutils literal notranslate"><span class="pre">regress</span></code> — same
+names, same defaults — so those rows are not repeated. Only the differences are
+owned separately.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter group</p></th>
+<th class="head"><p>Flags</p></th>
+<th class="head"><p>Primary</p></th>
+<th class="head"><p>Also in</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Categorical response</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--m-y-file</span></code>, <code class="docutils literal notranslate"><span class="pre">--m-y-column</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-CLF</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-GEN</span></code>, <code class="docutils literal notranslate"><span class="pre">C-CTRAC</span></code>, <code class="docutils literal notranslate"><span class="pre">C-CONC</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Hinge loss and its transition point</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-huber</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-rho</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-CLF</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-CTRAC</span></code>, <code class="docutils literal notranslate"><span class="pre">C-CONC</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Intercept</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-intercept</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-CLF</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-MSEL</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>What <code class="docutils literal notranslate"><span class="pre">classify</span></code> does <strong>not</strong> have</p></td>
+<td><p>(<code class="docutils literal notranslate"><span class="pre">--p-concomitant</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-do-yshift</span></code>)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-CONC</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-CLF</span></code>, <code class="docutils literal notranslate"><span class="pre">R-CL</span></code>, <code class="docutils literal notranslate"><span class="pre">R-TS</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Selection procedures</p></td>
+<td><p>as <code class="docutils literal notranslate"><span class="pre">regress</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-MSEL</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-CLF</span></code>, <code class="docutils literal notranslate"><span class="pre">C-CTRAC</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong><code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">classo</span> <span class="pre">classify</span> <span class="pre">--p-concomitant</span></code> does not exist.</strong> The parameter is not
+registered on <code class="docutils literal notranslate"><span class="pre">classify</span></code>, and the solver forces the concomitant formulation off
+for classification problems regardless. Passing the flag is a command-line error.
+Use the Huber hinge loss instead — <code class="docutils literal notranslate"><span class="pre">--p-huber</span> <span class="pre">True</span></code> with an explicit <code class="docutils literal notranslate"><span class="pre">--p-rho</span></code>,
+since <code class="docutils literal notranslate"><span class="pre">rho</span></code> defaults to <code class="docutils literal notranslate"><span class="pre">0.0</span></code> here rather than the <code class="docutils literal notranslate"><span class="pre">1.345</span></code> used by <code class="docutils literal notranslate"><span class="pre">regress</span></code>.
+<code class="docutils literal notranslate"><span class="pre">C-CONC</span></code> owns this comparison.</p>
+</div>
+</section>
+<section id="predict">
+<h3><code class="docutils literal notranslate"><span class="pre">predict</span></code><a class="headerlink" href="#predict" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter group</p></th>
+<th class="head"><p>Flags</p></th>
+<th class="head"><p>Primary</p></th>
+<th class="head"><p>Also in</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Inputs (no parameters)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--i-features</span></code>, <code class="docutils literal notranslate"><span class="pre">--i-problem</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-PRED</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-REG</span></code>, <code class="docutils literal notranslate"><span class="pre">C-RTRAC</span></code>, <code class="docutils literal notranslate"><span class="pre">C-CLF</span></code>, <code class="docutils literal notranslate"><span class="pre">C-CTRAC</span></code>, <code class="docutils literal notranslate"><span class="pre">C-MSEL</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">predict</span></code> emits one prediction set per model selection present in the problem, so
+switching CV or StabSel off at fit time silently reduces what you get here. That
+coupling is <code class="docutils literal notranslate"><span class="pre">C-PRED</span></code>’s to explain.</p>
+</section>
+<section id="id2">
+<h3><code class="docutils literal notranslate"><span class="pre">summarize</span></code> (visualizer)<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter group</p></th>
+<th class="head"><p>Flags</p></th>
+<th class="head"><p>Primary</p></th>
+<th class="head"><p>Also in</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Inputs</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--i-problem</span></code>, <code class="docutils literal notranslate"><span class="pre">--i-taxa</span></code>, <code class="docutils literal notranslate"><span class="pre">--i-predictions</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-PRED</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-GEN</span></code>, <code class="docutils literal notranslate"><span class="pre">C-REG</span></code>, <code class="docutils literal notranslate"><span class="pre">C-RTRAC</span></code>, <code class="docutils literal notranslate"><span class="pre">C-CLF</span></code>, <code class="docutils literal notranslate"><span class="pre">C-CTRAC</span></code>, <code class="docutils literal notranslate"><span class="pre">C-MSEL</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Plot truncation</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-maxplot</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-PRED</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-GEN</span></code>, <code class="docutils literal notranslate"><span class="pre">C-MSEL</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="supporting-qiime-2-commands">
+<h2>Supporting QIIME 2 commands<a class="headerlink" href="#supporting-qiime-2-commands" title="Link to this heading">#</a></h2>
+<p>The tutorial does not run in a vacuum. These commands are not part of either
+plugin, but a reader who skips them cannot complete the chapters, so they get the
+same treatment: one owning chapter each.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Command</p></th>
+<th class="head"><p>What the tutorial uses it for</p></th>
+<th class="head"><p>Primary</p></th>
+<th class="head"><p>Also in</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">sample-classifier</span> <span class="pre">split-table</span></code></p></td>
+<td><p>Train/test split before <code class="docutils literal notranslate"><span class="pre">regress</span></code> or <code class="docutils literal notranslate"><span class="pre">classify</span></code> (<code class="docutils literal notranslate"><span class="pre">--p-test-size</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-random-state</span></code>, <code class="docutils literal notranslate"><span class="pre">--p-stratify</span></code>)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-PREP</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C-REG</span></code>, <code class="docutils literal notranslate"><span class="pre">C-RTRAC</span></code>, <code class="docutils literal notranslate"><span class="pre">C-CLF</span></code>, <code class="docutils literal notranslate"><span class="pre">C-CTRAC</span></code>, <code class="docutils literal notranslate"><span class="pre">C-PRED</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">feature-table</span> <span class="pre">filter-features</span></code></p></td>
+<td><p>Restricting a table to a shared feature set before building multiple graphical-lasso instances</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">G-MGL</span></code></p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">feature-table</span> <span class="pre">filter-samples</span></code></p></td>
+<td><p>Splitting one table into the K per-group instances (<code class="docutils literal notranslate"><span class="pre">--p-where</span></code>)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">G-MGL</span></code></p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">feature-table</span> <span class="pre">summarize</span></code></p></td>
+<td><p>Reading off the sample count that <code class="docutils literal notranslate"><span class="pre">--p-n-samples</span></code> needs</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">G-PATH</span></code></p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">metadata</span> <span class="pre">tabulate</span></code></p></td>
+<td><p>Inspecting a grouping variable before splitting on it</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">G-MGL</span></code></p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">tools</span> <span class="pre">export</span></code></p></td>
+<td><p>The <code class="docutils literal notranslate"><span class="pre">build-groups</span></code> workaround, and reading the achieved rank out of a solution</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">G-MGL</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">H-RANK</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">tools</span> <span class="pre">view</span></code></p></td>
+<td><p>Opening a <code class="docutils literal notranslate"><span class="pre">.qzv</span></code> without a browser round-trip</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">G-SUM</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">G-PCA</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">tools</span> <span class="pre">peek</span></code></p></td>
+<td><p>Confirming a downloaded artifact’s type and UUID</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">DL</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">VERIFY</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">dev</span> <span class="pre">refresh-cache</span></code></p></td>
+<td><p>Making a freshly installed plugin visible to the CLI</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">INST-GG</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">INST-CL</span></code>, <code class="docutils literal notranslate"><span class="pre">VERIFY</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">gglasso</span> <span class="pre">--help</span></code>, <code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">classo</span> <span class="pre">--help</span></code></p></td>
+<td><p>The authoritative parameter list on <em>your</em> install</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">VERIFY</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">INST-GG</span></code>, <code class="docutils literal notranslate"><span class="pre">INST-CL</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">feature-table</span> <span class="pre">summarize</span></code> earns its place because <code class="docutils literal notranslate"><span class="pre">--p-n-samples</span></code> is the
+only <code class="docutils literal notranslate"><span class="pre">solve-problem</span></code> parameter with no default, and the value you give is passed
+straight through as the sample size <code class="docutils literal notranslate"><span class="pre">N</span></code> of the underlying problem — the same <code class="docutils literal notranslate"><span class="pre">N</span></code>
+that the model-selection criterion is computed against. Read it off the table
+rather than from memory.</p>
+</div>
+</section>
+<section id="coverage-debt">
+<span id="id3"></span><h2>Coverage debt<a class="headerlink" href="#coverage-debt" title="Link to this heading">#</a></h2>
+<p>Rows whose primary chapter is not in tier 1, i.e. where the “tier 1 is the
+reference tier” rule is currently broken. These are tracked deliberately; each is
+either a justified exception or work outstanding.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Group</p></th>
+<th class="head"><p>Current primary</p></th>
+<th class="head"><p>Why, or what is missing</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--p-pseudo-count</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">H-DATA</span></code></p></td>
+<td><p>Not exercised in tier 1. Zero handling only becomes visible on a sparse table, but tier 1 should still name it. <strong>Outstanding.</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--p-keep-original-id</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">H-DATA</span></code></p></td>
+<td><p>Only the default (<code class="docutils literal notranslate"><span class="pre">True</span></code>) is demonstrated: tier 2 keeps real feature IDs because at 300 features identity matters, <code class="docutils literal notranslate"><span class="pre">ASV-k</span></code> is a position rather than an identifier, and only real IDs join to taxonomy. No command in the book passes <code class="docutils literal notranslate"><span class="pre">False</span></code> — tier 1’s <code class="docutils literal notranslate"><span class="pre">ASV-1</span> <span class="pre">…</span> <span class="pre">ASV-13</span></code> labels come from the hand-written mapping table in <a class="reference internal" href="../00_getting_started/02_datasets.html"><span class="std std-doc">Atacama Soil Microbiome</span></a>, not from this parameter. A short <code class="docutils literal notranslate"><span class="pre">False</span></code> demonstration, next to the warning that its labels are positional, would close this. <strong>Outstanding.</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--p-bias</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">H-DATA</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">N</span></code> versus <code class="docutils literal notranslate"><span class="pre">N-1</span></code> changes nothing structural about the network. It is discussed once, in the chapter where the covariance estimate itself is under scrutiny. Justified.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--p-rescale</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">H-CV</span></code></p></td>
+<td><p>Not exercised in tier 1, although the tier 1 covariates (<code class="docutils literal notranslate"><span class="pre">elevation</span></code>, <code class="docutils literal notranslate"><span class="pre">ph</span></code>) are exactly the case that needs it. <strong>Outstanding.</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--p-rank</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">H-RANK</span></code></p></td>
+<td><p>The parameter always raises, so its owning chapter is the one about choosing a rank the working way. Justified.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Most of this book has not yet been re-run against QIIME 2 2026.7, so the “Also in”
+columns record where a flag is <em>written</em>, not where it has been <em>observed to
+work</em>. The distinction disappears once the CI checks below run.</p>
+</div>
+</section>
+<section id="how-this-page-gets-checked">
+<h2>How this page gets checked<a class="headerlink" href="#how-this-page-gets-checked" title="Link to this heading">#</a></h2>
+<p>The two parameter reference pages are meant to be <strong>generated, not written</strong>:
+<code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">gglasso</span> <span class="pre">&lt;action&gt;</span> <span class="pre">--help</span></code> and <code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">classo</span> <span class="pre">&lt;action&gt;</span> <span class="pre">--help</span></code> captured into
+<code class="docutils literal notranslate"><span class="pre">docs/_data/help/&lt;plugin&gt;-&lt;action&gt;.txt</span></code> at build time and rendered with
+<code class="docutils literal notranslate"><span class="pre">{literalinclude}</span></code>. Once the flag list on those pages comes from the plugin rather
+than from a human, this matrix becomes machine-checkable, because both sides of
+every comparison are then mechanical.</p>
+<p>The checks worth wiring, in rough order of value:</p>
+<ol class="arabic simple">
+<li><p><strong>No invented flags.</strong> Every <code class="docutils literal notranslate"><span class="pre">--p-</span></code>, <code class="docutils literal notranslate"><span class="pre">--i-</span></code>, <code class="docutils literal notranslate"><span class="pre">--o-</span></code> and <code class="docutils literal notranslate"><span class="pre">--m-</span></code> token appearing
+in a fenced <code class="docutils literal notranslate"><span class="pre">bash</span></code> block anywhere under <code class="docutils literal notranslate"><span class="pre">docs/chapters/</span></code> must appear in one of
+the captured help files. This is the check that catches a documented parameter
+that does not exist.</p></li>
+<li><p><strong>No missing parameters.</strong> Every <code class="docutils literal notranslate"><span class="pre">--p-</span></code>, <code class="docutils literal notranslate"><span class="pre">--i-</span></code> and <code class="docutils literal notranslate"><span class="pre">--m-</span></code> flag in a captured
+help file must appear in at least one row of this matrix. This is the check
+that turns “comprehensive coverage” from a claim into a build failure. Scoped
+to parameters and inputs — outputs are covered by the reference pages, per the
+note at the top of this page.</p></li>
+<li><p><strong>Primaries resolve.</strong> Every chapter key used in a <strong>Primary</strong> cell must
+resolve to a file listed in <code class="docutils literal notranslate"><span class="pre">docs/_toc.yml</span></code>, and each row must name exactly
+one.</p></li>
+<li><p><strong>Reference pages agree with the matrix.</strong> The chapter named in the
+<em>Demonstrated in</em> column of <code class="docutils literal notranslate"><span class="pre">R-GG</span></code> and <code class="docutils literal notranslate"><span class="pre">R-CL</span></code> must appear in this matrix as
+either the primary or an “Also in” chapter for that parameter’s group.</p></li>
+<li><p><strong>Deprecated spellings stay quarantined.</strong> <code class="docutils literal notranslate"><span class="pre">--p-cv--nlam</span></code> must not appear in a
+runnable command outside <code class="docutils literal notranslate"><span class="pre">C-MSEL</span></code>, <code class="docutils literal notranslate"><span class="pre">R-CL</span></code> and <code class="docutils literal notranslate"><span class="pre">R-TS</span></code>, where it is being
+explained rather than recommended.</p></li>
+<li><p><strong>Links resolve.</strong> Every relative link in every chapter points at a file that
+exists — cheap, and the failure mode readers notice first.</p></li>
+</ol>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p><strong>None of this is wired up yet.</strong> The <code class="docutils literal notranslate"><span class="pre">--help</span></code> capture step is not wired into the
+build, and the parameter reference pages are maintained by hand in the meantime.
+Until that changes, treat
+<code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">&lt;plugin&gt;</span> <span class="pre">&lt;action&gt;</span> <span class="pre">--help</span></code> on your own installation as the final authority,
+this matrix as the intent, and any disagreement between them as a bug worth
+filing.</p>
+</div>
+</section>
+<section id="see-also">
+<h2>See also<a class="headerlink" href="#see-also" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="02_gglasso_parameters.html"><span class="std std-doc">q2-gglasso Parameter Reference</span></a> — every flag, type
+and default for the 6 gglasso actions.</p></li>
+<li><p><a class="reference internal" href="03_classo_parameters.html"><span class="std std-doc">q2-classo Parameter Reference</span></a> — the same for the 8
+classo actions, organised by model-selection procedure.</p></li>
+<li><p><a class="reference internal" href="04_troubleshooting.html"><span class="std std-doc">Troubleshooting &amp; Known Gotchas</span></a> — the traps referenced
+throughout this page, with the symptom you will actually see.</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters/90_reference"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../05_metagenomics/01_gut_to_soil/03_regression.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Log-Contrast Regression</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="02_gglasso_parameters.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">q2-gglasso Parameter Reference</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-read-the-matrix">How to read the matrix</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#chapter-keys">Chapter keys</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#q2-gglasso">q2-gglasso</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#transform-features"><code class="docutils literal notranslate"><span class="pre">transform-features</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#build-groups"><code class="docutils literal notranslate"><span class="pre">build-groups</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculate-covariance"><code class="docutils literal notranslate"><span class="pre">calculate-covariance</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solve-problem"><code class="docutils literal notranslate"><span class="pre">solve-problem</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pca-visualizer"><code class="docutils literal notranslate"><span class="pre">pca</span></code> (visualizer)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summarize-visualizer"><code class="docutils literal notranslate"><span class="pre">summarize</span></code> (visualizer)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#q2-classo">q2-classo</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-data"><code class="docutils literal notranslate"><span class="pre">generate-data</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><code class="docutils literal notranslate"><span class="pre">transform-features</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#add-taxa"><code class="docutils literal notranslate"><span class="pre">add-taxa</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#add-covariates"><code class="docutils literal notranslate"><span class="pre">add-covariates</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regress"><code class="docutils literal notranslate"><span class="pre">regress</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#classify"><code class="docutils literal notranslate"><span class="pre">classify</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#predict"><code class="docutils literal notranslate"><span class="pre">predict</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2"><code class="docutils literal notranslate"><span class="pre">summarize</span></code> (visualizer)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supporting-qiime-2-commands">Supporting QIIME 2 commands</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coverage-debt">Coverage debt</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-this-page-gets-checked">How this page gets checked</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#see-also">See also</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Biomedical Statistics and Data Science Group @ LMU & Helmholtz Munich
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

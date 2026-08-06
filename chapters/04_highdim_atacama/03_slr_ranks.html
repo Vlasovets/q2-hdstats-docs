@@ -1,0 +1,950 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Choosing the Latent Rank &#8212; High-dimensional Statistics with QIIME 2</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles.css?v=3437f865" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/04_highdim_atacama/03_slr_ranks';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Latent Components &amp; Covariates" href="04_latent_pca.html" />
+    <link rel="prev" title="High-Dimensional Example: 300 Atacama ASVs" href="02_model_selection.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo_light.svg" class="logo__image only-light" alt="High-dimensional Statistics with QIIME 2 - Home"/>
+    <img src="../../_static/logo_dark.svg" class="logo__image only-dark pst-js-only" alt="High-dimensional Statistics with QIIME 2 - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../00_getting_started/01_intro.html">Why High-Dimensional Statistics?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../00_getting_started/02_datasets.html">Atacama Soil Microbiome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../00_getting_started/03_download_data.html">Download the Tutorial Data</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../01_installation/01_prerequisites.html">Prerequisites &amp; Installation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../01_installation/02_q2_gglasso.html">Installing q2-gglasso</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_installation/03_q2_classo.html">Installing q2-classo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_installation/04_verify.html">Verifying Your Installation</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tier 1 — Low-dimensional example (Atacama, 13 ASVs)</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../02_lowdim_gglasso/00_index.html">Graphical Lasso Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/01_data_preparation.html">Data Preparation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/02_sgl.html">Single Graphical Lasso</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/03_slr.html">Sparse + Low-Rank (Latent Variables)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/04_adaptive_glasso.html">Adaptive Graphical Lasso</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/05_lambda_paths.html">Regularization Paths &amp; Model Selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/06_multiple_graphical_lasso.html">Multiple Graphical Lasso (GGL / FGL)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/07_pca.html">Latent-Component PCA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/08_summarize.html">Summarizing a Solution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/09_interpretation.html">Interpretation</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../03_lowdim_classo/00_overview.html">Log-Contrast Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/01_generate_data.html">Synthetic Data with Known Truth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/02_data_preparation.html">Data Preparation</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../03_lowdim_classo/03_regression/00_index.html">Regression</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../03_lowdim_classo/03_regression/01_logcontrast.html">Log-Contrast</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../03_lowdim_classo/03_regression/02_trac.html">With trac</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../03_lowdim_classo/04_classification/00_index.html">Classification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../03_lowdim_classo/04_classification/01_logcontrast.html">Log-Contrast</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../03_lowdim_classo/04_classification/02_trac.html">With trac</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/05_advanced/01_concomitant_formulation.html">Advanced: Concomitant Formulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/05_advanced/02_model_selection.html">Advanced: Choosing a Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/06_predict_and_summarize.html">Predict &amp; Summarize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/07_interpretation.html">Interpretation</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tier 2 — High-dimensional example (Atacama, 300 ASVs)</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="00_index.html">Overview</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="01_data.html">The 300-ASV Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_model_selection.html">Selecting lambda</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Choosing the Latent Rank</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_latent_pca.html">Latent Components &amp; Covariates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05_classo_cv.html">Log-Contrast Models at Scale</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06_interpretation.html">Interpretation</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tier 3 — Metagenomics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../05_metagenomics/00_index.html">Overview</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../05_metagenomics/01_gut_to_soil/00_index.html">Gut-to-Soil (16S, 335 ASVs x 99 samples)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../05_metagenomics/01_gut_to_soil/01_data.html">The Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_metagenomics/01_gut_to_soil/02_network.html">Network Inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_metagenomics/01_gut_to_soil/03_regression.html">Log-Contrast Regression</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../90_reference/01_command_coverage.html">Command Coverage Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../90_reference/02_gglasso_parameters.html">q2-gglasso Parameter Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../90_reference/03_classo_parameters.html">q2-classo Parameter Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../90_reference/04_troubleshooting.html">Troubleshooting &amp; Known Gotchas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../99_appendix/01_math.html">Appendix: Mathematical Background</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../99_appendix/02_moshpit_cocoa_note.html">Appendix: Shotgun Metagenomics (MOSHPIT cocoa)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/chapters/04_highdim_atacama/03_slr_ranks.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Choosing the Latent Rank</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#you-cannot-set-the-rank">You cannot set the rank</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#procedure-a-one-model-selection-pass-over-a-mu-1-grid">Procedure A: one model-selection pass over a <span class="math notranslate nohighlight">\(\mu_1\)</span> grid</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#procedure-b-one-single-fit-per-mu-1">Procedure B: one single fit per <span class="math notranslate nohighlight">\(\mu_1\)</span></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#two-traps-while-scouting">Two traps while scouting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-the-map">Building the map</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-argument-for-a-low-rank">The argument for a low rank</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-to-do-next">What to do next</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="choosing-the-latent-rank">
+<h1>Choosing the Latent Rank<a class="headerlink" href="#choosing-the-latent-rank" title="Link to this heading">#</a></h1>
+<p><a class="reference internal" href="02_model_selection.html"><span class="std std-doc">Selecting lambda</span></a> fixed the sparsity penalty at
+<span class="math notranslate nohighlight">\(\lambda_1 = 0.8\)</span>. This page fixes the second penalty, <span class="math notranslate nohighlight">\(\mu_1\)</span>, which controls
+the size of the latent block in the sparse + low-rank decomposition</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{\Theta} = \hat{\Theta}_S - \hat{L},
+\]</div>
+<p>where the rank of <span class="math notranslate nohighlight">\(\hat{L}\)</span> counts the unobserved factors the model is allowed to
+invoke <span class="bibtex-citation" id="id1">[<a class="reference internal" href="../../references.html#id9" title="Venkat Chandrasekaran, Pablo A Parrilo, and Alan S Willsky. Latent variable graphical model selection via convex optimization. In 2010 48th Annual Allerton Conference on Communication, Control, and Computing (Allerton), 1610–1613. IEEE, 2010.">20</a>, <a class="reference internal" href="../../references.html#id17" title="Zachary D Kurtz, Richard Bonneau, and Christian L Müller. Disentangling microbial associations from hidden environmental and technical factors via latent graphical models. BioRxiv, pages 2019–12, 2019.">21</a>]</span> (see the
+<a class="reference internal" href="../99_appendix/01_math.html"><span class="std std-doc">appendix</span></a>).</p>
+<p>This page is a <strong>procedure</strong>, not a result. The output of the procedure — the map
+from <span class="math notranslate nohighlight">\(\mu_1\)</span> to achieved rank — is dataset-specific and <span class="math notranslate nohighlight">\(\lambda\)</span>-specific, so
+the values quoted at the end hold for this table at <span class="math notranslate nohighlight">\(\lambda_1 = 0.8\)</span> and nowhere
+else. What transfers to your own data is the method.</p>
+<section id="you-cannot-set-the-rank">
+<h2>You cannot set the rank<a class="headerlink" href="#you-cannot-set-the-rank" title="Link to this heading">#</a></h2>
+<p>The obvious thing to try does not work.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><code class="docutils literal notranslate"><span class="pre">--p-rank</span></code> <strong>always raises</strong> on every released GGLasso (up to and including
+0.3.0):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">NotImplementedError</span><span class="p">:</span> <span class="n">Explicit</span> <span class="n">rank</span> <span class="n">selection</span> <span class="n">requires</span> <span class="n">a</span> <span class="n">GGLasso</span> <span class="n">version</span> <span class="n">that</span>
+<span class="n">exposes</span> <span class="n">an</span> <span class="n">explicit</span> <span class="n">low</span><span class="o">-</span><span class="n">rank</span> <span class="n">rank</span> <span class="n">parameter</span><span class="o">...</span>
+</pre></div>
+</div>
+<p>The parameter is registered but guarded, so that it fails loudly instead of
+being silently ignored. Released GGLasso exposes only the continuous <span class="math notranslate nohighlight">\(\mu_1\)</span>
+penalty and reports the achieved rank as an <strong>output</strong>. (Passing <code class="docutils literal notranslate"><span class="pre">--p-rank</span></code>
+together with <code class="docutils literal notranslate"><span class="pre">--p-no-latent</span></code> raises a <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> first, since a rank is
+meaningless without a low-rank block.)</p>
+<p>Explicit rank selection becomes available when GGLasso PR #50
+(<code class="docutils literal notranslate"><span class="pre">fix_latent_rank</span></code>) is merged and released. Until then, use the scouting
+procedure below. This is also in
+<a class="reference internal" href="../90_reference/04_troubleshooting.html"><span class="std std-doc">Troubleshooting</span></a>.</p>
+</div>
+<p>What you have instead is the nuclear-norm penalty <span class="math notranslate nohighlight">\(\mu_1\)</span>, and one reliable
+qualitative fact: <strong>a larger <span class="math notranslate nohighlight">\(\mu_1\)</span> gives a smaller rank.</strong> The nuclear norm is
+the <span class="math notranslate nohighlight">\(\ell_1\)</span> norm of the eigenvalues, so penalizing it harder drives more
+eigenvalues of <span class="math notranslate nohighlight">\(\hat{L}\)</span> to exactly zero, which is what the rank counts.</p>
+<p>The relationship is monotone in intent but not calibrated: there is no formula
+taking a target rank to a <span class="math notranslate nohighlight">\(\mu_1\)</span>. You have to fit and look.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The <span class="math notranslate nohighlight">\(\mu_1 \rightarrow \text{rank}\)</span> map is specific to <strong>this covariance matrix
+at this <span class="math notranslate nohighlight">\(\lambda_1\)</span></strong>. The sparse and low-rank blocks compete to explain the same
+structure, so changing <span class="math notranslate nohighlight">\(\lambda_1\)</span> reallocates covariance between them and moves
+the whole map. Scout <span class="math notranslate nohighlight">\(\mu_1\)</span> at the <span class="math notranslate nohighlight">\(\lambda_1\)</span> you intend to report, and rescout
+if you change it. This is exactly why the superseded <span class="math notranslate nohighlight">\(\lambda = 0.95\)</span> /
+<span class="math notranslate nohighlight">\(\mu = 10.5\)</span> bundle described in the <a class="reference internal" href="00_index.html"><span class="std std-doc">overview</span></a> cannot be compared
+with the numbers here.</p>
+</div>
+</section>
+<section id="procedure-a-one-model-selection-pass-over-a-mu-1-grid">
+<h2>Procedure A: one model-selection pass over a <span class="math notranslate nohighlight">\(\mu_1\)</span> grid<a class="headerlink" href="#procedure-a-one-model-selection-pass-over-a-mu-1-grid" title="Link to this heading">#</a></h2>
+<p>The efficient way to build the map is a single run with <span class="math notranslate nohighlight">\(\lambda_1\)</span> pinned to one
+value and <span class="math notranslate nohighlight">\(\mu_1\)</span> swept over a grid. Because more than one grid has more than one
+value, the solver runs model selection and records per-grid-point statistics.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>gglasso<span class="w"> </span>solve-problem<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-covariance-matrix<span class="w"> </span>atacama-top-300-correlation.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-n-samples<span class="w"> </span><span class="m">54</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-latent<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-lambda1-min<span class="w"> </span><span class="m">0</span>.8<span class="w"> </span>--p-lambda1-max<span class="w"> </span><span class="m">0</span>.8<span class="w"> </span>--p-n-lambda1<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-mu1-min<span class="w"> </span><span class="m">5</span><span class="w"> </span>--p-mu1-max<span class="w"> </span><span class="m">20</span><span class="w"> </span>--p-n-mu1<span class="w"> </span><span class="m">7</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-path-scale<span class="w"> </span>linear<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-gamma<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-solution<span class="w"> </span>atacama-top-300-slr-lambda0.8-mu-scout.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--verbose
+</pre></div>
+</div>
+<p><strong>Explanation:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--p-lambda1-min</span> <span class="pre">0.8</span> <span class="pre">--p-lambda1-max</span> <span class="pre">0.8</span> <span class="pre">--p-n-lambda1</span> <span class="pre">1</span></code> pins the sparsity
+penalty to the selected value. Both bounds must be given; see the trap below
+about leaving them unset.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--p-mu1-min</span> <span class="pre">5</span> <span class="pre">--p-mu1-max</span> <span class="pre">20</span> <span class="pre">--p-n-mu1</span> <span class="pre">7</span></code> with <code class="docutils literal notranslate"><span class="pre">--p-path-scale</span> <span class="pre">linear</span></code> gives
+the grid <code class="docutils literal notranslate"><span class="pre">5,</span> <span class="pre">7.5,</span> <span class="pre">10,</span> <span class="pre">12.5,</span> <span class="pre">15,</span> <span class="pre">17.5,</span> <span class="pre">20</span></code>. A linear grid is the right shape for
+a first scout because you do not yet know the order of magnitude at which the
+rank starts collapsing; switch to <code class="docutils literal notranslate"><span class="pre">--p-path-scale</span> <span class="pre">log</span></code> once you do.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--p-gamma</span> <span class="pre">0.3</span></code> is the eBIC penalty. It matters here because model selection
+will pick a <em>best</em> grid point by eBIC — see the caveat below.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--p-path-scale</span></code> also applies to the <span class="math notranslate nohighlight">\(\lambda_1\)</span> grid, but that grid has one
+point, so the choice is inert for it.</p></li>
+</ul>
+<p>Then read the map out of the visualization:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>gglasso<span class="w"> </span>summarize<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-solution<span class="w"> </span>atacama-top-300-slr-lambda0.8-mu-scout.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-width<span class="w"> </span><span class="m">1500</span><span class="w"> </span>--p-height<span class="w"> </span><span class="m">1500</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-label-size<span class="w"> </span>4pt<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-visualization<span class="w"> </span>atacama-top-300-slr-mu-scout-summary.qzv
+</pre></div>
+</div>
+<p>The <strong>Statistics</strong> tab of the resulting <code class="docutils literal notranslate"><span class="pre">.qzv</span></code> carries one row per grid point with
+<code class="docutils literal notranslate"><span class="pre">sparsity</span></code>, <code class="docutils literal notranslate"><span class="pre">lambda</span></code>, <code class="docutils literal notranslate"><span class="pre">mu</span></code> and <code class="docutils literal notranslate"><span class="pre">rank</span></code>. Those four columns <em>are</em> the
+<span class="math notranslate nohighlight">\(\mu_1 \rightarrow \text{rank}\)</span> map, and they come with the sparsity of the
+corresponding sparse block for free, which is the second thing you want to know.
+The tab is described in full in
+<a class="reference internal" href="../02_lowdim_gglasso/08_summarize.html"><span class="std std-doc">Summarizing a Solution</span></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The rendered statistics table is not reproduced here. The achieved ranks it
+reports for this dataset are the ones tabulated in
+<a class="reference internal" href="#building-the-map">Building the map</a> below, re-run under QIIME 2 2026.7.</p>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>A model-selection run returns <strong>one</strong> solution — the eBIC-best grid point — not
+one per grid point. The statistics table is the map; the <code class="docutils literal notranslate"><span class="pre">solution/</span></code> group in the
+artifact belongs to the selected <span class="math notranslate nohighlight">\(\mu_1\)</span> only. If you want a fitted artifact for
+each <span class="math notranslate nohighlight">\(\mu_1\)</span> (to run <code class="docutils literal notranslate"><span class="pre">pca</span></code> on, or to count edges), use Procedure B.</p>
+<p>Note also that the eBIC-selected <span class="math notranslate nohighlight">\(\mu_1\)</span> is not automatically the <span class="math notranslate nohighlight">\(\mu_1\)</span> you
+should report. eBIC scores fit against complexity; it has no notion of whether a
+rank-8 latent block is interpretable. Use it as one input to the argument below,
+not as the decision.</p>
+</div>
+</section>
+<section id="procedure-b-one-single-fit-per-mu-1">
+<h2>Procedure B: one single fit per <span class="math notranslate nohighlight">\(\mu_1\)</span><a class="headerlink" href="#procedure-b-one-single-fit-per-mu-1" title="Link to this heading">#</a></h2>
+<p>When you need the individual solutions, fit them one at a time with every grid
+collapsed to a single value:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="w"> </span>MU<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="m">7</span>.5<span class="w"> </span><span class="m">10</span><span class="w"> </span><span class="m">12</span>.5<span class="w"> </span><span class="m">15</span><span class="w"> </span><span class="m">17</span>.5<span class="w"> </span><span class="m">20</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">  </span>qiime<span class="w"> </span>gglasso<span class="w"> </span>solve-problem<span class="w"> </span><span class="se">\</span>
+<span class="w">      </span>--i-covariance-matrix<span class="w"> </span>atacama-top-300-correlation.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">      </span>--p-n-samples<span class="w"> </span><span class="m">54</span><span class="w"> </span><span class="se">\</span>
+<span class="w">      </span>--p-latent<span class="w"> </span><span class="se">\</span>
+<span class="w">      </span>--p-lambda1-min<span class="w"> </span><span class="m">0</span>.8<span class="w"> </span>--p-lambda1-max<span class="w"> </span><span class="m">0</span>.8<span class="w"> </span>--p-n-lambda1<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">      </span>--p-lambda2-min<span class="w"> </span><span class="m">0</span>.1<span class="w"> </span>--p-lambda2-max<span class="w"> </span><span class="m">0</span>.1<span class="w"> </span>--p-n-lambda2<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">      </span>--p-mu1-min<span class="w"> </span><span class="si">${</span><span class="nv">MU</span><span class="si">}</span><span class="w"> </span>--p-mu1-max<span class="w"> </span><span class="si">${</span><span class="nv">MU</span><span class="si">}</span><span class="w"> </span>--p-n-mu1<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">      </span>--p-gamma<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="se">\</span>
+<span class="w">      </span>--o-solution<span class="w"> </span>atacama-top-300-slr-lambda0.8-mu<span class="si">${</span><span class="nv">MU</span><span class="si">}</span>.qza
+<span class="k">done</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">--p-lambda2-*</span></code> triple is not optional bookkeeping. <code class="docutils literal notranslate"><span class="pre">lambda2</span></code> is inert for
+this single-graph problem, but leaving it unset expands it to a five-point
+default path, which flips the run into model selection — see the second trap
+below. Any positive value collapses it; <code class="docutils literal notranslate"><span class="pre">0.1</span></code> is used here because the default
+<code class="docutils literal notranslate"><span class="pre">--p-path-scale</span> <span class="pre">log</span></code> takes a <span class="math notranslate nohighlight">\(\log_{10}\)</span> of the bounds, so zero is not
+available.</p>
+<p>A single fit writes <strong>no</strong> <code class="docutils literal notranslate"><span class="pre">modelselect_stats</span></code> group, so <code class="docutils literal notranslate"><span class="pre">summarize</span></code> will show a
+reduced Statistics tab with no <code class="docutils literal notranslate"><span class="pre">rank</span></code> column. Read the rank from the low-rank
+component directly instead:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>tools<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--input-path<span class="w"> </span>atacama-top-300-slr-lambda0.8-mu15.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--output-path<span class="w"> </span>slr-mu15-export
+</pre></div>
+</div>
+<p>The export contains a single file, <code class="docutils literal notranslate"><span class="pre">problem.zip</span></code>, which is a Zarr store:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">zarr</span>
+
+<span class="n">store</span> <span class="o">=</span> <span class="n">zarr</span><span class="o">.</span><span class="n">ZipStore</span><span class="p">(</span><span class="s2">&quot;slr-mu15-export/problem.zip&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
+<span class="n">root</span> <span class="o">=</span> <span class="n">zarr</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">store</span><span class="o">=</span><span class="n">store</span><span class="p">)</span>
+
+<span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">root</span><span class="p">[</span><span class="s2">&quot;solution/lowrank_&quot;</span><span class="p">])</span>
+<span class="n">Theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">root</span><span class="p">[</span><span class="s2">&quot;solution/precision_&quot;</span><span class="p">])</span>
+
+<span class="n">rank</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">matrix_rank</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+<span class="n">n_edges</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">count_nonzero</span><span class="p">(</span><span class="n">Theta</span><span class="p">)</span> <span class="o">-</span> <span class="n">Theta</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">//</span> <span class="mi">2</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;achieved rank:&quot;</span><span class="p">,</span> <span class="n">rank</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;off-diagonal edges:&quot;</span><span class="p">,</span> <span class="n">n_edges</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">np.linalg.matrix_rank</span></code> is exactly what the plugin’s own <code class="docutils literal notranslate"><span class="pre">pca</span></code> visualizer uses to
+decide how many components exist, so this number is the one that governs
+<code class="docutils literal notranslate"><span class="pre">--p-n-components</span></code> in
+<a class="reference internal" href="04_latent_pca.html"><span class="std std-doc">Latent Components &amp; Covariates</span></a>. The edge count uses the same
+convention as the eBIC in the <a class="reference internal" href="../99_appendix/01_math.html"><span class="std std-doc">appendix</span></a>: the
+off-diagonal nonzeros of the precision matrix, halved for symmetry.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">matrix_rank</span></code> thresholds singular values numerically, so the “achieved rank” is a
+numerical statement about <span class="math notranslate nohighlight">\(\hat{L}\)</span>, not an exact algebraic one. Eigenvalues that
+the solver drove very close to — but not exactly — zero can flip the reported rank
+by one. If a rank sits on a boundary you care about, inspect the eigenvalue
+spectrum of <code class="docutils literal notranslate"><span class="pre">L</span></code> with <code class="docutils literal notranslate"><span class="pre">np.linalg.eigvalsh</span></code> rather than trusting the integer.</p>
+</div>
+</section>
+<section id="two-traps-while-scouting">
+<h2>Two traps while scouting<a class="headerlink" href="#two-traps-while-scouting" title="Link to this heading">#</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>Leaving a grid unset does not mean “do not use it”.</strong> If <code class="docutils literal notranslate"><span class="pre">--p-mu1-min</span></code> and
+<code class="docutils literal notranslate"><span class="pre">--p-mu1-max</span></code> are both omitted on a latent problem, the solver substitutes
+<code class="docutils literal notranslate"><span class="pre">np.logspace(2,</span> <span class="pre">-1,</span> <span class="pre">10)</span></code> — a ten-point <span class="math notranslate nohighlight">\(\mu_1\)</span> path spanning three orders of
+magnitude — and emits a warning. The same applies to <span class="math notranslate nohighlight">\(\lambda_1\)</span>, which defaults
+to <code class="docutils literal notranslate"><span class="pre">np.logspace(0,</span> <span class="pre">-4,</span> <span class="pre">15)</span></code>. You will get a long model-selection run you did not
+ask for, at parameter values you did not choose. Always pass the grids
+explicitly, and always run the scout with <code class="docutils literal notranslate"><span class="pre">--verbose</span></code> so you see the warning if
+you did not.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>A single fit needs every grid to be a singleton.</strong> For a latent problem,
+<code class="docutils literal notranslate"><span class="pre">lambda1</span></code>, <code class="docutils literal notranslate"><span class="pre">lambda2</span></code> <strong>and</strong> <code class="docutils literal notranslate"><span class="pre">mu1</span></code> must all collapse to one value before the
+solver treats the run as a single fit. Pinning <span class="math notranslate nohighlight">\(\lambda_1\)</span> and <span class="math notranslate nohighlight">\(\mu_1\)</span> while
+leaving <code class="docutils literal notranslate"><span class="pre">lambda2</span></code> to its default is enough to trigger a model-selection run.
+Conversely, forgetting <code class="docutils literal notranslate"><span class="pre">--p-n-mu1</span></code> on what you intended to be a sweep gives you a
+single fit at <code class="docutils literal notranslate"><span class="pre">mu1_min</span></code>. The symptom either way is the Statistics tab: a single
+fit has no per-grid-point table.</p>
+</div>
+</section>
+<section id="building-the-map">
+<h2>Building the map<a class="headerlink" href="#building-the-map" title="Link to this heading">#</a></h2>
+<p>Record the scout as a table. These are measured values, read out of the fitted
+solutions at the Gate-C1-selected <span class="math notranslate nohighlight">\(\lambda = 0.8\)</span>:</p>
+<div class="pst-scrollable-table-container"><table class="table" id="id3">
+<caption><span class="caption-number">Table 2 </span><span class="caption-text">Achieved rank as a function of <span class="math notranslate nohighlight">\(\mu_1\)</span> (at <span class="math notranslate nohighlight">\(\lambda = 0.8\)</span>)</span><a class="headerlink" href="#id3" title="Link to this table">#</a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 30.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>mu1</p></th>
+<th class="head"><p>achieved rank</p></th>
+<th class="head"><p>sparse edges</p></th>
+<th class="head"><p>connected nodes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>15</p></td>
+<td><p>2</p></td>
+<td><p>202</p></td>
+<td><p>162</p></td>
+</tr>
+<tr class="row-odd"><td><p>10</p></td>
+<td><p>5</p></td>
+<td><p>158</p></td>
+<td><p>124</p></td>
+</tr>
+<tr class="row-even"><td><p>7.5</p></td>
+<td><p>10</p></td>
+<td><p>110</p></td>
+<td><p>92</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Read it the way the penalty works: <strong>a larger <span class="math notranslate nohighlight">\(\mu_1\)</span> shrinks the low-rank block
+harder, so it buys you a smaller rank</strong>. Sparse edges fall with it — the latent
+component absorbs correlation that the sparse part would otherwise have to
+explain.</p>
+<p>The three points the Tier 2 analysis uses:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Target rank</p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(\mu_1\)</span></p></th>
+<th class="head"><p>Role</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>2</strong></p></td>
+<td><p><strong>15</strong></p></td>
+<td><p>the canonical Tier 2 model</p></td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>10</p></td>
+<td><p>comparison, and a usable input for <code class="docutils literal notranslate"><span class="pre">pca</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>10</p></td>
+<td><p>7.5</p></td>
+<td><p>comparison</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This table is <strong>generated</strong>, not transcribed. The generator ships with this
+repository at <code class="docutils literal notranslate"><span class="pre">analysis/slurm/03_mu_rank_map.sh</span></code>, which
+fits each <span class="math notranslate nohighlight">\(\mu_1\)</span> and writes <code class="docutils literal notranslate"><span class="pre">analysis/results/tables/mu-rank-map.tsv</span></code> from the solution
+artifacts; <code class="docutils literal notranslate"><span class="pre">docs/_data/atacama-mu-rank-map.tsv</span></code> is a copy of it, so the two are
+kept in step by hand. The columns are the same four. It also asserts each fit
+really was a single fit — with
+<code class="docutils literal notranslate"><span class="pre">--p-lambda2-*</span></code> pinned, none of the three carries a <code class="docutils literal notranslate"><span class="pre">modelselect_stats</span></code> group.
+Note also the direction: <span class="math notranslate nohighlight">\(\mu_1\)</span> <em>decreasing</em> from 15 to 7.5 makes the rank
+<em>increase</em> from 2 to 10, which is the expected sign but a fast response over a
+narrow range — another reason to verify rather than interpolate.</p>
+</div>
+<p>Sparse edges and connected nodes belong in the same table as the rank, because
+they are the cost side of the decision. Every dimension you give the latent block
+removes covariance that the sparse block would otherwise have explained with
+edges, so the edge count falls as the rank rises. You are choosing where to draw
+the line between “an edge” and “a shared latent driver”, and you cannot see that
+trade-off from the rank alone.</p>
+</section>
+<section id="the-argument-for-a-low-rank">
+<h2>The argument for a low rank<a class="headerlink" href="#the-argument-for-a-low-rank" title="Link to this heading">#</a></h2>
+<p>Once you have the map, the question is which point on it to report. The case for
+staying at the low end is not aesthetic.</p>
+<p><strong>The sample budget.</strong> A rank-<span class="math notranslate nohighlight">\(r\)</span> latent block over <span class="math notranslate nohighlight">\(p = 300\)</span> features introduces
+on the order of <span class="math notranslate nohighlight">\(rp\)</span> additional free parameters, against <span class="math notranslate nohighlight">\(n = 54\)</span> samples. At
+rank 2 that is a small extension of the model; at rank 10 the latent block alone
+has more parameters than the data has observations several times over, and its
+individual directions are not estimable in any meaningful sense — only the
+subspace, and only loosely.</p>
+<p><strong>Identifiability.</strong> The sparse-plus-low-rank decomposition is only identifiable
+when the sparse part is not itself low-rank-like and the low-rank part is not
+sparse-like <span class="bibtex-citation" id="id2">[<a class="reference internal" href="../../references.html#id9" title="Venkat Chandrasekaran, Pablo A Parrilo, and Alan S Willsky. Latent variable graphical model selection via convex optimization. In 2010 48th Annual Allerton Conference on Communication, Control, and Computing (Allerton), 1610–1613. IEEE, 2010.">20</a>, <a class="reference internal" href="../../references.html#id29" title="Emmanuel J Candès, Xiaodong Li, Yi Ma, and John Wright. Robust principal component analysis? Journal of the ACM (JACM), 58(3):1–37, 2011.">22</a>]</span>. That condition
+degrades as the rank grows: a high-rank <span class="math notranslate nohighlight">\(\hat{L}\)</span> can start absorbing structure
+that is genuinely a set of direct edges, and you have no way to tell from the fit
+which happened. A low rank keeps the two blocks doing recognisably different
+jobs.</p>
+<p><strong>Interpretability, in the specific sense that matters.</strong> A latent dimension is
+only useful if you can eventually say what it might be. In this study the
+plausible global drivers are few — the aridity/elevation transect, soil moisture
+and temperature, sampling depth — and they are strongly inter-correlated, so they
+do not span many independent directions. A rank commensurate with the number of
+plausible drivers is a model you can argue about; a rank of 10 is a model in
+which no individual axis can be defended.</p>
+<p><strong>Rotation ambiguity.</strong> Components with close eigenvalues are defined only up to
+rotation within their shared subspace, so a “PC7 corresponds to pH” story is
+unsupportable unless the eigenvalues are clearly separated. Higher ranks produce
+more near-ties, and therefore more axes about which nothing can be said.</p>
+<p><strong>The external check.</strong> The rank can be validated against something outside the
+graphical model: whether the latent subspace is the same structure the
+log-contrast regressions are using. The <a class="reference internal" href="../99_appendix/01_math.html"><span class="std std-doc">appendix</span></a>
+defines the two quantities for this — the strongest correlation <span class="math notranslate nohighlight">\(m_t\)</span> between any
+robust principal component and outcome <span class="math notranslate nohighlight">\(t\)</span>, and the fraction <span class="math notranslate nohighlight">\(q_t\)</span> of the
+log-contrast coefficient vector lying in the latent subspace. If a rank-2
+subspace already accounts for the tasks the regressions can predict, adding
+dimensions is adding detail nothing downstream uses. The rank-2 choice for this
+dataset rests on that comparison; the correlation itself is <strong>pending recompute</strong>,
+and the reading of it belongs to <a class="reference internal" href="06_interpretation.html"><span class="std std-doc">Interpretation</span></a>.</p>
+<p><strong>The counter-argument, which you must also check.</strong> A rank that is too <em>small</em>
+leaves confounding in the sparse block, where it shows up as implausibly dense
+neighbourhoods and blocks of taxa all connected to each other. Compare the sparse
+edge sets across your scouted ranks. The rank to report is the smallest one at
+which two things have stopped happening: the edge set stops changing materially
+as you add a dimension, and the additional components stop tracking any measured
+covariate. If the edge set is still moving at rank 2, the low-rank block is too
+small, whatever the parsimony argument says.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A low rank costs you something in the <em>visualizer</em>, not in the model.
+<code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">gglasso</span> <span class="pre">pca</span></code> requires <code class="docutils literal notranslate"><span class="pre">--p-n-components</span></code> to be <strong>no greater than</strong> the
+achieved rank, so a rank-2 solution admits at most <code class="docutils literal notranslate"><span class="pre">--p-n-components</span> <span class="pre">2</span></code> — one
+pair-plot panel, showing the same PC1-against-PC2 scatter the single-plot tab
+already draws. That is a reason to keep the <span class="math notranslate nohighlight">\(\mu_1 = 10\)</span> and <span class="math notranslate nohighlight">\(\mu_1 = 7.5\)</span> fits
+around for inspection — not a reason to report a higher rank than you can defend.
+See <a class="reference internal" href="04_latent_pca.html"><span class="std std-doc">Latent Components &amp; Covariates</span></a>.</p>
+</div>
+</section>
+<section id="what-to-do-next">
+<h2>What to do next<a class="headerlink" href="#what-to-do-next" title="Link to this heading">#</a></h2>
+<p>Fit the canonical model at the selected <span class="math notranslate nohighlight">\(\mu_1\)</span>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>gglasso<span class="w"> </span>solve-problem<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-covariance-matrix<span class="w"> </span>atacama-top-300-correlation.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-n-samples<span class="w"> </span><span class="m">54</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-latent<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-lambda1-min<span class="w"> </span><span class="m">0</span>.8<span class="w"> </span>--p-lambda1-max<span class="w"> </span><span class="m">0</span>.8<span class="w"> </span>--p-n-lambda1<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-lambda2-min<span class="w"> </span><span class="m">0</span>.1<span class="w"> </span>--p-lambda2-max<span class="w"> </span><span class="m">0</span>.1<span class="w"> </span>--p-n-lambda2<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-mu1-min<span class="w"> </span><span class="m">15</span><span class="w"> </span>--p-mu1-max<span class="w"> </span><span class="m">15</span><span class="w"> </span>--p-n-mu1<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-gamma<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-solution<span class="w"> </span>atacama-top-300-slr-lambda0.8-rank2.qza
+</pre></div>
+</div>
+<p>Then project its samples onto the latent axes and ask what they correspond to:
+<a class="reference internal" href="04_latent_pca.html"><span class="std std-doc">Latent Components &amp; Covariates</span></a>.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters/04_highdim_atacama"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="02_model_selection.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">High-Dimensional Example: 300 Atacama ASVs</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="04_latent_pca.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Latent Components &amp; Covariates</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#you-cannot-set-the-rank">You cannot set the rank</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#procedure-a-one-model-selection-pass-over-a-mu-1-grid">Procedure A: one model-selection pass over a <span class="math notranslate nohighlight">\(\mu_1\)</span> grid</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#procedure-b-one-single-fit-per-mu-1">Procedure B: one single fit per <span class="math notranslate nohighlight">\(\mu_1\)</span></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#two-traps-while-scouting">Two traps while scouting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-the-map">Building the map</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-argument-for-a-low-rank">The argument for a low rank</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-to-do-next">What to do next</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Biomedical Statistics and Data Science Group @ LMU & Helmholtz Munich
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

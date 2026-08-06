@@ -1,0 +1,1012 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Network Inference &#8212; High-dimensional Statistics with QIIME 2</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles.css?v=3437f865" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/05_metagenomics/01_gut_to_soil/02_network';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Log-Contrast Regression" href="03_regression.html" />
+    <link rel="prev" title="The Dataset" href="01_data.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../../_static/searchtools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <script src="../../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/logo_light.svg" class="logo__image only-light" alt="High-dimensional Statistics with QIIME 2 - Home"/>
+    <img src="../../../_static/logo_dark.svg" class="logo__image only-dark pst-js-only" alt="High-dimensional Statistics with QIIME 2 - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../00_getting_started/01_intro.html">Why High-Dimensional Statistics?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../00_getting_started/02_datasets.html">Atacama Soil Microbiome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../00_getting_started/03_download_data.html">Download the Tutorial Data</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../01_installation/01_prerequisites.html">Prerequisites &amp; Installation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../01_installation/02_q2_gglasso.html">Installing q2-gglasso</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../01_installation/03_q2_classo.html">Installing q2-classo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../01_installation/04_verify.html">Verifying Your Installation</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tier 1 — Low-dimensional example (Atacama, 13 ASVs)</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../02_lowdim_gglasso/00_index.html">Graphical Lasso Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../02_lowdim_gglasso/01_data_preparation.html">Data Preparation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../02_lowdim_gglasso/02_sgl.html">Single Graphical Lasso</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../02_lowdim_gglasso/03_slr.html">Sparse + Low-Rank (Latent Variables)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../02_lowdim_gglasso/04_adaptive_glasso.html">Adaptive Graphical Lasso</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../02_lowdim_gglasso/05_lambda_paths.html">Regularization Paths &amp; Model Selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../02_lowdim_gglasso/06_multiple_graphical_lasso.html">Multiple Graphical Lasso (GGL / FGL)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../02_lowdim_gglasso/07_pca.html">Latent-Component PCA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../02_lowdim_gglasso/08_summarize.html">Summarizing a Solution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../02_lowdim_gglasso/09_interpretation.html">Interpretation</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../03_lowdim_classo/00_overview.html">Log-Contrast Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../03_lowdim_classo/01_generate_data.html">Synthetic Data with Known Truth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../03_lowdim_classo/02_data_preparation.html">Data Preparation</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../03_lowdim_classo/03_regression/00_index.html">Regression</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../03_lowdim_classo/03_regression/01_logcontrast.html">Log-Contrast</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../03_lowdim_classo/03_regression/02_trac.html">With trac</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../03_lowdim_classo/04_classification/00_index.html">Classification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../03_lowdim_classo/04_classification/01_logcontrast.html">Log-Contrast</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../03_lowdim_classo/04_classification/02_trac.html">With trac</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../03_lowdim_classo/05_advanced/01_concomitant_formulation.html">Advanced: Concomitant Formulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../03_lowdim_classo/05_advanced/02_model_selection.html">Advanced: Choosing a Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../03_lowdim_classo/06_predict_and_summarize.html">Predict &amp; Summarize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../03_lowdim_classo/07_interpretation.html">Interpretation</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tier 2 — High-dimensional example (Atacama, 300 ASVs)</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../04_highdim_atacama/00_index.html">Overview</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../04_highdim_atacama/01_data.html">The 300-ASV Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../04_highdim_atacama/02_model_selection.html">Selecting lambda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../04_highdim_atacama/03_slr_ranks.html">Choosing the Latent Rank</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../04_highdim_atacama/04_latent_pca.html">Latent Components &amp; Covariates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../04_highdim_atacama/05_classo_cv.html">Log-Contrast Models at Scale</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../04_highdim_atacama/06_interpretation.html">Interpretation</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tier 3 — Metagenomics</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../00_index.html">Overview</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="00_index.html">Gut-to-Soil (16S, 335 ASVs x 99 samples)</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="01_data.html">The Dataset</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Network Inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_regression.html">Log-Contrast Regression</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../90_reference/01_command_coverage.html">Command Coverage Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../90_reference/02_gglasso_parameters.html">q2-gglasso Parameter Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../90_reference/03_classo_parameters.html">q2-classo Parameter Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../90_reference/04_troubleshooting.html">Troubleshooting &amp; Known Gotchas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../99_appendix/01_math.html">Appendix: Mathematical Background</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../99_appendix/02_moshpit_cocoa_note.html">Appendix: Shotgun Metagenomics (MOSHPIT cocoa)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/chapters/05_metagenomics/01_gut_to_soil/02_network.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Network Inference</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-transform">Step 1: Transform</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-covariance">Step 2: Covariance</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-solve-selecting-lambda-1-with-ebic">Step 3: Solve, selecting <span class="math notranslate nohighlight">\(\lambda_1\)</span> with eBIC</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-summarize">Step 4: Summarize</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-optional-a-latent-block-for-the-stage-gradient">Step 5 (optional): a latent block for the stage gradient</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-6-gut-versus-soil-jointly">Step 6: Gut versus soil, jointly</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#splitting-the-design">Splitting the design</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-bookkeeping-array">The bookkeeping array</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#where-this-stops-working">Where this stops working</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-a-shared-edge-means-and-what-a-differential-edge-means">What a shared edge means, and what a differential edge means</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ggl-or-fgl-for-this-design">GGL or FGL for this design</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="network-inference">
+<h1>Network Inference<a class="headerlink" href="#network-inference" title="Link to this heading">#</a></h1>
+<p>This page estimates one network over all 99 samples, and then sets up the
+comparison that this dataset is uniquely suited to: <strong>gut-derived versus
+soil-derived communities, estimated jointly</strong>. The first half is the familiar
+<code class="docutils literal notranslate"><span class="pre">transform-features</span></code> → <code class="docutils literal notranslate"><span class="pre">calculate-covariance</span></code> → <code class="docutils literal notranslate"><span class="pre">solve-problem</span></code> → <code class="docutils literal notranslate"><span class="pre">summarize</span></code>
+chain at a new size. The second half is where the multiple graphical lasso
+becomes a scientific question rather than a syntax demonstration — and also where
+the current QIIME 2 interface runs out of road, which the page says plainly.</p>
+<p>Everything assumes the layout from <a class="reference internal" href="01_data.html"><span class="std std-doc">The Dataset</span></a>, with files under
+<code class="docutils literal notranslate"><span class="pre">data/gut-to-soil/</span></code>.</p>
+<section id="step-1-transform">
+<h2>Step 1: Transform<a class="headerlink" href="#step-1-transform" title="Link to this heading">#</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>gglasso<span class="w"> </span>transform-features<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-table<span class="w"> </span>data/gut-to-soil/asv-table-ms2.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-taxonomy<span class="w"> </span>data/gut-to-soil/taxonomy.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-transformation<span class="w"> </span>mclr<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-no-add-metadata<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-no-scale-metadata<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-keep-original-id<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-transformed-table<span class="w"> </span>data/gut-to-soil/gts-mclr.qza
+</pre></div>
+</div>
+<p>Three of those choices matter here more than they did on the Atacama tables.</p>
+<p><strong><code class="docutils literal notranslate"><span class="pre">--p-transformation</span> <span class="pre">mclr</span></code>.</strong> The <code class="docutils literal notranslate"><span class="pre">clr</span></code> branch does not add a pseudo-count to
+every cell; it <em>replaces zeros</em> with <code class="docutils literal notranslate"><span class="pre">--p-pseudo-count</span></code> and then rescales each
+sample back to its original total. On a table where most cells are zero, that
+puts a large fraction of the features on exactly the same floor value within a
+sample, and a block of tied values moves together with that sample’s geometric
+mean. The resulting apparent co-variation among rare features is an artifact of
+the imputation, not of the community. <code class="docutils literal notranslate"><span class="pre">mclr</span></code> <span class="bibtex-citation" id="id1">[<a class="reference internal" href="../../../references.html#id27" title="Grace Yoon, Irina Gaynanova, and Christian L Müller. Microbial networks in spring-semi-parametric rank-based correlation and partial correlation estimation for quantitative microbiome data. Frontiers in genetics, 10:516, 2019.">19</a>]</span> avoids it
+by log-transforming only the positive entries and leaving the zeros as a single
+shifted baseline. Use <code class="docutils literal notranslate"><span class="pre">--p-transformation</span> <span class="pre">clr</span> <span class="pre">--p-pseudo-count</span> <span class="pre">1</span></code> if you want the
+comparison, but expect the two networks to differ, and report which one you used.</p>
+<p><strong><code class="docutils literal notranslate"><span class="pre">--p-keep-original-id</span></code>.</strong> Without it, features are relabelled to sequential
+<code class="docutils literal notranslate"><span class="pre">ASV-n</span></code> names ordered by total abundance. At <span class="math notranslate nohighlight">\(p = 335\)</span> you cannot recover a node’s
+identity by eye, and you need the real IDs to join against <code class="docutils literal notranslate"><span class="pre">taxonomy.qza</span></code> later.</p>
+<p><strong><code class="docutils literal notranslate"><span class="pre">--p-no-add-metadata</span></code>.</strong> The covariates stay out of the table. Appending them is
+the adaptive workflow of
+<a class="reference internal" href="../../02_lowdim_gglasso/04_adaptive_glasso.html"><span class="std std-doc">Adaptive Graphical Lasso</span></a>; here we
+want a network of taxa only.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><code class="docutils literal notranslate"><span class="pre">--i-taxonomy</span></code> is required and unread. Passing the correct file costs nothing and
+means you have it to hand for interpretation. See
+<a class="reference internal" href="../../90_reference/04_troubleshooting.html"><span class="std std-doc">Troubleshooting</span></a>.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><code class="docutils literal notranslate"><span class="pre">mclr</span></code> applies a global shift derived from the <strong>minimum over the whole matrix</strong>
+before it fills the zeros back in. That makes the transform depend on the set of
+samples in the table: transforming a subset is not the same as transforming
+everything and then taking the subset. It matters in Step 6, where the table gets
+split into groups, and it is the reason that section transforms each group
+separately and says so rather than reusing <code class="docutils literal notranslate"><span class="pre">gts-mclr.qza</span></code>.</p>
+</div>
+</section>
+<section id="step-2-covariance">
+<h2>Step 2: Covariance<a class="headerlink" href="#step-2-covariance" title="Link to this heading">#</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>gglasso<span class="w"> </span>calculate-covariance<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-table<span class="w"> </span>data/gut-to-soil/gts-mclr.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-method<span class="w"> </span>scaled<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-bias<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-covariance-matrix<span class="w"> </span>data/gut-to-soil/gts-correlation.qza
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">--p-method</span> <span class="pre">scaled</span></code> divides out the diagonal, giving a correlation matrix. That is
+what makes a single scalar <span class="math notranslate nohighlight">\(\lambda_1\)</span> meaningful across 335 heterogeneous
+features: on the unscaled covariance, a high-variance feature would effectively be
+penalized less than a low-variance one, and the same <span class="math notranslate nohighlight">\(\lambda_1\)</span> would mean
+different things in different rows. <code class="docutils literal notranslate"><span class="pre">--p-bias</span></code> (the default) uses the <span class="math notranslate nohighlight">\(1/N\)</span>
+normalization that the solver’s Gaussian objective is written against.</p>
+</section>
+<section id="step-3-solve-selecting-lambda-1-with-ebic">
+<h2>Step 3: Solve, selecting <span class="math notranslate nohighlight">\(\lambda_1\)</span> with eBIC<a class="headerlink" href="#step-3-solve-selecting-lambda-1-with-ebic" title="Link to this heading">#</a></h2>
+<p>At <span class="math notranslate nohighlight">\(p = 335\)</span> there is no eyeballing the penalty. Sweep it and let the extended BIC
+<span class="bibtex-citation" id="id2">[<a class="reference internal" href="../../../references.html#id15" title="Rina Foygel and Mathias Drton. Extended bayesian information criteria for gaussian graphical models. Advances in neural information processing systems, 2010.">12</a>]</span> choose:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>gglasso<span class="w"> </span>solve-problem<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-covariance-matrix<span class="w"> </span>data/gut-to-soil/gts-correlation.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-n-samples<span class="w"> </span><span class="m">99</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-no-latent<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-lambda1-min<span class="w"> </span><span class="m">0</span>.1<span class="w"> </span>--p-lambda1-max<span class="w"> </span><span class="m">1</span>.0<span class="w"> </span>--p-n-lambda1<span class="w"> </span><span class="m">19</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-path-scale<span class="w"> </span>linear<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-gamma<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-solution<span class="w"> </span>data/gut-to-soil/gts-sgl-path.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--verbose
+</pre></div>
+</div>
+<p><strong>Explanation:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--p-n-samples</span> <span class="pre">99</span></code>: the number of samples the covariance was computed from.
+eBIC uses it, so it has to be right — if you filtered samples, change it.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--p-lambda1-min</span> <span class="pre">0.1</span> <span class="pre">--p-lambda1-max</span> <span class="pre">1.0</span> <span class="pre">--p-n-lambda1</span> <span class="pre">19</span></code> with
+<code class="docutils literal notranslate"><span class="pre">--p-path-scale</span> <span class="pre">linear</span></code>: the grid <code class="docutils literal notranslate"><span class="pre">0.10,</span> <span class="pre">0.15,</span> <span class="pre">…,</span> <span class="pre">1.00</span></code>. A linear path spends
+its points where the edge count actually changes; the default logarithmic
+spacing crowds them at the sparse end.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--p-gamma</span> <span class="pre">0.3</span></code>: the eBIC’s extra penalty on edges. This is the same value
+argued for in <a class="reference internal" href="../../04_highdim_atacama/02_model_selection.html"><span class="std std-doc">Selecting lambda</span></a>
+and it is <strong>not</strong> a constant of nature — <span class="math notranslate nohighlight">\(\gamma\)</span> and <span class="math notranslate nohighlight">\(\lambda_1\)</span> are chosen
+jointly, so changing <span class="math notranslate nohighlight">\(\gamma\)</span> changes which <span class="math notranslate nohighlight">\(\lambda_1\)</span> wins. Re-run with
+<code class="docutils literal notranslate"><span class="pre">--p-gamma</span> <span class="pre">0.5</span></code> (the conventional choice) and with the plugin default <code class="docutils literal notranslate"><span class="pre">0.01</span></code>
+and see how far the selection moves. If it moves a lot, say so when you report
+the network.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--p-no-latent</span></code>: sparse only, for now.</p></li>
+</ul>
+<p>Because <code class="docutils literal notranslate"><span class="pre">--p-n-lambda1</span></code> is greater than one, model selection runs and the
+solution carries a <code class="docutils literal notranslate"><span class="pre">modelselect_stats</span></code> group. With a single value it would not,
+and <code class="docutils literal notranslate"><span class="pre">summarize</span></code> would silently omit the statistics tab.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><code class="docutils literal notranslate"><span class="pre">--p-lambda1-path</span></code> takes an explicit grid if you would rather name the points
+than describe them. There is no <code class="docutils literal notranslate"><span class="pre">lambda2_path</span></code>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The selected <span class="math notranslate nohighlight">\(\lambda_1\)</span>, the eBIC curve and the resulting edge count for this
+table are <strong>pending verification against QIIME 2 2026.7</strong>. No numbers are quoted
+here, and any you find elsewhere for this dataset have not been produced by the
+recompute.</p>
+</div>
+</section>
+<section id="step-4-summarize">
+<h2>Step 4: Summarize<a class="headerlink" href="#step-4-summarize" title="Link to this heading">#</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>gglasso<span class="w"> </span>summarize<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-solution<span class="w"> </span>data/gut-to-soil/gts-sgl-path.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-width<span class="w"> </span><span class="m">1800</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-height<span class="w"> </span><span class="m">1800</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-label-size<span class="w"> </span>4pt<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-visualization<span class="w"> </span>data/gut-to-soil/gts-sgl-summary.qzv
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">--p-label-size</span> <span class="pre">4pt</span></code> is small on purpose: 335 node labels at the tier 1 setting of
+<code class="docutils literal notranslate"><span class="pre">25pt</span></code> overlap into a solid block. <code class="docutils literal notranslate"><span class="pre">--p-width</span></code> and <code class="docutils literal notranslate"><span class="pre">--p-height</span></code> trade file size
+for legibility. <code class="docutils literal notranslate"><span class="pre">--p-n-cov</span></code> is left unset because no metadata columns were
+appended to the table in Step 1; set it only if you used <code class="docutils literal notranslate"><span class="pre">--p-add-metadata</span></code>.</p>
+<p>Open the result at <a class="reference external" href="https://view.qiime2.org/">QIIME 2 View</a>.</p>
+</section>
+<section id="step-5-optional-a-latent-block-for-the-stage-gradient">
+<h2>Step 5 (optional): a latent block for the stage gradient<a class="headerlink" href="#step-5-optional-a-latent-block-for-the-stage-gradient" title="Link to this heading">#</a></h2>
+<p>There is a reason to expect this table to have a strong low-rank structure. The
+composting process is a single dominant gradient that moves nearly every taxon at
+once, and a driver like that shows up in the correlation matrix as dense,
+diffuse, non-sparse structure. A sparse-only estimator has to spend edges
+representing it. The sparse-plus-low-rank formulation gives it somewhere else to
+go: the low-rank block absorbs the shared driver, and the sparse block is left
+describing conditional dependence <em>given</em> the stage.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>gglasso<span class="w"> </span>solve-problem<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-covariance-matrix<span class="w"> </span>data/gut-to-soil/gts-correlation.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-n-samples<span class="w"> </span><span class="m">99</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-latent<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-lambda1-min<span class="w"> </span><span class="m">0</span>.4<span class="w"> </span>--p-lambda1-max<span class="w"> </span><span class="m">0</span>.4<span class="w"> </span>--p-n-lambda1<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-mu1-min<span class="w"> </span><span class="m">5</span><span class="w"> </span>--p-mu1-max<span class="w"> </span><span class="m">20</span><span class="w"> </span>--p-n-mu1<span class="w"> </span><span class="m">6</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-path-scale<span class="w"> </span>linear<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-gamma<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-solution<span class="w"> </span>data/gut-to-soil/gts-slr-mu-scout.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--verbose
+</pre></div>
+</div>
+<p>That is a <strong>scouting</strong> run: fix <span class="math notranslate nohighlight">\(\lambda_1\)</span> at whatever Step 3 selected — <code class="docutils literal notranslate"><span class="pre">0.4</span></code>
+above is a stand-in so the command is unambiguous, not a selected value — and
+sweep <span class="math notranslate nohighlight">\(\mu_1\)</span> to see what ranks are reachable. Larger <span class="math notranslate nohighlight">\(\mu_1\)</span> gives a smaller
+rank.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><code class="docutils literal notranslate"><span class="pre">--p-rank</span></code> is registered and <strong>always raises</strong> — <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> if <code class="docutils literal notranslate"><span class="pre">--p-latent</span></code> is
+not set, <code class="docutils literal notranslate"><span class="pre">NotImplementedError</span></code> otherwise. No released
+GGLasso can fix the rank of the low-rank block; it exposes only the continuous
+<span class="math notranslate nohighlight">\(\mu_1\)</span> penalty and reports the achieved rank as an output. Size the block through
+<code class="docutils literal notranslate"><span class="pre">--p-mu1-min</span></code> / <code class="docutils literal notranslate"><span class="pre">--p-mu1-max</span></code> and read the rank back out of the solution. The
+procedure is worked through in
+<a class="reference internal" href="../../04_highdim_atacama/03_slr_ranks.html"><span class="std std-doc">Choosing the Latent Rank</span></a>.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>For a latent problem, <code class="docutils literal notranslate"><span class="pre">lambda1</span></code>, <code class="docutils literal notranslate"><span class="pre">lambda2</span></code> <strong>and</strong> <code class="docutils literal notranslate"><span class="pre">mu1</span></code> must all collapse to a
+single value before the solver treats the run as a single fit. If you pin
+<span class="math notranslate nohighlight">\(\lambda_1\)</span> and forget <span class="math notranslate nohighlight">\(\mu_1\)</span>, the unset <span class="math notranslate nohighlight">\(\mu_1\)</span> falls back to a default
+ten-point grid and you have silently asked for ten solves; leave <span class="math notranslate nohighlight">\(\lambda_1\)</span>
+unpinned as well and the default fifteen-point <span class="math notranslate nohighlight">\(\lambda_1\)</span> grid makes it 150. At
+<span class="math notranslate nohighlight">\(p = 335\)</span> that is the difference between a coffee and an afternoon.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Achieved ranks, runtimes and the sparse edge count at each <span class="math notranslate nohighlight">\(\mu_1\)</span> are pending
+verification against QIIME 2 2026.7.</p>
+</div>
+<p>Note that <code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">gglasso</span> <span class="pre">pca</span></code> needs a <strong>latent</strong> solution — it reads
+<code class="docutils literal notranslate"><span class="pre">solution/lowrank_</span></code>, which a sparse-only solution does not have — and it also
+needs <code class="docutils literal notranslate"><span class="pre">--m-sample-metadata-file</span></code> despite that being optional in the signature. If
+you want the sample projection, this is the solution to give it.</p>
+</section>
+<section id="step-6-gut-versus-soil-jointly">
+<h2>Step 6: Gut versus soil, jointly<a class="headerlink" href="#step-6-gut-versus-soil-jointly" title="Link to this heading">#</a></h2>
+<p>Now the part this dataset is here for.</p>
+<section id="splitting-the-design">
+<h3>Splitting the design<a class="headerlink" href="#splitting-the-design" title="Link to this heading">#</a></h3>
+<p>The composting series has a natural two-group structure: samples from the
+gut-derived end of the process and samples from the mature compost or soil end.
+Read the metadata first and decide which column encodes it and which two levels
+you want — <a class="reference internal" href="01_data.html"><span class="std std-doc">The Dataset</span></a> shows the <code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">metadata</span> <span class="pre">tabulate</span></code> command.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Edit these three lines to match your own metadata before running anything below.</span>
+<span class="nv">GROUP_COLUMN</span><span class="o">=</span>sample-type
+<span class="nv">GROUP_A</span><span class="o">=</span>gut
+<span class="nv">GROUP_B</span><span class="o">=</span>soil
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The three values above are placeholders chosen to make the command shape
+unambiguous. <strong>They are not a claim about the gut-to-soil metadata.</strong> No column
+named <code class="docutils literal notranslate"><span class="pre">sample-type</span></code> was checked for; the one categorical column this book did
+read off the served <code class="docutils literal notranslate"><span class="pre">sample-metadata.tsv</span></code> is <code class="docutils literal notranslate"><span class="pre">SampleType</span></code>, and it has <strong>15
+levels</strong>, not two (see <a class="reference internal" href="03_regression.html"><span class="std std-doc">Log-Contrast Regression</span></a>), so a
+gut-versus-soil split has to be chosen deliberately rather than assumed. Read the
+real column and levels off <code class="docutils literal notranslate"><span class="pre">gts-metadata-summary.qzv</span></code> and substitute them. If your
+column name contains a space or a hyphen it must stay quoted and bracketed inside
+<code class="docutils literal notranslate"><span class="pre">--p-where</span></code>, as written below.</p>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>feature-table<span class="w"> </span>filter-samples<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-table<span class="w"> </span>data/gut-to-soil/asv-table-ms2.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--m-metadata-file<span class="w"> </span>data/gut-to-soil/sample-metadata.tsv<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-where<span class="w"> </span><span class="s2">&quot;[</span><span class="si">${</span><span class="nv">GROUP_COLUMN</span><span class="si">}</span><span class="s2">]=&#39;</span><span class="si">${</span><span class="nv">GROUP_A</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-filtered-table<span class="w"> </span>data/gut-to-soil/gts-table-a.qza
+
+qiime<span class="w"> </span>feature-table<span class="w"> </span>filter-samples<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-table<span class="w"> </span>data/gut-to-soil/asv-table-ms2.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--m-metadata-file<span class="w"> </span>data/gut-to-soil/sample-metadata.tsv<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-where<span class="w"> </span><span class="s2">&quot;[</span><span class="si">${</span><span class="nv">GROUP_COLUMN</span><span class="si">}</span><span class="s2">]=&#39;</span><span class="si">${</span><span class="nv">GROUP_B</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-filtered-table<span class="w"> </span>data/gut-to-soil/gts-table-b.qza
+</pre></div>
+</div>
+<p>Each group then drops the features it never observed, and gets its own transform
+and its own covariance. The <code class="docutils literal notranslate"><span class="pre">--p-min-samples</span> <span class="pre">1</span></code> filter is what makes the two
+instances genuinely <em>non-conforming</em> — a taxon absent from the soil-derived end
+should be an unmeasured variable there, not a measured zero. Estimating the two
+covariances separately is likewise not bureaucracy: the whole premise of the
+multiple graphical lasso is that the <span class="math notranslate nohighlight">\(K\)</span> covariance matrices are estimated
+independently and only the <em>precision</em> matrices are coupled.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="w"> </span>g<span class="w"> </span><span class="k">in</span><span class="w"> </span>a<span class="w"> </span>b<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">    </span>qiime<span class="w"> </span>feature-table<span class="w"> </span>filter-features<span class="w"> </span><span class="se">\</span>
+<span class="w">        </span>--i-table<span class="w"> </span><span class="s2">&quot;data/gut-to-soil/gts-table-</span><span class="si">${</span><span class="nv">g</span><span class="si">}</span><span class="s2">.qza&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">        </span>--p-min-samples<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">        </span>--o-filtered-table<span class="w"> </span><span class="s2">&quot;data/gut-to-soil/gts-table-</span><span class="si">${</span><span class="nv">g</span><span class="si">}</span><span class="s2">-observed.qza&quot;</span>
+
+<span class="w">    </span>qiime<span class="w"> </span>gglasso<span class="w"> </span>transform-features<span class="w"> </span><span class="se">\</span>
+<span class="w">        </span>--i-table<span class="w"> </span><span class="s2">&quot;data/gut-to-soil/gts-table-</span><span class="si">${</span><span class="nv">g</span><span class="si">}</span><span class="s2">-observed.qza&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">        </span>--i-taxonomy<span class="w"> </span>data/gut-to-soil/taxonomy.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">        </span>--p-transformation<span class="w"> </span>mclr<span class="w"> </span><span class="se">\</span>
+<span class="w">        </span>--p-no-add-metadata<span class="w"> </span><span class="se">\</span>
+<span class="w">        </span>--p-no-scale-metadata<span class="w"> </span><span class="se">\</span>
+<span class="w">        </span>--p-keep-original-id<span class="w"> </span><span class="se">\</span>
+<span class="w">        </span>--o-transformed-table<span class="w"> </span><span class="s2">&quot;data/gut-to-soil/gts-mclr-</span><span class="si">${</span><span class="nv">g</span><span class="si">}</span><span class="s2">.qza&quot;</span>
+
+<span class="w">    </span>qiime<span class="w"> </span>gglasso<span class="w"> </span>calculate-covariance<span class="w"> </span><span class="se">\</span>
+<span class="w">        </span>--i-table<span class="w"> </span><span class="s2">&quot;data/gut-to-soil/gts-mclr-</span><span class="si">${</span><span class="nv">g</span><span class="si">}</span><span class="s2">.qza&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">        </span>--p-method<span class="w"> </span>scaled<span class="w"> </span><span class="se">\</span>
+<span class="w">        </span>--p-bias<span class="w"> </span><span class="se">\</span>
+<span class="w">        </span>--o-covariance-matrix<span class="w"> </span><span class="s2">&quot;data/gut-to-soil/gts-correlation-</span><span class="si">${</span><span class="nv">g</span><span class="si">}</span><span class="s2">.qza&quot;</span>
+<span class="k">done</span>
+</pre></div>
+</div>
+</section>
+<section id="the-bookkeeping-array">
+<h3>The bookkeeping array<a class="headerlink" href="#the-bookkeeping-array" title="Link to this heading">#</a></h3>
+<p>If the two groups no longer measure the same features — which they will not, once
+you drop features a group never observed — the solver needs a map telling it
+where feature pair <span class="math notranslate nohighlight">\((i,j)\)</span> lives in each instance. <code class="docutils literal notranslate"><span class="pre">build-groups</span></code> constructs it:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>gglasso<span class="w"> </span>build-groups<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-tables<span class="w"> </span>data/gut-to-soil/gts-mclr-a.qza<span class="w"> </span>data/gut-to-soil/gts-mclr-b.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-check-groups<span class="w"> </span>True<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-group-array<span class="w"> </span>data/gut-to-soil/gts-groups.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--verbose
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The printed per-instance dimensions, sample sizes and group count are pending
+verification against QIIME 2 2026.7.</p>
+<p><code class="docutils literal notranslate"><span class="pre">build-groups</span></code> returns an array only when it detects that the instances differ,
+and the difference check it applies looks at <em>sample</em> labels rather than feature
+labels — so two tables produced by splitting one table always register as
+differing, whether or not their feature sets match. Inspect the exported array
+before relying on it. Both behaviours are described in
+<a class="reference internal" href="../../02_lowdim_gglasso/06_multiple_graphical_lasso.html"><span class="std std-doc">Multiple Graphical Lasso</span></a>.</p>
+</div>
+</section>
+<section id="where-this-stops-working">
+<h3>Where this stops working<a class="headerlink" href="#where-this-stops-working" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">build-groups</span></code> emits <code class="docutils literal notranslate"><span class="pre">group_array</span></code> as a <strong><code class="docutils literal notranslate"><span class="pre">TensorData</span></code> artifact</strong>;
+<code class="docutils literal notranslate"><span class="pre">solve-problem</span></code> accepts <code class="docutils literal notranslate"><span class="pre">group_array</span></code> as a <strong><code class="docutils literal notranslate"><span class="pre">List[Int]</span></code> parameter</strong>. They do not
+chain. The export-and-paste workaround, the fact that the flattened list is never
+reshaped back to <code class="docutils literal notranslate"><span class="pre">(2,</span> <span class="pre">L,</span> <span class="pre">K)</span></code>, and the blocking problem — that <code class="docutils literal notranslate"><span class="pre">solve-problem</span></code>
+takes a single <code class="docutils literal notranslate"><span class="pre">--i-covariance-matrix</span></code> and therefore cannot be given <span class="math notranslate nohighlight">\(K\)</span>
+matrices at all — are documented once, in full, in
+<a class="reference internal" href="../../02_lowdim_gglasso/06_multiple_graphical_lasso.html"><span class="std std-doc">Multiple Graphical Lasso</span></a>.
+Read that page before spending time here. It is not repeated because nothing
+about it is different at this scale.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The consequence for this dataset: <strong>the joint gut-versus-soil fit cannot be run
+from the QIIME 2 CLI today.</strong> The commands above are real and produce real
+artifacts; the step that would consume them does not exist yet. Two honest ways
+forward are to fit the two groups as independent single graphical lassos and
+compare them by hand, or to drop to the GGLasso Python API, where the multi-
+instance solvers are reachable. The section below is about how to <em>read</em> such a
+comparison, and it applies either way.</p>
+</div>
+</section>
+</section>
+<section id="what-a-shared-edge-means-and-what-a-differential-edge-means">
+<h2>What a shared edge means, and what a differential edge means<a class="headerlink" href="#what-a-shared-edge-means-and-what-a-differential-edge-means" title="Link to this heading">#</a></h2>
+<p>This is the part worth thinking about before you run anything, because the
+statistics only pay off if the biological question is posed correctly.</p>
+<p>The two ends of a composting process are not two samples of one community. A
+gut-derived community is anaerobic and host-associated; a mature compost or soil
+community is aerobic, has been through a thermophilic phase, and is dominated by
+different lineages. Temperature, oxygen, pH, moisture and carbon-to-nitrogen ratio
+all change together. Whether that holds in <em>your</em> subsample is something to check
+against <code class="docutils literal notranslate"><span class="pre">taxonomy.qza</span></code> — but it is the design assumption that makes the joint
+estimate interesting.</p>
+<p><strong>A shared edge is one supported in both groups.</strong> Its interpretation is stronger
+than it would be within a single group, and the reason is that the confounding is
+not shared. Within one group, two taxa can appear conditionally dependent because
+both respond to the same unmeasured environmental variable. Across two groups
+whose environments differ in almost every respect, that explanation gets harder:
+the driver that would have to be doing the work is not the same driver. What is
+left is more plausibly an association that travels with the organisms —
+cross-feeding, syntrophy, co-aggregation, physical co-transport through the
+process — or a pair of taxa that simply survive and disperse together.</p>
+<p>Three uninteresting explanations survive that argument and have to be excluded by
+hand:</p>
+<ul class="simple">
+<li><p><strong>The same organism twice.</strong> Two ASVs from different 16S copies of one genome
+are perfectly coupled everywhere. Check whether the taxonomy assigns them to
+the same species.</p></li>
+<li><p><strong>A compositional shadow.</strong> If one taxon dominates a sample, the log-ratio
+values of everything else move against it. CLR-based methods reduce but do not
+eliminate this <span class="bibtex-citation" id="id3">[<a class="reference internal" href="../../../references.html#id26" title="Gregory B Gloor, Jean M Macklaim, Vera Pawlowsky-Glahn, and Juan J Egozcue. Microbiome datasets are compositional: and this is not optional. Frontiers in microbiology, 8:2224, 2017.">18</a>]</span>.</p></li>
+<li><p><strong>A shared technical artifact</strong> — a contaminant pair from the extraction kit,
+or two features that are really one chimera and its parent — which is present
+in both groups precisely because it came from the lab and not from the pile.</p></li>
+</ul>
+<p><strong>A differential edge is one supported in only one group.</strong> Ecologically this is
+the interesting outcome: a coupling that requires a particular regime. An
+anaerobic syntrophy that exists in the gut-derived material has no reason to
+persist once the pile is aerobic and hot; a thermophile pairing has no reason to
+exist before it. That is a hypothesis with a mechanism attached, and it is
+testable.</p>
+<p>Statistically it is also the <strong>least trustworthy thing the model produces</strong>, for
+three compounding reasons, and it is worth being blunt about them:</p>
+<ol class="arabic simple">
+<li><p><strong>It is a difference of two noisy estimates.</strong> Splitting 99 samples gives each
+group substantially fewer, and covariance error grows fast as <span class="math notranslate nohighlight">\(n\)</span> falls.</p></li>
+<li><p><strong>The penalty is designed to suppress exactly this.</strong> Both GGL and FGL exist
+to <em>share</em> information across groups. An edge that survives as
+group-specific has beaten a prior that was pushing against it — which is
+reassuring — but the same machinery means the size of the difference is
+shrunk, so the estimated contrast is biased toward zero and cannot be read as
+an effect size.</p></li>
+<li><p><strong>A group-specific edge may be a group-specific <em>detection</em>.</strong> If a taxon is
+rare in one group, its edges there are unestimable rather than absent. The
+non-conforming variant (<code class="docutils literal notranslate"><span class="pre">--p-non-conforming</span> <span class="pre">True</span></code>) is the principled response:
+it applies the group penalty only to variable pairs that exist in more than
+one instance, instead of pretending an unmeasured pair is a measured zero.</p></li>
+</ol>
+<p>Before believing a differential edge, check that it is stable — that it survives
+a change of <span class="math notranslate nohighlight">\(\lambda_1\)</span>, a change of <span class="math notranslate nohighlight">\(\lambda_2\)</span>, and resampling of the samples
+within each group. A differential edge that appears at one grid point and nowhere
+else is a grid point, not a finding.</p>
+<section id="ggl-or-fgl-for-this-design">
+<h3>GGL or FGL for this design<a class="headerlink" href="#ggl-or-fgl-for-this-design" title="Link to this heading">#</a></h3>
+<p>With two ecologically distinct endpoints, <strong>GGL</strong> is the right coupling. Its
+<span class="math notranslate nohighlight">\(\lambda_2\)</span> is a group-lasso penalty acting on each edge <em>across</em> groups: an edge
+tends to be present in all groups or absent in all groups, while the surviving
+weights are free to differ. That is exactly the belief “the same organisms
+interact at both ends of the process, but not with the same intensity”. It is
+also the safer choice when the two groups have different sample sizes, because
+the smaller group borrows <em>support</em> from the larger without being dragged toward
+its coefficient values.</p>
+<p><strong>FGL</strong> penalizes the <em>difference</em> between corresponding edge weights, which
+pushes them to be numerically equal. Applied to gut versus soil, that prior
+actively suppresses the between-group differences you were looking for. FGL earns
+its place on this dataset in a different configuration: the composting series is a
+<strong>time course</strong>, so if you build <span class="math notranslate nohighlight">\(K\)</span> instances from ordered timepoints rather than
+two endpoints, “adjacent timepoints should have nearly the same edge weights” is
+precisely FGL’s assumption and precisely what you want. Same data, different
+grouping, different penalty.</p>
+<p>And if you cannot articulate why the two groups should share edges at all, fit
+them separately. A jointly estimated pair of near-identical networks is partly an
+artifact of <span class="math notranslate nohighlight">\(\lambda_2\)</span>, and reporting it as agreement is reporting the penalty.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>One caveat specific to log-ratio data and joint estimation. <code class="docutils literal notranslate"><span class="pre">mclr</span></code> shifts the
+whole matrix by a constant derived from its global minimum before restoring
+zeros, so a per-group transform anchors each group differently. Edge <span class="math notranslate nohighlight">\((i,j)\)</span> in
+group A and edge <span class="math notranslate nohighlight">\((i,j)\)</span> in group B are therefore not guaranteed to be on exactly
+the same scale, and the group penalty assumes they are. With <code class="docutils literal notranslate"><span class="pre">clr</span></code> the
+per-sample geometric-mean reference is unaffected by which samples are in the
+table, but it <em>is</em> affected by which <strong>features</strong> are — so dropping
+group-specific features, as non-conforming MGL requires, re-anchors each group
+anyway. There is no way to avoid this entirely; the practical response is to note
+it as a limitation rather than to pretend the two precision matrices are
+measured in identical units.</p>
+</div>
+<hr class="docutils" />
+<p>Next: <a class="reference internal" href="03_regression.html"><span class="std std-doc">Log-Contrast Regression</span></a> predicts a sample-level outcome
+from the same table, which is the other way of asking what the community is
+tracking.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters/05_metagenomics/01_gut_to_soil"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="01_data.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">The Dataset</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="03_regression.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Log-Contrast Regression</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-transform">Step 1: Transform</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-covariance">Step 2: Covariance</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-solve-selecting-lambda-1-with-ebic">Step 3: Solve, selecting <span class="math notranslate nohighlight">\(\lambda_1\)</span> with eBIC</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-summarize">Step 4: Summarize</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-optional-a-latent-block-for-the-stage-gradient">Step 5 (optional): a latent block for the stage gradient</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-6-gut-versus-soil-jointly">Step 6: Gut versus soil, jointly</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#splitting-the-design">Splitting the design</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-bookkeeping-array">The bookkeeping array</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#where-this-stops-working">Where this stops working</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-a-shared-edge-means-and-what-a-differential-edge-means">What a shared edge means, and what a differential edge means</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ggl-or-fgl-for-this-design">GGL or FGL for this design</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Biomedical Statistics and Data Science Group @ LMU & Helmholtz Munich
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

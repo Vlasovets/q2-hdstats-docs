@@ -1,0 +1,898 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>The 300-ASV Dataset &#8212; High-dimensional Statistics with QIIME 2</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles.css?v=3437f865" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/04_highdim_atacama/01_data';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="High-Dimensional Example: 300 Atacama ASVs" href="02_model_selection.html" />
+    <link rel="prev" title="Overview" href="00_index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo_light.svg" class="logo__image only-light" alt="High-dimensional Statistics with QIIME 2 - Home"/>
+    <img src="../../_static/logo_dark.svg" class="logo__image only-dark pst-js-only" alt="High-dimensional Statistics with QIIME 2 - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../00_getting_started/01_intro.html">Why High-Dimensional Statistics?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../00_getting_started/02_datasets.html">Atacama Soil Microbiome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../00_getting_started/03_download_data.html">Download the Tutorial Data</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../01_installation/01_prerequisites.html">Prerequisites &amp; Installation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../01_installation/02_q2_gglasso.html">Installing q2-gglasso</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_installation/03_q2_classo.html">Installing q2-classo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_installation/04_verify.html">Verifying Your Installation</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tier 1 — Low-dimensional example (Atacama, 13 ASVs)</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../02_lowdim_gglasso/00_index.html">Graphical Lasso Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/01_data_preparation.html">Data Preparation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/02_sgl.html">Single Graphical Lasso</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/03_slr.html">Sparse + Low-Rank (Latent Variables)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/04_adaptive_glasso.html">Adaptive Graphical Lasso</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/05_lambda_paths.html">Regularization Paths &amp; Model Selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/06_multiple_graphical_lasso.html">Multiple Graphical Lasso (GGL / FGL)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/07_pca.html">Latent-Component PCA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/08_summarize.html">Summarizing a Solution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/09_interpretation.html">Interpretation</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../03_lowdim_classo/00_overview.html">Log-Contrast Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/01_generate_data.html">Synthetic Data with Known Truth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/02_data_preparation.html">Data Preparation</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../03_lowdim_classo/03_regression/00_index.html">Regression</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../03_lowdim_classo/03_regression/01_logcontrast.html">Log-Contrast</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../03_lowdim_classo/03_regression/02_trac.html">With trac</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../03_lowdim_classo/04_classification/00_index.html">Classification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../03_lowdim_classo/04_classification/01_logcontrast.html">Log-Contrast</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../03_lowdim_classo/04_classification/02_trac.html">With trac</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/05_advanced/01_concomitant_formulation.html">Advanced: Concomitant Formulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/05_advanced/02_model_selection.html">Advanced: Choosing a Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/06_predict_and_summarize.html">Predict &amp; Summarize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/07_interpretation.html">Interpretation</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tier 2 — High-dimensional example (Atacama, 300 ASVs)</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="00_index.html">Overview</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">The 300-ASV Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_model_selection.html">Selecting lambda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_slr_ranks.html">Choosing the Latent Rank</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_latent_pca.html">Latent Components &amp; Covariates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05_classo_cv.html">Log-Contrast Models at Scale</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06_interpretation.html">Interpretation</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tier 3 — Metagenomics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../05_metagenomics/00_index.html">Overview</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../05_metagenomics/01_gut_to_soil/00_index.html">Gut-to-Soil (16S, 335 ASVs x 99 samples)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../05_metagenomics/01_gut_to_soil/01_data.html">The Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_metagenomics/01_gut_to_soil/02_network.html">Network Inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_metagenomics/01_gut_to_soil/03_regression.html">Log-Contrast Regression</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../90_reference/01_command_coverage.html">Command Coverage Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../90_reference/02_gglasso_parameters.html">q2-gglasso Parameter Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../90_reference/03_classo_parameters.html">q2-classo Parameter Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../90_reference/04_troubleshooting.html">Troubleshooting &amp; Known Gotchas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../99_appendix/01_math.html">Appendix: Mathematical Background</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../99_appendix/02_moshpit_cocoa_note.html">Appendix: Shotgun Metagenomics (MOSHPIT cocoa)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/chapters/04_highdim_atacama/01_data.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>The 300-ASV Dataset</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#provenance">Provenance</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-300-and-why-by-total-abundance">Why 300, and why by total abundance</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#taxonomy">Taxonomy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-transformed-table">The transformed table</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-covariance-matrix">The covariance matrix</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metadata">Metadata</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#artifact-inventory">Artifact inventory</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-the-files">Getting the files</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="the-300-asv-dataset">
+<h1>The 300-ASV Dataset<a class="headerlink" href="#the-300-asv-dataset" title="Link to this heading">#</a></h1>
+<p>This page is bookkeeping: where the Tier 2 table comes from, how the taxonomy
+and the transformed artifacts were made, and which file is which. No model is
+fitted here — that starts in <a class="reference internal" href="02_model_selection.html"><span class="std std-doc">Selecting lambda</span></a>.</p>
+<p>It is worth reading rather than skipping, because two of the choices below
+(which ASVs were kept, and which log-ratio transform was applied) change the
+network more than any penalty parameter does.</p>
+<section id="provenance">
+<h2>Provenance<a class="headerlink" href="#provenance" title="Link to this heading">#</a></h2>
+<p>The starting point is the same Atacama soil study used throughout this tutorial
+<span class="bibtex-citation" id="id1">[<a class="reference internal" href="../../references.html#id6" title="Julia W Neilson, Katy Califf, Cesar Cardona, Audrey Copeland, Will Van Treuren, Karen L Josephson, Rob Knight, Jack A Gilbert, Jay Quade, J Gregory Caporaso, and others. Significant impacts of increasing aridity on the arid soil microbiome. MSystems, 2(3):e00195–16, 2017.">6</a>]</span>, processed exactly as in the
+<a class="reference external" href="https://amplicon-docs.qiime2.org/en/latest/tutorials/atacama-soils.html">QIIME 2 Atacama soils tutorial</a>:
+demultiplexing with <code class="docutils literal notranslate"><span class="pre">q2-demux</span></code>, denoising with DADA2 <span class="bibtex-citation" id="id2">[<a class="reference internal" href="../../references.html#id31" title="Benjamin J Callahan, Paul J McMurdie, Michael J Rosen, Andrew W Han, Amy Jo A Johnson, and Susan P Holmes. Dada2: high-resolution sample inference from illumina amplicon data. Nature methods, 13(7):581–583, 2016.">7</a>]</span>
+via <code class="docutils literal notranslate"><span class="pre">q2-dada2</span></code>. That is the published, reproducible pipeline; nothing about it
+is specific to this tutorial, and the ASV table it produces is the one we
+subset.</p>
+<p>From that table, two reductions were applied:</p>
+<ol class="arabic simple">
+<li><p><strong>Sample matching.</strong> Only samples with a complete row in the sample metadata
+were kept, leaving <strong><span class="math notranslate nohighlight">\(n = 54\)</span> samples</strong>.</p></li>
+<li><p><strong>Abundance filtering.</strong> The <strong>300 ASVs with the greatest total abundance
+across those samples</strong> were retained, giving <strong><span class="math notranslate nohighlight">\(p = 300\)</span> features</strong>.</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The exact list of the 54 sample IDs and the 300 feature IDs is fixed by the
+artifact bundle rather than restated here, so that a reader can check membership
+against the file they actually downloaded instead of against prose. The
+per-sample and per-feature summary statistics of the subset are <strong>pending
+verification against QIIME 2 2026.7</strong>.</p>
+</div>
+<section id="why-300-and-why-by-total-abundance">
+<h3>Why 300, and why by total abundance<a class="headerlink" href="#why-300-and-why-by-total-abundance" title="Link to this heading">#</a></h3>
+<p>Two things are being traded off. Keeping more ASVs makes the network more
+complete but pushes <span class="math notranslate nohighlight">\(p/n\)</span> further into a regime where the empirical covariance is
+badly conditioned and the graphical lasso is doing more regularizing than
+estimating. Keeping fewer makes the estimate more stable but starts deleting the
+organisms you are trying to say something about. At <span class="math notranslate nohighlight">\(p = 300\)</span>, <span class="math notranslate nohighlight">\(n = 54\)</span> the ratio
+is already about 5.6 features per sample — high, but within the range where a
+sparse estimator is the accepted tool rather than a fig leaf.</p>
+<p>Filtering by <strong>total abundance</strong> rather than by prevalence, variance, or
+association with an outcome is deliberate. It is a marginal, outcome-blind
+criterion: it cannot leak information about any of the environmental variables
+that are later used as regression targets in
+<a class="reference internal" href="05_classo_cv.html"><span class="std std-doc">Log-Contrast Models at Scale</span></a>. A filter chosen with the
+outcome in view would invalidate every cross-validated <span class="math notranslate nohighlight">\(R^2\)</span> on that page.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Abundance filtering is not a neutral pre-processing step for compositional data.
+The CLR transform divides each sample by the geometric mean <strong>of the features
+that are present in the table</strong>, so removing features changes the reference and
+therefore changes every transformed value — and with it the covariance and the
+edges <span class="bibtex-citation" id="id3">[<a class="reference internal" href="../../references.html#id37" title="John Aitchison. The statistical analysis of compositional data. Journal of the Royal Statistical Society: Series B (Methodological), 44(2):139–160, 1982.">17</a>, <a class="reference internal" href="../../references.html#id26" title="Gregory B Gloor, Jean M Macklaim, Vera Pawlowsky-Glahn, and Juan J Egozcue. Microbiome datasets are compositional: and this is not optional. Frontiers in microbiology, 8:2224, 2017.">18</a>]</span>. A network estimated
+on the top 300 ASVs is a statement about that sub-composition, not about the full
+community. This is the single most important caveat to carry into
+<a class="reference internal" href="06_interpretation.html"><span class="std std-doc">Interpretation</span></a>.</p>
+</div>
+</section>
+</section>
+<section id="taxonomy">
+<h2>Taxonomy<a class="headerlink" href="#taxonomy" title="Link to this heading">#</a></h2>
+<p>Taxonomic labels were assigned with <code class="docutils literal notranslate"><span class="pre">q2-feature-classifier</span></code>
+<span class="bibtex-citation" id="id4">[<a class="reference internal" href="../../references.html#id42" title="Nicholas A Bokulich, Matthew R Dillon, Evan Bolyen, Benjamin D Kaehler, Gavin A Huttley, and J Gregory Caporaso. Q2-sample-classifier: machine-learning tools for microbiome classification and regression. Journal of open research software, 2018.">8</a>]</span> using the naive Bayes classifier trained on
+SILVA 138 <span class="bibtex-citation" id="id5">[<a class="reference internal" href="../../references.html#id33" title="Christian Quast, Elmar Pruesse, Pelin Yilmaz, Jan Gerken, Timmy Schweer, Pablo Yarza, Jörg Peplies, and Frank Oliver Glöckner. The silva ribosomal rna gene database project: improved data processing and web-based tools. Nucleic acids research, 41(D1):D590–D596, 2012.">9</a>]</span>, and ship as
+<code class="docutils literal notranslate"><span class="pre">atacama-taxonomy-silva138.qza</span></code> (<code class="docutils literal notranslate"><span class="pre">FeatureData[Taxonomy]</span></code>).</p>
+<p>The taxonomy is used for <strong>interpretation only</strong> — putting a genus name on a
+node or on a selected coefficient. It plays no part in estimating the network.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">gglasso</span> <span class="pre">transform-features</span></code> requires <code class="docutils literal notranslate"><span class="pre">--i-taxonomy</span></code>, but the function body
+never reads it. This is a registration wart, not a real dependency: the artifact
+must be a valid <code class="docutils literal notranslate"><span class="pre">FeatureData[Taxonomy]</span></code>, and its contents do not affect the
+transformed table. See
+<a class="reference internal" href="../90_reference/04_troubleshooting.html"><span class="std std-doc">Troubleshooting</span></a>.</p>
+<p>Because the input is required anyway, pass the <em>correct</em> taxonomy rather than a
+convenient one — the same artifact is what you will need later to map feature IDs
+back to names.</p>
+</div>
+</section>
+<section id="the-transformed-table">
+<h2>The transformed table<a class="headerlink" href="#the-transformed-table" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">transform-features</span></code> moves the counts out of the simplex before any covariance
+is computed. Two transforms are available, and they differ in how they handle
+zeros:</p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">clr</span></code></strong> replaces every zero with <code class="docutils literal notranslate"><span class="pre">--p-pseudo-count</span></code>, renormalizes each sample
+to the simplex, then takes the centred log-ratio. Only zeros are imputed, but
+in a table where ~94% of entries are zero the pseudo-count still sets the floor
+of the whole log-ratio geometry.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">mclr</span></code></strong> <span class="bibtex-citation" id="id6">[<a class="reference internal" href="../../references.html#id27" title="Grace Yoon, Irina Gaynanova, and Christian L Müller. Microbial networks in spring-semi-parametric rank-based correlation and partial correlation estimation for quantitative microbiome data. Frontiers in genetics, 10:516, 2019.">19</a>]</span> skips zero imputation entirely — no
+pseudo-count is added, and <code class="docutils literal notranslate"><span class="pre">--p-pseudo-count</span></code> is ignored — and log-transforms
+only the positive entries. For sparse tables this avoids inventing counts that
+were never observed.</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>gglasso<span class="w"> </span>transform-features<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-table<span class="w"> </span>atacama-top-300-table.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-taxonomy<span class="w"> </span>atacama-taxonomy-silva138.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-transformation<span class="w"> </span>clr<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-pseudo-count<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-no-add-metadata<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-keep-original-id<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-transformed-table<span class="w"> </span>atacama-top-300-clr.qza
+</pre></div>
+</div>
+<p>Swap <code class="docutils literal notranslate"><span class="pre">--p-transformation</span> <span class="pre">clr</span></code> for <code class="docutils literal notranslate"><span class="pre">--p-transformation</span> <span class="pre">mclr</span></code> to produce the
+modified variant; drop <code class="docutils literal notranslate"><span class="pre">--p-pseudo-count</span></code>, which that branch does not use.</p>
+<p><strong>Explanation:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--p-transformation</span></code>: <code class="docutils literal notranslate"><span class="pre">clr</span></code> or <code class="docutils literal notranslate"><span class="pre">mclr</span></code>. Neither plugin declares <code class="docutils literal notranslate"><span class="pre">Choices()</span></code>, so a
+typo here is a runtime <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>, not a command-line error.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--p-pseudo-count</span></code>: substituted for zeros before normalization, on the <code class="docutils literal notranslate"><span class="pre">clr</span></code>
+branch only.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--p-no-add-metadata</span></code>: do <strong>not</strong> append the numeric metadata columns to the
+table. Appending them is the adaptive-model workflow of
+<a class="reference internal" href="../02_lowdim_gglasso/04_adaptive_glasso.html"><span class="std std-doc">Adaptive Graphical Lasso</span></a>; for the
+Tier 2 network the covariates are deliberately left <em>out</em> of the table, so that
+the latent block has something to find.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--m-sample-metadata-file</span></code> and <code class="docutils literal notranslate"><span class="pre">--p-scale-metadata</span></code> are omitted deliberately.
+Both matter only when metadata is appended, so with <code class="docutils literal notranslate"><span class="pre">--p-no-add-metadata</span></code> they
+are inert; leaving them out keeps the command honest about what actually
+affects the output.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--p-keep-original-id</span></code>: keep the real feature IDs instead of relabelling to
+sequential <code class="docutils literal notranslate"><span class="pre">ASV-n</span></code> names. At <span class="math notranslate nohighlight">\(p = 300\)</span> this matters — without it you cannot
+trace a node in the network or a coefficient in a log-contrast model back to
+its taxonomy.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The output is registered as <code class="docutils literal notranslate"><span class="pre">FeatureTable[Frequency]</span></code> even though its values are
+log-ratios and can be negative. That is a typing convenience, not a claim about
+the contents — but it does mean the QIIME 2 type system will happily let you feed
+a transformed table to an action expecting counts, or transform an
+already-transformed table a second time. Keep the naming unambiguous.</p>
+</div>
+<p>The transformed table is not a dead end after the covariance is computed:
+<code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">gglasso</span> <span class="pre">pca</span></code> takes it as <code class="docutils literal notranslate"><span class="pre">--i-table</span></code> and multiplies it against the
+eigenvectors of the low-rank block, so the feature set and its order must still
+match the covariance matrix. That is worked through in
+<a class="reference internal" href="04_latent_pca.html"><span class="std std-doc">Latent Components &amp; Covariates</span></a>.</p>
+</section>
+<section id="the-covariance-matrix">
+<h2>The covariance matrix<a class="headerlink" href="#the-covariance-matrix" title="Link to this heading">#</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>gglasso<span class="w"> </span>calculate-covariance<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-table<span class="w"> </span>atacama-top-300-clr.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-method<span class="w"> </span>scaled<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-bias<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-covariance-matrix<span class="w"> </span>atacama-top-300-correlation.qza
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">--p-method</span> <span class="pre">scaled</span></code> divides out the diagonal, so the result is a <strong>correlation</strong>
+matrix. That is what the graphical lasso in this tutorial is applied to, and it
+is why a single <span class="math notranslate nohighlight">\(\lambda_1\)</span> is meaningful across all 300 features: on the
+unscaled covariance, features with larger variance would effectively be penalized
+less than features with smaller variance, and a scalar penalty would mean
+different things in different rows.</p>
+<p><code class="docutils literal notranslate"><span class="pre">--p-bias</span></code> (the default) uses the <span class="math notranslate nohighlight">\(1/N\)</span> normalization that falls out of the
+Gaussian log-likelihood, which is the quantity the solver’s objective is written
+against.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p><strong>The shipped correlation matrix is <code class="docutils literal notranslate"><span class="pre">clr</span></code>-backed.</strong> This was an open question in
+earlier drafts, because some of the reference text describes an mclr-transformed
+table. The provenance of the shipped <code class="docutils literal notranslate"><span class="pre">atacama-top-300-correlation.qza</span></code> settles
+it: it records <code class="docutils literal notranslate"><span class="pre">calculate_covariance</span></code> with <code class="docutils literal notranslate"><span class="pre">method:</span> <span class="pre">scaled</span></code>, <code class="docutils literal notranslate"><span class="pre">bias:</span> <span class="pre">true</span></code>, run on
+<code class="docutils literal notranslate"><span class="pre">atacama-top-300-clr.qza</span></code>, whose own provenance records <code class="docutils literal notranslate"><span class="pre">transformation:</span> <span class="pre">clr</span></code>.
+Both commands above are therefore exactly the ones that produced the shipped
+artifacts. That was not true of releases before the tier-2 regeneration, whose
+<code class="docutils literal notranslate"><span class="pre">clr</span></code> table was built without <code class="docutils literal notranslate"><span class="pre">--p-keep-original-id</span></code> — see the next box.</p>
+<p>That does not make the question uninteresting: <code class="docutils literal notranslate"><span class="pre">clr</span></code> and <code class="docutils literal notranslate"><span class="pre">mclr</span></code> do <strong>not</strong> give
+the same network. If you regenerate the correlation matrix yourself, regenerate
+it from the transformed table you intend to report, and say which one it was.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>The bundle ships real feature IDs, and this was not always true.</strong>
+<code class="docutils literal notranslate"><span class="pre">atacama-top-300-clr.qza</span></code> is built with <code class="docutils literal notranslate"><span class="pre">--p-keep-original-id</span></code>, so its features
+carry the original 32-character hexadecimal IDs;
+<code class="docutils literal notranslate"><span class="pre">atacama-top-300-correlation.qza</span></code> inherits them from it (<code class="docutils literal notranslate"><span class="pre">calculate-covariance</span></code>
+has no such parameter — it takes whatever labels its input carries). Both join
+directly against <code class="docutils literal notranslate"><span class="pre">atacama-taxonomy-silva138.qza</span></code>: all 300 features resolve, with
+no mapping step.</p>
+<p>Earlier releases of this bundle were produced <em>without</em> that flag, so their
+features were sequential <code class="docutils literal notranslate"><span class="pre">ASV-1</span></code> … <code class="docutils literal notranslate"><span class="pre">ASV-300</span></code> names. If you have an older copy,
+regenerate it rather than trying to map the names back. <code class="docutils literal notranslate"><span class="pre">ASV-k</span></code> is assigned by
+<strong>position</strong> in the abundance ranking, and 209 of these 300 features share a
+total-abundance value with another feature, so the ranking does not determine
+which organism got which number — see the warning in
+<a class="reference internal" href="06_interpretation.html"><span class="std std-doc">Interpretation</span></a>.</p>
+<p>Relabelling changes nothing numerically. The graphical-lasso objective is
+invariant under simultaneous row/column permutation, so λ = 0.8, 216 edges and
+eBIC 16130.0988 are identical either way.</p>
+<p>It does change one visible thing: a 32-character ID is unusable as a network
+node label or a heatmap tick. Figures should render a short display name —
+the deepest informative rank plus a slice of the ID, e.g.
+<code class="docutils literal notranslate"><span class="pre">Rubrobacter</span> <span class="pre">(a7b877)</span></code> — while keeping the full ID as the key. A 5-character
+prefix is already unique across these 300 features. <code class="docutils literal notranslate"><span class="pre">scripts/export_network.py</span></code>
+emits exactly this as a <code class="docutils literal notranslate"><span class="pre">display</span></code> column and refuses to run if two display names
+would collide.</p>
+</div>
+</section>
+<section id="metadata">
+<h2>Metadata<a class="headerlink" href="#metadata" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">sample-metadata.tsv</span></code> is the standard Atacama sample metadata. It carries the
+continuous environmental variables used as regression outcomes in
+<a class="reference internal" href="05_classo_cv.html"><span class="std std-doc">Log-Contrast Models at Scale</span></a> — elevation, pH, soil
+temperature and humidity summaries, and several assay measurements — plus two
+categorical variables that are the natural grouping factors for this study:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Column</p></th>
+<th class="head"><p>Levels</p></th>
+<th class="head"><p>Rows in the metadata file</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">transect-name</span></code></p></td>
+<td><p>Baquedano / Yungay</p></td>
+<td><p>32 / 43</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">vegetation</span></code></p></td>
+<td><p>no / yes</p></td>
+<td><p>40 / 35</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Those counts describe <strong>the metadata file</strong>, which covers more samples than the
+modelled table: 75 rows against the <span class="math notranslate nohighlight">\(n = 54\)</span> samples that survived matching and
+entered the network. The per-group counts <em>within the 54 modelled samples</em> are a
+subset of these and are <strong>pending confirmation</strong> — do not quote 32/43 or 40/35 as
+group sizes for the Tier 2 analysis.</p>
+</div>
+<p>Two practical consequences of the metadata layout:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">gglasso</span> <span class="pre">pca</span></code> filters the metadata to <strong>numeric</strong> columns before it does
+anything. <code class="docutils literal notranslate"><span class="pre">transect-name</span></code> and <code class="docutils literal notranslate"><span class="pre">vegetation</span></code> are dropped, and naming either in
+<code class="docutils literal notranslate"><span class="pre">--p-color-by</span></code> fails. Recode them numerically first if you want to see them.
+This is worked through in
+<a class="reference internal" href="04_latent_pca.html"><span class="std std-doc">Latent Components &amp; Covariates</span></a>.</p></li>
+<li><p>The same numeric filter governs which columns <code class="docutils literal notranslate"><span class="pre">transform-features</span> <span class="pre">--p-add-metadata</span></code> would append, and therefore what <code class="docutils literal notranslate"><span class="pre">summarize</span> <span class="pre">--p-n-cov</span></code> must
+be set to. See <a class="reference internal" href="../02_lowdim_gglasso/08_summarize.html"><span class="std std-doc">Summarizing a Solution</span></a>.</p></li>
+</ul>
+</section>
+<section id="artifact-inventory">
+<h2>Artifact inventory<a class="headerlink" href="#artifact-inventory" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>File</p></th>
+<th class="head"><p>QIIME 2 type</p></th>
+<th class="head"><p>What it is</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">atacama-top-300-table.qza</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">FeatureTable[Frequency]</span></code></p></td>
+<td><p>the 300 × 54 count table</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">atacama-top-300-clr.qza</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">FeatureTable[Frequency]</span></code></p></td>
+<td><p>log-ratio transformed counts, input to <code class="docutils literal notranslate"><span class="pre">calculate-covariance</span></code> and to <code class="docutils literal notranslate"><span class="pre">pca</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">atacama-top-300-correlation.qza</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PairwiseFeatureData</span></code></p></td>
+<td><p>300 × 300 correlation matrix, input to <code class="docutils literal notranslate"><span class="pre">solve-problem</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">atacama-taxonomy-silva138.qza</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">FeatureData[Taxonomy]</span></code></p></td>
+<td><p>SILVA 138 assignments</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sample-metadata.tsv</span></code></p></td>
+<td><p>metadata</p></td>
+<td><p>sample metadata, including the regression outcomes</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The three derived artifacts are shipped so that the modelling pages can be run
+without re-deriving them. The commands above are the ones that produced them, so
+running the chain yourself reproduces the bundle. Still, check each artifact’s
+own provenance (<code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">tools</span> <span class="pre">peek</span></code> / the <code class="docutils literal notranslate"><span class="pre">provenance/</span></code> directory of the unzipped
+<code class="docutils literal notranslate"><span class="pre">.qza</span></code>) rather than assuming the prose and the bundle agree — that assumption is
+what let an earlier release ship with <code class="docutils literal notranslate"><span class="pre">ASV-k</span></code> labels while the prose described a
+chain that would have produced feature IDs.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>File sizes and checksums are not transcribed here — they live in the bundle
+manifest, which is generated from the published files rather than by hand and is
+authoritative if the two ever disagree. See
+<a class="reference internal" href="../00_getting_started/03_download_data.html"><span class="std std-doc">Download the tutorial data</span></a>.</p>
+</div>
+</section>
+<section id="getting-the-files">
+<h2>Getting the files<a class="headerlink" href="#getting-the-files" title="Link to this heading">#</a></h2>
+<p>All Tier 2 artifacts are part of the tutorial data bundle described in
+<a class="reference internal" href="../00_getting_started/03_download_data.html"><span class="std std-doc">Download the Tutorial Data</span></a>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The bundle will be published as the Zenodo record <em>q2-hdstats-tutorial-data</em>
+v1.0.0. <strong>The DOI has not been minted yet</strong>, so the download URL on that page is
+currently the placeholder <code class="docutils literal notranslate"><span class="pre">ZENODO_DOI_PENDING</span></code>.</p>
+</div>
+<p>With the files in place, continue to <a class="reference internal" href="02_model_selection.html"><span class="std std-doc">Selecting lambda</span></a>.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters/04_highdim_atacama"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="00_index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Overview</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="02_model_selection.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">High-Dimensional Example: 300 Atacama ASVs</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#provenance">Provenance</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-300-and-why-by-total-abundance">Why 300, and why by total abundance</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#taxonomy">Taxonomy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-transformed-table">The transformed table</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-covariance-matrix">The covariance matrix</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metadata">Metadata</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#artifact-inventory">Artifact inventory</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-the-files">Getting the files</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Biomedical Statistics and Data Science Group @ LMU & Helmholtz Munich
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

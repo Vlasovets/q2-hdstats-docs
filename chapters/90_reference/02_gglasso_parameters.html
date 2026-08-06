@@ -1,0 +1,1311 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>q2-gglasso Parameter Reference &#8212; High-dimensional Statistics with QIIME 2</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles.css?v=3437f865" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/90_reference/02_gglasso_parameters';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="q2-classo Parameter Reference" href="03_classo_parameters.html" />
+    <link rel="prev" title="Command Coverage Matrix" href="01_command_coverage.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo_light.svg" class="logo__image only-light" alt="High-dimensional Statistics with QIIME 2 - Home"/>
+    <img src="../../_static/logo_dark.svg" class="logo__image only-dark pst-js-only" alt="High-dimensional Statistics with QIIME 2 - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../00_getting_started/01_intro.html">Why High-Dimensional Statistics?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../00_getting_started/02_datasets.html">Atacama Soil Microbiome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../00_getting_started/03_download_data.html">Download the Tutorial Data</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../01_installation/01_prerequisites.html">Prerequisites &amp; Installation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../01_installation/02_q2_gglasso.html">Installing q2-gglasso</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_installation/03_q2_classo.html">Installing q2-classo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_installation/04_verify.html">Verifying Your Installation</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tier 1 — Low-dimensional example (Atacama, 13 ASVs)</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../02_lowdim_gglasso/00_index.html">Graphical Lasso Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/01_data_preparation.html">Data Preparation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/02_sgl.html">Single Graphical Lasso</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/03_slr.html">Sparse + Low-Rank (Latent Variables)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/04_adaptive_glasso.html">Adaptive Graphical Lasso</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/05_lambda_paths.html">Regularization Paths &amp; Model Selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/06_multiple_graphical_lasso.html">Multiple Graphical Lasso (GGL / FGL)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/07_pca.html">Latent-Component PCA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/08_summarize.html">Summarizing a Solution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02_lowdim_gglasso/09_interpretation.html">Interpretation</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../03_lowdim_classo/00_overview.html">Log-Contrast Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/01_generate_data.html">Synthetic Data with Known Truth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/02_data_preparation.html">Data Preparation</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../03_lowdim_classo/03_regression/00_index.html">Regression</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../03_lowdim_classo/03_regression/01_logcontrast.html">Log-Contrast</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../03_lowdim_classo/03_regression/02_trac.html">With trac</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../03_lowdim_classo/04_classification/00_index.html">Classification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../03_lowdim_classo/04_classification/01_logcontrast.html">Log-Contrast</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../03_lowdim_classo/04_classification/02_trac.html">With trac</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/05_advanced/01_concomitant_formulation.html">Advanced: Concomitant Formulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/05_advanced/02_model_selection.html">Advanced: Choosing a Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/06_predict_and_summarize.html">Predict &amp; Summarize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03_lowdim_classo/07_interpretation.html">Interpretation</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tier 2 — High-dimensional example (Atacama, 300 ASVs)</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../04_highdim_atacama/00_index.html">Overview</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../04_highdim_atacama/01_data.html">The 300-ASV Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_highdim_atacama/02_model_selection.html">Selecting lambda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_highdim_atacama/03_slr_ranks.html">Choosing the Latent Rank</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_highdim_atacama/04_latent_pca.html">Latent Components &amp; Covariates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_highdim_atacama/05_classo_cv.html">Log-Contrast Models at Scale</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04_highdim_atacama/06_interpretation.html">Interpretation</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tier 3 — Metagenomics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../05_metagenomics/00_index.html">Overview</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../05_metagenomics/01_gut_to_soil/00_index.html">Gut-to-Soil (16S, 335 ASVs x 99 samples)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../05_metagenomics/01_gut_to_soil/01_data.html">The Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_metagenomics/01_gut_to_soil/02_network.html">Network Inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_metagenomics/01_gut_to_soil/03_regression.html">Log-Contrast Regression</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_command_coverage.html">Command Coverage Matrix</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">q2-gglasso Parameter Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_classo_parameters.html">q2-classo Parameter Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_troubleshooting.html">Troubleshooting &amp; Known Gotchas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../99_appendix/01_math.html">Appendix: Mathematical Background</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../99_appendix/02_moshpit_cocoa_note.html">Appendix: Shotgun Metagenomics (MOSHPIT cocoa)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/chapters/90_reference/02_gglasso_parameters.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>q2-gglasso Parameter Reference</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-read-the-tables">How to read the tables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transform-features"><code class="docutils literal notranslate"><span class="pre">transform-features</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#inputs-and-outputs">Inputs and outputs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#parameters">Parameters</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build-groups"><code class="docutils literal notranslate"><span class="pre">build-groups</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#calculate-covariance"><code class="docutils literal notranslate"><span class="pre">calculate-covariance</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#solve-problem"><code class="docutils literal notranslate"><span class="pre">solve-problem</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Inputs and outputs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Parameters</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#when-the-defaults-kick-in">When the defaults kick in</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#when-model-selection-actually-runs">When model selection actually runs</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pca-visualizer"><code class="docutils literal notranslate"><span class="pre">pca</span></code> (visualizer)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summarize-visualizer"><code class="docutils literal notranslate"><span class="pre">summarize</span></code> (visualizer)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#string-parameters-have-no-validation">String parameters have no validation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#see-also">See also</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="q2-gglasso-parameter-reference">
+<h1>q2-gglasso Parameter Reference<a class="headerlink" href="#q2-gglasso-parameter-reference" title="Link to this heading">#</a></h1>
+<p>Every parameter of every registered <code class="docutils literal notranslate"><span class="pre">q2-gglasso</span></code> action, with its CLI spelling,
+its type as registered with QIIME 2, its default as declared in the function
+signature, and the chapter where the tutorial exercises it.</p>
+<p>Use this page when you already know <em>what</em> you want to do and need the exact
+flag. Use <a class="reference internal" href="04_troubleshooting.html"><span class="std std-doc">Troubleshooting</span></a> when a flag does something
+other than what you expected, and
+<a class="reference internal" href="01_command_coverage.html"><span class="std std-doc">Command Coverage Matrix</span></a> to see which actions the
+tutorial covers at all.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>These tables are maintained <strong>by hand</strong> today, which means they can drift away
+from the plugin. The intended end state is to capture
+<code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">gglasso</span> <span class="pre">&lt;action&gt;</span> <span class="pre">--help</span></code> into <code class="docutils literal notranslate"><span class="pre">docs/_data/help/gglasso-&lt;action&gt;.txt</span></code> at
+build time, render it with <code class="docutils literal notranslate"><span class="pre">{literalinclude}</span></code>, and add a CI check that asserts
+the documented parameter set equals the set registered in
+<code class="docutils literal notranslate"><span class="pre">q2_gglasso/plugin_setup.py</span></code> and <code class="docutils literal notranslate"><span class="pre">q2_gglasso/_dict.py</span></code>. <strong>That generation step is
+not wired up yet.</strong> Until it is, treat <code class="docutils literal notranslate"><span class="pre">--help</span></code> on your own install as the final
+authority and open an issue if this page disagrees with it.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Every name, type and default below was read directly from
+<code class="docutils literal notranslate"><span class="pre">q2_gglasso/plugin_setup.py</span></code>, <code class="docutils literal notranslate"><span class="pre">q2_gglasso/_dict.py</span></code> and the function signatures in
+<code class="docutils literal notranslate"><span class="pre">q2_gglasso/_func.py</span></code>. They have <strong>not</strong> yet been checked against captured
+<code class="docutils literal notranslate"><span class="pre">--help</span></code> output from a QIIME 2 2026.7 build, because that environment does not
+exist yet. Nothing on this page is a recorded command output.</p>
+</div>
+<section id="how-to-read-the-tables">
+<h2>How to read the tables<a class="headerlink" href="#how-to-read-the-tables" title="Link to this heading">#</a></h2>
+<p>QIIME 2 derives every CLI flag mechanically from the registered name: a
+parameter <code class="docutils literal notranslate"><span class="pre">foo_bar</span></code> becomes <code class="docutils literal notranslate"><span class="pre">--p-foo-bar</span></code>, an input becomes <code class="docutils literal notranslate"><span class="pre">--i-foo-bar</span></code>, an
+output <code class="docutils literal notranslate"><span class="pre">--o-foo-bar</span></code>, and a <code class="docutils literal notranslate"><span class="pre">Metadata</span></code> parameter becomes <code class="docutils literal notranslate"><span class="pre">--m-foo-bar-file</span></code>.
+Underscores in the registered name are <em>not</em> collapsed, which is why the
+deprecated <code class="docutils literal notranslate"><span class="pre">cv__nlam</span></code> in the sibling plugin surfaces as <code class="docutils literal notranslate"><span class="pre">--p-cv--nlam</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">List[...]</span></code> parameters are repeatable options on the command line: pass the flag
+once per value (<code class="docutils literal notranslate"><span class="pre">--p-lambda1-path</span> <span class="pre">1.0</span> <span class="pre">--p-lambda1-path</span> <span class="pre">0.1</span> <span class="pre">...</span></code>). Several
+<code class="docutils literal notranslate"><span class="pre">List[...]</span></code> parameters here — the <code class="docutils literal notranslate"><span class="pre">lambda*_min</span></code>/<code class="docutils literal notranslate"><span class="pre">lambda*_max</span></code>/<code class="docutils literal notranslate"><span class="pre">mu1_*</span></code> bounds —
+are registered as lists but consumed as scalars, so in practice you pass them
+exactly once. (<code class="docutils literal notranslate"><span class="pre">n_samples</span></code> is the exception: pass it once per instance.)</p>
+<p>Two conventions used in the <strong>Notes</strong> column:</p>
+<ul class="simple">
+<li><p><strong>always raises</strong> — the parameter is registered and accepted by the CLI, but
+every call that sets it fails. It exists so the limitation is explicit rather
+than silently ignored.</p></li>
+<li><p><strong>no <code class="docutils literal notranslate"><span class="pre">Choices()</span></code></strong> — the plugin does not constrain the accepted strings, so a
+typo passes argument parsing and fails (or is silently accepted) inside the
+function. See the last section of this page.</p></li>
+</ul>
+<p>The <strong>Demonstrated in</strong> column names the chapter that exercises the parameter,
+or the closest chapter that discusses it. <code class="docutils literal notranslate"><span class="pre">not</span> <span class="pre">demonstrated</span></code> means the parameter
+is never passed in a runnable command in this tutorial (it may still be
+discussed in prose); it is not a statement about whether the parameter works.</p>
+</section>
+<hr class="docutils" />
+<section id="transform-features">
+<h2><code class="docutils literal notranslate"><span class="pre">transform-features</span></code><a class="headerlink" href="#transform-features" title="Link to this heading">#</a></h2>
+<p>Turns a count table into a CLR- or mCLR-transformed table suitable for
+covariance estimation. Optionally joins scaled sample metadata onto the table as
+extra rows, which is how continuous covariates enter the network.</p>
+<section id="inputs-and-outputs">
+<h3>Inputs and outputs<a class="headerlink" href="#inputs-and-outputs" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>CLI flag</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Required</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">table</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--i-table</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">FeatureTable[Composition</span> <span class="pre">|</span> <span class="pre">Frequency</span> <span class="pre">|</span> <span class="pre">Design]</span></code></p></td>
+<td><p>yes</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">taxonomy</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--i-taxonomy</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">FeatureData[Taxonomy]</span></code></p></td>
+<td><p>yes</p></td>
+<td><p><strong>Required but never read.</strong> The function body ignores it entirely.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">transformed_table</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--o-transformed-table</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">FeatureTable[Frequency]</span></code></p></td>
+<td><p>yes</p></td>
+<td><p>Output is stored feature-major (p x n).</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="parameters">
+<h3>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>CLI flag</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Demonstrated in</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sample_metadata</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--m-sample-metadata-file</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Metadata</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p></td>
+<td><p><a class="reference internal" href="../02_lowdim_gglasso/01_data_preparation.html"><span class="std std-doc">Data Preparation</span></a></p></td>
+<td><p>Only read when <code class="docutils literal notranslate"><span class="pre">add_metadata</span></code> is <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">transformation</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-transformation</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Str</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">clr</span></code></p></td>
+<td><p><a class="reference internal" href="../02_lowdim_gglasso/01_data_preparation.html"><span class="std std-doc">Data Preparation</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">clr</span></code> or <code class="docutils literal notranslate"><span class="pre">mclr</span></code>. <strong>No <code class="docutils literal notranslate"><span class="pre">Choices()</span></code></strong> — a typo is a runtime <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pseudo_count</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-pseudo-count</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1</span></code></p></td>
+<td><p><a class="reference internal" href="../04_highdim_atacama/01_data.html"><span class="std std-doc">The 300-ASV Dataset</span></a></p></td>
+<td><p>Zero replacement before the log. Only meaningful for <code class="docutils literal notranslate"><span class="pre">clr</span></code>; <code class="docutils literal notranslate"><span class="pre">mclr</span></code> handles zeros itself.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">scale_metadata</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-scale-metadata</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Bool</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">True</span></code></p></td>
+<td><p><a class="reference internal" href="../02_lowdim_gglasso/01_data_preparation.html"><span class="std std-doc">Data Preparation</span></a></p></td>
+<td><p>Standardises metadata columns before joining.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">add_metadata</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-add-metadata</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Bool</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">False</span></code></p></td>
+<td><p><a class="reference internal" href="../02_lowdim_gglasso/01_data_preparation.html"><span class="std std-doc">Data Preparation</span></a></p></td>
+<td><p>Appends metadata columns as additional variables of the network. Only <strong>numeric</strong> columns are used — <code class="docutils literal notranslate"><span class="pre">filter_columns(column_type='numeric')</span></code> silently drops categorical ones, so a categorical covariate never becomes a node. Missing values in the retained columns are filled with <code class="docutils literal notranslate"><span class="pre">0</span></code> behind a <code class="docutils literal notranslate"><span class="pre">Missing</span> <span class="pre">values</span> <span class="pre">are</span> <span class="pre">imputed</span> <span class="pre">with</span> <span class="pre">0!</span></code> warning.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">keep_original_id</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-keep-original-id</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Bool</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">True</span></code></p></td>
+<td><p><a class="reference internal" href="../04_highdim_atacama/01_data.html"><span class="std std-doc">The 300-ASV Dataset</span></a></p></td>
+<td><p>Rows are always reordered by <strong>ascending</strong> total abundance, at either setting, with ties broken on the feature ID so the order depends only on the table’s contents. With <code class="docutils literal notranslate"><span class="pre">False</span></code> the index is additionally replaced by <code class="docutils literal notranslate"><span class="pre">ASV-1</span> <span class="pre">…</span> <span class="pre">ASV-p</span></code>, so <code class="docutils literal notranslate"><span class="pre">ASV-1</span></code> is the <em>least</em> abundant feature. <strong><code class="docutils literal notranslate"><span class="pre">ASV-k</span></code> is a position, not an identifier</strong> — it is only meaningful inside the artifact that defines it and must never be used as a join key across artifacts. Ties are common (209 of the 300 Atacama features share a total-abundance value), so before ties were broken deterministically the same table could yield different <code class="docutils literal notranslate"><span class="pre">ASV-k</span></code> assignments. Prefer the default.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Two of these deserve more than a table row. <code class="docutils literal notranslate"><span class="pre">add_metadata</span></code> is the switch that
+decides <em>what kind of question the network answers</em>: with it off you get taxon-taxon
+conditional dependencies only; with it on, environmental covariates become nodes
+and a taxon-covariate edge means the association survives conditioning on every
+other taxon. <code class="docutils literal notranslate"><span class="pre">scale_metadata</span></code> matters because the CLR-transformed taxa and a raw
+covariate such as elevation live on wildly different scales, and the graphical
+lasso applies one global <code class="docutils literal notranslate"><span class="pre">lambda1</span></code> to all of them — leaving a covariate unscaled
+effectively changes its penalty relative to everything else.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><code class="docutils literal notranslate"><span class="pre">--i-taxonomy</span></code> is required by the registration but unused by the implementation.
+Pass any valid <code class="docutils literal notranslate"><span class="pre">FeatureData[Taxonomy]</span></code> artifact; its contents cannot change the
+result. This is tracked in <a class="reference internal" href="04_troubleshooting.html"><span class="std std-doc">Troubleshooting</span></a>.</p>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="build-groups">
+<h2><code class="docutils literal notranslate"><span class="pre">build-groups</span></code><a class="headerlink" href="#build-groups" title="Link to this heading">#</a></h2>
+<p>Builds the bookkeeping array that a non-conforming Group Graphical Lasso needs
+when the K instances do not share the same feature set.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>CLI flag</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Demonstrated in</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">tables</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--i-tables</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">List[FeatureTable[Frequency]]</span></code></p></td>
+<td><p>required</p></td>
+<td><p><a class="reference internal" href="../02_lowdim_gglasso/06_multiple_graphical_lasso.html"><span class="std std-doc">Multiple Graphical Lasso</span></a></p></td>
+<td><p>Repeat the flag once per instance.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">check_groups</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-check-groups</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Bool</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">True</span></code></p></td>
+<td><p><a class="reference internal" href="../02_lowdim_gglasso/06_multiple_graphical_lasso.html"><span class="std std-doc">Multiple Graphical Lasso</span></a></p></td>
+<td><p>Validates the constructed overlap groups.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">group_array</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--o-group-array</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">TensorData</span></code></p></td>
+<td><p>required</p></td>
+<td><p><a class="reference internal" href="../02_lowdim_gglasso/06_multiple_graphical_lasso.html"><span class="std std-doc">Multiple Graphical Lasso</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(2,</span> <span class="pre">L,</span> <span class="pre">K)</span></code> index array: L overlap groups across K instances.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>Known gap: <code class="docutils literal notranslate"><span class="pre">build-groups</span></code> does not chain into <code class="docutils literal notranslate"><span class="pre">solve-problem</span></code>.</strong> This action
+emits a <code class="docutils literal notranslate"><span class="pre">TensorData</span></code> <em>artifact</em>, while <code class="docutils literal notranslate"><span class="pre">solve-problem</span></code> accepts <code class="docutils literal notranslate"><span class="pre">group_array</span></code> as a
+<code class="docutils literal notranslate"><span class="pre">List[Int]</span></code> <em>parameter</em>. The QIIME 2 type system cannot connect the two, so you
+have to export the artifact and pass the indices explicitly with
+<code class="docutils literal notranslate"><span class="pre">--p-group-array</span></code>. The workaround is written out in
+<a class="reference internal" href="../02_lowdim_gglasso/06_multiple_graphical_lasso.html"><span class="std std-doc">Multiple Graphical Lasso</span></a>.</p>
+</div>
+</section>
+<hr class="docutils" />
+<section id="calculate-covariance">
+<h2><code class="docutils literal notranslate"><span class="pre">calculate-covariance</span></code><a class="headerlink" href="#calculate-covariance" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>CLI flag</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Demonstrated in</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">table</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--i-table</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">FeatureTable[Frequency]</span></code></p></td>
+<td><p>required</p></td>
+<td><p><a class="reference internal" href="../02_lowdim_gglasso/01_data_preparation.html"><span class="std std-doc">Data Preparation</span></a></p></td>
+<td><p>Expects the p x n output of <code class="docutils literal notranslate"><span class="pre">transform-features</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">method</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-method</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Str</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">scaled</span></code></p></td>
+<td><p><a class="reference internal" href="../02_lowdim_gglasso/01_data_preparation.html"><span class="std std-doc">Data Preparation</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">scaled</span></code> divides by the square root of the diagonal (a correlation matrix); <code class="docutils literal notranslate"><span class="pre">unscaled</span></code> returns the raw covariance. <strong>No <code class="docutils literal notranslate"><span class="pre">Choices()</span></code></strong>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">bias</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-bias</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Bool</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">True</span></code></p></td>
+<td><p><a class="reference internal" href="../04_highdim_atacama/01_data.html"><span class="std std-doc">The 300-ASV Dataset</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">True</span></code> normalises by N, <code class="docutils literal notranslate"><span class="pre">False</span></code> by N-1.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">covariance_matrix</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--o-covariance-matrix</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PairwiseFeatureData</span></code></p></td>
+<td><p>required</p></td>
+<td><p><a class="reference internal" href="../02_lowdim_gglasso/01_data_preparation.html"><span class="std std-doc">Data Preparation</span></a></p></td>
+<td><p>p x p, rounded to 10 decimals.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">method</span></code> is not cosmetic. A single <code class="docutils literal notranslate"><span class="pre">lambda1</span></code> penalises every entry of the
+precision matrix equally, so on an unscaled covariance the taxa with the largest
+variance absorb the penalty budget. <code class="docutils literal notranslate"><span class="pre">scaled</span></code> is the default for that reason, and
+it is what the tutorial uses throughout.</p>
+</section>
+<hr class="docutils" />
+<section id="solve-problem">
+<h2><code class="docutils literal notranslate"><span class="pre">solve-problem</span></code><a class="headerlink" href="#solve-problem" title="Link to this heading">#</a></h2>
+<p>The core solver. Twenty parameters, but they fall into five groups: how big the
+problem is, the sparsity grid, the low-rank grid, the multiple-instance
+settings, and model selection.</p>
+<section id="id1">
+<h3>Inputs and outputs<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>CLI flag</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">covariance_matrix</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--i-covariance-matrix</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PairwiseFeatureData</span></code></p></td>
+<td><p>p x p, positive semi-definite.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">solution</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--o-solution</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">GGLassoProblem</span></code></p></td>
+<td><p>Zarr store holding the solution and the hyperparameters used.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="id2">
+<h3>Parameters<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>CLI flag</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Demonstrated in</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">n_samples</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-n-samples</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">List[Int]</span></code></p></td>
+<td><p><strong>required</strong></p></td>
+<td><p><a class="reference internal" href="../02_lowdim_gglasso/02_sgl.html"><span class="std std-doc">Single Graphical Lasso</span></a></p></td>
+<td><p>Number of samples behind the covariance estimate; one value per instance. The only parameter with no default.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">lambda1_min</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-lambda1-min</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">List[Float]</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p></td>
+<td><p><a class="reference internal" href="../02_lowdim_gglasso/02_sgl.html"><span class="std std-doc">Single Graphical Lasso</span></a></p></td>
+<td><p>Lower bound of the sparsity grid. If unset while <code class="docutils literal notranslate"><span class="pre">lambda1_max</span></code> is set, falls back to <code class="docutils literal notranslate"><span class="pre">1e-3</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">lambda1_max</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-lambda1-max</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">List[Float]</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p></td>
+<td><p><a class="reference internal" href="../02_lowdim_gglasso/02_sgl.html"><span class="std std-doc">Single Graphical Lasso</span></a></p></td>
+<td><p>Upper bound of the sparsity grid. If unset while <code class="docutils literal notranslate"><span class="pre">lambda1_min</span></code> is set, falls back to <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">n_lambda1</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-n-lambda1</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1</span></code></p></td>
+<td><p><a class="reference internal" href="../02_lowdim_gglasso/02_sgl.html"><span class="std std-doc">Single Graphical Lasso</span></a></p></td>
+<td><p>Grid points between min and max. Leaving it at <code class="docutils literal notranslate"><span class="pre">1</span></code> only limits the <code class="docutils literal notranslate"><span class="pre">lambda1</span></code> grid to one point; on its own it does not turn model selection off — see “When model selection actually runs” below.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">lambda1_path</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-lambda1-path</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">List[Float]</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p></td>
+<td><p><a class="reference internal" href="../02_lowdim_gglasso/05_lambda_paths.html"><span class="std std-doc">Lambda Paths</span></a></p></td>
+<td><p>Explicit grid. Overrides <code class="docutils literal notranslate"><span class="pre">lambda1_min</span></code>/<code class="docutils literal notranslate"><span class="pre">lambda1_max</span></code>/<code class="docutils literal notranslate"><span class="pre">n_lambda1</span></code> <em>and</em> <code class="docutils literal notranslate"><span class="pre">path_scale</span></code>; values are used verbatim.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">lambda2_min</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-lambda2-min</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">List[Float]</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p></td>
+<td><p><a class="reference internal" href="../02_lowdim_gglasso/06_multiple_graphical_lasso.html"><span class="std std-doc">Multiple Graphical Lasso</span></a></p></td>
+<td><p>Across-instance penalty, MGL only. Same <code class="docutils literal notranslate"><span class="pre">1e-3</span></code> fallback.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">lambda2_max</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-lambda2-max</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">List[Float]</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p></td>
+<td><p><a class="reference internal" href="../02_lowdim_gglasso/06_multiple_graphical_lasso.html"><span class="std std-doc">Multiple Graphical Lasso</span></a></p></td>
+<td><p>Same <code class="docutils literal notranslate"><span class="pre">1</span></code> fallback.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">n_lambda2</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-n-lambda2</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1</span></code></p></td>
+<td><p><a class="reference internal" href="../02_lowdim_gglasso/06_multiple_graphical_lasso.html"><span class="std std-doc">Multiple Graphical Lasso</span></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mu1_min</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-mu1-min</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">List[Float]</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p></td>
+<td><p><a class="reference internal" href="../02_lowdim_gglasso/03_slr.html"><span class="std std-doc">Sparse + Low-Rank</span></a></p></td>
+<td><p>Low-rank penalty. Only used when <code class="docutils literal notranslate"><span class="pre">latent</span></code> is <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">mu1_max</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-mu1-max</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">List[Float]</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p></td>
+<td><p><a class="reference internal" href="../02_lowdim_gglasso/03_slr.html"><span class="std std-doc">Sparse + Low-Rank</span></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">n_mu1</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-n-mu1</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1</span></code></p></td>
+<td><p><a class="reference internal" href="../04_highdim_atacama/03_slr_ranks.html"><span class="std std-doc">Choosing the Latent Rank</span></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">mu1_path</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-mu1-path</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">List[Float]</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p></td>
+<td><p><a class="reference internal" href="../02_lowdim_gglasso/05_lambda_paths.html"><span class="std std-doc">Lambda Paths</span></a></p></td>
+<td><p>Explicit low-rank grid; overrides <code class="docutils literal notranslate"><span class="pre">mu1_min</span></code>/<code class="docutils literal notranslate"><span class="pre">mu1_max</span></code>/<code class="docutils literal notranslate"><span class="pre">n_mu1</span></code> and <code class="docutils literal notranslate"><span class="pre">path_scale</span></code>. Ignored unless <code class="docutils literal notranslate"><span class="pre">latent</span></code> is <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">path_scale</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-path-scale</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Str</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">log</span></code></p></td>
+<td><p><a class="reference internal" href="../02_lowdim_gglasso/05_lambda_paths.html"><span class="std std-doc">Lambda Paths</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">log</span></code> or <code class="docutils literal notranslate"><span class="pre">linear</span></code> spacing when a grid is built from min/max/count. Ignored when an explicit path is given. <strong>No <code class="docutils literal notranslate"><span class="pre">Choices()</span></code></strong> — an unrecognised value raises <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>, but only once a grid is actually built from bounds: with every <code class="docutils literal notranslate"><span class="pre">lambda1</span></code>/<code class="docutils literal notranslate"><span class="pre">lambda2</span></code>/<code class="docutils literal notranslate"><span class="pre">mu1</span></code> bound unset the misspelling is never reached.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">latent</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-latent</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Bool</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p></td>
+<td><p><a class="reference internal" href="../02_lowdim_gglasso/03_slr.html"><span class="std std-doc">Sparse + Low-Rank</span></a></p></td>
+<td><p>Switches on the sparse + low-rank decomposition. Required for <code class="docutils literal notranslate"><span class="pre">pca</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">rank</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-rank</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p></td>
+<td><p><a class="reference internal" href="../04_highdim_atacama/03_slr_ranks.html"><span class="std std-doc">Choosing the Latent Rank</span></a></p></td>
+<td><p><strong>Always raises.</strong> See the box below.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">weights</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-weights</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">List[Str]</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p></td>
+<td><p><a class="reference internal" href="../02_lowdim_gglasso/04_adaptive_glasso.html"><span class="std std-doc">Adaptive Graphical Lasso</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">entry</span> <span class="pre">weight</span></code> pairs, applied element-wise to <code class="docutils literal notranslate"><span class="pre">lambda1</span></code>. Later entries override earlier ones, so order matters. SGL only.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">non_conforming</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-non-conforming</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Bool</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p></td>
+<td><p><a class="reference internal" href="../02_lowdim_gglasso/06_multiple_graphical_lasso.html"><span class="std std-doc">Multiple Graphical Lasso</span></a></p></td>
+<td><p>Instances with differing feature sets; requires <code class="docutils literal notranslate"><span class="pre">group_array</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">group_array</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-group-array</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">List[Int]</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p></td>
+<td><p><a class="reference internal" href="../02_lowdim_gglasso/06_multiple_graphical_lasso.html"><span class="std std-doc">Multiple Graphical Lasso</span></a></p></td>
+<td><p>A <strong>parameter</strong>, not an input — see the <code class="docutils literal notranslate"><span class="pre">build-groups</span></code> gap above.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">reg</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-reg</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Str</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">GGL</span></code></p></td>
+<td><p><a class="reference internal" href="../02_lowdim_gglasso/06_multiple_graphical_lasso.html"><span class="std std-doc">Multiple Graphical Lasso</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">GGL</span></code> (group) or <code class="docutils literal notranslate"><span class="pre">FGL</span></code> (fused). MGL only. <strong>No <code class="docutils literal notranslate"><span class="pre">Choices()</span></code></strong>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">gamma</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-gamma</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Float</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0.01</span></code></p></td>
+<td><p><a class="reference internal" href="../04_highdim_atacama/02_model_selection.html"><span class="std std-doc">Model Selection</span></a></p></td>
+<td><p>eBIC parameter in [0, 1]. Larger values push model selection toward sparser solutions.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong><code class="docutils literal notranslate"><span class="pre">--p-rank</span></code> always raises</strong> — <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> if <code class="docutils literal notranslate"><span class="pre">--p-latent</span></code> is not set,
+<code class="docutils literal notranslate"><span class="pre">NotImplementedError</span></code> otherwise. No released GGLasso
+(up to and including 0.3.0) can fix the rank of the low-rank component; it
+exposes only the continuous <code class="docutils literal notranslate"><span class="pre">mu1</span></code> penalty and reports the achieved rank as an
+<em>output</em>. The parameter is registered and guarded so that setting it fails
+loudly instead of being ignored.</p>
+<p>Size the low-rank block through <code class="docutils literal notranslate"><span class="pre">mu1</span></code> instead: <strong>a larger <code class="docutils literal notranslate"><span class="pre">mu1</span></code> gives a smaller
+rank.</strong> Scout a small <code class="docutils literal notranslate"><span class="pre">mu1</span></code> grid and read the achieved rank out of the solution —
+<a class="reference internal" href="../04_highdim_atacama/03_slr_ranks.html"><span class="std std-doc">Choosing the Latent Rank</span></a> walks through
+this. Setting <code class="docutils literal notranslate"><span class="pre">rank</span></code> without <code class="docutils literal notranslate"><span class="pre">latent=True</span></code> raises <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> before the
+version check is even reached.</p>
+</div>
+</section>
+<section id="when-the-defaults-kick-in">
+<h3>When the defaults kick in<a class="headerlink" href="#when-the-defaults-kick-in" title="Link to this heading">#</a></h3>
+<p>If you leave a grid completely unset, the solver substitutes a built-in path and
+emits a warning rather than failing:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Grid</p></th>
+<th class="head"><p>Substituted when both bounds are unset</p></th>
+<th class="head"><p>Warning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">lambda1</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">np.logspace(0,</span> <span class="pre">-4,</span> <span class="pre">15)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Default</span> <span class="pre">values</span> <span class="pre">for</span> <span class="pre">lambda1</span> <span class="pre">have</span> <span class="pre">been</span> <span class="pre">used.</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">lambda2</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">np.logspace(-1,</span> <span class="pre">-4,</span> <span class="pre">5)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Default</span> <span class="pre">values</span> <span class="pre">for</span> <span class="pre">lambda2</span> <span class="pre">have</span> <span class="pre">been</span> <span class="pre">used.</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mu1</span></code> (only if <code class="docutils literal notranslate"><span class="pre">latent=True</span></code>)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">np.logspace(2,</span> <span class="pre">-1,</span> <span class="pre">10)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Default</span> <span class="pre">values</span> <span class="pre">for</span> <span class="pre">mu1</span> <span class="pre">have</span> <span class="pre">been</span> <span class="pre">used.</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Setting only one of the two bounds does <em>not</em> trigger this. A missing lower
+bound becomes <code class="docutils literal notranslate"><span class="pre">1e-3</span></code> and a missing upper bound becomes <code class="docutils literal notranslate"><span class="pre">1</span></code>, silently, which is
+easy to mistake for a grid you specified yourself.</p>
+</section>
+<section id="when-model-selection-actually-runs">
+<h3>When model selection actually runs<a class="headerlink" href="#when-model-selection-actually-runs" title="Link to this heading">#</a></h3>
+<p>Model selection runs whenever <strong>at least one grid ends up with more than one
+value</strong> — and the grids the solver sees are the ones <em>after</em> the defaults in the
+previous section have been substituted. That substitution is what makes single
+fits harder to get than the flags suggest:</p>
+<ul class="simple">
+<li><p><strong>Non-latent (SGL/MGL).</strong> A run counts as a single fit only if <code class="docutils literal notranslate"><span class="pre">lambda1</span></code>
+collapses to one value <strong>and</strong> at least one of <code class="docutils literal notranslate"><span class="pre">--p-lambda2-min</span></code>/
+<code class="docutils literal notranslate"><span class="pre">--p-lambda2-max</span></code> is set (with <code class="docutils literal notranslate"><span class="pre">--p-n-lambda2</span> <span class="pre">1</span></code>). With <code class="docutils literal notranslate"><span class="pre">lambda2</span></code> left unset
+the solver substitutes the 5-point default grid even for SGL, so
+<code class="docutils literal notranslate"><span class="pre">model_selection</span></code> is on and <code class="docutils literal notranslate"><span class="pre">modelselect_stats</span></code> is written — pinning
+<code class="docutils literal notranslate"><span class="pre">--p-lambda1-min</span></code>/<code class="docutils literal notranslate"><span class="pre">--p-lambda1-max</span></code> to the same value, or passing a
+one-element <code class="docutils literal notranslate"><span class="pre">--p-lambda1-path</span></code>, is not enough on its own.</p></li>
+<li><p><strong>Latent (<code class="docutils literal notranslate"><span class="pre">--p-latent</span> <span class="pre">True</span></code>).</strong> <code class="docutils literal notranslate"><span class="pre">lambda1</span></code>, <code class="docutils literal notranslate"><span class="pre">lambda2</span></code> <em>and</em> <code class="docutils literal notranslate"><span class="pre">mu1</span></code> must all
+collapse to a single value. Supplying a <code class="docutils literal notranslate"><span class="pre">lambda1</span></code> range while forgetting <code class="docutils literal notranslate"><span class="pre">mu1</span></code>
+— or the reverse — produces a grid search when you expected one fit.</p></li>
+</ul>
+<p>To check what happened, look for a <code class="docutils literal notranslate"><span class="pre">modelselect_stats</span></code> group in the solution: a
+genuine single fit has none, and <code class="docutils literal notranslate"><span class="pre">summarize</span></code> omits the statistics accordingly.
+Because of the <code class="docutils literal notranslate"><span class="pre">lambda2</span></code> substitution above, most non-latent runs <em>will</em> have
+one.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This describes current solver behaviour, not a design decision. Applying the
+<code class="docutils literal notranslate"><span class="pre">lambda2</span></code> default only to MGL problems would be the cleaner fix, but that is a
+behaviour change in <code class="docutils literal notranslate"><span class="pre">q2_gglasso/utils.py</span></code> and needs a maintainer decision; the
+same inaccurate “n_lambda1 == 1 means a single fit” rule is also repeated as a
+code comment in <code class="docutils literal notranslate"><span class="pre">q2_gglasso/_summarize/_visualizer.py</span></code>.</p>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="pca-visualizer">
+<h2><code class="docutils literal notranslate"><span class="pre">pca</span></code> (visualizer)<a class="headerlink" href="#pca-visualizer" title="Link to this heading">#</a></h2>
+<p>Projects samples onto the principal components of the <strong>low-rank</strong> component of
+an SLR solution.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>CLI flag</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Demonstrated in</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">table</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--i-table</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">FeatureTable[Frequency]</span></code></p></td>
+<td><p>required</p></td>
+<td><p><a class="reference internal" href="../02_lowdim_gglasso/07_pca.html"><span class="std std-doc">PCA of the Latent Space</span></a></p></td>
+<td><p>The transformed table, p x n.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">solution</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--i-solution</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">GGLassoProblem</span></code></p></td>
+<td><p>required</p></td>
+<td><p><a class="reference internal" href="../02_lowdim_gglasso/07_pca.html"><span class="std std-doc">PCA of the Latent Space</span></a></p></td>
+<td><p><strong>Must have been solved with <code class="docutils literal notranslate"><span class="pre">--p-latent</span> <span class="pre">True</span></code>.</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sample_metadata</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--m-sample-metadata-file</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Metadata</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p></td>
+<td><p><a class="reference internal" href="../02_lowdim_gglasso/07_pca.html"><span class="std std-doc">PCA of the Latent Space</span></a></p></td>
+<td><p><strong>Optional in the signature, required in practice</strong> — the visualizer dereferences it unconditionally.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">n_components</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-n-components</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">3</span></code></p></td>
+<td><p><a class="reference internal" href="../04_highdim_atacama/04_latent_pca.html"><span class="std std-doc">Latent PCA</span></a></p></td>
+<td><p>Number of components to plot.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">color_by</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-color-by</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Str</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p></td>
+<td><p><a class="reference internal" href="../02_lowdim_gglasso/07_pca.html"><span class="std std-doc">PCA of the Latent Space</span></a></p></td>
+<td><p>Name of a metadata column. Must exist in the file passed above.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Two failure modes, both easy to hit:</p>
+<ul class="simple">
+<li><p>Running <code class="docutils literal notranslate"><span class="pre">pca</span></code> on a sparse-only (SGL) solution fails, because the visualizer
+reads <code class="docutils literal notranslate"><span class="pre">solution/lowrank_</span></code>, which only exists when <code class="docutils literal notranslate"><span class="pre">--p-latent</span> <span class="pre">True</span></code> was used.</p></li>
+<li><p>Omitting <code class="docutils literal notranslate"><span class="pre">--m-sample-metadata-file</span></code> crashes with an <code class="docutils literal notranslate"><span class="pre">AttributeError</span></code> despite
+the parameter being optional in the signature. Treat it as required.</p></li>
+</ul>
+</div>
+</section>
+<hr class="docutils" />
+<section id="summarize-visualizer">
+<h2><code class="docutils literal notranslate"><span class="pre">summarize</span></code> (visualizer)<a class="headerlink" href="#summarize-visualizer" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>CLI flag</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Demonstrated in</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">solution</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--i-solution</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">GGLassoProblem</span></code></p></td>
+<td><p>required</p></td>
+<td><p><a class="reference internal" href="../02_lowdim_gglasso/08_summarize.html"><span class="std std-doc">Summarize</span></a></p></td>
+<td><p>Works for sparse-only and latent solutions alike.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">width</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-width</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1500</span></code></p></td>
+<td><p><a class="reference internal" href="../02_lowdim_gglasso/08_summarize.html"><span class="std std-doc">Summarize</span></a></p></td>
+<td><p>Plot width in pixels.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">height</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-height</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1500</span></code></p></td>
+<td><p><a class="reference internal" href="../02_lowdim_gglasso/08_summarize.html"><span class="std std-doc">Summarize</span></a></p></td>
+<td><p>Plot height in pixels.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">label_size</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-label-size</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Str</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">5pt</span></code></p></td>
+<td><p><a class="reference internal" href="../02_lowdim_gglasso/02_sgl.html"><span class="std std-doc">Single Graphical Lasso</span></a></p></td>
+<td><p>A bokeh font-size string, e.g. <code class="docutils literal notranslate"><span class="pre">25pt</span></code>. Raise it for small networks; the default is sized for hundreds of nodes.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">n_cov</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">--p-n-cov</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p></td>
+<td><p><a class="reference internal" href="../02_lowdim_gglasso/08_summarize.html"><span class="std std-doc">Summarize</span></a></p></td>
+<td><p>Number of <em>trailing</em> variables that are covariates rather than taxa. When set, the heatmaps cluster the taxon block and the covariate block separately instead of mixing them. Set this if you used <code class="docutils literal notranslate"><span class="pre">--p-add-metadata</span> <span class="pre">True</span></code>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<hr class="docutils" />
+<section id="string-parameters-have-no-validation">
+<h2>String parameters have no validation<a class="headerlink" href="#string-parameters-have-no-validation" title="Link to this heading">#</a></h2>
+<p>Neither plugin declares <code class="docutils literal notranslate"><span class="pre">Choices()</span></code> on any string parameter. QIIME 2 therefore
+accepts <strong>any</strong> string, and the check happens inside the function — if it
+happens at all. In <code class="docutils literal notranslate"><span class="pre">q2-gglasso</span></code> this affects:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Flag</p></th>
+<th class="head"><p>Accepted values</p></th>
+<th class="head"><p>Behaviour on a typo</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--p-transformation</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">clr</span></code>, <code class="docutils literal notranslate"><span class="pre">mclr</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ValueError</span></code> inside <code class="docutils literal notranslate"><span class="pre">transform-features</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--p-method</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">scaled</span></code>, <code class="docutils literal notranslate"><span class="pre">unscaled</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ValueError</span></code> inside <code class="docutils literal notranslate"><span class="pre">calculate-covariance</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--p-path-scale</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">log</span></code>, <code class="docutils literal notranslate"><span class="pre">linear</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ValueError</span></code> inside grid construction — but only if at least one of the <code class="docutils literal notranslate"><span class="pre">lambda1</span></code>/<code class="docutils literal notranslate"><span class="pre">lambda2</span></code>/<code class="docutils literal notranslate"><span class="pre">mu1</span></code> bounds is set; with every grid unbounded (or driven entirely by an explicit <code class="docutils literal notranslate"><span class="pre">--p-lambda1-path</span></code>/<code class="docutils literal notranslate"><span class="pre">--p-mu1-path</span></code>) the misspelling is silently ignored</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--p-reg</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">GGL</span></code>, <code class="docutils literal notranslate"><span class="pre">FGL</span></code></p></td>
+<td><p>Reaches the solver; behaviour depends on the GGLasso build</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--p-label-size</span></code></p></td>
+<td><p>any CSS size string</p></td>
+<td><p>No validation; a bad value degrades the plot silently</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The practical consequence is that a typo costs you a whole run rather than being
+caught at argument-parsing time. On a 13-ASV problem that is a minor annoyance;
+on the 300-ASV problem in Tier 2 it is the entire solve. Check the spelling
+before you submit the job.</p>
+</section>
+<hr class="docutils" />
+<section id="see-also">
+<h2>See also<a class="headerlink" href="#see-also" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="03_classo_parameters.html"><span class="std std-doc">q2-classo Parameter Reference</span></a></p></li>
+<li><p><a class="reference internal" href="04_troubleshooting.html"><span class="std std-doc">Troubleshooting &amp; Known Gotchas</span></a></p></li>
+<li><p><a class="reference internal" href="01_command_coverage.html"><span class="std std-doc">Command Coverage Matrix</span></a></p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters/90_reference"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="01_command_coverage.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Command Coverage Matrix</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="03_classo_parameters.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">q2-classo Parameter Reference</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-read-the-tables">How to read the tables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transform-features"><code class="docutils literal notranslate"><span class="pre">transform-features</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#inputs-and-outputs">Inputs and outputs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#parameters">Parameters</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build-groups"><code class="docutils literal notranslate"><span class="pre">build-groups</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#calculate-covariance"><code class="docutils literal notranslate"><span class="pre">calculate-covariance</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#solve-problem"><code class="docutils literal notranslate"><span class="pre">solve-problem</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Inputs and outputs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Parameters</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#when-the-defaults-kick-in">When the defaults kick in</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#when-model-selection-actually-runs">When model selection actually runs</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pca-visualizer"><code class="docutils literal notranslate"><span class="pre">pca</span></code> (visualizer)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summarize-visualizer"><code class="docutils literal notranslate"><span class="pre">summarize</span></code> (visualizer)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#string-parameters-have-no-validation">String parameters have no validation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#see-also">See also</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Biomedical Statistics and Data Science Group @ LMU & Helmholtz Munich
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
