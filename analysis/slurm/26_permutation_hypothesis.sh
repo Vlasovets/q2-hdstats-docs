@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=q2-perm
-#SBATCH --output=/home/itg/oleg.vlasovets/slr_example/q2-hdstats-recompute/slurm/logs/perm_%j.out
-#SBATCH --error=/home/itg/oleg.vlasovets/slr_example/q2-hdstats-recompute/slurm/logs/perm_%j.err
+#SBATCH --output=/home/itg/oleg.vlasovets/slr_example/q2-hdstats-docs/analysis/slurm/logs/perm_%j.out
+#SBATCH --error=/home/itg/oleg.vlasovets/slr_example/q2-hdstats-docs/analysis/slurm/logs/perm_%j.err
 #SBATCH --time=01:00:00
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=16G
@@ -28,7 +28,8 @@
 # Writes nothing outside reports/.
 
 set -euo pipefail
-ROOT=/home/itg/oleg.vlasovets/slr_example/q2-hdstats-recompute
+REPO="${Q2_HDSTATS_REPO:-/home/itg/oleg.vlasovets/slr_example/q2-hdstats-docs}"
+ROOT="$REPO/analysis"
 PREFIX=/home/itg/oleg.vlasovets/.conda/envs/q2-2026.7-slr
 CONDA=/home/itg/oleg.vlasovets/miniconda3/bin/conda
 REPORT="$ROOT/reports/PERMUTATION_HYPOTHESIS.md"

@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=q2-classo-sum
-#SBATCH --output=/home/itg/oleg.vlasovets/slr_example/q2-hdstats-recompute/slurm/logs/classo_sum_%j.out
-#SBATCH --error=/home/itg/oleg.vlasovets/slr_example/q2-hdstats-recompute/slurm/logs/classo_sum_%j.err
+#SBATCH --output=/home/itg/oleg.vlasovets/slr_example/q2-hdstats-docs/analysis/slurm/logs/classo_sum_%j.out
+#SBATCH --error=/home/itg/oleg.vlasovets/slr_example/q2-hdstats-docs/analysis/slurm/logs/classo_sum_%j.err
 #SBATCH --time=01:00:00
 #SBATCH --cpus-per-task=2
 #SBATCH --mem=16G
@@ -15,8 +15,9 @@
 # and mu->rank map now use.
 
 set -euo pipefail
-ROOT=/home/itg/oleg.vlasovets/slr_example/q2-hdstats-recompute
-DOCS=/home/itg/oleg.vlasovets/slr_example/q2-hdstats-docs
+REPO="${Q2_HDSTATS_REPO:-/home/itg/oleg.vlasovets/slr_example/q2-hdstats-docs}"
+ROOT="$REPO/analysis"
+DOCS="$REPO"
 PREFIX=/home/itg/oleg.vlasovets/.conda/envs/q2-2026.7-slr
 CONDA=/home/itg/oleg.vlasovets/miniconda3/bin/conda
 

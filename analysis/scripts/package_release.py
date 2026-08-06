@@ -15,16 +15,23 @@ Run from anywhere:
 
 import argparse
 import hashlib
+import os
 import pathlib
 import shutil
 import sys
 import tarfile
 
-ROOT = pathlib.Path(__file__).resolve().parents[1]
-GG = pathlib.Path("/home/itg/oleg.vlasovets/slr_example/q2-gglasso/data")
-CL = pathlib.Path("/home/itg/oleg.vlasovets/slr_example/q2-classo/data")
-DOCS = pathlib.Path("/home/itg/oleg.vlasovets/slr_example/q2-hdstats-docs")
+ROOT = pathlib.Path(__file__).resolve().parents[1]   # <repo>/analysis
+DOCS = ROOT.parent                                   # <repo> — the book lives here
 REGEN = ROOT / "results" / "tier2-regen"
+
+# The two plugin checkouts are genuinely external, so they stay configurable.
+# Everything inside this repository is now addressed relative to ROOT.
+_SIB = pathlib.Path(
+    os.environ.get("Q2_HDSTATS_PLUGINS", ROOT.parent.parent)
+)
+GG = _SIB / "q2-gglasso" / "data"
+CL = _SIB / "q2-classo" / "data"
 
 # tier -> [(published filename, source directory)] or
 #         [(published filename, source directory, source filename)] when the

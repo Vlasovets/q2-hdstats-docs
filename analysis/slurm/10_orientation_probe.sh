@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=q2-orient
-#SBATCH --output=/home/itg/oleg.vlasovets/slr_example/q2-hdstats-recompute/slurm/logs/orient_%j.out
-#SBATCH --error=/home/itg/oleg.vlasovets/slr_example/q2-hdstats-recompute/slurm/logs/orient_%j.err
+#SBATCH --output=/home/itg/oleg.vlasovets/slr_example/q2-hdstats-docs/analysis/slurm/logs/orient_%j.out
+#SBATCH --error=/home/itg/oleg.vlasovets/slr_example/q2-hdstats-docs/analysis/slurm/logs/orient_%j.err
 #SBATCH --time=00:30:00
 #SBATCH --cpus-per-task=2
 #SBATCH --mem=8G
@@ -21,7 +21,8 @@
 # reports/ORIENTATION_FINDING.md. It changes NO source.
 
 set -euo pipefail
-ROOT=/home/itg/oleg.vlasovets/slr_example/q2-hdstats-recompute
+REPO="${Q2_HDSTATS_REPO:-/home/itg/oleg.vlasovets/slr_example/q2-hdstats-docs}"
+ROOT="$REPO/analysis"
 PREFIX=/home/itg/oleg.vlasovets/.conda/envs/q2-2026.7-slr
 CONDA=/home/itg/oleg.vlasovets/miniconda3/bin/conda
 GG=/home/itg/oleg.vlasovets/slr_example/q2-gglasso

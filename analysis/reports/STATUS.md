@@ -1,6 +1,6 @@
-# Recompute status — 2026-08-05T22:32:05+02:00
+# Recompute status — 2026-08-06T14:38:17+02:00
 
-Written by `slurm/19_final_verify.sh` (job 39135666) on `cpusrv28.scidom.de`.
+Written by `slurm/19_final_verify.sh` (job 39164400) on `cpusrv46.scidom.de`.
 Everything below was re-run just now; nothing is carried over from an earlier report.
 
 ## Environment
@@ -19,8 +19,8 @@ c-lasso    1.0.11
 
 ## Test suites
 
-- q2-gglasso: `45 passed, 51 warnings in 363.21s (0:06:03)`
-- q2-classo:  `22 passed in 11.61s`
+- q2-gglasso: `45 passed, 53 warnings in 504.82s (0:08:24)`
+- q2-classo:  `22 passed in 123.51s (0:02:03)`
 
 ## Documentation
 
@@ -54,7 +54,7 @@ c-lasso    1.0.11
 
 ## Gates
 
-- **Gate C1 PASS** — the CLI reproduces the reference selection (lambda 0.8, 216 edges).
+- Gate C1 — no PASS line found in `slurm/logs/lambda_path_*.out`.
 - Orientation probe: see `reports/ORIENTATION_FINDING.md`.
 
 ## Still needs you
@@ -65,9 +65,6 @@ c-lasso    1.0.11
 ## Job log index
 
 ```
-    39111919_9       q2-classo-cv  COMPLETED   00:02:00 
-   39111919_10       q2-classo-cv  COMPLETED   00:02:00 
-   39111919_11       q2-classo-cv  COMPLETED   00:02:00 
    39111919_12       q2-classo-cv  COMPLETED   00:02:00 
    39111919_13       q2-classo-cv  COMPLETED   00:02:00 
    39111919_14       q2-classo-cv  COMPLETED   00:02:00 
@@ -89,5 +86,8 @@ c-lasso    1.0.11
       39126519          q2-t2-ids  COMPLETED   00:10:25 
       39133812         q2-docs-ci  COMPLETED   00:01:00 
       39135665         q2-docs-ci  COMPLETED   00:01:00 
-      39135666           q2-final    RUNNING   00:07:30 
+      39135666           q2-final  COMPLETED   00:07:30 
+      39136342         q2-docs-ci  COMPLETED   00:00:52 
+      39164399         q2-docs-ci  COMPLETED   00:01:08 
+      39164400           q2-final    RUNNING   00:14:25 
 ```
