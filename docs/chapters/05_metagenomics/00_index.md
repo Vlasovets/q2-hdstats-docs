@@ -94,7 +94,7 @@ parameter-selection reasoning comes from
    the metadata before running anything, and quote a value back at you only where
    they say they checked it against the served `sample-metadata.tsv`.
 
-```{warning}
+```{note}
 **Nothing in this tier has been run against QIIME 2 2026.7**, because the tier 3
 recompute has not been run yet. Every page shows commands and explains what they
 do; none shows captured output, edge counts, $R^2$ values or runtimes. Where output would

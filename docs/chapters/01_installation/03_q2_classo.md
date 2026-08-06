@@ -56,7 +56,7 @@ docker run -it -v $(pwd):/data ovlasovets/q2-classo:latest
 docker run -it -v /path/to/your/data:/data ovlasovets/q2-classo:latest qiime classo --help
 ```
 
-```{warning}
+```{note}
 The published `:latest` image is built on the retired `amplicon` base image and
 has not yet been rebuilt for 2026.7. Prefer the conda instructions above until it
 has been.

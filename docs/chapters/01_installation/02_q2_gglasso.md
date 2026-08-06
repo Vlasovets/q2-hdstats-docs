@@ -38,7 +38,7 @@ pip install -e .
 qiime dev refresh-cache
 ```
 
-```{warning}
+```{note}
 If `conda env create` fails with
 
     package deblur-1.1.1 requires sortmerna 2.0, but none of the providers
@@ -71,7 +71,7 @@ docker run -it -v $(pwd):/data ovlasovets/q2-gglasso:latest
 docker run -it -v /path/to/your/data:/data ovlasovets/q2-gglasso:latest qiime gglasso --help
 ```
 
-```{warning}
+```{note}
 The published `:latest` image is built on the retired `amplicon` base image and
 has not yet been rebuilt for 2026.7. Prefer the conda instructions above until it
 has been.

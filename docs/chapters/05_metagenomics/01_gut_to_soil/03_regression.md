@@ -46,7 +46,7 @@ are also incomplete across the full study (`Composting Time Point` is present fo
 column.
 ```
 
-```{warning}
+```{note}
 **`SampleType` has 15 levels, not 2.** The two largest are
 `Human Excrement Compost` (799 rows) and `Human Excrement Compost Pre-Roll`
 (453). `qiime classo classify` accepts binary outcomes only, so you must reduce
@@ -272,7 +272,7 @@ qiime classo classify \
     --verbose
 ```
 
-```{warning}
+```{important}
 `classify` is **not** `regress` with a categorical outcome. Three differences bite:
 
 - There is **no `--p-concomitant`**. The parameter does not exist on this action

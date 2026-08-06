@@ -12,11 +12,22 @@ This page is about what those four things say **together**, and — at least as
 importantly — what they do not say. It fits no models and introduces no
 parameters.
 
-```{warning}
-Every quantitative claim below is conditional on a recompute that has not
-happened. Edge counts, ranks, correlations, $R^2$ values and named taxa across
-this tier are **pending verification against QIIME 2 2026.7**. What follows is
-how to read those numbers once they exist, not a report of them.
+```{note}
+**Which numbers on this page are verified.** The recompute has run under QIIME 2
+2026.7, but it did not cover everything, so the claims below are not uniformly
+solid:
+
+| quantity | status |
+|---|---|
+| $\lambda = 0.8$, 216 edges, eBIC 16130.0988 | reproduced through the CLI |
+| $\mu_1 \rightarrow$ rank map, and the edge/node counts at each rank | reproduced |
+| taxonomy of individual nodes | resolves for all 300 features since the bundle was rebuilt with real feature IDs |
+| correlations between components and covariates | **not** re-run |
+| $R^2$ values | **not** re-run — the recompute reports cross-validated *error*; converting it needs a held-out `predict` pass |
+| named taxa in the narrative below | carried over from the reference analysis |
+
+Read the unverified rows as "how to read this number once you have it", not as a
+report of it.
 ```
 
 ## The two blocks are one model
@@ -138,7 +149,7 @@ join will not raise — it returns all-`NaN`, which is easy to miss. Rebuild wit
 attempting to map the names back; the next box explains why mapping cannot work.
 ```
 
-```{danger}
+```{important}
 **Do not recover the mapping from `top-300-asvs.tsv` by abundance rank.** It is
 tempting — the file has `feature-id` / `total-abundance` / `abundance-rank`, the
 relabelling helper sorts **ascending** by total abundance, so `ASV-1` is the
@@ -289,7 +300,7 @@ and two dimensions are carrying the predictable structure. That is a statement
 about the *rank*, which is why it belongs in the rank argument in
 [Choosing the Latent Rank](03_slr_ranks.md) as well as here.
 
-```{warning}
+```{important}
 The Spearman correlation between $m_t$ and $q_t$ that appears in the appendix and
 in the earlier drafts of this tier is **pending recompute** and must not be
 quoted until it has been recomputed at $\lambda_1 = 0.8$, $\gamma = 0.3$,

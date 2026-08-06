@@ -96,7 +96,7 @@ canonical bundle is $\lambda_1 = 0.8$, $\gamma = 0.3$, $\mu_1 = 15$.
 
 ## Most numbers in this tier are still pending recompute
 
-```{warning}
+```{note}
 **Recomputed and confirmed.** The single-graphical-lasso $\lambda$ path on
 [Selecting lambda](02_model_selection.md) has been re-run under QIIME 2 2026.7:
 the selected $\lambda = 0.8$, its 216 edges and the $\gamma$ sensitivity are
@@ -130,7 +130,7 @@ values in the table above, and the page cites both. That is the only way a
 reader can tell whether a number they disagree with came from a different input
 or a different command.
 
-```{warning}
+```{note}
 The artifact bundle will be published as the Zenodo record
 *q2-hdstats-tutorial-data* v1.0.0. **The DOI has not been minted yet.** Wherever
 a download URL is required, these pages use the literal placeholder

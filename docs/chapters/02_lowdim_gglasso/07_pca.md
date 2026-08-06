@@ -105,7 +105,7 @@ tab. That column comes from the model-selection path, so it is only present if
 the solution was fitted over a grid rather than as a single fit — see
 [Regularization Paths & Model Selection](05_lambda_paths.md).
 
-```{warning}
+```{important}
 Do not size `--p-n-components` exactly to the number you read off that tab. Two
 things stand between it and the components you actually get. First, the tab
 prints **one rank per grid point**, so you have to match the row to the selected
@@ -214,7 +214,7 @@ If a component lines up with nothing you measured, you have a candidate
 unmeasured driver: an unrecorded gradient, a collection batch, an extraction
 run. That is a hypothesis to check against your study design, not a result.
 
-```{warning}
+```{important}
 Do not over-read individual axes. The eigenvectors of `L` are determined only up
 to sign, so the direction of an axis carries no meaning, and components with
 close eigenvalues are only defined up to rotation within their shared subspace —

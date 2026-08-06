@@ -200,7 +200,7 @@ spectrum of `L` with `np.linalg.eigvalsh` rather than trusting the integer.
 
 ## Two traps while scouting
 
-```{warning}
+```{important}
 **Leaving a grid unset does not mean "do not use it".** If `--p-mu1-min` and
 `--p-mu1-max` are both omitted on a latent problem, the solver substitutes
 `np.logspace(2, -1, 10)` — a ten-point $\mu_1$ path spanning three orders of
@@ -211,7 +211,7 @@ explicitly, and always run the scout with `--verbose` so you see the warning if
 you did not.
 ```
 
-```{warning}
+```{note}
 **A single fit needs every grid to be a singleton.** For a latent problem,
 `lambda1`, `lambda2` **and** `mu1` must all collapse to one value before the
 solver treats the run as a single fit. Pinning $\lambda_1$ and $\mu_1$ while

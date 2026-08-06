@@ -81,7 +81,7 @@ single feature for `depth` and `ec` up to twelve for `amplicon-concentration`.
 
 ## Prediction from ASVs only (base R1)
 
-```{warning}
+```{important}
 **The $R^2$ table below has NOT been reproduced.** The recompute reports
 cross-validated *error*, which is what the solution artifact stores; turning that
 into an out-of-sample $R^2$ needs a `qiime classo predict` pass on held-out

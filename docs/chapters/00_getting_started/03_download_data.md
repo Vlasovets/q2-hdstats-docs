@@ -34,7 +34,7 @@ The Atacama artifacts (tiers 1 and 2) are published as a single Zenodo record,
 the plugin repositories means the exact bytes used to build this book stay
 citable and stay put.
 
-```{warning}
+```{note}
 **The DOI has not been minted yet.** Wherever a base URL is needed below, the
 literal placeholder `ZENODO_DOI_PENDING` stands in for it. The tier 1 and tier 2
 commands on this page therefore cannot be run as written yet — they are the
@@ -174,7 +174,7 @@ Recomputing them from `atacama-top-300-table.qza` is the first exercise of the
 tier 2 chapters; having the reference versions on disk means a mismatch is
 visible immediately rather than propagating into the network.
 
-```{warning}
+```{note}
 `sample-metadata.tsv` is a generic name and the tier 3 dataset ships a file with
 exactly the same name. Keep tier 3 in its own subdirectory, as below, or one will
 overwrite the other.

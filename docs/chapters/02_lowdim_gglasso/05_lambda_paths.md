@@ -51,7 +51,7 @@ override `*_min`, `*_max`, `n_*` **and** `path_scale`. There is deliberately no
 `lambda2_path`; if you need a hand-built $\lambda_2$ grid you have to express it
 through `lambda2_min` / `lambda2_max` / `n_lambda2`.
 
-```{warning}
+```{note}
 Neither plugin declares `Choices()` on its string parameters, so
 `--p-path-scale logg` is accepted by the command line and fails inside the
 function with `ValueError: Unknown scale 'logg', use 'log' or 'linear'.`

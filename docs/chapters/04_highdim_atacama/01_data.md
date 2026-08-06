@@ -50,7 +50,7 @@ that are later used as regression targets in
 [Log-Contrast Models at Scale](05_classo_cv.md). A filter chosen with the
 outcome in view would invalidate every cross-validated $R^2$ on that page.
 
-```{warning}
+```{important}
 Abundance filtering is not a neutral pre-processing step for compositional data.
 The CLR transform divides each sample by the geometric mean **of the features
 that are present in the table**, so removing features changes the reference and
@@ -225,7 +225,7 @@ categorical variables that are the natural grouping factors for this study:
 | `transect-name` | Baquedano / Yungay | 32 / 43 |
 | `vegetation` | no / yes | 40 / 35 |
 
-```{warning}
+```{important}
 Those counts describe **the metadata file**, which covers more samples than the
 modelled table: 75 rows against the $n = 54$ samples that survived matching and
 entered the network. The per-group counts *within the 54 modelled samples* are a
@@ -274,7 +274,7 @@ authoritative if the two ever disagree. See
 All Tier 2 artifacts are part of the tutorial data bundle described in
 [Download the Tutorial Data](../00_getting_started/03_download_data.md).
 
-```{warning}
+```{note}
 The bundle will be published as the Zenodo record *q2-hdstats-tutorial-data*
 v1.0.0. **The DOI has not been minted yet**, so the download URL on that page is
 currently the placeholder `ZENODO_DOI_PENDING`.

@@ -31,7 +31,7 @@ Column names are generated, not drawn from anything: the first `d // 2` columns
 are named `A0`, `A1`, … and the remainder `B0`, `B1`, …. For `--p-d 20` you get
 `A0`–`A9` followed by `B0`–`B9`.
 
-```{warning}
+```{important}
 **Known bug: `randomy.tsv` is written to the current working directory.**
 
 The response vector is written with a hardcoded relative path, so it lands
@@ -276,7 +276,7 @@ column names, and the support printed under `--verbose` is reported in terms of
 *aggregated tree nodes* rather than leaves — so those labels will not always look
 like feature IDs.
 
-```{warning}
+```{important}
 **Keep `--p-d` at or below the number of tips in your taxonomy.** When the
 taxonomy has fewer tips than `d`, the tip names are written into a fixed-width
 NumPy string array that was sized for the two- and three-character `A0`/`B0`

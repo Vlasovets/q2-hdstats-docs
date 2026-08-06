@@ -119,7 +119,7 @@ readers hit it before they hit anything statistical.
 | Instance tables and validation | `--i-tables`, `--p-check-groups`, `--o-group-array` | `G-MGL` | — |
 | The `TensorData` -> `List[Int]` gap | (export workaround) | `G-MGL` | `R-GG`, `R-TS` |
 
-```{warning}
+```{important}
 `build-groups` emits a `TensorData` **artifact** while `solve-problem` accepts
 `group_array` as a `List[Int]` **parameter**. They do not chain through the QIIME 2
 type system, so the only way to connect them is to export the artifact and pass
@@ -184,7 +184,7 @@ out of the solution.
 | Inputs and the required metadata file | `--i-table`, `--i-solution`, `--m-sample-metadata-file` | `G-PCA` | `H-PCA`, `R-TS` |
 | Projection and colouring | `--p-n-components`, `--p-color-by` | `G-PCA` | `H-PCA` |
 
-```{warning}
+```{note}
 `pca` has two prerequisites that the signature does not state.
 
 The solution must have been produced with `--p-latent True` — the visualizer
@@ -221,7 +221,7 @@ separately. Anyone who turned metadata into nodes in `G-PREP` needs it here.
 | Taxonomy-derived labels and tree | `--i-taxa` | `C-GEN` | — |
 | The `randomy.tsv` side effect | (no flag) | `C-GEN` | `R-CL` |
 
-```{warning}
+```{note}
 `generate-data` writes `randomy.tsv` into the **current working directory** — the
 generated response is not returned as an artifact. It is overwritten on every
 call. `C-GEN` is the only chapter that runs this action, and it says where to run
@@ -302,7 +302,7 @@ owned separately.
 | What `classify` does **not** have | (`--p-concomitant`, `--p-do-yshift`) | `C-CONC` | `C-CLF`, `R-CL`, `R-TS` |
 | Selection procedures | as `regress` | `C-MSEL` | `C-CLF`, `C-CTRAC` |
 
-```{warning}
+```{important}
 **`qiime classo classify --p-concomitant` does not exist.** The parameter is not
 registered on `classify`, and the solver forces the concomitant formulation off
 for classification problems regardless. Passing the flag is a command-line error.

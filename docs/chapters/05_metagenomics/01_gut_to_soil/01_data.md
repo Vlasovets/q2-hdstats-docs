@@ -54,7 +54,7 @@ Two further files are available from the same location and are **not** used here
 interchangeable; if a command on the next pages behaves strangely, check first
 that you passed `asv-table-ms2.qza`.
 
-```{warning}
+```{note}
 The tier 3 metadata file is called `sample-metadata.tsv`, and so is the tier 2
 one. Keep them in separate directories, as above. Every command in this tier
 writes and reads under `data/gut-to-soil/`.
@@ -187,7 +187,7 @@ tenth of the design. Ten is a starting point, not a recommendation: re-run
 `qiime feature-table summarize` on the filtered table and check how much of the
 total count you discarded before accepting it.
 
-```{warning}
+```{note}
 Filtering features is **not** a neutral preprocessing step for compositional
 data. The CLR transform divides each sample by the geometric mean of the features
 *present in the table*, so removing features moves the reference and changes every

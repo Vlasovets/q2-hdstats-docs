@@ -52,7 +52,7 @@ means you have it to hand for interpretation. See
 [Troubleshooting](../../90_reference/04_troubleshooting.md).
 ```
 
-```{warning}
+```{important}
 `mclr` applies a global shift derived from the **minimum over the whole matrix**
 before it fills the zeros back in. That makes the transform depend on the set of
 samples in the table: transforming a subset is not the same as transforming
@@ -174,7 +174,7 @@ above is a stand-in so the command is unambiguous, not a selected value — and
 sweep $\mu_1$ to see what ranks are reachable. Larger $\mu_1$ gives a smaller
 rank.
 
-```{warning}
+```{important}
 `--p-rank` is registered and **always raises** — `ValueError` if `--p-latent` is
 not set, `NotImplementedError` otherwise. No released
 GGLasso can fix the rank of the low-rank block; it exposes only the continuous
@@ -184,7 +184,7 @@ procedure is worked through in
 [Choosing the Latent Rank](../../04_highdim_atacama/03_slr_ranks.md).
 ```
 
-```{warning}
+```{important}
 For a latent problem, `lambda1`, `lambda2` **and** `mu1` must all collapse to a
 single value before the solver treats the run as a single fit. If you pin
 $\lambda_1$ and forget $\mu_1$, the unset $\mu_1$ falls back to a default
@@ -221,7 +221,7 @@ GROUP_A=gut
 GROUP_B=soil
 ```
 
-```{warning}
+```{note}
 The three values above are placeholders chosen to make the command shape
 unambiguous. **They are not a claim about the gut-to-soil metadata.** No column
 named `sample-type` was checked for; the one categorical column this book did
@@ -416,7 +416,7 @@ And if you cannot articulate why the two groups should share edges at all, fit
 them separately. A jointly estimated pair of near-identical networks is partly an
 artifact of $\lambda_2$, and reporting it as agreement is reporting the penalty.
 
-```{warning}
+```{note}
 One caveat specific to log-ratio data and joint estimation. `mclr` shifts the
 whole matrix by a constant derived from its global minimum before restoring
 zeros, so a per-group transform anchors each group differently. Edge $(i,j)$ in

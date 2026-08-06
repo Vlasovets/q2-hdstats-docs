@@ -73,7 +73,7 @@ for checking that your invocation works before pointing it at real data.
 | `x` | `--o-x` | `FeatureTable[Design]` | required | [Generate Data](../03_lowdim_classo/01_generate_data.md) | |
 | `c` | `--o-c` | `ConstraintMatrix` | required | [Generate Data](../03_lowdim_classo/01_generate_data.md) | Zero-sum constraint. |
 
-```{warning}
+```{important}
 **Known bug: `generate-data` writes `randomy.tsv` into your current working
 directory.** The generated response vector is not returned as an artifact; it is
 dumped as a side effect to a fixed relative path. Run this action from a
@@ -233,7 +233,7 @@ searches over, which is a common source of confusion when the CV-selected lambda
 does not appear on the plotted path.
 ```
 
-```{warning}
+```{important}
 **Open docs issue.** The only runnable commands that pass this grid's size use
 the *deprecated* spelling: [Cross-Validation](../04_highdim_atacama/05_classo_cv.md)
 invokes `--p-cv--nlam`, not `--p-cv-nlam`. Rule 5 of
@@ -286,7 +286,7 @@ CV, StabSel and LAMfixed in one call — StabSel refits the model `stabsel_b` ti
 going to read: `--p-cv False`, `--p-stabsel False`, `--p-lamfixed False`.
 ```
 
-```{warning}
+```{note}
 **`--help` misreports several of these defaults.** QIIME 2 renders the
 registered description text verbatim, so `--help` contradicts its own
 `[default: ...]` marker wherever the description in `q2_classo/_dict.py` has
@@ -332,7 +332,7 @@ Identical to `regress`: `--i-features`, `--i-c`, `--i-weights`, `--o-result`.
 | `do_yshift` | — | — | — | — | **Does not exist on `classify`.** Centring a categorical response is meaningless. |
 | `concomitant` | — | — | — | — | **Does not exist on `classify`.** See the warning below. |
 
-```{warning}
+```{important}
 **`qiime classo classify --p-concomitant` does not exist.** The concomitant
 formulation is unavailable for classification: the parameter is not registered,
 and the solver forces `formulation.concomitant = False` for classification

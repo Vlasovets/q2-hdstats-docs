@@ -15,7 +15,7 @@ directions, the study has a small number of plausible global drivers, and there
 are measured covariates for most of them. That makes the correspondence testable
 rather than decorative.
 
-```{warning}
+```{note}
 No figure, correlation or component-to-covariate assignment on this page has been
 computed; everything here is **pending verification against QIIME 2 2026.7**. The
 procedure is what is being documented — not its result.
@@ -64,7 +64,7 @@ solution, and they are the same values the generated map in
 [Choosing the Latent Rank](03_slr_ranks.md) reports.
 ```
 
-```{warning}
+```{note}
 Still read the achieved rank out of *your own* solution before choosing
 `--p-n-components` rather than copying the table: a different $\lambda$, a
 different covariance matrix, or a different GGLasso build can all shift it. If the
@@ -128,7 +128,7 @@ size then the first latent dimension is bookkeeping, not ecology, and every
 biological reading below is unsafe. Rule it out first, in writing, before moving
 on.
 
-```{warning}
+```{note}
 The default `seq-depth` colouring cannot settle it on a clr table. clr centres
 each sample across features, so every row of `atacama-top-300-clr.qza` sums to
 zero up to floating-point error; `seq-depth` then rescales that residual numerical
@@ -238,7 +238,7 @@ qiime gglasso pca \
     --o-visualization atacama-top-300-rank2-pca-transect.qzv
 ```
 
-```{warning}
+```{note}
 A 0/1 column drawn on a continuous colour scale is a crude two-colour plot, and
 that is all it should be used for: seeing whether the two groups fall in
 different regions of the latent plane. It is not a test. If the separation looks

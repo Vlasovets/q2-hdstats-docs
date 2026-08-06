@@ -159,7 +159,7 @@ The resolution rule, if both are present:
 * Both given with **different** values → `ValueError`, refusing to guess.
 * One given → that one is used; the deprecated spelling additionally warns.
 
-```{warning}
+```{important}
 There is one hole in that rule. The check treats `cv_nlam == 100` as "not set",
 because 100 is its default and the framework cannot distinguish an explicit
 `--p-cv-nlam 100` from an omitted one. So
@@ -361,7 +361,7 @@ solver reads as "choose for me" and resolves against the formulation you asked
 for — and the formulation is a better guide to the right algorithm than intuition
 is.
 
-```{warning}
+```{important}
 Because the default is itself a non-canonical string, an unrecognised value here
 is silently accepted rather than rejected: a misspelled `--p-cv-numerical-method
 Path-Algo` does not raise, it just gives you the automatic choice. Neither plugin

@@ -25,7 +25,7 @@ in [Single Graphical Lasso](02_sgl.md), and $\lambda_2$ controls how strongly th
 groups are tied together. Setting $\lambda_2 = 0$ recovers $K$ independent
 single graphical lassos.
 
-```{warning}
+```{important}
 **Read the "Known gaps" section in Step 3 before you invest time here.** The
 flags documented on this page all exist and all validate, but in the current
 release the MGL path does not close end-to-end through the QIIME 2 CLI. Nothing
@@ -143,7 +143,7 @@ The printed dimensions, sample sizes and group count are pending verification
 against QIIME 2 2026.7 and are not reproduced here.
 ```
 
-```{warning}
+```{note}
 `build-groups` only returns an array when it detects that the instances differ.
 If every table carries the same labels it prints *"All datasets have exactly the
 same number of features."* and returns nothing, which QIIME 2 cannot turn into a
@@ -205,7 +205,7 @@ qiime gglasso solve-problem \
     --verbose
 ```
 
-```{warning}
+```{important}
 `--p-group-array 0 1 2 0 1 2` is a syntactically valid six-integer list, not the
 array your data produces. Substitute the integers your own export prints. The
 values shown here exist only to make the command shape unambiguous; they are
@@ -305,7 +305,7 @@ most informative version of that warning — it is the estimator telling you it
 would rather not couple the groups at all, which is an argument for fitting them
 independently.
 
-```{warning}
+```{important}
 `--p-reg` accepts any string — it is registered as a bare `Str` with no
 `Choices()`, so `ggl` or `GGl` is not rejected by the command line. Today an
 invalid value is silently ignored, because gap 3 means the MGL branch is never

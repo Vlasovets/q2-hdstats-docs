@@ -88,7 +88,7 @@ clustered and reordered, and the covariate rows and columns are pinned at the
 edge of the matrix in their original order. This is what you want — covariates
 shuffled into the middle of a taxon dendrogram are unreadable.
 
-```{warning}
+```{note}
 If `--p-n-cov` does not equal the number of columns actually appended, the split
 happens in the wrong place. Some ASVs get pinned as if they were covariates,
 some covariates get clustered as if they were ASVs, and the axis labels stop
@@ -162,7 +162,7 @@ Bands of taxa moving together here are the global structure that the sparse
 component was relieved of. To turn that into a per-sample statement, project it
 with [`pca`](07_pca.md).
 
-```{warning}
+```{note}
 The tab is built inside a `try` block whose `except` catches everything and emits
 the same `NO low-rank solution has been found.` message. Any failure while
 rendering the low-rank heatmap — not just a genuinely missing component — is
@@ -219,7 +219,7 @@ lists the precision-matrix entries pair by pair, with the diagonal removed and
 the taxon labels substituted in. It is sortable, and it is the quickest way to
 get a ranked edge list out of the visualization without exporting the artifact.
 
-```{warning}
+```{important}
 Treat the taxon names in that pair table with suspicion until they are checked.
 Reading the current sources, the table is built from the precision matrix as
 stored — in the original feature order — while the labels substituted into it are

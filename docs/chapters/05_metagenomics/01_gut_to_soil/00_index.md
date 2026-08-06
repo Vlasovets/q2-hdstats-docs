@@ -62,7 +62,7 @@ re-explained here. The parameter-selection reasoning — eBIC, $\gamma$, the lin
 path, sizing the latent block with $\mu_1$ — comes from
 [Tier 2](../../04_highdim_atacama/00_index.md).
 
-```{warning}
+```{note}
 No page in this tier has been run against QIIME 2 2026.7. There are no captured
 outputs, no edge counts and no $R^2$ values anywhere in it. See
 [the tier overview](../00_index.md).

@@ -42,7 +42,7 @@ therefore expected, not a sign of a broken registration.
 `classify`, `generate-data`, `predict`, `regress`, `summarize`,
 `transform-features`.
 
-```{warning}
+```{note}
 If two actions are both shown as **regress**, your q2-classo predates the fix for
 `classify` having been registered under the wrong name. The action works; it is
 only mislabelled. Update to a current checkout.

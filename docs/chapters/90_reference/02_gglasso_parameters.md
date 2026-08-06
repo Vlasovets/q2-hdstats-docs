@@ -93,7 +93,7 @@ covariate such as elevation live on wildly different scales, and the graphical
 lasso applies one global `lambda1` to all of them — leaving a covariate unscaled
 effectively changes its penalty relative to everything else.
 
-```{warning}
+```{note}
 `--i-taxonomy` is required by the registration but unused by the implementation.
 Pass any valid `FeatureData[Taxonomy]` artifact; its contents cannot change the
 result. This is tracked in [Troubleshooting](04_troubleshooting.md).
@@ -112,7 +112,7 @@ when the K instances do not share the same feature set.
 | `check_groups` | `--p-check-groups` | `Bool` | `True` | [Multiple Graphical Lasso](../02_lowdim_gglasso/06_multiple_graphical_lasso.md) | Validates the constructed overlap groups. |
 | `group_array` | `--o-group-array` | `TensorData` | required | [Multiple Graphical Lasso](../02_lowdim_gglasso/06_multiple_graphical_lasso.md) | `(2, L, K)` index array: L overlap groups across K instances. |
 
-```{warning}
+```{important}
 **Known gap: `build-groups` does not chain into `solve-problem`.** This action
 emits a `TensorData` *artifact*, while `solve-problem` accepts `group_array` as a
 `List[Int]` *parameter*. The QIIME 2 type system cannot connect the two, so you
@@ -177,7 +177,7 @@ settings, and model selection.
 | `reg` | `--p-reg` | `Str` | `GGL` | [Multiple Graphical Lasso](../02_lowdim_gglasso/06_multiple_graphical_lasso.md) | `GGL` (group) or `FGL` (fused). MGL only. **No `Choices()`**. |
 | `gamma` | `--p-gamma` | `Float` | `0.01` | [Model Selection](../04_highdim_atacama/02_model_selection.md) | eBIC parameter in [0, 1]. Larger values push model selection toward sparser solutions. |
 
-```{warning}
+```{important}
 **`--p-rank` always raises** — `ValueError` if `--p-latent` is not set,
 `NotImplementedError` otherwise. No released GGLasso
 (up to and including 0.3.0) can fix the rank of the low-rank component; it
@@ -253,7 +253,7 @@ an SLR solution.
 | `n_components` | `--p-n-components` | `Int` | `3` | [Latent PCA](../04_highdim_atacama/04_latent_pca.md) | Number of components to plot. |
 | `color_by` | `--p-color-by` | `Str` | `None` | [PCA of the Latent Space](../02_lowdim_gglasso/07_pca.md) | Name of a metadata column. Must exist in the file passed above. |
 
-```{warning}
+```{note}
 Two failure modes, both easy to hit:
 
 - Running `pca` on a sparse-only (SGL) solution fails, because the visualizer

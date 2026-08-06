@@ -61,7 +61,7 @@ The `intercept` entry is handled specially: it is not looked up in your table,
 it is filled with ones. So a model fitted with the default `--p-intercept` needs
 no `intercept` column in the prediction table, and adding one would be ignored.
 
-```{warning}
+```{note}
 `predict` emits an artifact of type `CLASSOProblem` — the *same* type as the
 output of `regress`. It does not contain a problem, it contains predictions, and
 the two are not interchangeable. Because the types match, QIIME 2 will happily
@@ -214,7 +214,7 @@ since σ should decline and then flatten as the model saturates.
 
 If predictions were supplied, a third panel plots held-out error against λ.
 
-```{warning}
+```{note}
 **The path prediction panel only uses samples that are in the prediction table
 and were *not* in the training set.** Predict on the training table and that set
 is empty, which does not raise — it produces a flat, meaningless error curve.
