@@ -11,6 +11,44 @@ This site features tutorials and usage guides for the [`q2-gglasso`](https://git
 
 ---
 
+## Repository layout
+
+Despite the name, this repository holds **both** the book and the analysis that
+produces the numbers in it.
+
+| path | what it is |
+|---|---|
+| `docs/` | the Jupyter Book. `jupyter-book` reads only this directory (`path_to_book: docs`) |
+| `docs/_data/` | tables the chapters render, **generated** by the analysis — never edited by hand |
+| `analysis/` | the recompute pipeline: SLURM stages, scripts, pinned environment, reports |
+| `main.tex` | the F1000Research Application Note |
+
+The two used to be separate repositories, which meant the analysis wrote its
+generated tables and the data manifest into a *sibling checkout by absolute
+path*. The pipeline consequently ran on one machine only. Keeping them together
+makes those paths relative and gives the manuscript's "Underlying data" section a
+single artifact to cite.
+
+### Running the analysis
+
+Every SLURM stage resolves paths from one variable, so a different checkout needs
+no edits:
+
+```shell
+export Q2_HDSTATS_REPO=/path/to/this/repo    # defaults to the author's checkout
+sbatch analysis/slurm/01_lambda_path.sh
+```
+
+`analysis/data/`, `analysis/results/` and `analysis/publish/` are gitignored:
+the repository tracks the **recipe**, not the output. Everything regenerates from
+the committed scripts against the pinned environment in `analysis/envs/`.
+
+Start with `analysis/README.md` for the stage-by-stage description, and
+`analysis/reports/DECISIONS_NEEDED.md` for the decisions taken and the evidence
+behind them.
+
+---
+
 ## 🚀 Building the Documentation
 
 **Create and activate conda environment:**
