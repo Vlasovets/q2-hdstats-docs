@@ -1,62 +1,127 @@
 format: jb-book
 root: intro
-chapters:
-  - file: chapters/00_getting_started/01_intro
-    title: Getting Started
-    sections:
-      - file: chapters/00_getting_started/02_data
+
+parts:
+  - caption: Getting Started
+    chapters:
+      - file: chapters/00_getting_started/01_intro
+        title: Why High-Dimensional Statistics?
+      - file: chapters/00_getting_started/02_datasets
         title: Atacama Soil Microbiome
-
-  - file: chapters/01_installation/01_prerequisites
-    title: Prerequisites & Installation
-    sections:
-      - file: chapters/01_installation/02_q2_gglasso
-        title: Installing q2-gglasso
-      - file: chapters/01_installation/03_q2_classo
-        title: Installing q2-classo
-
-  - file: chapters/02_graphical_models/01_data_preparation
-    title: Graphical Lasso Models
-    sections:
-      - file: chapters/02_graphical_models/02_sgl
-        title: Single Graphical Lasso
-      - file: chapters/02_graphical_models/03_slr
-        title: Single Graphical Lasso with Latent Variables
-      - file: chapters/02_graphical_models/04_adaptive_glasso
-        title: Adaptive Graphical Lasso
-      - file: chapters/02_graphical_models/05_interpretation
-        title: Interpretation
-      - file: chapters/02_graphical_models/06_highdim_atacama
-        title: "High-Dimensional Example (300 ASVs)"
-
-  - file: chapters/03_logcontrast_models/00_overview
-    title: Log-Contrast Models
-    sections:
-      - file: chapters/03_logcontrast_models/01_data_preparation
-        title: Data Preparation
-      - file: chapters/03_logcontrast_models/02_regression/00_index
-        title: Regression
+      - file: chapters/00_getting_started/03_download_data
+        title: Download the Tutorial Data
+      - file: chapters/01_installation/01_prerequisites
+        title: Prerequisites & Installation
         sections:
-          - file: chapters/03_logcontrast_models/02_regression/01_logcontrast
-            title: Log-Contrast
-          - file: chapters/03_logcontrast_models/02_regression/02_trac
-            title: With trac
-      - file: chapters/03_logcontrast_models/03_classification/00_index
-        title: Classification
+          - file: chapters/01_installation/02_q2_gglasso
+            title: Installing q2-gglasso
+          - file: chapters/01_installation/03_q2_classo
+            title: Installing q2-classo
+          - file: chapters/01_installation/04_verify
+            title: Verifying Your Installation
+
+  # Tier 1 is the REFERENCE tier: every action gets its one canonical
+  # demonstration here, on data small enough to see the whole matrix. Tiers 2
+  # and 3 introduce no new action -- only new parameter values and new
+  # scientific questions.
+  - caption: "Tier 1 — Low-dimensional example (Atacama, 13 ASVs)"
+    chapters:
+      - file: chapters/02_lowdim_gglasso/00_index
+        title: Graphical Lasso Models
         sections:
-          - file: chapters/03_logcontrast_models/03_classification/01_logcontrast
-            title: Log-Contrast
-          - file: chapters/03_logcontrast_models/03_classification/02_trac
-            title: With trac
-      - file: chapters/03_logcontrast_models/04_advanced/01_concomitant_formulation
-        title: "Advanced: Concomitant Formulation"
-      - file: chapters/03_logcontrast_models/05_interpretation
-        title: Interpretation
-      - file: chapters/03_logcontrast_models/06_highdim_classo
-        title: "High-Dimensional Example (300 ASVs)"
+          - file: chapters/02_lowdim_gglasso/01_data_preparation
+            title: Data Preparation
+          - file: chapters/02_lowdim_gglasso/02_sgl
+            title: Single Graphical Lasso
+          - file: chapters/02_lowdim_gglasso/03_slr
+            title: Sparse + Low-Rank (Latent Variables)
+          - file: chapters/02_lowdim_gglasso/04_adaptive_glasso
+            title: Adaptive Graphical Lasso
+          - file: chapters/02_lowdim_gglasso/05_lambda_paths
+            title: Regularization Paths & Model Selection
+          - file: chapters/02_lowdim_gglasso/06_multiple_graphical_lasso
+            title: Multiple Graphical Lasso (GGL / FGL)
+          - file: chapters/02_lowdim_gglasso/07_pca
+            title: Latent-Component PCA
+          - file: chapters/02_lowdim_gglasso/08_summarize
+            title: Summarizing a Solution
+          - file: chapters/02_lowdim_gglasso/09_interpretation
+            title: Interpretation
+      - file: chapters/03_lowdim_classo/00_overview
+        title: Log-Contrast Models
+        sections:
+          - file: chapters/03_lowdim_classo/01_generate_data
+            title: Synthetic Data with Known Truth
+          - file: chapters/03_lowdim_classo/02_data_preparation
+            title: Data Preparation
+          - file: chapters/03_lowdim_classo/03_regression/00_index
+            title: Regression
+            sections:
+              - file: chapters/03_lowdim_classo/03_regression/01_logcontrast
+                title: Log-Contrast
+              - file: chapters/03_lowdim_classo/03_regression/02_trac
+                title: With trac
+          - file: chapters/03_lowdim_classo/04_classification/00_index
+            title: Classification
+            sections:
+              - file: chapters/03_lowdim_classo/04_classification/01_logcontrast
+                title: Log-Contrast
+              - file: chapters/03_lowdim_classo/04_classification/02_trac
+                title: With trac
+          - file: chapters/03_lowdim_classo/05_advanced/01_concomitant_formulation
+            title: "Advanced: Concomitant Formulation"
+          - file: chapters/03_lowdim_classo/05_advanced/02_model_selection
+            title: "Advanced: Choosing a Model"
+          - file: chapters/03_lowdim_classo/06_predict_and_summarize
+            title: Predict & Summarize
+          - file: chapters/03_lowdim_classo/07_interpretation
+            title: Interpretation
 
-  - file: chapters/04_appendix/01_math
-    title: "Appendix: Mathematical Background"
+  - caption: "Tier 2 — High-dimensional example (Atacama, 300 ASVs)"
+    chapters:
+      - file: chapters/04_highdim_atacama/00_index
+        title: Overview
+        sections:
+          - file: chapters/04_highdim_atacama/01_data
+            title: The 300-ASV Dataset
+          - file: chapters/04_highdim_atacama/02_model_selection
+            title: Selecting lambda
+          - file: chapters/04_highdim_atacama/03_slr_ranks
+            title: Choosing the Latent Rank
+          - file: chapters/04_highdim_atacama/04_latent_pca
+            title: Latent Components & Covariates
+          - file: chapters/04_highdim_atacama/05_classo_cv
+            title: Log-Contrast Models at Scale
+          - file: chapters/04_highdim_atacama/06_interpretation
+            title: Interpretation
 
-  - file: references
-    title: References
+  - caption: "Tier 3 — Metagenomics"
+    chapters:
+      - file: chapters/05_metagenomics/00_index
+        title: Overview
+      - file: chapters/05_metagenomics/01_gut_to_soil/00_index
+        title: "Gut-to-Soil (16S, 335 ASVs x 99 samples)"
+        sections:
+          - file: chapters/05_metagenomics/01_gut_to_soil/01_data
+            title: The Dataset
+          - file: chapters/05_metagenomics/01_gut_to_soil/02_network
+            title: Network Inference
+          - file: chapters/05_metagenomics/01_gut_to_soil/03_regression
+            title: Log-Contrast Regression
+
+  - caption: Reference
+    chapters:
+      - file: chapters/90_reference/01_command_coverage
+        title: Command Coverage Matrix
+      - file: chapters/90_reference/02_gglasso_parameters
+        title: q2-gglasso Parameter Reference
+      - file: chapters/90_reference/03_classo_parameters
+        title: q2-classo Parameter Reference
+      - file: chapters/90_reference/04_troubleshooting
+        title: Troubleshooting & Known Gotchas
+      - file: chapters/99_appendix/01_math
+        title: "Appendix: Mathematical Background"
+      - file: chapters/99_appendix/02_moshpit_cocoa_note
+        title: "Appendix: Shotgun Metagenomics (MOSHPIT cocoa)"
+      - file: references
+        title: References

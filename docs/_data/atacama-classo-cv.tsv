@@ -1,0 +1,16 @@
+outcome	selected features	lambda (min CV)	CV error (min)	max |beta|
+amplicon-concentration	12	0.31012	22.643	10.4
+average-soil-relative-humidity	8	0.27585	391.74	74.23
+average-soil-temperature	5	0.39194	16.025	15.87
+depth	1	0.62605	0.21301	1.981
+ec	1	0.49535	0.33565	0.3763
+elevation	5	0.39194	4.9722e+05	2985
+extract-concen	33	0.24538	14.591	4.017
+percent-relative-humidity-soil-100	13	0.19415	591.74	50.79
+percentcover	22	0.27585	7.1704	2.018
+ph	16	0.21826	0.37138	7.868
+relative-humidity-soil-high	5	0.13664	307.46	88.45
+relative-humidity-soil-low	8	0.44062	650.3	53.58
+temperature-soil-high	7	0.34864	9.0494	22.93
+temperature-soil-low	4	0.55688	20.133	7.683
+toc	1	0.39194	3.4997e+06	1068

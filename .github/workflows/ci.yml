@@ -1,10 +1,18 @@
-
 name: deploy-book
 
 on:
+  # Build on PRs and on the restructure branch too, so a broken book is caught
+  # before it reaches the branch that publishes. Only `main` actually deploys --
+  # the Pages step below is gated on the ref, not on this list -- so adding a
+  # branch here buys verification without any risk of publishing from it.
   push:
     branches:
     - main
+    - tutorial-restructure
+  pull_request:
+    branches:
+    - main
+  workflow_dispatch:
 
 jobs:
   deploy-book:
@@ -12,22 +20,30 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Setup Miniconda
-      uses: conda-incubator/setup-miniconda@v3
+    - name: Set up Python
+      uses: actions/setup-python@v5
       with:
-        python-version: 3.9
-        mamba-version: "*"
-        channels: conda-forge,defaults
-        channel-priority: true
-        activate-environment: conda-env
+        python-version: "3.11"
 
+    # Install from requirements.txt, not a bare `jupyter-book`. The book now
+    # declares `sphinxext.rediraffe` in docs/_config.yml (it emits the redirect
+    # stubs for the ~19 chapters moved during the three-tier restructure), and a
+    # toolchain without it fails the build outright with
+    #   Could not import extension sphinxext.rediraffe
+    # Installing only jupyter-book would take the published site down.
     - name: Install dependencies
-      run: mamba install -n conda-env jupyter-book
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
 
+    # -W turns Sphinx warnings into errors: a broken cross-reference or a
+    # redirect pointing at a page that no longer exists should fail the build
+    # rather than silently ship. The book is currently warning-clean.
     - name: Build the book
-      run: mamba run -n conda-env jupyter-book build docs
+      run: jupyter-book build docs --warningiserror
 
     - name: GitHub Pages action
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
