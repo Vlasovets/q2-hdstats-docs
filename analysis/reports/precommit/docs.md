@@ -1,3 +1,18 @@
+> **HISTORICAL SNAPSHOT — 2026-08-04 pre-commit review of the docs repo.**
+>
+> Two of its findings turned on repository structure that has since changed:
+> **docs-13** noted the generator scripts sat in a directory that was "not a
+> git repository at all, so nothing is committed anywhere". Those scripts were
+> subsequently versioned as `q2-hdstats-recompute`, and on 2026-08-05 that repo
+> was merged into this one as `analysis/`. They are now committed alongside the
+> book, and the chapters point at `analysis/slurm/`.
+>
+> Absolute paths of the form `.../q2-hdstats-recompute/...` in the text below
+> now correspond to `analysis/...` in this repository. Read as a record of what
+> was found, not as a description of the current tree.
+
+---
+
 ## CONFIRMED (13)
 
 **[docs-01] `docs/_config.yml` + `requirements.txt` vs `.github/workflows/ci.yml` — published book build will fail (HIGH)**

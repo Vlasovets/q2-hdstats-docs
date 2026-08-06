@@ -247,9 +247,9 @@ The three points the Tier 2 analysis uses:
 | 10 | 7.5 | comparison |
 
 ```{note}
-This table is **generated**, not transcribed. The generator is not in this book:
-`slurm/03_mu_rank_map.sh` lives in the companion `q2-hdstats-recompute` tree,
-fits each $\mu_1$ and writes `results/tables/mu-rank-map.tsv` from the solution
+This table is **generated**, not transcribed. The generator ships with this
+repository at `analysis/slurm/03_mu_rank_map.sh`, which
+fits each $\mu_1$ and writes `analysis/results/tables/mu-rank-map.tsv` from the solution
 artifacts; `docs/_data/atacama-mu-rank-map.tsv` is a copy of it, so the two are
 kept in step by hand. The columns are the same four. It also asserts each fit
 really was a single fit — with

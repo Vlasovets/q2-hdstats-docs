@@ -52,9 +52,9 @@ sparse network with **216 edges**:
 ```
 
 ```{note}
-This table is **generated**, not transcribed. The generator is not in this book:
-`slurm/01_lambda_path.sh` lives in the companion `q2-hdstats-recompute` tree and
-writes `results/tables/lambda-path.tsv` with columns `lambda1 / sparsity / ebic`
+This table is **generated**, not transcribed. The generator ships with this
+repository at `analysis/slurm/01_lambda_path.sh`, which
+writes `analysis/results/tables/lambda-path.tsv` with columns `lambda1 / sparsity / ebic`
 straight out of the solution artifact. `docs/_data/atacama-lambda-path.tsv` is
 that file re-expressed as `lambda / eBIC (gamma=0.3) / edges`, with the edge
 counts derived from the reported sparsity as
