@@ -2,9 +2,9 @@ name: deploy-book
 
 on:
   # Build on PRs and on the restructure branch too, so a broken book is caught
-  # before it reaches the branch that publishes. Only `main` actually deploys --
-  # the Pages step below is gated on the ref, not on this list -- so adding a
-  # branch here buys verification without any risk of publishing from it.
+  # before it reaches the branch that publishes. Only `main` deploys -- the
+  # deploy job below is gated on the ref, not on this list -- so adding a branch
+  # here buys verification without any risk of publishing from it.
   push:
     branches:
     - main
@@ -14,8 +14,19 @@ on:
     - main
   workflow_dispatch:
 
+# `pages: write` is what lets the deploy job ASK GitHub to publish (see the
+# "Request a Pages build" step). Without it that API call returns 403 and the
+# site silently stops updating -- which is exactly the bug this file fixes.
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
 jobs:
-  deploy-book:
+  build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -25,7 +36,7 @@ jobs:
       with:
         python-version: "3.11"
 
-    # Install from requirements.txt, not a bare `jupyter-book`. The book now
+    # Install from requirements.txt, not a bare `jupyter-book`. The book
     # declares `sphinxext.rediraffe` in docs/_config.yml (it emits the redirect
     # stubs for the ~19 chapters moved during the three-tier restructure), and a
     # toolchain without it fails the build outright with
@@ -42,11 +53,110 @@ jobs:
     - name: Build the book
       run: jupyter-book build docs --warningiserror
 
-    - name: GitHub Pages action
+    # Assert the build produced the post-restructure tree before publishing it.
+    - name: Sanity-check the built tree
+      run: |
+        set -euo pipefail
+        for f in \
+          docs/_build/html/index.html \
+          docs/_build/html/chapters/02_lowdim_gglasso/01_data_preparation.html \
+          docs/_build/html/chapters/04_highdim_atacama/01_data.html \
+          docs/_build/html/chapters/90_reference/01_command_coverage.html
+        do
+          [[ -s "$f" ]] || { echo "missing or empty: $f"; exit 1; }
+        done
+        echo "built $(find docs/_build/html -name '*.html' | wc -l) html pages"
+
+    # Carry the build to the deploy job so the site is published from exactly
+    # the tree that was just checked, with no second build to diverge from it.
+    - name: Upload the built site
       if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      uses: actions/upload-artifact@v4
+      with:
+        name: book-html
+        path: docs/_build/html
+        retention-days: 7
+
+  deploy:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Download the built site
+      uses: actions/download-artifact@v4
+      with:
+        name: book-html
+        path: site
+
+    - name: Publish to the pages branch
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: docs/_build/html
+        publish_dir: site
         publish_branch: book
         enable_jekyll: false
+
+    # THE FIX.
+    #
+    # Pushing to `book` is not enough. GitHub deliberately does not trigger
+    # workflow runs from pushes made with the default GITHUB_TOKEN, and the
+    # "pages build and deployment" run is subject to that rule. So the branch
+    # updated, every check went green, and the live site kept serving a build
+    # from three weeks earlier. Nothing failed -- the publish simply never ran.
+    #
+    # Asking for the build explicitly is the documented way out when Pages is
+    # configured as "Deploy from a branch". It needs `pages: write`, granted above.
+    - name: Request a Pages build
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        set -euo pipefail
+        code=$(curl -sS -o /tmp/pages.json -w '%{http_code}' -X POST \
+          -H "Authorization: Bearer $GH_TOKEN" \
+          -H "Accept: application/vnd.github+json" \
+          -H "X-GitHub-Api-Version: 2022-11-28" \
+          "https://api.github.com/repos/${{ github.repository }}/pages/builds")
+        echo "HTTP $code"; cat /tmp/pages.json
+        # 201 Created is the success case. Anything else means the site will not
+        # update, and that must be loud rather than ignored.
+        if [[ "$code" != "201" ]]; then
+          echo "::error::Could not request a Pages build (HTTP $code). The book branch was updated but the live site will NOT refresh."
+          exit 1
+        fi
+
+  # The reason this job exists: every check was green while the published site
+  # was three weeks stale. A green pipeline must mean the thing readers see is
+  # the thing we built, so go and look.
+  verify-published:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+    - name: Assert the live site serves the build we just published
+      run: |
+        set -uo pipefail
+        base="https://${{ github.repository_owner }}.github.io/${GITHUB_REPOSITORY#*/}"
+        echo "checking $base"
+        # Pages builds asynchronously after the API accepts the request, so give
+        # it a few minutes before calling it a failure.
+        for attempt in $(seq 1 15); do
+          ok=1
+          for p in \
+            "chapters/02_lowdim_gglasso/01_data_preparation.html" \
+            "chapters/04_highdim_atacama/01_data.html" \
+            "chapters/90_reference/01_command_coverage.html"
+          do
+            code=$(curl -sS -o /dev/null -w '%{http_code}' -L --max-time 30 "$base/$p" || echo 000)
+            [[ "$code" == "200" ]] || { ok=0; last="$code $p"; }
+          done
+          if [[ "$ok" == "1" ]]; then
+            echo "published site verified against $base"
+            exit 0
+          fi
+          echo "attempt $attempt/15: not live yet (last: ${last:-n/a}), waiting 20s"
+          sleep 20
+        done
+        echo "::error::Pages reported a build but $base still does not serve the new chapters (last: ${last:-n/a})."
+        exit 1
