@@ -2,15 +2,29 @@
 
 Seven items surfaced during the 2026.7 migration that change **behaviour, artifact
 semantics, or a release commitment** rather than prose. Evidence is recorded so
-each decision can be made without re-deriving it. Items 1 and 7 have been acted
-on; the rest are deliberately left unfixed.
+each can be re-checked without re-deriving it.
 
-Status of everything else: Gate A1 and Gate C1 both PASS, the plugin tests pass,
-the book builds with zero warnings. See `project_q2_hdstats_migration` in the
+| | item | status |
+|---|---|---|
+| 1 | `transform_features` swapped axes | **fixed**, verified neutral (0.000e+00) |
+| 2 | `stabsel_true_lam` / `lamfixed_true_lam` | **confirmed from c-lasso's source** |
+| 3 | `List[Float]` registration | decided: leave, documented |
+| 4 | `selected-atacama-sample-metadata.tsv` on the record | **resolved** — already deposited |
+| 5 | λ = 0.8 vs λ = 0.95 | **decided on evidence**: 0.8 canonical |
+| 6 | MOSHPIT cocoa / shotgun data | open — needs Evan and the F1000 reviewer |
+| 7 | `ASV-k` is a position, not an identifier | **fixed**, tier 2 rebuilt with real IDs |
+
+Only item 6 is genuinely open, and it is a scope question for other people rather
+than something to fix here. Items 2 and 5 were originally flagged for the author
+to confirm; both were closed from primary evidence instead.
+
+Status of everything else: Gate A1 and Gate C1 both PASS, 45 q2-gglasso + 22
+q2-classo tests pass, the book builds with zero warnings, and the manifest
+matches the published files (11/11). See `project_q2_hdstats_migration` in the
 Claude memory index for the full picture.
 
-**Read item 7 first if you are about to mint the Zenodo DOI** — it is the only
-one that becomes irreversible at that point.
+**Read item 7 before minting the Zenodo DOI** — feature identity is the thing
+that becomes irreversible at that point.
 
 ---
 
@@ -54,8 +68,8 @@ sort. The shipped matrix was written **2026-06-27**. 209 of 300 features share a
 total-abundance value, and exactly **158 features moved, all of them within their
 own abundance level** (0 crossed levels).
 
-**The documented chain does reproduce the shipped matrix.** Gate C1 stands. No
-question for C. Müller here; only the λ=0.8 item below remains.
+**The documented chain does reproduce the shipped matrix.** Gate C1 stands, and
+the provenance question this raised is answered — nothing to ask anyone.
 
 **What this did surface, and it is worse:** `ASV-k` is not a stable identifier,
 and the recovery procedure the tutorial documented is broken. See item 7.
@@ -110,24 +124,38 @@ mixed-state risk that makes (a) unattractive.
 
 ---
 
-## 2. `--p-stabsel-true-lam` / `--p-lamfixed-true-lam` — behaviour change already applied
+## 2. `--p-stabsel-true-lam` / `--p-lamfixed-true-lam` — **CONFIRMED FROM SOURCE** (2026-08-05)
 
 **Applied, flagging because it changes results.** Both parameters were **inert**:
 q2-classo assigned `param.true_lam`, but c-lasso reads `rescaled_lam`. Assigning an
 undefined attribute silently created a new one that nothing consulted.
 
-The correct mapping is an **inversion**. c-lasso, `solver.py:643`:
-`rescaled_lam (bool) : (only used if method = 'lam') False if lam = lambda, [True]
-if lam = lambda/lambdamax`. q2's `true_lam` means "the lambda given is the real
-lambda". So `rescaled_lam = not true_lam`, now applied at all four call sites.
+The correct mapping is an **inversion**. c-lasso, `solver.py:729`:
+`rescaled_lam (bool) : False if lam = lambda, True if lam = lambda/lambdamax`.
+q2's `true_lam` means "the lambda given is the real lambda". So
+`rescaled_lam = not true_lam`, now applied at all four call sites.
 
 **Blast radius:** only consulted when `stabsel_method == 'lam'`; the default is
 `'first'`. Two `.qzv` templates that rendered `{{ ....true_lam }}` were updated to
 `rescaled_lam` — otherwise that row would have rendered *blank* rather than
 erroring, because q2templates uses jinja2's default `Undefined`.
 
-**Confirm:** is `rescaled_lam = not true_lam` the intended semantics, or was
-`true_lam` meant to be passed through unchanged under a different name?
+**~~Confirm~~ CONFIRMED FROM THE SOURCE 2026-08-05 — no author input needed.**
+
+c-lasso performs the same inversion itself. In
+`classo/solver.py` it passes `true_lam=not param.rescaled_lam` at **three** call
+sites (857, 1183, 1343). So `true_lam` and `rescaled_lam` are documented
+opposites in c-lasso's own code, and q2-classo's
+`param.rescaled_lam = not stabsel_true_lam` is the correct round trip. Applied at
+all four call sites (`_func.py:345, 363, 494, 512`).
+
+One trap for anyone re-checking this: the docstring at `solver.py:643` is
+**itself buggy** — "False if lam = lambda, *False* if lam = lambda/lambdamax".
+The correct wording is at `:729` ("…*True* if lam = lambda/lambdamax"), and the
+code at 857 is better evidence than either. Do not resolve this from the 643
+docstring; it says the parameter has the same value in both cases.
+
+Closed on evidence rather than confirmation.
 
 ---
 
@@ -170,7 +198,7 @@ blocks the release.
 
 ---
 
-## 5. λ = 0.8 vs λ = 0.95 — confirm with C. Müller
+## 5. λ = 0.8 vs λ = 0.95 — **DECIDED ON EVIDENCE** (2026-08-05)
 
 Now stronger than when the plan was written. Gate C1 reproduced the **whole** λ
 path, and both values are points on it:
@@ -181,8 +209,26 @@ path, and both values are points on it:
 | 0.80 | 216 | the tutorial chapters, `tutorial-notes.md`, `run_q2_gglasso_lambda08_models.sh` |
 
 So the share bundle is not wrong, just an **earlier point on the same path**.
-Recommendation stands: λ=0.8 canonical, regenerate the bundle. One email to
-confirm before the recompute overwrites it.
+
+**DECIDED 2026-08-05: λ = 0.8 is canonical**, on the artifact evidence rather
+than by asking. The evidence is four-fold and mutually consistent:
+
+1. Gate C1 reproduces the **entire** λ path through the CLI, so 0.95 and 0.80 are
+   demonstrably two points on one curve, not two competing analyses.
+2. λ = 0.80 is the eBIC-selected minimum (16130.0988) on that curve; 0.95 is not
+   selected by any criterion in the pipeline.
+3. Timestamps inside `Atacama-q2-gglasso-q2-classo-tutorial.zip` put the λ=0.95
+   fits at 06-27 19:28 and the λ=0.8 models at 06-28 09:24 — later, i.e. the
+   λ=0.95 run is the earlier exploratory pass.
+4. Both `tutorial-notes.md` and `run_q2_gglasso_lambda08_models.sh` use 0.8.
+
+Nothing in the bundle argues for 0.95 except its own existence. Recorded here so
+the reasoning is auditable if it is ever questioned: this was inferred, not
+confirmed by the author, and (3) is the only strand that could in principle be
+misleading — file mtimes survive copying badly. Strands (1) and (2) do not depend
+on it.
+
+The share bundle at λ=0.95 is superseded, not deleted.
 
 ---
 
