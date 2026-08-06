@@ -1,4 +1,4 @@
-# Docs CI parity — 2026-08-06T14:58:29+02:00
+# Docs CI parity — 2026-08-06T16:42:18+02:00
 
 Built from a THROWAWAY venv via `pip install -r requirements.txt`, i.e.
 exactly the toolchain CI resolves — not a warm local environment.
@@ -9,4 +9,4 @@ Sphinx                        7.4.7
 sphinxext-rediraffe           0.3.0
 ```
 
-Result: **PASS**
+Result: **FAIL**

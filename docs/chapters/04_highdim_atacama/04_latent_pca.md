@@ -369,6 +369,28 @@ ones, so a covariate that correlates with two components is reported only for th
 last of them.
 ```
 
+## Which ASVs load on each axis?
+
+The projection above places *samples* on the latent axes. The eigenvectors of
+$\hat{L}$ place the *features*: each ASV gets a loading on each axis, and the
+distribution of those loadings tells you whether an axis is driven by a handful
+of taxa or by the community as a whole.
+
+```{figure} ../../images/png/atacama-full/atacama-top-300-lambda0.8-lowrank-vector-histograms.png
+:name: fig-atacama-lowrank-loadings
+:width: 100%
+
+Per-ASV loadings on the two latent axes at $\lambda = 0.8$, rank 2. Loadings
+spread across many ASVs rather than concentrating in a few indicate a
+community-wide gradient — the signature of an environmental driver rather than a
+property of one clade.
+```
+
+A broad, roughly symmetric spread is what you expect from a gradient such as pH
+or moisture acting on the whole community. A spike — most ASVs near zero and a
+few far out — would instead suggest the axis is tracking something specific, and
+is worth chasing back to those taxa before calling it environmental.
+
 ## What to do with the answer
 
 Three outcomes, three next steps.

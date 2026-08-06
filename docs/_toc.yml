@@ -24,7 +24,7 @@ parts:
   # demonstration here, on data small enough to see the whole matrix. Tiers 2
   # and 3 introduce no new action -- only new parameter values and new
   # scientific questions.
-  - caption: "Tier 1 — Low-dimensional example (Atacama, 13 ASVs)"
+  - caption: "Start small: a 13-ASV network"
     chapters:
       - file: chapters/02_lowdim_gglasso/00_index
         title: Graphical Lasso Models
@@ -77,7 +77,7 @@ parts:
           - file: chapters/03_lowdim_classo/07_interpretation
             title: Interpretation
 
-  - caption: "Tier 2 — High-dimensional example (Atacama, 300 ASVs)"
+  - caption: "Scale up: 300 ASVs"
     chapters:
       - file: chapters/04_highdim_atacama/00_index
         title: Overview
@@ -95,7 +95,7 @@ parts:
           - file: chapters/04_highdim_atacama/06_interpretation
             title: Interpretation
 
-  - caption: "Tier 3 — Metagenomics"
+  - caption: "Metagenomics: from networks to regression"
     chapters:
       - file: chapters/05_metagenomics/00_index
         title: Overview

@@ -1,29 +1,22 @@
-# High-Dimensional Example: 300 Atacama ASVs
+# Choosing the penalties
 
-The chapters above use a small 13-ASV subset to keep every step easy to follow.
-This chapter scales the same q2-gglasso workflow to a **high-dimensional**
-setting — the **300 most abundant ASVs** across **54 samples** of the Atacama
-soil microbiome — and selects the regularization parameters with an explicit
-model-selection criterion. It reproduces the reference analysis prepared by
-Christian L. Müller.
+[The 300-ASV Dataset](01_data.md) left us with a correlation matrix over 300
+features estimated from 54 samples. That is the regime where the sample
+covariance is singular and every network you could draw is, in some sense,
+consistent with the data — so the model is decided by the penalties, not by the
+data alone.
 
-## Data
+This page fixes both of them. First $\lambda_1$, which controls how many edges
+survive. Then $\mu_1$, which controls how much of the covariance is explained
+away by unobserved factors instead of by edges between ASVs.
 
-Starting from the full Atacama tutorial table, samples are matched and the
-**300 ASVs with the greatest total abundance** are retained ($n = 54$ samples,
-$p = 300$ features; the resulting table has 49,252 counts and is 5.9% non-zero).
-The empirical correlation matrix of the clr-transformed table
-(`atacama-top-300-correlation.qza`) is the input to the graphical lasso.
+## How sparse should the network be?
 
-## Single graphical lasso: selecting $\lambda$ with eBIC
-
-For a high-dimensional network we choose the sparsity penalty $\lambda_1$ with
-the **extended Bayesian Information Criterion** (eBIC). The extra parameter
-$\gamma \in [0, 1]$ controls how strongly extra edges are penalized: Foygel and
-Drton use $\gamma = 0.5$ as the conventional choice, while the small-example
-default `--p-gamma 0.01` is tailored to the toy table. For this analysis we use
-a moderate **$\gamma = 0.3$**, evaluated on a **linear** $\lambda$ path running
-from `1.00` down to `0.30` in steps of `0.05` — 15 points:
+Ask the data. The **extended Bayesian Information Criterion** (eBIC) scores each
+candidate network by fit minus a penalty for the edges it spends, and we take the
+$\lambda_1$ that scores lowest. The extra parameter $\gamma$ sets how harshly
+extra edges are charged; we use $\gamma = 0.3$, between Foygel and Drton's
+conventional $0.5$ and the toy-table default of $0.01$.
 
 ```bash
 qiime gglasso solve-problem \
@@ -36,69 +29,53 @@ qiime gglasso solve-problem \
     --o-solution atacama-top-300-sgl-linear-path.qza
 ```
 
-`--p-path-scale linear` is what makes this an evenly-spaced grid; the default is
-`log`. Passing the grid explicitly with `--p-lambda1-path` is equivalent.
+```{figure} ../../images/png/generated/atacama-ebic-lambda-selection.png
+:name: fig-atacama-ebic
+:width: 100%
 
-Along this path the **minimum eBIC occurs at $\lambda = 0.8$**, which defines the
-sparse network with **216 edges**:
-
-![Linear eBIC model selection for the 300-ASV single graphical lasso](../../images/png/atacama-full/atacama-top-300-linear-model-selection.png)
-
-```{csv-table} eBIC across the linear $\lambda$ path
-:file: ../../_data/atacama-lambda-path.tsv
-:delim: tab
-:header-rows: 1
-:widths: 20, 40, 20
+eBIC across the linear $\lambda_1$ path at $\gamma = 0.3$, with the edge count on
+the right-hand axis. The minimum sits at $\lambda_1 = 0.8$, giving a network of
+**216 edges** among 300 ASVs — about 0.5% of the 44,850 possible pairs.
 ```
 
-```{note}
-This table is **generated**, not transcribed. The generator ships with this
-repository at `analysis/slurm/01_lambda_path.sh`, which
-writes `analysis/results/tables/lambda-path.tsv` with columns `lambda1 / sparsity / ebic`
-straight out of the solution artifact. `docs/_data/atacama-lambda-path.tsv` is
-that file re-expressed as `lambda / eBIC (gamma=0.3) / edges`, with the edge
-counts derived from the reported sparsity as
-$\text{density} \times \binom{300}{2}$. That conversion is a hand step, so the
-prose above *can* drift from the numbers below — check both against
-`results/tables/lambda-path.tsv` after any re-run rather than trusting the
-pipeline to keep them in step.
+**The minimum is real but shallow.** eBIC at $\lambda_1 = 0.8$ is 16130.1, and at
+the opposite end of the path $\lambda_1 = 0.3$ scores 16165.1 — a difference of
+35 on a scale of ~16,000. Two networks that differ by an order of magnitude in
+density (216 edges versus 1405) are nearly tied by this criterion. That is worth
+knowing before you quote the selected model as though the data insisted on it.
+
+It also explains why the answer moves with $\gamma$: $\gamma \in [0.30, 0.31]$
+gives $\lambda = 0.8$, $\gamma \le 0.29$ gives the dense $\lambda = 0.3$, and
+$\gamma \ge 0.32$ gives the empty $\lambda = 1.0$. The selection is a judgement
+about how much sparsity you want, expressed through $\gamma$ — not a fact the
+data handed over.
+
+```{admonition} How we actually chose γ = 0.3
+:class: tip, dropdown
+
+$\gamma = 0.5$ is the conventional default and here selects the empty network,
+which is useless. $\gamma = 0.01$ — the plugin's default, tuned for the 13-ASV
+toy table — selects 1405 edges, which at $n = 54$ is far more parameters than
+data. We took the middle: the smallest $\gamma$ that yields a network sparse
+enough to read, and checked it was not perched on a boundary. It very nearly is
+— see the interval above — so we report the sensitivity rather than hide it.
+
+The full $\lambda$ path with eBIC and edge counts at every grid point is in
+`docs/_data/atacama-lambda-path.tsv`, and the per-$\gamma$ comparison that
+produced the interval is in `analysis/reports/`.
 ```
 
-The choice of $\gamma$ matters: $\gamma \in [0.30, 0.31]$ selects $\lambda = 0.8$
-(216 edges); $\gamma \le 0.29$ selects the much denser $\lambda = 0.3$
-(1405 edges); and $\gamma \ge 0.32$ selects the empty $\lambda = 1.0$ network.
+## Is there hidden structure the network is missing?
 
-```{note}
-**On reproducibility across the path.** The CLI run reproduces the original
-reference analysis exactly at 11 of the 14 non-empty grid points — including the
-whole sparse end and, critically, the selected $\lambda = 0.8$ at 216 edges. Three
-points at the dense end differ by one or two edges: $\lambda = 0.55$ (819 vs 820),
-$\lambda = 0.35$ (1350 vs 1348) and $\lambda = 0.3$ (1405 vs 1403). The numbers
-above and in the table are the **current** run.
+An edge between two ASVs is supposed to mean they associate *after* controlling
+for everything else measured. But soil pH, moisture and depth act on many taxa at
+once, and if those drivers are not in the model their footprint arrives as a haze
+of spurious edges.
 
-Two things could produce a difference that small in the dense regime, and the
-path artifact does not retain enough information to separate them: genuine solver
-variation where many entries sit near the sparsity threshold, or rounding in the
-edge counts, which are derived from the reported density rather than counted from
-each grid point's precision matrix. Neither affects the selection — the eBIC
-minimum is at $\lambda = 0.8$ either way, and agrees with the reference to eight
-significant figures.
-```
-
-## Sparse + low-rank: comparing ranks 2, 5 and 10
-
-At the selected $\lambda = 0.8$ we add a low-rank latent component and compare
-target ranks **2, 5 and 10**. In the current release the rank is not set
-directly; it is controlled through the low-rank penalty $\mu_1$ (a larger
-$\mu_1$ yields a smaller rank). We therefore **scout** $\mu_1$ until the fitted
-`rank(lowrank_)` matches each target:
-
-| Model | $\mu_1$ | sparse edges | connected nodes |
-|-------|---------|--------------|-----------------|
-| Sparse only (rank 0) | — | 216 | 163 |
-| Sparse + low-rank, rank 2 | 15.0 | 202 | 162 |
-| Sparse + low-rank, rank 5 | 10.0 | 158 | 124 |
-| Sparse + low-rank, rank 10 | 7.5 | 110 | 92 |
+The sparse + low-rank formulation gives that haze somewhere else to go: it splits
+the precision matrix into a sparse part $\hat{\Theta}_S$ (the network) and a
+low-rank part $\hat{L}$ (a handful of latent factors). The penalty $\mu_1$
+controls the rank — larger $\mu_1$ permits fewer latent factors.
 
 ```bash
 # rank 2 (mu1 = 15); repeat with mu1 = 10 for rank 5, mu1 = 7.5 for rank 10
@@ -112,28 +89,52 @@ qiime gglasso solve-problem \
     --o-solution atacama-top-300-slr-lambda0.8-rank2.qza
 ```
 
-The `--p-lambda2-*` triple pins the second penalty to a single value. It is
-inert for a single-graph problem, but omitting it leaves `lambda2` on a
-five-point default path, which turns this single fit into a model-selection run;
-see [Choosing the Latent Rank](03_slr_ranks.md).
+```{figure} ../../images/png/generated/atacama-rank-tradeoff.png
+:name: fig-atacama-rank
+:width: 100%
 
-![Sparse and sparse + low-rank precision matrices at lambda = 0.8 for ranks 0, 2, 5, 10](../../images/png/atacama-full/atacama-top-300-lambda0.8-rank-comparison-matrices.png)
+What each latent dimension absorbs. Two latent factors take 14 edges out of the
+network and cost one connected node; going to rank 10 removes half the edges and
+a third of the nodes. The rank is not set directly — it is reached by tuning
+$\mu_1$, and these are the values that hit ranks 2, 5 and 10.
+```
 
 **Rank 2 is the parsimonious choice.** Its two latent components already capture
-the dominant measured-covariate structure, while ranks 5 and 10 mostly add
-higher-dimensional detail. Across the downstream prediction tasks, the strength
-of each task's association with the robust principal components tracks the
-energy of its log-contrast coefficients in the rank-2 latent subspace (Spearman
-$\rho = 0.90$, $p = 6\times10^{-5}$), confirming that two latent dimensions are
-sufficient.
+the dominant measured-covariate structure: the network keeps 202 of its 216 edges
+and 162 of 163 connected nodes, so almost nothing that survived the sparsity
+penalty is being explained away. Ranks 5 and 10 strip out progressively more, and
+at rank 10 you are no longer looking at the same network.
 
-The low-rank component's eigenvectors give per-ASV loadings on the latent axes:
+Independently, the strength of each downstream prediction task's association with
+the robust principal components tracks the energy of its log-contrast
+coefficients in the rank-2 latent subspace (Spearman $\rho = 0.90$,
+$p = 6\times10^{-5}$) — two latent dimensions are enough to carry the signal the
+regression tier later needs.
 
-![Low-rank loading vectors at lambda = 0.8, rank 2](../../images/png/atacama-full/atacama-top-300-lambda0.8-lowrank-vector-histograms.png)
+```{admonition} Setting the rank when you cannot set the rank
+:class: note
 
-> **Choosing $\mu_1$ / the low-rank rank.** Until q2-gglasso exposes an explicit
-> `--p-rank` (registered but currently guarded, pending upstream GGLasso
-> support), select the rank indirectly: fit the SLR model for a few $\mu_1$
-> values at the chosen $\lambda$, read the achieved `rank(lowrank_)` from each
-> solution, and keep the $\mu_1$ that reaches your target rank. For this dataset
-> that yields $\mu_1 = 15, 10, 7.5$ for ranks $2, 5, 10$, and rank 2 is enough.
+`--p-rank` is registered but currently guarded, pending upstream GGLasso support,
+so the rank is reached indirectly: fit at a few $\mu_1$ values, read the achieved
+`rank(lowrank_)` from each solution, and keep the one that hits your target. For
+this dataset that is $\mu_1 = 15, 10, 7.5$ for ranks $2, 5, 10$.
+
+The `--p-lambda2-*` triple pins the second penalty to a single value. It is inert
+for a single-graph problem, but omitting it leaves `lambda2` on a five-point
+default path, which quietly turns this single fit into a model-selection run —
+see [Choosing the Latent Rank](03_slr_ranks.md).
+```
+
+## What you should have now
+
+Two artifacts and two numbers to carry forward:
+
+| artifact | what it is |
+|---|---|
+| `atacama-top-300-sgl-linear-path.qza` | the whole $\lambda$ path, with eBIC at every grid point |
+| `atacama-top-300-slr-lambda0.8-rank2.qza` | the selected model: $\lambda_1 = 0.8$, rank 2 |
+
+The headline result is **216 edges at $\lambda_1 = 0.8$**, reduced to **202** once
+two latent factors are allowed. [Choosing the Latent Rank](03_slr_ranks.md)
+examines the $\mu_1 \to$ rank relationship properly, and
+[Latent PCA](04_latent_pca.md) asks what those two latent axes actually are.
