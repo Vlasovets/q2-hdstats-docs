@@ -233,6 +233,80 @@ def fig_network_rank0_vs_rank2(outdir):
     return out, "%d shared, %d removed, %d added" % (len(shared), len(removed), len(added))
 
 
+
+def fig_simplex_zero_sum(outdir):
+    """The two facts every chapter in this book depends on, drawn once.
+
+    Compositionality is discussed in 27 of the 48 chapters and illustrated in
+    none of them. The reference tutorial this book is modelled on can get away
+    with no schematics because a rarefaction curve explains itself; a simplex
+    does not, and neither does a zero-sum constraint on regression coefficients.
+
+    Left: two count vectors that differ only by sequencing depth land on the same
+    point of the simplex, so depth is not recoverable and only ratios carry
+    information. Right: the consequence for regression -- coefficients are forced
+    to sum to zero, so no single one means anything on its own.
+    """
+    fig, (axA, axB) = plt.subplots(1, 2, figsize=(11.0, 4.6), dpi=200)
+
+    # ---- A: the simplex -------------------------------------------------
+    import numpy as _np
+    V = _np.array([[0.0, 0.0], [1.0, 0.0], [0.5, _np.sqrt(3) / 2]])
+    axA.add_patch(plt.Polygon(V, closed=True, facecolor="#eef2f6",
+                              edgecolor=MUTED, linewidth=1.6, zorder=1))
+    for (x, y), lab, off in zip(V, ["feature 1", "feature 2", "feature 3"],
+                                [(-0.06, -0.07), (0.06, -0.07), (0.0, 0.05)]):
+        axA.text(x + off[0], y + off[1], lab, ha="center", va="center",
+                 fontsize=10, color=INK)
+
+    def bary(c):
+        c = _np.asarray(c, float); c = c / c.sum()
+        return c @ V
+
+    p1 = bary([10, 20, 30])
+    axA.plot(*p1, "o", markersize=13, color=ACCENT, zorder=4)
+    axA.annotate("(10, 20, 30)", xy=p1, xytext=(-96, 34),
+                 textcoords="offset points", fontsize=10.5, color=ACCENT,
+                 arrowprops=dict(arrowstyle="-", color=ACCENT, linewidth=1.1))
+    axA.annotate("(100, 200, 300)", xy=p1, xytext=(24, -40),
+                 textcoords="offset points", fontsize=10.5, color=ACCENT,
+                 arrowprops=dict(arrowstyle="-", color=ACCENT, linewidth=1.1))
+    axA.text(0.5, -0.215, "ten times the reads, same point",
+             ha="center", fontsize=10.5, color=INK, fontweight="bold")
+    axA.text(0.5, -0.345, "sequencing depth is not recoverable —\nonly the "
+             "ratios between features are",
+             ha="center", fontsize=9.5, color=MUTED, linespacing=1.5)
+    axA.set_xlim(-0.22, 1.22); axA.set_ylim(-0.46, 1.02)
+    axA.set_aspect("equal"); axA.set_axis_off()
+    axA.set_title("Counts live on a simplex", fontsize=12.5,
+                  fontweight="bold", color=INK, pad=10)
+
+    # ---- B: the zero-sum constraint -------------------------------------
+    beta = _np.array([0.26, -0.11, -0.19, -0.10, 0.13, 0.16, -0.15])
+    beta = beta - beta.mean()                      # exactly zero-sum
+    names = ["ASV-6", "ASV-7", "ASV-9", "ASV-10", "ASV-11", "ASV-12", "ASV-13"]
+    cols = [ACCENT if b > 0 else "#3b6ea5" for b in beta]
+    axB.bar(range(len(beta)), beta, color=cols, edgecolor="white", linewidth=0.8, zorder=3)
+    axB.axhline(0, color=INK, linewidth=1.2, zorder=4)
+    axB.set_xticks(range(len(beta)))
+    axB.set_xticklabels(names, fontsize=9, rotation=30, ha="right", color=INK)
+    axB.set_ylabel(r"coefficient $\beta_i$", fontsize=10.5, color=INK)
+    _style(axB)
+    axB.set_title("…so coefficients must sum to zero", fontsize=12.5,
+                  fontweight="bold", color=INK, pad=10)
+    axB.annotate(r"$\sum_i \beta_i = 0$", xy=(0.97, 0.93), xycoords="axes fraction",
+                 ha="right", fontsize=13, color=INK, fontweight="bold")
+    axB.text(0.5, -0.40, "a positive coefficient is a statement about that "
+             "feature\nrelative to the negatively-weighted ones — never alone",
+             transform=axB.transAxes, ha="center", fontsize=9.5,
+             color=MUTED, linespacing=1.5)
+
+    out = outdir / "compositional-simplex-zero-sum.png"
+    fig.savefig(out, bbox_inches="tight", facecolor="white")
+    plt.close(fig)
+    return out, "simplex + zero-sum schematic (sum beta = %.1e)" % abs(beta.sum())
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--outdir", type=pathlib.Path, default=DEFAULT_OUT)
@@ -245,7 +319,8 @@ def main():
         sys.exit(f"missing input tables in {TABLES}: {missing}. "
                  "Run the recompute stages first.")
 
-    for fn in (fig_ebic_path, fig_rank_tradeoff, fig_network_rank0_vs_rank2):
+    for fn in (fig_ebic_path, fig_rank_tradeoff, fig_network_rank0_vs_rank2,
+               fig_simplex_zero_sum):
         path, note = fn(args.outdir)
         print(f"  {path.name:44} {note}")
     print(f"  -> {args.outdir}")

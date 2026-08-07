@@ -1,6 +1,22 @@
 # Log-Contrast Models Overview
 
-Log-contrast models are powerful tools for analyzing compositional microbiome data while respecting the constrained nature of relative abundance data. This chapter covers both regression and classification tasks using log-contrast transformations.
+Microbiome counts have no absolute scale: a sample sequenced twice as deeply
+gives twice the counts and exactly the same biology. Log-contrast models are
+built for that — they work in log-ratios and require the coefficients to sum to
+zero, so the fit depends on the balance between taxa rather than on any number
+the sequencing run happened to produce.
+
+```{figure} ../../images/png/generated/compositional-simplex-zero-sum.png
+:name: fig-simplex-overview
+:width: 100%
+
+The constraint this whole tier is built around. See
+[Appendix: Mathematical Background](../99_appendix/01_math.md) for the
+formulation it comes from.
+```
+
+This chapter covers both regression and classification tasks using
+log-contrast transformations.
 
 ## What are Log-Contrast Models?
 

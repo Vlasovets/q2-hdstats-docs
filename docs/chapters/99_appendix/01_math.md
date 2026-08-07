@@ -27,7 +27,25 @@ $$
 $$
 
 where the zero-sum constraint $\mathbf{1}_p^\top \beta = 0$ makes the fit
-invariant to the compositional scale. The loss $f$ selects the c-lasso
+invariant to the compositional scale.
+
+```{figure} ../../images/png/generated/compositional-simplex-zero-sum.png
+:name: fig-simplex-zero-sum
+:width: 100%
+
+Why that constraint is there. **Left:** a count vector and any rescaling of it —
+$(10, 20, 30)$ and $(100, 200, 300)$ — are the same point of the simplex, so
+sequencing depth is not recoverable from the data and only ratios between
+features carry information. **Right:** requiring $\sum_i \beta_i = 0$ is what
+makes the fit depend on those ratios alone. A coefficient is therefore a
+statement about one feature *relative to* the negatively-weighted ones, and
+cannot be read on its own.
+```
+
+The constraint is not a regularisation choice — it is what makes the model
+well-posed. Without it, adding a constant to every $\beta_i$ would change the
+prediction whenever the total count changes, so the fit would depend on
+sequencing depth, which is an artefact of the run rather than of the biology. The loss $f$ selects the c-lasso
 formulation:
 
 - **R1 — standard (least squares):** $f = \lVert y - X\beta \rVert_2^2$, with
