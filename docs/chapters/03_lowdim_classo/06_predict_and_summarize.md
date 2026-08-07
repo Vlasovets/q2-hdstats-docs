@@ -185,6 +185,23 @@ appears in the navigation if the corresponding block was enabled at fit time —
 so a model fitted with `--p-no-stabsel` produces a `.qzv` with no Stability
 Selection tab. Overview is always present.
 
+```{figure} ../../images/png/reg.png
+:name: fig-summarize-panels-detail
+:width: 100%
+
+Three of those pages at full size, from a regression on the 13-ASV toy data.
+**Top left** is the held-out fit that the performance table summarises; **top
+right** is Stability Selection, one bar per feature against the threshold; and
+**bottom** is Lambda-path, every coefficient as the penalty relaxes. The x-axis
+there is $-\log_{10}(\lambda/\lambda_{\max})$, so the penalty *decreases* to the
+right and coefficients leave zero as you move right.
+```
+
+[Log-Contrast Regression](03_regression/01_logcontrast.md) shows the same run as
+a four-panel composite that also includes the Cross-Validation page. Use that one
+for the overview; this one is the readable version when you need to identify
+individual features.
+
 ### Overview
 
 The problem as the solver saw it: total number of samples, number of samples in

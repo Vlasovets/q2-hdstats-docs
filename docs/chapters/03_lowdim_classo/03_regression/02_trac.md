@@ -1,10 +1,34 @@
-# Log-Contrast Regression with trac (tree-aggregation of compositional data)
+# Tree-Aggregated Regression (trac)
 
-This tutorial demonstrates how to leverage taxonomic hierarchical information in log-contrast regression to predict average soil temperature. trac (tree-aggregation of compositional data) {cite}`bien2021tree` improves feature selection by aggregating predictors along the taxonomic tree.
+[Log-Contrast Regression](01_logcontrast.md) treated the 13 ASVs as 13
+unrelated predictors. They are not unrelated — they sit in a taxonomy, and two
+ASVs in the same genus are far more likely to respond to soil temperature the
+same way than two from different phyla.
 
-## Overview
+trac {cite}`bien2021tree` uses that structure. Instead of selecting individual
+ASVs it can select an internal node — a genus, an order, a phylum — and use the
+aggregated abundance of everything beneath it. The practical consequence is
+interpretability: "*Nitriliruptorales* predicts temperature" is a more useful and
+more testable statement than a list of four ASV hashes that happen to belong to
+it.
 
-trac regression incorporates taxonomic classifications and computes adaptive weights based on the taxonomic hierarchy. This approach can identify which taxonomic groups (not just individual taxa) are most predictive of your target variable, leading to more interpretable and potentially more robust predictions.
+```{figure} ../../../images/png/reg_tree.png
+:name: fig-trac-tree
+:width: 100%
+
+The taxonomy trac aggregates over. Each level is a rank, each node a taxon, and
+trac may place a coefficient on any node — not only the leaves. Selecting a node
+high in the tree is a claim about a whole clade; selecting a leaf is a claim
+about one ASV.
+```
+
+```{note}
+Two things to read past in that figure. The axis numbers are layout coordinates
+from the plotting routine, not data — ignore them. And the top row is labelled
+"kingdom", but the SILVA 138 taxonomy used here has no kingdom rank: its strings
+run `d__` (domain), `p__`, `c__`, `o__`, `f__`, `g__`, `s__`. That row is the
+tree's artificial root, and the row below it, "domain", is `d__Bacteria`.
+```
 
 ## Step 1: Transform Features
 

@@ -41,3 +41,46 @@ The original data is available through the European Nucleotide Archive under acc
 | YUN3856.3 | 21.0 | 36.0 | 23.0 | ... | 33.0 | 0.0 | 0.0 | 3856 | 7.43 | 99.44 | 9.51 | yes |
 
 QIIME2 .qza file can be downloaded from this [link](https://github.com/Vlasovets/q2-gglasso/blob/main/data/atacama-counts.qza), here is the snapshot of the count data and corresponding [metadata](https://data.qiime2.org/2026.7/tutorials/atacama-soils/sample_metadata.tsv) we're using in our example.
+
+## The covariates, and a caveat worth knowing before you model
+
+Four numeric covariates travel with these samples — pH, elevation, average soil
+relative humidity and average soil temperature. They are the outcomes and the
+adjustment variables in the [log-contrast regression](../03_lowdim_classo/03_regression/01_logcontrast.md)
+chapters, and they are what the latent components in
+[Latent Components & Covariates](../04_highdim_atacama/04_latent_pca.md) are
+tested against.
+
+```{figure} ../../images/png/ph.png
+:name: fig-covariate-ph
+:width: 100%
+
+Soil pH across the 75 samples, before and after scaling. The bulk of the
+distribution sits between 6 and 9 — alkaline, as expected for this desert. The
+bar at zero is the problem described below.
+```
+
+```{important}
+**Some covariate values are missing and coded as `0`, not as blanks.** Counted
+directly from `atacama-selected-covariates-veg.tsv` (75 samples):
+
+| covariate | zeros | plausible as a real value? |
+|---|---|---|
+| `ph` | **8** | No — soil pH of 0 is not physically possible |
+| `average-soil-relative-humidity` | 3 | Implausible |
+| `average-soil-temperature` | 3 | Possible at altitude, but suspicious |
+| `elevation` | 0 | — (range 895–4700 m) |
+
+The zeros do not co-occur: none of the humidity-zero or temperature-zero samples
+is also a pH-zero sample, so this is per-measurement missingness rather than
+eight incomplete records. The eight pH-zero samples are `BAQ1370.3`, `BAQ1552.2`,
+`BAQ895.2`, `BAQ895.3`, `YUN1005.2`, `YUN3008.2`, `YUN3008.3` and `YUN3184.2`.
+
+This matters because a zero is not neutral. Scaled, those eight samples land near
+$-2.6$ — the extreme tail of the distribution — so a regression that takes them
+at face value is being told that eight sites are radically more acidic than any
+other, when in fact their pH was never recorded. Decide explicitly whether to
+drop those samples, impute, or exclude pH as a covariate, and say which you did.
+The tutorials that follow pass the file through unchanged; that is a
+demonstration of the commands, not a recommendation.
+```
