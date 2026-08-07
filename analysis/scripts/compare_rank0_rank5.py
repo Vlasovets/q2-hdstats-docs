@@ -201,7 +201,7 @@ def network_plot(
                 2.2 if node in core_nodes else 0.7 for node in node_order
             ],
             "membership": [
-                "rank 5" if node in core_nodes else "rank 0 only"
+                "rank 2" if node in core_nodes else "rank 0 only"
                 for node in node_order
             ],
         }
@@ -377,7 +377,7 @@ legend = Div(
         "<h3 style='margin-top:0'>Comparison</h3>"
         "<p style='font-size:12px'>Blue solid: shared edge<br>"
         "<b style='color:#d05b34'>Orange dashed: rank-0-only edge</b><br>"
-        "Black node outline: connected at rank 5<br>"
+        "Black node outline: connected at rank 2<br>"
         "Node size: mean CLR abundance</p>"
         "<h3>Genus</h3>"
         f"{legend_items}"
@@ -506,7 +506,7 @@ matrix_panel = TabPanel(
     title="Inverse covariance",
 )
 
-output_file(f"{OUTPUT_STEM}.html", title="Rank-0 versus rank-5 comparison")
+output_file(f"{OUTPUT_STEM}.html", title="Rank-0 versus rank-2 comparison")
 save(Tabs(tabs=[network_panel, matrix_panel]))
 
 labels = [f"ASV-{i + 1}" for i in permutation]
@@ -567,7 +567,7 @@ plt.close(figure)
 
 network_figure, network_axis = plt.subplots(figsize=(14, 11))
 network_axis.set_title(
-    "Rank-0 versus rank-5 network overlay\n"
+    "Rank-0 versus rank-2 network overlay\n"
     "solid blue = shared; dashed orange = rank-0 only",
     fontsize=15,
 )

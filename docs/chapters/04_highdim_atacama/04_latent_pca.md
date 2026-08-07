@@ -369,6 +369,42 @@ ones, so a covariate that correlates with two components is reported only for th
 last of them.
 ```
 
+### What the answer looks like when it works
+
+```{figure} ../../images/png/scatter_pc.png
+:name: fig-atacama-pc1-covariates
+:width: 100%
+
+The first latent component against two measured covariates, from the reference
+analysis. PC1 tracks average soil temperature ($r = 0.61$, $p \approx 2\times
+10^{-6}$) and, more strongly and in the opposite direction, elevation
+($r = -0.67$, $p \approx 1\times 10^{-7}$). Each point is one of the 54 samples.
+```
+
+This is the outcome worth hoping for: a latent axis that is not a technical
+artefact and not a mystery, but a stand-in for a gradient you measured. Elevation
+and soil temperature are themselves strongly related along the Atacama transect,
+so these are two views of one physical gradient rather than two independent
+findings — PC1 is the transect.
+
+Note what that licenses and what it does not. It says the rank-2 block is
+absorbing environmental structure rather than batch or library size, which is the
+check [First run](#first-run-the-default-seq-depth-colouring) set out to make. It
+does **not** say the remaining edges are free of environmental confounding: a
+covariate correlated with a latent axis at $r = -0.67$ still leaves plenty
+unexplained. The follow-up is to put elevation into the model explicitly with
+`transform-features --p-add-metadata` and compare edge sets, as
+[What to do with the answer](#what-to-do-with-the-answer) describes.
+
+```{note}
+These correlations come from the reference analysis and have **not** been re-run
+under QIIME 2 2026.7 — the figure shows what a resolved component-to-covariate
+assignment looks like, not a verified result for this build. The p-value
+annotations inside the image are also mis-rendered (`2.02 − e6` should read
+$2.02\times 10^{-6}$); the values quoted in the caption above are the correct
+ones.
+```
+
 ## Which ASVs load on each axis?
 
 The projection above places *samples* on the latent axes. The eigenvectors of

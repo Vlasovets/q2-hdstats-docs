@@ -158,6 +158,81 @@ def fig_rank_tradeoff(outdir):
     return out, "rank 0/2/5/10 -> " + "/".join(str(e) for e in edges) + " edges"
 
 
+def fig_network_rank0_vs_rank2(outdir):
+    """Which edges the latent block removes.
+
+    The book had no network picture at all. The pipeline's existing one is a ring
+    of 300 nodes in which most components are isolated pairs, the edges are pale
+    hairlines, and the handful of edges the figure exists to highlight are
+    invisible. This shows the comparison the chapter actually claims: the rank-2
+    latent component removes 14 edges and adds none.
+
+    Isolated and degree-1-pair nodes are dropped from the drawing -- they carry no
+    comparison and are what made the original unreadable. The count printed on the
+    figure is over the FULL network, not the drawn subgraph, so nothing is
+    silently under-reported.
+    """
+    import networkx as nx
+
+    g = ROOT / "results" / "gglasso"
+    sgl = pd.read_csv(g / "atacama-top-300-network-sgl-lambda0.8-edges.tsv", sep="\t")
+    slr = pd.read_csv(g / "atacama-top-300-network-slr-lambda0.8-rank2-edges.tsv", sep="\t")
+
+    def keyset(df):
+        return set(tuple(sorted(p)) for p in df[["source", "target"]].values)
+
+    S, L = keyset(sgl), keyset(slr)
+    shared, removed, added = S & L, S - L, L - S
+
+    G = nx.Graph()
+    G.add_edges_from(shared, kind="shared")
+    G.add_edges_from(removed, kind="removed")
+    # Drop the components that carry no information about the comparison: the
+    # original figure was ~60 isolated pairs arranged in a ring.
+    keep = set()
+    for comp in nx.connected_components(G):
+        sub = G.subgraph(comp)
+        if len(comp) >= 4 or any(d.get("kind") == "removed"
+                                 for *_, d in sub.edges(data=True)):
+            keep |= comp
+    H = G.subgraph(keep)
+
+    pos = nx.spring_layout(H, seed=11, k=0.55, iterations=250)
+    fig, ax = plt.subplots(figsize=(9.0, 6.4), dpi=200)
+    e_shared = [e for e in H.edges if tuple(sorted(e)) in shared]
+    e_removed = [e for e in H.edges if tuple(sorted(e)) in removed]
+
+    nx.draw_networkx_edges(H, pos, ax=ax, edgelist=e_shared,
+                           edge_color="#b9c4cf", width=1.3, alpha=0.95)
+    nx.draw_networkx_edges(H, pos, ax=ax, edgelist=e_removed,
+                           edge_color=ACCENT, width=2.6)
+    touched = {n for e in e_removed for n in e}
+    nx.draw_networkx_nodes(H, pos, ax=ax,
+                           nodelist=[n for n in H if n not in touched],
+                           node_size=34, node_color="#ffffff",
+                           edgecolors="#8b98a5", linewidths=1.0)
+    nx.draw_networkx_nodes(H, pos, ax=ax, nodelist=sorted(touched),
+                           node_size=64, node_color=ACCENT,
+                           edgecolors="#7a2a1c", linewidths=1.2)
+
+    ax.set_axis_off()
+    ax.set_title("What the latent block takes away", fontsize=13,
+                 fontweight="bold", color=INK, pad=14)
+    ax.text(0.5, -0.04,
+            "%d edges shared  ·  %d removed by the rank-2 latent component  ·  %d added"
+            % (len(shared), len(removed), len(added)),
+            transform=ax.transAxes, ha="center", fontsize=10.5, color=INK)
+    ax.text(0.5, -0.09,
+            "drawn: components with 4+ nodes, plus every component touching a "
+            "removed edge (%d of %d nodes)" % (H.number_of_nodes(), len(set().union(*S, *L))),
+            transform=ax.transAxes, ha="center", fontsize=9, color=MUTED)
+
+    out = outdir / "atacama-network-rank0-vs-rank2.png"
+    fig.savefig(out, bbox_inches="tight", facecolor="white")
+    plt.close(fig)
+    return out, "%d shared, %d removed, %d added" % (len(shared), len(removed), len(added))
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--outdir", type=pathlib.Path, default=DEFAULT_OUT)
@@ -170,7 +245,7 @@ def main():
         sys.exit(f"missing input tables in {TABLES}: {missing}. "
                  "Run the recompute stages first.")
 
-    for fn in (fig_ebic_path, fig_rank_tradeoff):
+    for fn in (fig_ebic_path, fig_rank_tradeoff, fig_network_rank0_vs_rank2):
         path, note = fn(args.outdir)
         print(f"  {path.name:44} {note}")
     print(f"  -> {args.outdir}")

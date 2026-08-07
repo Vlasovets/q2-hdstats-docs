@@ -216,6 +216,38 @@ $\lambda_1$. Those are the associations that a small number of global directions
 can explain — candidate environment-mediated or batch-mediated edges. The edges
 present in both are the ones that survive conditioning on the latent subspace.
 
+On this dataset the difference is small and highly structured.
+
+```{figure} ../../images/png/generated/atacama-network-rank0-vs-rank2.png
+:name: fig-atacama-network-diff
+:width: 100%
+
+Adding two latent dimensions removes 14 of the 216 edges and adds none. The
+removed edges (red) are not scattered across the network: they fall into three
+components — one of 6 nodes carrying 9 of them, one of 4 nodes carrying 4, and a
+single isolated pair. Grey shows the 202 edges both models agree on.
+```
+
+Two things make that difference interpretable rather than incidental.
+
+**The removed edges were the weak ones.** Their partial correlations have median
+$|r| = 0.021$ against $0.116$ for the edges that survive — and the strongest edge
+the latent block removed, $|r| = 0.062$, is weaker than the *median* surviving
+edge. The latent component is not competing with the strong structure in the
+network; it is absorbing a haze at the bottom of the edge-weight distribution.
+
+**They are clustered, not spread.** Fourteen edges over 12 nodes, nine of them
+inside a single 6-node group that was nearly complete before the latent block was
+added. That is the shape you expect when one unmeasured driver acts on a handful
+of taxa at once and induces weak mutual correlation among all of them. A driver
+acting on the whole community would have thinned edges everywhere instead.
+
+Neither observation proves the driver is environmental — see
+[What you cannot conclude](#what-you-cannot-conclude) — but together they say the
+rank-2 block is doing something specific and local rather than shaving the
+network uniformly, which is what makes those 12 nodes worth looking up in the
+taxonomy.
+
 Export the sparse-only solution alongside the one you already unpacked:
 
 ```bash
