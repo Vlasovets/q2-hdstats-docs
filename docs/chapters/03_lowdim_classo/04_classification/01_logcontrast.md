@@ -1,10 +1,19 @@
 # Log-Contrast Classification
 
-This tutorial demonstrates how to use log-contrast classification to predict vegetation presence from microbial community data without incorporating taxonomic information.
+[Log-Contrast Regression](../03_regression/01_logcontrast.md) predicted a
+continuous outcome. This chapter asks a yes/no question of the same community:
+can you tell a vegetated site from a bare one by its microbes alone?
 
-## Overview
+The compositional problem is unchanged — only ratios between features are
+meaningful — so the zero-sum constraint on the coefficients carries over. What
+changes is the loss: a hinge loss on a binary label instead of squared error, and
+a misclassification rate instead of $R^2$.
 
-Log-contrast classification is useful for predicting categorical outcomes (like vegetation presence/absence) from compositional data. This approach uses regularized logistic regression with log-contrast penalties to handle the compositional nature of microbiome data.
+```{important}
+`qiime classo classify` has **no** `--p-concomitant` parameter. It is forced off
+internally, and passing it fails. The regression action accepts it; the
+classification action does not.
+```
 
 ## Step 1: Transform Features
 
@@ -105,12 +114,55 @@ qiime classo summarize \
     --o-visualization data/classifytaxa_C1_lc.qzv
 ```
 
-**Output visualization:**
-The `.qzv` file contains:
-- Selected taxa and their classification coefficients
-- Model performance metrics (accuracy, precision, recall, F1-score)
-- Confusion matrix for test predictions
-- Cross-validation curves
-- Feature importance rankings
+Open it with `qiime tools view` or at [QIIME 2 View](https://view.qiime2.org/).
 
-View the results at [QIIME 2 View](https://view.qiime2.org/).
+## Reading the result
+
+```{figure} ../../../images/png/classo_class.png
+:name: fig-classo-classification-panels
+:width: 100%
+
+Classification on the 13-ASV toy data. **Left:** cross-validated
+misclassification rate along the $\lambda$ path, with error bars over folds and
+vertical lines at the minimum-error $\lambda$ and at the more conservative
+one-standard-error choice. **Right:** the coefficients of the seven ASVs the
+selected model retains.
+```
+
+**The cross-validation is not confident here, and the figure shows it.** The
+misclassification rate sits between roughly 0.22 and 0.33 across the whole path,
+and the error bars overlap almost everywhere. The two candidate penalties — the
+minimum and the one-standard-error rule — land on top of each other, which
+happens when the curve has no clear minimum to separate them. On 50 samples with
+a binary outcome that is unsurprising, and it is the honest reading: this model
+distinguishes vegetated from bare sites better than a coin, and not much more.
+
+Do not skip past that to the coefficient panel. A coefficient list from a model
+whose error curve is flat tells you which features the optimiser happened to keep
+at one point on a path where neighbouring points would have kept others.
+[Model Selection](../05_advanced/02_model_selection.md) covers what to do about
+it; stability selection, as in the regression chapter, is the usual answer.
+
+**The coefficients come in opposing groups, and must.** Seven ASVs are retained,
+three with positive weight and four negative, and they sum to approximately zero
+— that is the log-contrast constraint, not a coincidence of the fit. It also
+means no single coefficient can be read alone: ASV-6's $+0.26$ is a statement
+about ASV-6 *relative to* the negatively-weighted set, not about its abundance.
+
+```{note}
+The legend in this figure labels the plotted series **"Accuracy"** while the axis
+is **misclassification rate**. The axis is correct — the values are error rates,
+so a lower curve is a better model. The legend is mislabelled.
+```
+
+## What you should have now
+
+`data/classifytaxa_lc.qza` with the fitted classifier, predictions on the
+held-out split, and a `.qzv` showing both panels above.
+
+Before drawing conclusions from the selected taxa, read
+[Model Interpretation](../07_interpretation.md) — and note that with an error
+curve this flat, the comparison in [Tree-Aggregated
+Classification](02_trac.md) is the more informative next step: if aggregating to
+clades sharpens the CV curve, the signal is phylogenetic rather than
+ASV-specific.

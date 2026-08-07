@@ -1,10 +1,17 @@
 # Log-Contrast Regression
 
-This tutorial demonstrates how to use log-contrast regression to predict average soil temperature from microbial community data without incorporating taxonomic information.
+Can the community predict the soil temperature it lives in, and which taxa carry
+that signal?
 
-## Overview
+That is a regression, but not an ordinary one. The predictors are compositional:
+sequencing depth is arbitrary, so only *ratios* between features mean anything.
+Log-contrast regression handles this by transforming to log-ratios and requiring
+the coefficients to sum to zero — so the fit depends on the balance between
+taxa, not on any absolute abundance that the sequencing run happened to produce
+{cite}`aitchison1984log,lin2014variable`.
 
-Log-contrast regression applies CLR transformation to your count data and uses regularized regression to identify predictive taxa. This is the most straightforward approach when you want to focus on raw compositional relationships without leveraging the taxonomic hierarchy.
+This chapter does that without using the taxonomy. [Tree-Aggregated
+Regression](02_trac.md) adds it back and is worth comparing against.
 
 ## Step 1: Transform Features
 
@@ -101,11 +108,61 @@ qiime classo summarize \
     --o-visualization data/regresstaxa_R1_lc.qzv
 ```
 
-**Output visualization:**
-The `.qzv` file contains:
-- Selected taxa and their regression coefficients
-- Model performance metrics (R², RMSE, etc.)
-- Cross-validation curves
-- Prediction accuracy on test data
+Open it with `qiime tools view` or at [QIIME 2 View](https://view.qiime2.org/).
 
-View the results at [QIIME 2 View](https://view.qiime2.org/).
+## Reading the result
+
+```{figure} ../../../images/png/classo_reg.png
+:name: fig-classo-regression-panels
+:width: 100%
+
+The four things a `classo summarize` regression report gives you, on the 13-ASV
+toy data. **Top left:** predicted against observed soil temperature on held-out
+samples. **Top right:** cross-validated $L_2$ error along the $\lambda$ path.
+**Bottom left:** every coefficient $\beta_i$ as the penalty relaxes — the order
+in which taxa enter is the order of their apparent importance. **Right:**
+stability selection, the proportion of subsamples in which each ASV was selected,
+against a threshold.
+```
+
+Four questions, one panel each.
+
+**Does the model predict anything?** The scatter, not the $R^2$ alone. With
+$R^2 = 0.707$ on 10 held-out samples, one influential point moves that number a
+lot — look at whether the cloud follows the line or whether two extremes are
+carrying it.
+
+**Was the penalty chosen sensibly?** The CV curve should have a visible minimum.
+Here it descends and flattens rather than turning up, which means the
+cross-validation is not strongly identifying a best $\lambda$ — the `--p-cv-one-se`
+rule exists for exactly this situation, and this run disabled it
+(`--p-no-cv-one-se`).
+
+**Which taxa carry the signal?** The coefficient paths. Taxa whose $\beta$ leaves
+zero early and stays large are the robust contributors; ones that wander near
+zero are not. Because the coefficients must sum to zero, they come in opposing
+groups — a positive $\beta$ is only meaningful relative to the negative ones.
+
+**Would those taxa be selected again?** Stability selection resamples the data
+and counts how often each feature survives {cite}`meinshausen2010stability`.
+This is the panel to trust when the coefficient path looks ambiguous, and the
+threshold is a choice you make, not a result.
+
+```{note}
+The figure comes from a run at a stability threshold of **0.7**, while the
+command above uses `--p-stabsel-threshold 0.5`. Expect more features above your
+line than above the one drawn here. It also carries a stray `ASV₁₄` tick label —
+the toy table has 13 features, not 14.
+```
+
+## What you should have now
+
+`data/regresstaxa_lc.qza` — the fitted problem, holding the coefficient path, the
+CV curve and the stability-selection frequencies — plus predictions on the
+held-out split and a `.qzv` rendering all four panels above.
+
+The comparison worth making next is [Tree-Aggregated
+Regression](02_trac.md): the same outcome, the same samples, but predictors
+aggregated up the taxonomy. If a clade predicts better than its member ASVs, that
+is evidence the signal is phylogenetically coherent rather than carried by one
+organism.
