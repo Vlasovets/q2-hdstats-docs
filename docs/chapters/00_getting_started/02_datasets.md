@@ -76,8 +76,8 @@ is also a pH-zero sample, so this is per-measurement missingness rather than
 eight incomplete records. The eight pH-zero samples are `BAQ1370.3`, `BAQ1552.2`,
 `BAQ895.2`, `BAQ895.3`, `YUN1005.2`, `YUN3008.2`, `YUN3008.3` and `YUN3184.2`.
 
-This matters because a zero is not neutral. Scaled, those eight samples land near
-$-2.6$ — the extreme tail of the distribution — so a regression that takes them
+This matters because a zero is not neutral. Scaled, those eight samples land at
+$-2.80$ — the minimum of the distribution — so a regression that takes them
 at face value is being told that eight sites are radically more acidic than any
 other, when in fact their pH was never recorded. Decide explicitly whether to
 drop those samples, impute, or exclude pH as a covariate, and say which you did.

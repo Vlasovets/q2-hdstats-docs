@@ -77,7 +77,8 @@ solution artifacts by `slurm/12_classo_summary.sh`:
 Read the sparsity, not the error scale: the CV error is in the outcome's own
 units squared, so it is comparable *across $\lambda$ for one outcome* and not
 across outcomes. What is comparable is how many of the 300 ASVs survive — from a
-single feature for `depth` and `ec` up to twelve for `amplicon-concentration`.
+single feature for `depth`, `ec` and `toc` up to thirty-three for
+`extract-concen`.
 
 ## Prediction from ASVs only (base R1)
 
@@ -133,8 +134,8 @@ and weights artifacts):
 
 ```bash
 qiime classo add-covariates \
-    --i-features atacama-top-300-clr-design.qza \
-    --m-covariates-file atacama-classo-outcomes-mean-imputed.tsv \
+    --i-features data/atacama-top-300-classo-clr.qza \
+    --m-covariates-file data/atacama-classo-outcomes-mean-imputed.tsv \
     --p-to-add <covariate> --p-rescale --p-w-to-add 0.162565105 \
     --o-new-features <design>.qza --o-new-c <c>.qza --o-new-w <w>.qza
 ```
@@ -148,7 +149,7 @@ qiime classo regress \
     --m-y-file atacama-classo-outcomes-mean-imputed.tsv --m-y-column <outcome> \
     --p-do-yshift --p-path --p-path-nlam-log 120 --p-path-lamin-log 0.0001 \
     --p-cv --p-cv-subsets 5 --p-cv-seed 1 --p-cv-one-se \
-    --p-cv--nlam 120 --p-cv-lamin 0.0001 --p-cv-logscale \
+    --p-cv-nlam 120 --p-cv-lamin 0.0001 --p-cv-logscale \
     --p-no-stabsel --p-no-lamfixed --p-no-concomitant --p-no-huber --p-intercept \
     --o-result <outcome>-joint-r1-cv5.qza
 ```

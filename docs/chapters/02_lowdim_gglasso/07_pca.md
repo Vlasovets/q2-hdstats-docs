@@ -41,7 +41,7 @@ qiime gglasso pca \
     --i-table data/atacama-table-mclr.qza \
     --i-solution data/atacama-solution-slr.qza \
     --m-sample-metadata-file data/selected-atacama-sample-metadata.tsv \
-    --p-n-components 3 \
+    --p-n-components 2 \
     --p-color-by ph \
     --o-visualization data/slr-pca.qzv
 ```
