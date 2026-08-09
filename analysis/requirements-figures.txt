@@ -1,0 +1,24 @@
+# Dependencies for analysis/scripts/make_docs_figures.py.
+#
+# Recorded because they were not written down anywhere: the figure generator ran
+# inside the QIIME 2 conda env, so nothing in this repo said what it needed. The
+# docs toolchain (../requirements.txt) does NOT include matplotlib -- building
+# the book and regenerating its figures are two different jobs.
+#
+# With these plus the TSVs under analysis/results/, all four generated figures
+# rebuild from a clean clone with no cluster and no QIIME 2:
+#
+#     pip install -r analysis/requirements-figures.txt
+#     python analysis/scripts/make_docs_figures.py
+#
+# Versions are the ones the committed figures were produced with, floored rather
+# than exactly pinned; the script asserts its own numeric invariants, so a
+# version that changes the output fails loudly instead of drifting.
+matplotlib>=3.10.7
+numpy>=2.2.6,<3
+# networkx is imported lazily INSIDE fig_network_rank0_vs_rank2, not at module
+# top level, so it is invisible to a glance at the imports. It was found by
+# actually running the generator in a bare venv, which is the only way this file
+# can be trusted.
+networkx>=3.6.1
+pandas>=2.3.3,<3

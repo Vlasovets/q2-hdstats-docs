@@ -5,9 +5,29 @@
 # for no reproducibility gain. The generated tables the book renders are
 # committed in q2-hdstats-docs (docs/_data/), which is where they are consumed.
 
-results/
+results/*
 publish/
 slurm/logs/
+
+# ...EXCEPT the small text outputs that make_docs_figures.py actually reads.
+#
+# The rationale above did not survive contact with the code. It says results
+# regenerate "from the committed scripts against the pinned artifacts in data/",
+# but data/ is ignored three lines below, and data/ itself is unpacked from two
+# zips that are ignored at the repo root -- so the chain bottomed out on files
+# that exist on one filesystem and nowhere else. It also says the generated
+# tables "are committed in docs/_data/, which is where they are consumed"; they
+# are consumed from HERE. docs/_data/atacama-lambda-path.tsv is a different
+# derivation (lambda / eBIC@gamma=0.3 / edges) from the generator's input
+# (lambda1 / sparsity / ebic), so it is not a substitute.
+#
+# Net effect: nobody with a clean clone could regenerate a single figure. These
+# seven files are 103 KB of plain TSV and close that hole. Solver output, .qza
+# artifacts and figures stay ignored -- those are the 40 MB the rule is for.
+!results/tables/
+!results/gglasso/
+results/gglasso/*
+!results/gglasso/*.tsv
 
 # Input artifacts: unpacked from the two Atacama zips and the gut-to-soil
 # tutorial site by scripts/, and listed with checksums in
