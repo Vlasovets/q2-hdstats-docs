@@ -28,16 +28,36 @@ single graphical lassos.
 ```{important}
 **Read the "Known gaps" section in Step 3 before you invest time here.** The
 flags documented on this page all exist and all validate, but in the current
-release the MGL path does not close end-to-end through the QIIME 2 CLI. Nothing
-on this page has been run against QIIME 2 2026.7, and the gaps below were read
-out of the plugin source rather than reproduced.
+release the MGL path does not close end-to-end through the QIIME 2 CLI.
+
+Every claim on this page has now been executed against QIIME 2 2026.7 by
+`analysis/slurm/31_mgl_verify.sh`; the three gaps are reproduced, not inferred.
+Full transcript in `analysis/reports/mgl-verification.md`.
 ```
 
 ## Step 1: Split the toy table into two instances
 
-The Atacama study samples two transects. We use `transect-name` as the grouping
-variable and build one feature table per transect with the standard
-`q2-feature-table` filter.
+The Atacama study samples two transects, and the 13-ASV table splits **25 / 25**
+between them (measured, not assumed).
+
+```{important}
+**The grouping column is not in the tier-1 metadata.** `transect-name` exists in
+the 75-sample Atacama metadata used by [Tier 2](../04_highdim_atacama/01_data.md)
+(Baquedano 32, Yungay 43), but the file shipped with the plugin,
+`data/selected-atacama-sample-metadata.tsv`, has only five columns:
+
+    sample-id, ph, average-soil-relative-humidity, elevation, average-soil-temperature
+
+Filtering on `[transect-name]` against it fails with
+`Selection of IDs failed with query`. The transect is still recoverable, because
+it is encoded in the sample identifier: `BAQ…` for Baquedano, `YUN…` for Yungay.
+Build a two-column metadata file from that prefix and filter on it. This chapter
+originally took the grouping variable from one dataset and the table from
+another; the mismatch was caught by running it.
+```
+
+Build one feature table per transect with the standard `q2-feature-table`
+filter.
 
 ```bash
 qiime feature-table filter-samples \
@@ -138,10 +158,16 @@ sizes $N_k$, and the number of groups found. Set `--p-check-groups False` only i
 you have already validated the array once and want the noise gone — the check is
 cheap and catches malformed input.
 
-```{note}
-The printed dimensions, sample sizes and group count are pending verification
-against QIIME 2 2026.7 and are not reproduced here.
+On the 13-ASV table it prints:
+
 ```
+Dimensions p_k:  [13, 13]
+Sample sizes N_k:  [25, 25]
+Number of groups found:  78
+```
+
+78 is every one of the $13 \times 12 / 2$ feature pairs, which is what two
+instances over the same features should give.
 
 ```{note}
 `build-groups` only returns an array when it detects that the instances differ.
@@ -155,8 +181,13 @@ identifiers, while the reported $p_k$ counts rows, which are features. Two
 tables produced by splitting one table on a metadata column always have disjoint
 sample sets, so the check will report them as differing even when their feature
 sets are identical. Inspect the exported array (next section) before relying on
-it. Both behaviours are read from the plugin source and are pending confirmation
-against a live run.
+it.
+
+Both behaviours are now confirmed by running them. Two tables split from one
+table on a metadata column report `p_k = [13, 13]` — **identical feature sets** —
+and `build-groups` still produces an array for them, which is exactly what
+comparing sample labels predicts. Handing it two genuinely identical tables
+fails with `Expected output view type 'ndarray', received 'NoneType'`.
 ```
 
 ## Step 3: The chaining gap, and the export workaround
@@ -219,8 +250,8 @@ filtered tables report if you are working from a different subset.
 
 ### Known gaps
 
-Three separate things are broken or missing on this path. All three were read
-out of the plugin source; none has been reproduced against QIIME 2 2026.7.
+Three separate things are broken or missing on this path. **All three have been
+reproduced against QIIME 2 2026.7** — see `analysis/reports/mgl-verification.md`.
 
 1. **The artifact does not chain to the parameter.** As above. Documented in
    [Troubleshooting](../90_reference/04_troubleshooting.md); the clean fix is
@@ -238,6 +269,13 @@ out of the plugin source; none has been reproduced against QIIME 2 2026.7.
    With one two-dimensional artifact the single-graphical-lasso branch is taken
    regardless of `--p-reg`, `--p-lambda2-*`, `--p-non-conforming` or
    `--p-group-array`.
+
+   **And it exits 0.** Running `solve-problem` with `--p-non-conforming True`
+   and a `--p-group-array` against a single covariance succeeds and writes a
+   solution whose `precision_` has shape `(13, 13)` — two dimensions, so SGL.
+   You get a valid artifact containing the answer to a different question, with
+   no warning. This is the one to watch: a command that fails is a nuisance, a
+   command that quietly answers something else is a retraction.
 
 Gap 3 is the blocking one: until a semantic type exists that can carry a stack of
 covariance matrices, MGL is reachable from the GGLasso Python API but not from
@@ -314,9 +352,16 @@ input exists, only `GGL` and `FGL` will be valid and they are case-sensitive.
 ```
 
 ```{note}
-Selected $(\lambda_1, \lambda_2)$ pairs, per-group edge counts and the
-GGL-versus-FGL difference for this dataset are pending verification against
-QIIME 2 2026.7.
+**These numbers cannot be produced through the CLI at all, and that is gap 3,
+not an omission.** Selected $(\lambda_1, \lambda_2)$ pairs, per-group edge counts
+and the GGL-versus-FGL difference all require the multi-instance branch, which
+is only entered for a three-dimensional covariance stack — and no semantic type
+can carry one. Verified against QIIME 2 2026.7: a run with `--p-non-conforming`
+and a group array returns a `(13, 13)` precision matrix, i.e. a single graph.
+
+They are reachable today only through the GGLasso Python API directly. Until an
+input type lands, treat every $\lambda_2$ and `--p-reg` value on this page as
+documented-but-inert.
 ```
 
 ## Step 5: Non-conforming groups

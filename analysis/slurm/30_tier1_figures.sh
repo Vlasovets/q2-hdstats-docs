@@ -138,6 +138,34 @@ print("  gamma    lambda     SP        edges/%d" % PAIRS)
 for g, l, s_, e in rows:
     print("  %-7g  %-9.4f %-9.4f %d" % (g, l, s_, e))
 
+# Persist the numbers, not just the picture.
+#
+# The figure is committed but everything behind it lived in $SCRATCH, which the
+# EXIT trap deletes -- so the only surviving record of these values was stdout in
+# a log file. That is the same hole that was just closed for the other four
+# generated figures: a chapter quoting numbers nobody can recompute without the
+# cluster. This TSV is committed and is what the chapter's table should be read
+# against.
+tsv = os.path.join(os.path.dirname(outdir.rstrip("/")), "..", "..", "..",
+                   "analysis", "results", "tables", "toy-lambda-path-gamma.tsv")
+tsv = os.path.abspath(tsv)
+os.makedirs(os.path.dirname(tsv), exist_ok=True)
+with open(tsv, "w") as fh:
+    fh.write("gamma\tlambda\tsparsity\tedges\tpairs\n")
+    for g, l, s_, e in rows:
+        fh.write("%g\t%.6f\t%.6f\t%d\t%d\n" % (g, l, s_, e, PAIRS))
+print("  wrote %s" % tsv)
+
+# The full per-gamma curve, so the figure itself can be redrawn offline.
+curve = os.path.join(os.path.dirname(tsv), "toy-lambda-path-curves.tsv")
+with open(curve, "w") as fh:
+    fh.write("gamma\tlambda\tebic\n")
+    for g in gammas:
+        c = curves[g][order]
+        for lv, cv in zip(lam, c):
+            fh.write("%g\t%.6f\t%.6f\n" % (float(g), lv, cv))
+print("  wrote %s" % curve)
+
 distinct_lam = len({round(l, 6) for _, l, _, _ in rows})
 print("  distinct lambda selections across gamma: %d of %d" % (distinct_lam, len(rows)))
 print("  edge counts across gamma: %s" % sorted({e for *_, e in rows}))

@@ -34,9 +34,41 @@ SCRATCH="${SCRATCH:-/lustre/scratch/users/oleg.vlasovets/q2-docs-ci/${SLURM_JOB_
 export TMPDIR="$SCRATCH/tmp"; mkdir -p "$TMPDIR" "$ROOT/reports"
 trap '[[ "${KEEP_SCRATCH:-0}" == "1" ]] || rm -rf "$SCRATCH"' EXIT
 
+# Match CI's interpreter, or say plainly that we could not.
+#
+# This block used a bare `python3 -m venv`. On this cluster that is Python
+# 3.9.21, while CI pins 3.11 through actions/setup-python -- so the stage was
+# named "CI parity", printed "mirrors CI's actions/setup-python", and was in
+# fact testing a different interpreter than CI on every run. A harness that
+# reports parity it does not have is worse than no harness: its FAIL sends you
+# hunting a phantom, and its PASS is not evidence CI will pass.
+#
+# The version is read out of the workflow file so the two cannot drift again.
+CI_PY=$(grep -A2 'uses: actions/setup-python' "$REPO/.github/workflows/ci.yml" \
+        | grep -oP 'python-version:\s*"\K[0-9.]+' | head -1)
+[[ -n "$CI_PY" ]] || { echo "cannot read python-version from ci.yml"; exit 1; }
+
+if command -v "python$CI_PY" >/dev/null 2>&1; then
+  PYBIN="python$CI_PY"; PARITY="true"
+else
+  PYBIN="python3"; PARITY="false"
+fi
+echo "=== [1/3] clean venv ==="
+echo "  CI pins python $CI_PY"
+echo "  using: $PYBIN ($($PYBIN -V 2>&1))"
+if [[ "$PARITY" != "true" ]]; then
+  cat <<EOF
+
+  NOT CI PARITY. python$CI_PY is not installed on this node, so this run uses a
+  different interpreter than CI. Treat the result as a smoke test: a FAIL here
+  may be an interpreter artefact, and a PASS does not prove CI will pass. The
+  authoritative check is the build job on GitHub Actions, which runs on every
+  push and every PR to main.
+
+EOF
+fi
 VENV="$SCRATCH/venv"
-echo "=== [1/3] clean venv (mirrors CI's actions/setup-python) ==="
-python3 -m venv "$VENV"
+"$PYBIN" -m venv "$VENV"
 "$VENV/bin/pip" install --upgrade pip -q
 
 echo "=== [2/3] pip install -r requirements.txt (exactly what CI runs) ==="
