@@ -97,7 +97,34 @@ named first-selected taxon.
 The out-of-sample $R^2$ (mean across the 5 folds) shows which environmental
 variables are predictable from the 300 ASVs alone:
 
-![q2-classo R1 selected taxa across Atacama outcomes](../../images/png/atacama-full/atacama-top-300-r1-cv5-selected-taxa-heatmap.png)
+```{figure} ../../images/png/atacama-full/atacama-top-300-r1-cv5-selected-taxa-heatmap.png
+:name: fig-classo-asv-only
+:width: 100%
+
+One row per outcome, ordered by cross-validated $R^2$ (left column); one column
+per ASV selected by at least one 1-SE model. Colour is the coefficient divided
+by the largest absolute coefficient **within that row**, so shades are comparable
+along a row and *not* down a column.
+
+Three things to read off it. **Most outcomes are not predictable from the
+microbiome alone** — only the top two clear $R^2 = 0.4$. **The bottom four rows
+(`toc`, `relative-humidity-soil-high`, `ec`, `depth`) have negative $R^2$**: the
+model does worse than predicting the mean, and their rows are correspondingly
+almost empty. A negative $R^2$ here is the honest answer, not a bug. Finally,
+**`Pseudarthrobacter` (6b780e) is the most widely shared predictor**, carrying
+weight in nearly every outcome that is predictable at all — the genus discussed
+in [Network interpretation](../02_lowdim_gglasso/09_interpretation.md).
+```
+
+```{important}
+**The `ph` row is contaminated.** Eight samples in the Atacama metadata carry
+`ph = 0`, which is a missing-value sentinel rather than a measurement — pH 0 is
+not a soil. Those rows enter this regression as genuine values sitting about 2.8
+standard deviations below the mean, so the `ph` result in this figure and the
+next one should not be interpreted. See
+[q2-classo parameters](../90_reference/03_classo_parameters.md) for the check
+that surfaces it.
+```
 
 | Outcome | CV $R^2$ |
 |---------|----------|
@@ -159,7 +186,33 @@ variables — e.g. soil temperature and humidity — but the **filtered** analys
 removes most of that gain, showing it came largely from outcome-correlated
 covariates rather than the microbiome:
 
-![Filtered-adjustment q2-classo R1 models: microbial and environmental predictors](../../images/png/atacama-full/atacama-filtered-r1-cv5-selected-predictors-heatmap.png)
+```{figure} ../../images/png/atacama-full/atacama-filtered-r1-cv5-selected-predictors-heatmap.png
+:name: fig-classo-filtered
+:width: 100%
+
+The filtered-adjustment models. Same layout as {numref}`fig-classo-asv-only`,
+but the predictor block now begins with the added **covariates** (left of the
+vertical rule) before the ASVs, and three score columns replace one: the
+filtered $R^2$, its gain over the ASV-only model, and its loss relative to
+using *all* covariates.
+
+The two gain columns are the argument. `elevation` reaches 0.84, of which
+$+0.58$ comes from covariates and only $-0.03$ is given up by filtering — its
+predictors were never proxies. The soil-temperature outcomes behave the
+opposite way: `temperature-soil-low` gains $+0.38$ over ASVs alone but loses
+$-0.45$ against the unfiltered model, so most of that apparent skill was one
+covariate standing in for the outcome. `toc`, `ec` and `depth` stay negative
+with $\Delta R^2 \approx 0$ throughout — nothing helps, and the near-empty
+rows show the model selecting little beyond the intercept.
+```
+
+```{note}
+The `×` and `−` marks in the covariate block are not decoded here. This figure
+is carried over from the reference analysis and its marker legend was not
+preserved with it; there is no script in this repository that regenerates it.
+Read the colours and the three score columns, which are labelled, and treat the
+markers as unexplained rather than inferring a meaning for them.
+```
 
 | Outcome | ASV-only | Joint (all cov.) | Filtered ($\lvert r\rvert<0.8$) |
 |---------|----------|------------------|----------------------|

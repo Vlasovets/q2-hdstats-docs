@@ -21,7 +21,7 @@ else. What transfers to your own data is the method.
 
 The obvious thing to try does not work.
 
-````{warning}
+````{important}
 `--p-rank` **always raises** on every released GGLasso (up to and including
 0.3.0):
 

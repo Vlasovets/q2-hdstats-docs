@@ -4,7 +4,23 @@
 
 Log-contrast models transform compositional data to overcome the challenges of working with constrained data that sums to a constant. The interpretation of results requires careful consideration of the log-ratio nature of the transformations.
 
-![Log-contrast model interpretation](../../images/png/slc_fig.png)
+```{figure} ../../images/png/slc_fig.png
+:name: fig-logcontrast-anatomy
+:width: 100%
+
+The whole log-contrast model in one line. The outcome $Y$ ($n$ values) is
+regressed not on the counts but on $\log(X)$, against a coefficient vector
+$\beta^*$ of length $p$, plus noise scaled by $\sigma$ — the scale that
+`--p-concomitant` estimates jointly rather than fixing.
+
+The two annotations are what make it *compositional*. $C\beta = 0$ at the
+bottom right is the **zero-sum constraint**: the coefficients must sum to zero,
+so the fit depends only on *ratios* between taxa and is unchanged if every
+sample is rescaled. That is what removes the arbitrary sequencing depth. The
+inset shows the `trac` variant, where the constraint matrix $C$ encodes the
+taxonomic tree — coefficients attach to internal nodes from kingdom up to
+order, so a single $\beta$ can act on a whole clade instead of one ASV.
+```
 
 ### Regression Tasks
 
