@@ -216,17 +216,11 @@ $\lambda_1$. Those are the associations that a small number of global directions
 can explain — candidate environment-mediated or batch-mediated edges. The edges
 present in both are the ones that survive conditioning on the latent subspace.
 
-On this dataset the difference is small and highly structured.
-
-```{figure} ../../images/png/generated/atacama-network-rank0-vs-rank2.png
-:name: fig-atacama-network-diff
-:width: 100%
-
-Adding two latent dimensions removes 14 of the 216 edges and adds none. The
-removed edges (red) are not scattered across the network: they fall into three
-components — one of 6 nodes carrying 9 of them, one of 4 nodes carrying 4, and a
-single isolated pair. Grey shows the 202 edges both models agree on.
-```
+On this dataset the difference is small and highly structured. Adding two latent
+dimensions removes 14 of the 216 edges and adds none, and the removed edges are
+not scattered: they fall into three components — one of 6 nodes carrying 9 of them,
+one of 4 nodes carrying 4, and a single isolated pair. The remaining 202 edges are
+common to both models.
 
 Two things make that difference interpretable rather than incidental.
 
@@ -405,9 +399,7 @@ sparse + low-rank result impossible to reproduce when they are.
 
 ## Where to go next
 
-[Tier 3](../05_metagenomics/00_index.md) runs the same workflow on a shallower,
-noisier 16S dataset, where the interesting question is how much of this survives
-low sequencing depth. The method-level comparison of SGL, SLR and the adaptive
+The method-level comparison of SGL, SLR and the adaptive
 model is in the Tier 1 chapter
 [Network Interpretation and Analysis](../02_lowdim_gglasso/09_interpretation.md);
 the definitions behind $m_t$, $q_t$ and the eBIC are in

@@ -40,6 +40,15 @@ sphinx:
       chapters/03_logcontrast_models/05_interpretation: chapters/03_lowdim_classo/07_interpretation
       chapters/03_logcontrast_models/06_highdim_classo: chapters/04_highdim_atacama/05_classo_cv
       chapters/04_appendix/01_math: chapters/99_appendix/01_math
+      # The metagenomics (tier 3) chapters were removed: they were written but
+      # never executed, so every number in them was a placeholder. Point their
+      # URLs at the high-dimensional tier, which covers the same workflow on data
+      # that was actually run.
+      chapters/05_metagenomics/00_index: chapters/04_highdim_atacama/00_index
+      chapters/05_metagenomics/01_gut_to_soil/00_index: chapters/04_highdim_atacama/00_index
+      chapters/05_metagenomics/01_gut_to_soil/01_data: chapters/04_highdim_atacama/01_data
+      chapters/05_metagenomics/01_gut_to_soil/02_network: chapters/04_highdim_atacama/02_model_selection
+      chapters/05_metagenomics/01_gut_to_soil/03_regression: chapters/04_highdim_atacama/05_classo_cv
 
   extra_extensions:
     - sphinxcontrib.bibtex

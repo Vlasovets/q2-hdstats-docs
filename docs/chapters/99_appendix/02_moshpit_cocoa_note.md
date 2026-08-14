@@ -96,9 +96,8 @@ error estimate is not usable.
 So: **this appendix demonstrates that shotgun tables are compatible. It does not
 demonstrate that they can be analyzed at this sample size.** If you have a shotgun
 dataset with tens to hundreds of samples, the workflows in
-[Tier 3](../05_metagenomics/00_index.md) transfer directly, and
-[Gut-to-Soil](../05_metagenomics/01_gut_to_soil/00_index.md) is the closest
-runnable template — 16S rather than shotgun, but identical in every command.
+[Tier 2](../04_highdim_atacama/00_index.md) transfer directly — 16S rather than
+shotgun, but identical in every command.
 
 ```{note}
 No MOSHPIT step, no table, and no model has been run for this appendix against

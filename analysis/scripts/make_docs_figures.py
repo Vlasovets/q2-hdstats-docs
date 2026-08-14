@@ -34,6 +34,16 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]        # <repo>/analysis
 TABLES = ROOT / "results" / "tables"
 DEFAULT_OUT = ROOT.parent / "docs" / "images" / "png" / "generated"
 
+# Legend placement follows the cnsplots conventions (github.com/faridrashidi/cnsplots),
+# read from cns.settings rather than guessed: a legend belongs OUTSIDE the plotting
+# area, anchored at the top-right corner, unframed, at 7pt. Hardcoded here so this
+# script keeps no runtime dependency on cnsplots -- the figure generator must stay
+# installable from analysis/requirements-figures.txt alone.
+CNS_LEGEND_LOC = "upper left"
+CNS_LEGEND_BBOX = (1, 1.02)
+CNS_LEGEND_FONTSIZE = 7
+
+
 # The chapter's canonical parameterisation. Asserted against the data below
 # rather than trusted, so a re-run that moves the selection fails loudly here
 # instead of silently producing a figure that contradicts the prose.
@@ -85,13 +95,17 @@ def fig_ebic_path(outdir):
     ax.annotate(
         f"minimum at $\\lambda$ = {lam[j]:g}\n{edges[j]} edges",
         # placed left of the minimum: the curve rises steeply to the right of
-        # lambda=0.8 and the legend occupies the top centre
+        # lambda=0.8
         xy=(lam[j], ebic[j]), xytext=(-150, 34), textcoords="offset points",
         fontsize=11, color=ACCENT, fontweight="bold",
         arrowprops=dict(arrowstyle="-", color=ACCENT, linewidth=1.2),
     )
     ax.set_xlabel(r"$\lambda_1$  (sparsity penalty)", fontsize=11, color=INK)
-    ax.set_ylabel(r"eBIC", fontsize=11, color=INK)
+    # gamma lives in the axis label, not a legend: this figure has a twin right
+    # axis and both series are already colour-matched to their own axis label and
+    # ticks, so a legend would restate the axes -- and anchoring one at the
+    # cnsplots top-right position would land on the twin axis's ticks and label.
+    ax.set_ylabel(r"eBIC  ($\gamma = 0.3$)", fontsize=11, color=INK)
     ax.set_title("Lower is better: eBIC picks the penalty", fontsize=13,
                  fontweight="bold", color=INK, pad=12)
 
@@ -103,7 +117,6 @@ def fig_ebic_path(outdir):
         ax2.spines[side].set_visible(False)
     ax2.spines["right"].set_color(MUTED)
 
-    ax.legend(loc="upper center", frameon=False, fontsize=10)
     out = outdir / "atacama-ebic-lambda-selection.png"
     fig.savefig(out, bbox_inches="tight", facecolor="white")
     plt.close(fig)
@@ -133,9 +146,21 @@ def fig_rank_tradeoff(outdir):
     ax.plot(rank, nodes, "s", color=MUTED, markersize=6, zorder=3,
             label="connected nodes")
 
+    # Label placement is per-point rather than uniform, because each point has a
+    # different obstruction: `where="post"` puts a VERTICAL step segment to the
+    # right of every dropping point, the y-axis and its top tick crowd the first
+    # point, and the pale "connected nodes" series runs just under the third.
+    # Offsets were set by rendering and measuring, not by eye.
+    label_offset = {
+        rank[0]: (14, -4),    # right of the marker: clear of the axis and top tick
+        rank[1]: (-13, 7),    # left: the step segment rises on its right
+        rank[2]: (-13, 9),    # left and higher: the nodes line passes just below
+        rank[3]: (-13, 7),    # left: last point, keep consistent with its neighbours
+    }
     for r, e in zip(rank, edges):
-        ax.annotate(str(e), xy=(r, e), xytext=(0, 11), textcoords="offset points",
-                    ha="center", fontsize=9.5, color=INK)
+        dx, dy = label_offset[r]
+        ax.annotate(str(e), xy=(r, e), xytext=(dx, dy), textcoords="offset points",
+                    ha="left" if dx > 0 else "right", fontsize=9.5, color=INK)
 
     ax.axvspan(-0.35, 2.35, color=ACCENT, alpha=0.07, zorder=0)
     ax.annotate("rank 2 keeps 94% of the edges", xy=(2, edges[rank == 2][0]),
@@ -149,89 +174,14 @@ def fig_rank_tradeoff(outdir):
     ax.set_ylabel("count", fontsize=11, color=INK)
     ax.set_title(r"What each latent dimension absorbs ($\lambda = 0.8$)",
                  fontsize=13, fontweight="bold", color=INK, pad=12)
-    ax.legend(frameon=False, fontsize=10, loc="upper right")
+    ax.legend(loc=CNS_LEGEND_LOC, bbox_to_anchor=CNS_LEGEND_BBOX,
+              frameon=False, fontsize=CNS_LEGEND_FONTSIZE)
     ax.set_xlim(-0.5, max(rank) + 0.6)
 
     out = outdir / "atacama-rank-tradeoff.png"
     fig.savefig(out, bbox_inches="tight", facecolor="white")
     plt.close(fig)
     return out, "rank 0/2/5/10 -> " + "/".join(str(e) for e in edges) + " edges"
-
-
-def fig_network_rank0_vs_rank2(outdir):
-    """Which edges the latent block removes.
-
-    The book had no network picture at all. The pipeline's existing one is a ring
-    of 300 nodes in which most components are isolated pairs, the edges are pale
-    hairlines, and the handful of edges the figure exists to highlight are
-    invisible. This shows the comparison the chapter actually claims: the rank-2
-    latent component removes 14 edges and adds none.
-
-    Isolated and degree-1-pair nodes are dropped from the drawing -- they carry no
-    comparison and are what made the original unreadable. The count printed on the
-    figure is over the FULL network, not the drawn subgraph, so nothing is
-    silently under-reported.
-    """
-    import networkx as nx
-
-    g = ROOT / "results" / "gglasso"
-    sgl = pd.read_csv(g / "atacama-top-300-network-sgl-lambda0.8-edges.tsv", sep="\t")
-    slr = pd.read_csv(g / "atacama-top-300-network-slr-lambda0.8-rank2-edges.tsv", sep="\t")
-
-    def keyset(df):
-        return set(tuple(sorted(p)) for p in df[["source", "target"]].values)
-
-    S, L = keyset(sgl), keyset(slr)
-    shared, removed, added = S & L, S - L, L - S
-
-    G = nx.Graph()
-    G.add_edges_from(shared, kind="shared")
-    G.add_edges_from(removed, kind="removed")
-    # Drop the components that carry no information about the comparison: the
-    # original figure was ~60 isolated pairs arranged in a ring.
-    keep = set()
-    for comp in nx.connected_components(G):
-        sub = G.subgraph(comp)
-        if len(comp) >= 4 or any(d.get("kind") == "removed"
-                                 for *_, d in sub.edges(data=True)):
-            keep |= comp
-    H = G.subgraph(keep)
-
-    pos = nx.spring_layout(H, seed=11, k=0.55, iterations=250)
-    fig, ax = plt.subplots(figsize=(9.0, 6.4), dpi=200)
-    e_shared = [e for e in H.edges if tuple(sorted(e)) in shared]
-    e_removed = [e for e in H.edges if tuple(sorted(e)) in removed]
-
-    nx.draw_networkx_edges(H, pos, ax=ax, edgelist=e_shared,
-                           edge_color="#b9c4cf", width=1.3, alpha=0.95)
-    nx.draw_networkx_edges(H, pos, ax=ax, edgelist=e_removed,
-                           edge_color=ACCENT, width=2.6)
-    touched = {n for e in e_removed for n in e}
-    nx.draw_networkx_nodes(H, pos, ax=ax,
-                           nodelist=[n for n in H if n not in touched],
-                           node_size=34, node_color="#ffffff",
-                           edgecolors="#8b98a5", linewidths=1.0)
-    nx.draw_networkx_nodes(H, pos, ax=ax, nodelist=sorted(touched),
-                           node_size=64, node_color=ACCENT,
-                           edgecolors="#7a2a1c", linewidths=1.2)
-
-    ax.set_axis_off()
-    ax.set_title("What the latent block takes away", fontsize=13,
-                 fontweight="bold", color=INK, pad=14)
-    ax.text(0.5, -0.04,
-            "%d edges shared  ·  %d removed by the rank-2 latent component  ·  %d added"
-            % (len(shared), len(removed), len(added)),
-            transform=ax.transAxes, ha="center", fontsize=10.5, color=INK)
-    ax.text(0.5, -0.09,
-            "drawn: components with 4+ nodes, plus every component touching a "
-            "removed edge (%d of %d nodes)" % (H.number_of_nodes(), len(set().union(*S, *L))),
-            transform=ax.transAxes, ha="center", fontsize=9, color=MUTED)
-
-    out = outdir / "atacama-network-rank0-vs-rank2.png"
-    fig.savefig(out, bbox_inches="tight", facecolor="white")
-    plt.close(fig)
-    return out, "%d shared, %d removed, %d added" % (len(shared), len(removed), len(added))
-
 
 
 def fig_simplex_zero_sum(outdir):
@@ -319,8 +269,9 @@ def main():
         sys.exit(f"missing input tables in {TABLES}: {missing}. "
                  "Run the recompute stages first.")
 
-    for fn in (fig_ebic_path, fig_rank_tradeoff, fig_network_rank0_vs_rank2,
-               fig_simplex_zero_sum):
+    # toy-lambda-path-gamma.png is produced by analysis/slurm/30_tier1_figures.sh,
+    # not here.
+    for fn in (fig_ebic_path, fig_rank_tradeoff, fig_simplex_zero_sum):
         path, note = fn(args.outdir)
         print(f"  {path.name:44} {note}")
     print(f"  -> {args.outdir}")

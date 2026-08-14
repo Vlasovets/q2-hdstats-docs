@@ -84,9 +84,6 @@ The matrix uses short keys so the tables stay narrow.
 | `H-PCA` | [Latent Components & Covariates](../04_highdim_atacama/04_latent_pca.md) |
 | `H-CV` | [Log-Contrast Models at Scale](../04_highdim_atacama/05_classo_cv.md) |
 | `H-INT` | [Interpretation (tier 2)](../04_highdim_atacama/06_interpretation.md) |
-| `M-DATA` | [Gut-to-Soil: The Dataset](../05_metagenomics/01_gut_to_soil/01_data.md) |
-| `M-NET` | [Gut-to-Soil: Network Inference](../05_metagenomics/01_gut_to_soil/02_network.md) |
-| `M-REG` | [Gut-to-Soil: Log-Contrast Regression](../05_metagenomics/01_gut_to_soil/03_regression.md) |
 | `R-GG` | [q2-gglasso Parameter Reference](02_gglasso_parameters.md) |
 | `R-CL` | [q2-classo Parameter Reference](03_classo_parameters.md) |
 | `R-TS` | [Troubleshooting & Known Gotchas](04_troubleshooting.md) |
@@ -99,8 +96,8 @@ The matrix uses short keys so the tables stay narrow.
 
 | Parameter group | Flags | Primary | Also in |
 |---|---|---|---|
-| Input table | `--i-table` | `G-PREP` | `G-ADAPT`, `G-MGL`, `H-DATA`, `M-DATA`, `VERIFY` |
-| Choice of transform | `--p-transformation` | `G-PREP` | `G-ADAPT`, `G-MGL`, `H-DATA`, `M-DATA`, `VERIFY` |
+| Input table | `--i-table` | `G-PREP` | `G-ADAPT`, `G-MGL`, `H-DATA`, `VERIFY` |
+| Choice of transform | `--p-transformation` | `G-PREP` | `G-ADAPT`, `G-MGL`, `H-DATA`, `VERIFY` |
 | Zero handling | `--p-pseudo-count` | `H-DATA` | — |
 | Metadata as network nodes | `--m-sample-metadata-file`, `--p-add-metadata`, `--p-scale-metadata` | `G-PREP` | `G-ADAPT`, `G-MGL`, `H-DATA` |
 | Feature relabelling | `--p-keep-original-id` | `H-DATA` | `G-INT` |
@@ -132,8 +129,8 @@ out the workaround.
 
 | Parameter group | Flags | Primary | Also in |
 |---|---|---|---|
-| Input table (the p x n transform output) | `--i-table` | `G-PREP` | `G-ADAPT`, `G-MGL`, `H-DATA`, `M-NET`, `VERIFY` |
-| Scaling | `--p-method` | `G-PREP` | `G-ADAPT`, `G-MGL`, `H-DATA`, `M-NET`, `VERIFY` |
+| Input table (the p x n transform output) | `--i-table` | `G-PREP` | `G-ADAPT`, `G-MGL`, `H-DATA`, `VERIFY` |
+| Scaling | `--p-method` | `G-PREP` | `G-ADAPT`, `G-MGL`, `H-DATA`, `VERIFY` |
 | Normalisation denominator | `--p-bias` | `H-DATA` | — |
 
 ### `solve-problem`
@@ -144,9 +141,9 @@ cover more than two of them at once.
 
 | Parameter group | Flags | Primary | Also in |
 |---|---|---|---|
-| Input covariance | `--i-covariance-matrix` | `G-SGL` | `G-SLR`, `G-ADAPT`, `G-PATH`, `G-MGL`, `H-LAM`, `H-RANK`, `M-NET` |
-| Problem size | `--p-n-samples` | `G-SGL` | `G-SLR`, `G-ADAPT`, `G-PATH`, `G-MGL`, `H-LAM`, `H-RANK`, `M-NET` |
-| Sparsity grid | `--p-lambda1-min`, `--p-lambda1-max`, `--p-n-lambda1` | `G-SGL` | `G-SLR`, `G-ADAPT`, `G-PATH`, `G-MGL`, `H-LAM`, `H-RANK`, `M-NET` |
+| Input covariance | `--i-covariance-matrix` | `G-SGL` | `G-SLR`, `G-ADAPT`, `G-PATH`, `G-MGL`, `H-LAM`, `H-RANK` |
+| Problem size | `--p-n-samples` | `G-SGL` | `G-SLR`, `G-ADAPT`, `G-PATH`, `G-MGL`, `H-LAM`, `H-RANK` |
+| Sparsity grid | `--p-lambda1-min`, `--p-lambda1-max`, `--p-n-lambda1` | `G-SGL` | `G-SLR`, `G-ADAPT`, `G-PATH`, `G-MGL`, `H-LAM`, `H-RANK` |
 | Explicit grids and spacing | `--p-lambda1-path`, `--p-mu1-path`, `--p-path-scale` | `G-PATH` | `G-MGL`, `H-LAM`, `H-RANK` |
 | Low-rank block | `--p-latent`, `--p-mu1-min`, `--p-mu1-max`, `--p-n-mu1` | `G-SLR` | `G-PATH`, `G-PCA`, `H-LAM`, `H-RANK`, `H-PCA` |
 | Explicit rank (always raises) | `--p-rank` | `H-RANK` | `G-PATH`, `G-PCA`, `R-TS` |
@@ -232,8 +229,8 @@ it from.
 
 | Parameter group | Flags | Primary | Also in |
 |---|---|---|---|
-| Input features | `--i-features` | `C-PREP` | `C-GEN`, `C-REG`, `C-RTRAC`, `C-CLF`, `C-CTRAC`, `M-REG` |
-| CLR transform and pseudocount | `--p-transformation`, `--p-coef` | `C-PREP` | `C-GEN`, `C-REG`, `C-RTRAC`, `C-CLF`, `C-CTRAC`, `M-REG` |
+| Input features | `--i-features` | `C-PREP` | `C-GEN`, `C-REG`, `C-RTRAC`, `C-CLF`, `C-CTRAC` |
+| CLR transform and pseudocount | `--p-transformation`, `--p-coef` | `C-PREP` | `C-GEN`, `C-REG`, `C-RTRAC`, `C-CLF`, `C-CTRAC` |
 
 This is a **different** implementation from `qiime gglasso transform-features`:
 `coef` rather than `pseudo_count`, no `mclr`, no metadata handling, and a
@@ -269,8 +266,8 @@ blocks over the same fitted path.
 
 | Parameter group | Flags | Primary | Also in |
 |---|---|---|---|
-| Inputs | `--i-features`, `--i-c`, `--i-weights` | `C-REG` | `C-RTRAC`, `C-CLF`, `C-CTRAC`, `C-CONC`, `C-MSEL`, `H-CV`, `M-REG` |
-| Numeric response | `--m-y-file`, `--m-y-column` | `C-REG` | `C-RTRAC`, `C-CONC`, `C-MSEL`, `H-CV`, `M-REG` |
+| Inputs | `--i-features`, `--i-c`, `--i-weights` | `C-REG` | `C-RTRAC`, `C-CLF`, `C-CTRAC`, `C-CONC`, `C-MSEL`, `H-CV` |
+| Numeric response | `--m-y-file`, `--m-y-column` | `C-REG` | `C-RTRAC`, `C-CONC`, `C-MSEL`, `H-CV` |
 | Response shift | `--p-do-yshift` | `C-MSEL` | `H-CV` |
 | Intercept | `--p-intercept` | `C-MSEL` | `C-PRED`, `H-CV` |
 | Loss and noise model | `--p-concomitant`, `--p-huber`, `--p-rho` | `C-CONC` | `C-GEN`, `C-REG`, `C-RTRAC`, `C-PRED`, `H-CV` |

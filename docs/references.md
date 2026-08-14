@@ -12,15 +12,6 @@ examples consume, and the software that implements it all. The grouping is there
 so you can decide what to read: most readers need one or two entries from a
 section, not the whole section.
 
-```{figure} _static/figs/pipeline_overview_placeholder.png
-:name: fig-pipeline-overview
-:width: 100%
-
-**Placeholder.** This figure will trace the pipeline end to end: raw reads to
-ASVs, ASVs to a log-ratio transformed table, and from there to both a sparse
-network and a log-contrast regression on metagenomic features.
-```
-
 ## How these references support the tutorial
 
 - **Toy example (13 ASVs).** Start with {cite}`aitchison1982statistical` and
@@ -64,15 +55,6 @@ regression tier.
   log-contrast formulations and their robust variants, as implemented by
   `q2-classo`.
 
-```{figure} _static/figs/compositional_regression_placeholder.png
-:name: fig-compositional-regression
-:width: 100%
-
-**Placeholder.** This figure will depict the simplex and the log-contrast
-constraint — why coefficients are required to sum to zero, and what that means
-geometrically for the metagenomics tier.
-```
-
 ```{bibliography}
 :filter: keywords % "compositional"
 :labelprefix: C
@@ -104,15 +86,6 @@ it succeeds.
   latent-component views of the data.
 - {cite}`kurtz2015sparse` — SPIEC-EASI; the compositionally-aware network
   inference this book's estimator is most directly compared against.
-
-```{figure} _static/figs/toy_vs_hd_network_placeholder.png
-:name: fig-toy-vs-hd
-:width: 100%
-
-**Placeholder.** This figure will place the 13-ASV toy network beside the 300-ASV
-Atacama network at the same λ, showing what changes when the same estimator is
-taken from an inspectable problem to a genuinely high-dimensional one.
-```
 
 ```{bibliography}
 :filter: keywords % "methods"

@@ -327,7 +327,7 @@ Identical to `regress`: `--i-features`, `--i-c`, `--i-weights`, `--o-result`.
 |---|---|---|---|---|---|
 | `y` | `--m-y-file` / `--m-y-column` | `MetadataColumn[Categorical]` | required | [Log-contrast Classification](../03_lowdim_classo/04_classification/01_logcontrast.md) | **Categorical**, not numeric. Must be binary; a non-binary column is rejected. |
 | `huber` | `--p-huber` | `Bool` | `False` | [Log-contrast Classification](../03_lowdim_classo/04_classification/01_logcontrast.md) | Huber hinge loss. |
-| `rho` | `--p-rho` | `Float` | `0.0` | [Concomitant Formulation](../03_lowdim_classo/05_advanced/01_concomitant_formulation.md) | **Different default from `regress`** (`1.345`). Also passed on a `classify` call in [Gut-to-Soil Regression](../05_metagenomics/01_gut_to_soil/03_regression.md). |
+| `rho` | `--p-rho` | `Float` | `0.0` | [Concomitant Formulation](../03_lowdim_classo/05_advanced/01_concomitant_formulation.md) | **Different default from `regress`** (`1.345`). |
 | `intercept` | `--p-intercept` | `Bool` | `True` | [Cross-Validation](../04_highdim_atacama/05_classo_cv.md) | |
 | `do_yshift` | — | — | — | — | **Does not exist on `classify`.** Centring a categorical response is meaningless. |
 | `concomitant` | — | — | — | — | **Does not exist on `classify`.** See the warning below. |

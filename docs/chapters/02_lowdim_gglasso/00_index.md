@@ -7,9 +7,8 @@ plus five environmental covariates.
 
 Nothing here is meant to be a scientific result. The point is that each command
 runs in seconds, and you can check the output by eye before trusting the same
-command on 300 or 30,000 features in
-[Tier 2](../04_highdim_atacama/00_index.md) and
-[Tier 3](../05_metagenomics/00_index.md).
+command on 300 features in
+[Tier 2](../04_highdim_atacama/00_index.md).
 
 ## What each chapter adds
 

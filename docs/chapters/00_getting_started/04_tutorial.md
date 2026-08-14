@@ -351,23 +351,12 @@ edges from the sparse block. Rank 2 keeps 94% of the rank-0 edges; rank 10 keeps
 half. The shaded region marks the choice made here.
 ```
 
-```{figure} ../../images/png/generated/atacama-network-rank0-vs-rank2.png
----
-name: tutorial-network
-alt: Network of the 300-feature solution with 202 shared edges in grey and 14 edges removed by the rank-2 latent component highlighted in red.
-width: 720px
-align: center
----
-The same network with and without a rank-2 latent block. 202 edges are shared
-(grey), 14 are removed by the latent component (red), and **none are added** — the
-latent block explains away a specific subset of edges rather than reshuffling the
-network. Only components with four or more nodes plus every component touching a
-removed edge are drawn (88 of 163 nodes).
-```
-
-That "0 added" is the useful diagnostic. It says the 14 removed edges were
-attributable to shared gradients, and that the remaining 202 are not — which is a
-stronger statement about those 202 than the sparse-only fit could make.
+Comparing the two edge sets directly is the useful diagnostic: 202 edges are
+shared, 14 are removed by the latent block, and **none are added**. That says the
+14 removed edges were attributable to shared gradients and the remaining 202 are
+not — a stronger statement about those 202 than the sparse-only fit could make.
+`qiime gglasso summarize` reports the edge set for each solution, so you can make
+this comparison yourself without drawing a network.
 
 Rank choice: {doc}`../04_highdim_atacama/03_slr_ranks`. What the latent components
 correspond to: {doc}`../04_highdim_atacama/04_latent_pca`.
@@ -479,5 +468,3 @@ URLs. Until the deposit exists, obtain the tutorial files as described in
 - **Which chapter owns which command** — {doc}`../90_reference/01_command_coverage`
 - **Errors and their causes** — {doc}`../90_reference/04_troubleshooting`
 - **The mathematics** — {doc}`../99_appendix/01_math`
-- **A third regime** — {doc}`../05_metagenomics/00_index` takes the same workflow
-  to a 335-ASV gut-to-soil table

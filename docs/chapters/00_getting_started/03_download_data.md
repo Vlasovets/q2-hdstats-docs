@@ -40,8 +40,7 @@ literal placeholder `ZENODO_DOI_PENDING` stands in for it. The tier 1 and tier 2
 commands on this page therefore cannot be run as written yet — they are the
 shape of the final commands, with one substitution outstanding. Search the
 sources for `ZENODO_DOI_PENDING` to find every place that has to change when the
-record goes live. Tier 3 (below) is downloadable **today**, from its upstream
-tutorial site.
+record goes live.
 ```
 
 Set the base URL once and reuse it. Every tier 1 and tier 2 block on this page
@@ -63,7 +62,7 @@ everything the tutorial downloads. It has five tab-separated columns:
 | `tier` | `1`, `2` or `3` — which part of the book needs it |
 | `bytes` | Expected size |
 | `sha256` | Expected checksum |
-| `url` | Where it came from (Zenodo for tiers 1–2, the gut-to-soil tutorial site for tier 3) |
+| `url` | Where it came from (Zenodo for both tiers) |
 
 Prose can drift out of date; the manifest cannot, because it is what the
 verification steps below read. Treat it as authoritative when the two disagree,
@@ -87,8 +86,7 @@ reports `OK` for every tier, so the verification steps below work today.
 
 The one thing still outstanding is the **`url` column for tiers 1 and 2**, which
 reads `ZENODO_DOI_PENDING` until the record is minted. So you can verify files you
-already have, but the `curl` commands for those two tiers cannot fetch them yet.
-Tier 3 downloads from its upstream tutorial site and works end to end.
+already have, but the `curl` commands cannot fetch them yet.
 ```
 
 ## Tier 1 — Atacama, 13 ASVs
@@ -174,74 +172,6 @@ Recomputing them from `atacama-top-300-table.qza` is the first exercise of the
 tier 2 chapters; having the reference versions on disk means a mismatch is
 visible immediately rather than propagating into the network.
 
-```{note}
-`sample-metadata.tsv` is a generic name and the tier 3 dataset ships a file with
-exactly the same name. Keep tier 3 in its own subdirectory, as below, or one will
-overwrite the other.
-```
-
-## Tier 3 — Gut-to-soil (16S)
-
-Tier 3 is not on the Zenodo record. Its files belong to the gut-to-soil
-composting tutorial and are served from that tutorial's own site, so we link them
-at the source rather than mirroring them. **These URLs work today.**
-
-```bash
-mkdir -p ~/q2-hdstats-tutorial/data/gut-to-soil
-cd ~/q2-hdstats-tutorial/data/gut-to-soil
-
-BASE=https://gut-to-soil-tutorial.readthedocs.io/en/latest/data/gut-to-soil
-curl -L -O "${BASE}/asv-table-ms2.qza"
-curl -L -O "${BASE}/taxonomy.qza"
-curl -L -O "${BASE}/sample-metadata.tsv"
-```
-
-Those three are what the tier 3 chapters use. Two more are available from the
-same location if you want to work outside the book:
-
-```bash
-cd ~/q2-hdstats-tutorial/data/gut-to-soil
-BASE=https://gut-to-soil-tutorial.readthedocs.io/en/latest/data/gut-to-soil
-curl -L -O "${BASE}/asv-table.qza"
-curl -L -O "${BASE}/asv-seqs.qza"
-```
-
-| File | What it is |
-|---|---|
-| `asv-table-ms2.qza` | The tutorial subsample used here: 335 ASVs × 99 samples |
-| `taxonomy.qza` | `FeatureData[Taxonomy]` for the ASVs |
-| `sample-metadata.tsv` | Full-study sample metadata (1,660 rows); only 99 rows match `asv-table-ms2.qza` |
-| `asv-table.qza` | The other tutorial table, 1069 features × 104 samples (not used here) |
-| `asv-seqs.qza` | Representative sequences (not used here) |
-
-Verify:
-
-```bash
-tier_checklist 3 > ~/q2-hdstats-tutorial/data/gut-to-soil/SHA256SUMS.tier3
-cd ~/q2-hdstats-tutorial/data/gut-to-soil && sha256sum --ignore-missing -c SHA256SUMS.tier3
-```
-
-Because these are upstream artifacts we do not control, the manifest records
-their `sha256` **as observed when the book was built**. A mismatch does not
-necessarily mean a corrupt download — it may mean the upstream tutorial was
-regenerated. Check the upstream site before assuming the worst.
-
-```{important}
-`asv-table-ms2.qza` is a **10% subsample** of a much larger study and it is
-shallow: per-sample depth ranges from **3 to 1218 reads, with a median of 261**. A CLR-transformed covariance
-estimated from counts that small is noisy, and the resulting network should be
-read as a demonstration of the workflow, not as a biological result. The tier 3
-chapters say the same thing where it matters.
-```
-
-The full study — 1,660 samples, from the gut-to-soil composting work of Meilander
-and colleagues {cite}`meilander2025upcycling` — is Zenodo record **15390940**
-{cite}`caporaso2025guttosoil`. It is far too large for a tutorial run on a laptop,
-but it is the right starting point if you want to take the workflow somewhere
-real. Its feature count is pending verification and is not quoted here; see
-[Gut-to-Soil: The Dataset](../05_metagenomics/01_gut_to_soil/01_data.md) for how
-the scaling arithmetic is written conditionally on it.
-
 ## The cocoa appendix has no download
 
 The MOSHPIT cocoa fermentation example (14 shotgun metagenomes, BioProject
@@ -276,7 +206,7 @@ captured output is shown here.
 
 ## The resulting tree
 
-After all three tiers:
+After both tiers:
 
 ```text
 ~/q2-hdstats-tutorial/
@@ -289,11 +219,7 @@ After all three tiers:
     ├── atacama-top-300-clr.qza
     ├── atacama-top-300-correlation.qza
     ├── atacama-taxonomy-silva138.qza
-    ├── sample-metadata.tsv
-    └── gut-to-soil/
-        ├── asv-table-ms2.qza
-        ├── taxonomy.qza
-        └── sample-metadata.tsv
+    └── sample-metadata.tsv
 ```
 
 Everything else the tutorial uses is **derived**: each chapter writes its

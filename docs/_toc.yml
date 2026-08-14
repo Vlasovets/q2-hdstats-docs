@@ -97,20 +97,6 @@ parts:
           - file: chapters/04_highdim_atacama/06_interpretation
             title: Interpretation
 
-  - caption: "Metagenomics: from networks to regression"
-    chapters:
-      - file: chapters/05_metagenomics/00_index
-        title: Overview
-      - file: chapters/05_metagenomics/01_gut_to_soil/00_index
-        title: "Gut-to-Soil (16S, 335 ASVs x 99 samples)"
-        sections:
-          - file: chapters/05_metagenomics/01_gut_to_soil/01_data
-            title: The Dataset
-          - file: chapters/05_metagenomics/01_gut_to_soil/02_network
-            title: Network Inference
-          - file: chapters/05_metagenomics/01_gut_to_soil/03_regression
-            title: Log-Contrast Regression
-
   - caption: Reference
     chapters:
       - file: chapters/90_reference/01_command_coverage
