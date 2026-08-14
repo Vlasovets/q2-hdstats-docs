@@ -10,6 +10,8 @@ parts:
         title: Atacama Soil Microbiome
       - file: chapters/00_getting_started/03_download_data
         title: Download the Tutorial Data
+      - file: chapters/00_getting_started/04_tutorial
+        title: End-to-End Tutorial
       - file: chapters/01_installation/01_prerequisites
         title: Prerequisites & Installation
         sections:
