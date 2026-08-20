@@ -92,9 +92,17 @@ if python -c "import motus" 2>/dev/null; then
 else
   pip install --no-deps -q "motu-profiler==3.1.0" 2>&1 | tail -3 | sed 's/^/    /'
 fi
-MOTUS_PKG=$(python -c "import motus, os; print(os.path.dirname(motus.__file__))" 2>/dev/null)
-if [[ -z "$MOTUS_PKG" ]]; then echo "  FAIL motus package not importable"; FAIL=1
-else echo "  motus package at: $MOTUS_PKG"; fi
+# motus ships NO __init__.py, so it imports as a namespace package and motus.__file__
+# is None -- dirname(None) raises, which is how the first version of this stage decided
+# a perfectly good install was missing. __path__ is the correct accessor. Importing
+# motus.motus is NOT an option here: it checks for the database at module scope and
+# calls sys.exit() when it is absent, which is exactly the state we are fixing.
+MOTUS_PKG=$(python -c "import motus; print(list(motus.__path__)[0])" 2>/dev/null)
+if [[ -z "$MOTUS_PKG" || ! -d "$MOTUS_PKG" ]]; then
+  echo "  FAIL motus package not importable"; FAIL=1
+else
+  echo "  motus package at: $MOTUS_PKG ($(ls -1 "$MOTUS_PKG" | wc -l) entries)"
+fi
 
 echo "############ [3/5] reference database (2.9 GiB) ############"
 if [[ -d "$DB_ROOT/db_mOTU" ]]; then
@@ -113,9 +121,14 @@ else
       echo "  md5 ok: $got"
     fi
   fi
-  if [[ $FAIL -eq 0 ]]; then
-    echo "  extracting into $DB_ROOT"
+  # Gated on the checksum only. The first version gated this on the global $FAIL, so
+  # an unrelated failure two steps earlier silently skipped a 2.9 GiB extraction that
+  # had already been paid for. Steps here are independent; each guards its own inputs.
+  if [[ -f "$DB_TGZ" ]] && [[ "$(md5sum "$DB_TGZ" | cut -d' ' -f1)" == "$DB_MD5" ]]; then
+    echo "  extracting into $DB_ROOT (this takes a few minutes)"
     tar -xzf "$DB_TGZ" -C "$DB_ROOT" || { echo "  FAIL extract"; FAIL=1; }
+  else
+    echo "  FAIL tarball missing or checksum bad; not extracting"; FAIL=1
   fi
 fi
 [[ -d "$DB_ROOT/db_mOTU" ]] && echo "  db files: $(ls -1 "$DB_ROOT/db_mOTU" | wc -l)"
@@ -149,7 +162,7 @@ else
 fi
 python - "$DB_ROOT" <<'PY'
 import os, sys, motus
-pkg = os.path.dirname(motus.__file__)
+pkg = list(motus.__path__)[0]
 db = os.path.join(pkg, "db_mOTU")
 print(f"  resolved db path: {db}")
 print(f"  exists: {os.path.exists(db)}   is symlink: {os.path.islink(db)}")
