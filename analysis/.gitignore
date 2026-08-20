@@ -36,6 +36,11 @@ slurm/logs/
 results/gglasso/*
 !results/gglasso/*.tsv
 
+# The merged mOTUs table is 36 x 378 of plain text (~90 KB) and is the input to
+# every number the shotgun chapter would quote. The per-sample .qza profiles stay
+# ignored -- they regenerate from the sample sheet via stage 35.
+!results/motus-merged/
+
 # Input artifacts: unpacked from the two Atacama zips and the gut-to-soil
 # tutorial site by scripts/, and listed with checksums in
 # q2-hdstats-docs/docs/_data/manifest.tsv. Reproducible, and destined for Zenodo.
