@@ -42,9 +42,49 @@ export TMPDIR="$SCRATCH/tmp"; export TMP="$TMPDIR"; export TEMP="$TMPDIR"
 mkdir -p "$TMPDIR" "$OUT" "$TAB"
 trap '[[ "${KEEP_SCRATCH:-0}" == "1" ]] || rm -rf "$SCRATCH"' EXIT
 
+# The conda env is not the env that runs unless we say so.
+#
+# ~/.local/lib/python3.12/site-packages shadows this env for 19 packages, and three
+# of them are pins the migration declared load-bearing:
+#     zarr      2.18.7 -> 3.1.5   (zarr.hierarchy.Group STOPS RESOLVING, and both
+#                                  plugins annotate their transformers with it)
+#     numpy     2.4.2  -> 2.2.6   (Gate A1 was validated on 2.4.2)
+#     numcodecs 0.15.1 -> 0.16.5  (the pin is <0.16)
+#
+# ~/.local is not ours to clean -- other projects on this account depend on it -- so the
+# stages opt out of user site-packages instead. Must be exported BEFORE activation so
+# the interpreter never builds a user-site path.
+export PYTHONNOUSERSITE=1
+
 # shellcheck source=/dev/null
 source "$(dirname "$CONDA")/../etc/profile.d/conda.sh"
 conda activate "$PREFIX"
+
+# Assert we got the env the lockfile describes.
+#
+# This check exists because the shadowing went unnoticed: a silent version swap raises
+# no error, it just changes the numbers, while the lockfile keeps saying the right
+# thing. Runs AFTER activation, so it tests the env's interpreter and not the login
+# node's python3.
+python - <<'ENVCHECK' || exit 9
+import sys
+import numpy, zarr
+bad = []
+if not zarr.__version__.startswith("2.18"):
+    bad.append("zarr %s, expected 2.18.x" % zarr.__version__)
+if not numpy.__version__.startswith("2.4"):
+    bad.append("numpy %s, expected 2.4.x" % numpy.__version__)
+try:
+    import zarr.hierarchy  # noqa: F401
+except ImportError:
+    bad.append("zarr.hierarchy missing -- the plugin transformers cannot load")
+if bad:
+    sys.stderr.write("ENV CHECK FAILED: %s\n" % "; ".join(bad))
+    sys.stderr.write("  PYTHONNOUSERSITE=1 should pin this env. If it did not, something\n")
+    sys.stderr.write("  in ~/.local or PYTHONPATH still wins. Do not trust these results.\n")
+    sys.exit(9)
+ENVCHECK
+
 
 LAMBDA=0.8
 for MU in 15 10 7.5; do
