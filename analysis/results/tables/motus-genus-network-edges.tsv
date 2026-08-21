@@ -1,0 +1,4 @@
+source	target	partial_correlation	gamma	selected_lambda
+g__Bifidobacterium	g__Clostridium	0.21	0.3	0.5
+g__Klebsiella	g__Enterococcus	0.161	0.3	0.5
+g__Haemophilus	g__Blautia	0.11	0.3	0.5
