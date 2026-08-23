@@ -446,6 +446,7 @@ solve everything in one conda transaction:
 | `q2-gglasso/environment-files/q2-gglasso-qiime2-2026.7.yml` | q2-gglasso + QIIME 2 2026.7 |
 | `q2-classo/environment-files/q2-classo-qiime2-2026.7.yml` | q2-classo + QIIME 2 2026.7 |
 | `analysis/requirements-figures.txt` | figure generation only, no QIIME 2 |
+| `analysis/requirements-qzv-figures.txt` | re-capturing the plugin visualizations from the committed `.qzv` files |
 | `requirements.txt` | the documentation toolchain |
 
 Provenance for every input file — sizes and SHA-256 digests — is in

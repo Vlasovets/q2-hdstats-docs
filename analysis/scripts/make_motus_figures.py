@@ -7,9 +7,17 @@ produce, including two node-link network drawings -- neither q2-gglasso nor q2-c
 imports networkx or emits a graph layout, so a network picture in this book would come
 from a path the reader has no access to. Nothing here draws a network.
 
-Each figure is generated from a COMMITTED TSV under analysis/results/tables/, so it
-cannot drift from the numbers the chapter quotes, and it rebuilds from a clean clone
-with no cluster and no QIIME 2:
+THIS SCRIPT DRAWS ONLY WHAT THE PLUGINS DO NOT. The precision matrix, the latent PCA
+scatter and the cross-validation curve are all emitted by q2-gglasso and q2-classo
+themselves, so the chapter shows the plugins' own output, screenshotted from the
+committed .qzv files by `render_qzv_figures.py`. Redrawing those here would risk a figure
+that disagrees with the .qzv the same page offers for download.
+
+What remains are the two quantities the plugins do not plot, because this analysis
+computes them rather than the plugins: the eBIC path over lambda1, and the mu1 -> rank
+map. Each is generated from a COMMITTED TSV under analysis/results/tables/, so it cannot
+drift from the numbers the chapter quotes, and it rebuilds from a clean clone with no
+cluster and no QIIME 2:
 
     pip install -r analysis/requirements-figures.txt
     python analysis/scripts/make_motus_figures.py
@@ -117,39 +125,19 @@ def fig_mu_rank(outdir):
     return out, f"{len(d)} mu values, ranks {d['rank'].min()}-{d['rank'].max()}"
 
 
-def fig_trac_coefficients(outdir):
-    """`classo regress` -- which clades the log-contrast model keeps."""
-    d = pd.read_csv(TABLES / "motus-trac-selected.tsv", sep="\t")
-    d = d.sort_values("coefficient")
-    fig, ax = plt.subplots(figsize=(7.4, 2.9), dpi=200)
-    _style(ax)
-    colors = [ACCENT if v > 0 else "#3b6ea5" for v in d.coefficient]
-    ax.barh(range(len(d)), d.coefficient, color=colors, height=0.55, zorder=3)
-    ax.set_yticks(range(len(d)))
-    ax.set_yticklabels(d.clade, fontsize=9.5, color=INK)
-    ax.axvline(0, color=MUTED, linewidth=1)
-    ax.set_xlabel("log-contrast coefficient", fontsize=10, color=INK)
-    ax.set_title("trac keeps three clades for postnatal age",
-                 fontsize=11.5, fontweight="bold", color=INK, pad=10)
-    out = outdir / "motus-trac-coefficients.png"
-    fig.savefig(out, bbox_inches="tight", facecolor="white"); plt.close(fig)
-    return out, f"{len(d)} clades selected"
-
-
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--outdir", type=pathlib.Path, default=DEFAULT_OUT)
     args = ap.parse_args()
     args.outdir.mkdir(parents=True, exist_ok=True)
 
-    need = ["motus-lambda-path.tsv", "motus-top100-mu-rank-map.tsv",
-            "motus-trac-selected.tsv"]
+    need = ["motus-lambda-path.tsv", "motus-top100-mu-rank-map.tsv"]
     missing = [t for t in need if not (TABLES / t).is_file()]
     if missing:
         sys.exit(f"missing input tables in {TABLES}: {missing}. "
                  "Run analysis/slurm/44_motus_tutorial_run.sh first.")
 
-    for fn in (fig_lambda_path, fig_mu_rank, fig_trac_coefficients):
+    for fn in (fig_lambda_path, fig_mu_rank):
         path, note = fn(args.outdir)
         print(f"  {path.name:36} {note}")
     print(f"  -> {args.outdir}")

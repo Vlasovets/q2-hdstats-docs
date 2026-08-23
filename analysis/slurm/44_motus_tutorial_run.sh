@@ -89,12 +89,21 @@ md.to_csv(f"{pub}/motus-outcomes.tsv", sep="\t")
 print(f"  outcomes: {md.shape[0]} rows, {md.host_subject_id.nunique()} infants")
 
 # The table the chapter renders as a csv-table.
+#
+# "samples per infant" and the diagnosis balance were hardcoded as 2 and
+# "17 asthma / 17 control". The depth filter drops two samples, so 16 infants
+# contribute two and two contribute one -- the literal made the table assert a
+# balanced design the filtered data does not have. Both are counted now.
+per = md.groupby("host_subject_id").size().value_counts().sort_index(ascending=False)
+per_str = " + ".join(f"{n_inf}\u00d7{k}" for k, n_inf in per.items())
+dx = md.diagnosis.value_counts()
+dx_str = " / ".join(f"{v} {k}" for k, v in dx.items())
 pd.DataFrame({
     "property": ["samples (n)", "features (p)", "p/n", "zeros", "median assigned depth",
                  "infants", "samples per infant", "diagnosis balance"],
     "value": [sub.shape[0], sub.shape[1], round(sub.shape[1]/sub.shape[0], 1),
               f"{zeros:.1f}%", f"{sub.sum(1).median():.0f}", md.host_subject_id.nunique(),
-              2, "17 asthma / 17 control"],
+              per_str, dx_str],
 }).to_csv(f"{tables}/motus-tutorial-shape.tsv", sep="\t", index=False)
 PY
 
@@ -178,17 +187,33 @@ print(f"  latent fit mu1=5: rank {np.linalg.matrix_rank(Lo,tol=1e-8)}, "
       f"{int((np.abs(Po)>1e-8).sum()//2)} edges, "
       f"eigenvalues {', '.join(f'{v:.3f}' for v in ev)}")
 
-cols=list(qiime2.Artifact.load(f"{out}/classo-x-trac.qza").view(pd.DataFrame).columns)
+# Label the coefficients from the artifact's OWN label array, never by position.
+#
+# This previously zipped `b` against the 133 design columns of classo-x-trac.qza.
+# c-lasso prepends the intercept, so b has 134 entries and every label was shifted
+# by one: the intercept's +21.7318 was reported as p__Proteobacteria, and the two
+# real clades were named as their predecessors in the column order. The zero-sum
+# constraint made the error visible in hindsight -- the true pair sums to 0, while
+# the mislabelled triple summed to +21.73 -- but nothing in the code would have
+# caught it. s["CV"]["label"] is written by q2-classo alongside the coefficients and
+# is the only correct source; it agrees with CV-beta.csv in the .qzv.
 with tempfile.TemporaryDirectory() as t, zipfile.ZipFile(f"{out}/motus-regress-age.qza") as z:
     n=[x for x in z.namelist() if x.endswith(".zip")][0]; z.extract(n,t)
     s=zarr.open(zarr.ZipStore(os.path.join(t,n),mode="r"))["solution"]
     b=np.asarray(s["CV"]["refit"]).ravel()
-nz=np.argwhere(np.abs(b)>1e-10).ravel()
-sel=pd.DataFrame({"clade":[cols[i] if i<len(cols) else f"coef{i}" for i in nz],
+    lab=[str(x) for x in np.asarray(s["CV"]["label"]).ravel()]
+if len(lab)!=len(b):
+    sys.exit(f"label/coefficient length mismatch: {len(lab)} vs {len(b)}")
+nz=[i for i in np.argwhere(np.abs(b)>1e-10).ravel() if lab[i]!="intercept"]
+icpt=[float(b[i]) for i,l in enumerate(lab) if l=="intercept" and abs(b[i])>1e-10]
+sel=pd.DataFrame({"clade":[lab[i] for i in nz],
                   "coefficient":[round(float(b[i]),4) for i in nz]})
 sel.to_csv(f"{tables}/motus-trac-selected.tsv",sep="\t",index=False)
-print(f"  trac selects {len(nz)} of {len(b)} clades:")
+n_cand=sum(1 for l in lab if l!="intercept")
+print(f"  trac selects {len(nz)} of {n_cand} clades"
+      + (f" (intercept {icpt[0]:+.4f})" if icpt else "") + ":")
 print("   "+sel.to_string(index=False).replace("\n","\n   "))
+print(f"  zero-sum check: selected coefficients sum to {sel.coefficient.sum():+.4f}")
 PY
 
 echo "############ artifact sizes (what would be committed) ############"

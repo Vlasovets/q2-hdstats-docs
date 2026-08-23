@@ -143,13 +143,23 @@ command in it was run and every number came from a committed table —
 
 The configuration, if you need it in one line: **mOTUs species level, top-100 by
 abundance, p=100 n=34**, γ=0.15 selecting λ=0.30 with 481 edges against a permutation
-null of 0.2; latent block at μ₁=5 gives rank 3 and 217 edges; trac selects 3 clades for
-`host_age_days` at a leave-one-subject-out R² of +0.164.
+null of 0.2; latent block at μ₁=5 gives rank 3 and 217 edges; trac selects **2 clades** for
+`host_age_days` — `o__Enterobacterales` +5.2475 against `p__Bacteroidetes` −5.2475 — at a
+leave-one-subject-out R² of +0.164.
 
-Three things about it that are easy to get wrong and are argued in the page: filter by
+Four things about it that are easy to get wrong. Three are argued in the page: filter by
 **abundance not prevalence** (prevalence filtering makes eBIC select the empty graph),
 γ=0.15 is a **reported choice** not a default, and q2-classo's CV **leaks** on this
 paired design with a sign that depends on whether the outcome is subject-constant.
+
+The fourth is a trap that already caught this repository once. **c-lasso prepends the
+intercept to the coefficient vector**, so the 133-column trac design returns 134
+coefficients. Labelling them by position against the design columns shifts every name by
+one, and the page shipped three wrong clades (`p__Proteobacteria`, `p__Actinobacteria`,
+`o__Pasteurellales`) until the mismatch was noticed. Read labels from
+`solution/CV/label` in the artifact, or from `CV-beta.csv` inside the `.qzv`. The tell was
+the zero-sum constraint: the true pair sums to 0, the mislabelled triple summed to the
+intercept's +21.73.
 
 Stages 32–44 cover fetch, profile, the model sweeps and the tutorial run. Reports:
 `analysis/reports/mgl-verification.md`, `analysis/reports/figure-audit.md`.
@@ -175,6 +185,7 @@ Stages 32–44 cover fetch, profile, the model sweeps and the tutorial run. Repo
 | `q2-classo/environment-files/q2-classo-qiime2-2026.7.yml` | plugin env |
 | `requirements.txt` | docs toolchain |
 | `analysis/requirements-figures.txt` | figure generator |
+| `analysis/requirements-qzv-figures.txt` | .qzv screenshot renderer (needs `playwright install chromium`) |
 
 A 36 MB bundle of the pre-mOTUs cluster-only artifacts (raw `.qza`, PCA outputs, solver
 figures, the exact pip freeze of the wiped scratch venv) was staged at

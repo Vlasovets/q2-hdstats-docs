@@ -79,7 +79,7 @@ parts:
           - file: chapters/03_lowdim_classo/07_interpretation
             title: Interpretation
 
-  - caption: "Scale up: 300 ASVs"
+  - caption: "Scale up: hundreds of features"
     chapters:
       - file: chapters/04_highdim_atacama/00_index
         title: Overview

@@ -1,110 +1,116 @@
 # Shotgun Metagenomics: mOTUs Profiles
 
-Everything so far in this tier has been 16S amplicon data from soil. This page runs the
-same two plugins on **shotgun metagenomes from human infants**, profiled to species
-level with [mOTUs](https://github.com/motu-tool/mOTUs) {cite}`ruscheweyh2022motus`.
+The preceding chapters analyse 16S amplicon data from soil. The same two plugins apply to
+shotgun metagenomes from human infants, profiled to species level with mOTUs
+{cite}`ruscheweyh2022motus`.
 
-Nothing about the workflow changes. `transform-features`, `calculate-covariance`,
-`solve-problem`, `add-taxa` and `regress` take the same arguments and mean the same
-things. What changes is what a *feature* is — a marker-gene-defined species rather than
-an exact sequence variant — and, more consequentially, how much data sits behind each
-count. That difference turns out to decide which parameter values work, and it is the
-reason this page exists rather than a sentence saying "shotgun tables also work".
+The workflow is unchanged. `transform-features`, `calculate-covariance`,
+`solve-problem`, `add-taxa` and `regress` take the same arguments and carry the same
+meaning. The differences are the feature definition and the depth per feature: a feature
+here is a marker-gene-defined species rather than an exact sequence variant, and each
+count rests on far fewer reads. The lower depth determines which parameter values yield a
+usable model.
 
-## The study
+## Study and data source
 
 | | |
 |---|---|
 | Qiita study | [13241](https://qiita.ucsd.edu/public/?study_id=13241) |
 | ENA project | [PRJEB52147](https://www.ebi.ac.uk/ena/browser/view/PRJEB52147) |
 | Publication | Bai-Tong et al., *Scientific Reports* 2022 {cite}`baitong2022map` |
-| Design | preterm infants in two San Diego NICUs, 9 with a mother who has asthma and 9 without |
+| Design | preterm infants in two San Diego neonatal intensive care units, 9 whose mothers have asthma and 9 whose mothers do not |
 
-The **MAP study** (Microbiome, Atopic disease, and Prematurity) asked whether **maternal
-asthma leaves a mark on the preterm infant gut** — in the microbiome, in the metabolome,
-or both. Its answer was split: the authors found metabolomic differences between the two
-groups, and reported that maternal asthma *"did not play an observable role in shaping
-the infant gut microbiome during the study period"*.
-
-That published null matters for this page, and we return to it at the end rather than
-discovering it by accident.
+The MAP study (Microbiome, Atopic disease, and Prematurity) investigated whether
+maternal asthma is associated with differences in the preterm infant gut microbiome,
+metabolome, or both. The authors reported metabolomic differences between the two
+groups and concluded that maternal asthma "did not play an observable role in shaping
+the infant gut microbiome during the study period". The bearing of this conclusion on the
+classification analysis is given under
+[Limitations](#limitations-and-interpretation).
 
 ```{note}
-**Anonymous access uses a different URL than the one you will find first.**
-`qiita.ucsd.edu/study/description/13241` redirects to the Qiita landing page when you
-are not logged in, which looks like the study is private. It is not — the public view is
-at `qiita.ucsd.edu/public/?study_id=13241`, and the download endpoints under
-`qiita.ucsd.edu/public_download/` work without an account.
+Anonymous access requires a different URL from the one search engines return.
+`qiita.ucsd.edu/study/description/13241` redirects to the Qiita landing page for
+unauthenticated visitors, which resembles a permissions error. The public view is
+`qiita.ucsd.edu/public/?study_id=13241`, and the endpoints under
+`qiita.ucsd.edu/public_download/` require no account.
 ```
 
-### What we took, and what we left
+### Data selection
 
-The study has **two sequencing preparations over the same samples**: 16S V4 amplicon on a
-MiSeq, and whole-genome shotgun on a NovaSeq. Only the shotgun half can be profiled with
-mOTUs. Pulling PRJEB52147 wholesale gets you 192 runs of which half are amplicon.
+The study contains two sequencing preparations covering the same samples: 16S V4
+amplicon on an Illumina MiSeq, and whole-genome shotgun on a NovaSeq. Only the shotgun
+preparation is suitable for mOTUs profiling. PRJEB52147 comprises 192 runs, of which
+half are amplicon.
 
-Of the shotgun half we kept only the **fecal** samples — the study also sequenced breast
-milk and meconium, which are different niches and would confound a single covariance
-estimate with sample type. That leaves **36 runs from 18 infants**, each contributing an
-early (~11–16 d) and a late (~26–42 d) sample.
+Within the shotgun preparation, analysis was restricted to faecal samples. The study
+also sequenced breast milk and meconium; these represent distinct microbial niches, and
+pooling them would confound a single covariance estimate with sample type. The
+restriction yields 36 runs from 18 infants, each contributing one early sample
+(10–18 days) and one late sample (23–47 days).
 
-## How the table was made
+## Preprocessing
 
-The profiling is described here rather than asked of you: it needs 13 GiB of reads and
-the 2.9 GiB mOTUs reference database. The stages that do it are
-`analysis/slurm/32`–`35` in the book's repository.
+Profiling requires 13 GiB of sequencing reads and the 2.9 GiB mOTUs reference database.
+The corresponding pipeline stages are `analysis/slurm/32`–`35` in the repository
+accompanying this book; the steps are given here in summary.
 
-1. **Select the runs.** Join the Qiita sample template to the ENA run report on the
-   stripped `sample_alias`, keep `library_strategy == WGS` and `sample_type == feces`.
-2. **Fetch and verify.** 72 FASTQ files, checked against the MD5s ENA publishes.
-3. **Profile.** `qiime motus profile` per sample, then merge. mOTUs counts only reads
-   landing on ten universal marker genes, so a 2 M-read run yields a few hundred assigned
-   inserts — this is the single most important property of the resulting table.
-4. **Drop `unassigned`.** mOTUs emits a literal `unassigned` row for reads it could not
-   place. It is the complement of everything profiled, and including it in a log-ratio
-   makes the "composition" a mixture of taxa and not-taxa.
-5. **Filter.** Two samples fall below 100 assigned counts and are dropped, leaving 34.
-   Features are then ranked **by total abundance** and the top 100 kept.
+1. **Run selection.** The Qiita sample template is joined to the ENA run report on the
+   stripped `sample_alias` field, retaining records with `library_strategy == WGS` and
+   `sample_type == feces`.
+2. **Retrieval and verification.** 72 FASTQ files, each checked against the MD5 digest
+   published by ENA.
+3. **Profiling.** `qiime motus profile` is applied per sample and the results merged.
+   mOTUs counts only reads aligning to ten universal marker genes, so a 2 M-read run
+   yields on the order of several hundred assigned inserts.
+4. **Removal of the `unassigned` feature.** mOTUs emits an explicit `unassigned` row for
+   reads it cannot place. This row is the complement of the profiled fraction, and
+   retaining it in a log-ratio transform would define the composition over a mixture of
+   taxa and non-taxa.
+5. **Filtering.** Two samples fall below 100 assigned counts and are excluded, leaving
+   34. Features present in fewer than two of the remaining samples are then dropped
+   (378 → 156), and the 156 are ranked by total abundance with the 100 most abundant
+   retained.
 
 ```{important}
-**Rank by abundance, not by prevalence.** Both are one-line filters and they behave
-completely differently here.
+**Rank features by abundance, not by prevalence.**
 
-The unfiltered table is 84% zeros. Two features that are absent in the same 28 samples
-have a large sample correlation driven entirely by shared zeros, and a *prevalence*
-filter keeps such a pair as long as each clears the threshold. An *abundance* filter
-removes them, because a feature whose entire signal is a handful of 1s carries almost no
-counts.
+The table before filtering is 93.6% zeros (84.6% at a prevalence-3 floor). Two features
+absent from the same 28 samples exhibit a large sample correlation attributable entirely
+to shared zeros. A prevalence filter retains such a pair provided each feature clears the
+threshold; an abundance filter excludes them, because a feature whose entire signal
+consists of a small number of single counts contributes negligible total abundance.
 
-This is not a stylistic preference. Under prevalence filtering the eBIC criterion on this
-dataset selects the **empty graph** at every threshold tried. Under abundance filtering it
-selects a network that beats a permutation null by three orders of magnitude. Same data,
-same commands, different filter.
+The two filters select different models. Under prevalence filtering, the extended BIC
+selects the empty graph at every threshold examined. Under abundance filtering it selects
+a network exceeding a permutation null by three orders of magnitude. The data and the
+commands are identical in both cases.
 ```
 
-## The shape of the problem
+## Dataset characteristics
 
-```{csv-table} What you are modelling
+```{csv-table} Properties of the filtered table
 :file: ../../../analysis/results/tables/motus-tutorial-shape.tsv
 :delim: tab
 :header-rows: 1
 :widths: 45, 25
 ```
 
-$p = 100$ against $n = 34$ is squarely the regime this tier is about: the sample
-covariance has rank at most 33, so it is singular, and the penalty decides the model.
+With $p = 100$ and $n = 34$ the sample covariance has rank at most 33 and is therefore
+singular. In this regime the penalty determines the model.
 
-Two properties differ sharply from the Atacama table and both are worth carrying:
+Two properties distinguish this table from the Atacama data:
 
-- **The table is sparse.** 85% of cells are zero, against a dense soil table. This is why
-  `mclr` rather than `clr` — the modified transform is built for exactly this.
-- **Samples are paired within infants.** Two samples per infant, 18 infants. Nothing in
-  the network estimate cares, but the regression very much does, and
-  [Reading the result honestly](#reading-the-result-honestly) is where that bill comes due.
+- **Sparsity.** 85% of entries are zero, compared with a dense soil table. This
+  motivates the `mclr` transform in place of `clr`.
+- **Repeated measures.** Sixteen infants contribute two samples and two contribute one,
+  the second having been dropped at the depth threshold. The covariance estimate is
+  unaffected. The cross-validated regression is affected; see
+  [Limitations](#limitations-and-interpretation).
 
-## Getting the files
+## Obtaining the files
 
-Three small artifacts, committed with the book:
+Three artifacts are distributed with this book:
 
 ```bash
 BASE=https://raw.githubusercontent.com/Vlasovets/q2-hdstats-docs/main/docs/_data/motus
@@ -115,7 +121,7 @@ curl -L -O "${BASE}/motus-outcomes.tsv"          # 1 KB, sample metadata
 
 ## Network inference with q2-gglasso
 
-### Transform and build the covariance
+### Transformation and covariance estimation
 
 ```bash
 qiime gglasso transform-features \
@@ -136,10 +142,11 @@ Saved FeatureTable[Frequency] to: mclr.qza
 Saved PairwiseFeatureData to: correlation.qza
 ```
 
-`--i-taxonomy` is required by `transform-features` even though the function body never
-reads it; the taxonomy earns its keep later, in `add-taxa`.
+`--i-taxonomy` is a required input of `transform-features` although the function body
+does not read it. Pass the taxonomy you will need for `add-taxa` rather than a
+placeholder.
 
-### Select $\lambda_1$
+### Selection of $\lambda_1$
 
 ```bash
 qiime gglasso solve-problem \
@@ -160,16 +167,16 @@ Saved GGLassoProblem to: motus-sgl-path.qza
 :name: fig-motus-lambda
 :width: 100%
 
-eBIC along the $\lambda_1$ path at $\gamma = 0.15$ (solid, left axis) with the edge count
-(dashed, right axis). The minimum is interior — both neighbouring grid points score
-worse — and sits at $\lambda_1 = 0.30$, giving **481 edges** among 4,950 possible pairs,
-a density of 9.7%.
+Extended BIC along the $\lambda_1$ path at $\gamma = 0.15$ (solid, left axis) with the
+corresponding edge count (dashed, right axis). The minimum is interior, both adjacent
+grid points scoring higher, and occurs at $\lambda_1 = 0.30$. The selected model
+contains 481 edges among 4,950 possible pairs, a density of 9.7%.
 ```
 
-**$\gamma = 0.15$, not the $\gamma = 0.3$ used elsewhere in this tier.** That is a
-reported modelling choice, not a default someone forgot to change. At $\gamma \geq 0.20$
-this dataset selects the empty graph; the criterion's model-space penalty overwhelms the
-likelihood at $n = 34$. Report $\gamma$ with any network, always, and especially here.
+The value $\gamma = 0.15$ differs from the $\gamma = 0.3$ used for the Atacama data.
+At $\gamma \geq 0.20$ the criterion selects the empty graph on this dataset, the
+model-space penalty dominating the likelihood term at $n = 34$. Report $\gamma$ with any
+network you derive from it.
 
 ```bash
 qiime gglasso summarize \
@@ -178,11 +185,25 @@ qiime gglasso summarize \
     --o-visualization motus-sgl-summary.qzv
 ```
 
-📊 **[motus-sgl-summary.qzv](../../_static/qzv/motus-sgl-summary.qzv)** — the solution
-path, sparsity and eBIC at every grid point. Open with
+```
+Saved Visualization to: motus-sgl-summary.qzv
+```
+
+```{figure} ../../images/png/generated/motus-qzv-precision.png
+:name: fig-motus-precision
+:width: 100%
+
+The *Estimated inverse covariance* tab of `motus-sgl-summary.qzv`, at the selected
+$\lambda_1 = 0.30$. The off-diagonal entries are the 481 retained edges; the remaining
+90.3% of the 4,950 pairs are exactly zero. The *Statistics* tab of the same visualization
+reports `best lambda 0.3` and a sparsity of 0.0972, which is $481 / 4{,}950$.
+```
+
+Download: **[motus-sgl-summary.qzv](../../_static/qzv/motus-sgl-summary.qzv)** — solution
+path, sparsity and extended BIC at each grid point. View at
 [view.qiime2.org](https://view.qiime2.org).
 
-### Add a latent block
+### Sparse plus low-rank decomposition
 
 ```bash
 qiime gglasso solve-problem \
@@ -199,27 +220,28 @@ qiime gglasso solve-problem \
 Saved GGLassoProblem to: motus-slr-mu5.qza
 ```
 
-All three penalties are pinned to single values. Leaving `--p-lambda2-*` unset
-substitutes a five-point default path, which silently turns this single fit into a
-model-selection run that can wander away from the $\lambda_1$ you just chose.
+All three penalties are pinned to single values. Leave `--p-lambda2-*` unset and the
+solver substitutes a five-point default path, which turns the single fit into a
+model-selection run that may select a $\lambda_1$ other than the one specified.
 
 ```{figure} ../../images/png/generated/motus-mu-rank.png
 :name: fig-motus-mu-rank
 :width: 100%
 
-The rank is an **output**, not a setting — `--p-rank` is registered but raises on every
-released GGLasso, so you reach a rank by tuning $\mu_1$ and reading back what you got.
-$\mu_1 = 5$ gives rank 3 and leaves 217 of the 481 edges in the sparse component.
+Achieved rank against the number of edges retained in the sparse component. The rank is
+an output rather than a setting: `--p-rank` is registered but raises an exception on all
+released versions of GGLasso, so a target rank is reached by tuning $\mu_1$ and reading
+back the achieved value. At $\mu_1 = 5$ the rank is 3 and 217 of the 481 edges remain.
 ```
 
-**Three latent dimensions absorb 55% of the network.** That is a much larger effect than
-the Atacama example, where a rank-2 block removes 14 of 216 edges (6.5%). A dominant
-latent gradient is what a maturing infant gut should look like — but do not carry
-[Choosing the Latent Rank](03_slr_ranks.md)'s framing across, because there almost
-nothing was explained away and here most of it is.
+Three latent dimensions remove 264 of the 481 edges (55%). The corresponding figure for
+the Atacama data is 6.5%, where a rank-2 block removes 14 of 216 edges. In the Atacama
+analysis the latent block removes few edges ([Choosing the Latent
+Rank](03_slr_ranks.md)). That interpretation does not transfer to this dataset.
 
 The eigenvalues of the latent block at $\mu_1 = 5$ are 2.428, 0.711 and 0.029. The third
-is small enough that this is effectively rank 2 with a marginal third direction.
+is small relative to the first two, so the fit is close to rank 2 with a weak third
+direction.
 
 ```bash
 qiime gglasso pca \
@@ -230,21 +252,35 @@ qiime gglasso pca \
     --o-visualization motus-latent-pca.qzv
 ```
 
-📊 **[motus-latent-pca.qzv](../../_static/qzv/motus-latent-pca.qzv)** — samples projected
-onto the latent components, coloured by metadata.
+```
+Saved Visualization to: motus-latent-pca.qzv
+```
 
-`--p-n-components` must not exceed the achieved rank, and `pca` fails without
-`--m-sample-metadata-file` despite the signature marking it optional.
+```{figure} ../../images/png/generated/motus-qzv-pca.png
+:name: fig-motus-pca
+:width: 90%
+
+The *Single plot* tab of `motus-latent-pca.qzv`: samples projected onto the first two
+latent components. The two components carry 76.6% and 22.4% of the latent variance, 99.0%
+together, which is the rank-2-plus-weak-third structure the eigenvalues describe. Most
+samples fall near the origin of PC1 with a small number displaced along it.
+```
+
+Download: **[motus-latent-pca.qzv](../../_static/qzv/motus-latent-pca.qzv)** — samples
+projected onto the latent components, coloured by metadata.
+
+`--p-n-components` must not exceed the achieved rank. The action also requires
+`--m-sample-metadata-file`, despite the signature marking it optional.
 
 ## Log-contrast regression with q2-classo
 
-The outcome is **`host_age_days`**, postnatal age at sampling, 10–47 days.
+The response variable is `host_age_days`, postnatal age at sampling, ranging from 10 to
+47 days.
 
-It is chosen because it is the only variable that **varies within an infant**. Every
-other numeric column — gestational age at birth, birth weight, maternal age — is constant
-per infant, so 34 samples would carry no more information than 18. Age varies by 13–29
-days within each infant, which is what makes the paired design informative rather than
-merely repetitive.
+It is the only numeric variable in this metadata that varies within an infant.
+Gestational age at birth, birth weight and maternal age are constant per infant, so 34
+samples would carry no more information than 18 for those responses. Postnatal age
+varies by 13 to 29 days within each infant.
 
 ```bash
 qiime classo transform-features \
@@ -264,14 +300,15 @@ Saved FeatureTable[Design] to: classo-x-trac.qza
 Saved Weights to: classo-w-trac.qza
 ```
 
-`add-taxa` rebuilds the design as $\log(X)A$, where $A$ aggregates features up the
-taxonomy, so coefficients attach to **clades** instead of single species. The design
-grows from **100 columns to 133** — 33 internal nodes, one per taxonomic group present.
+`add-taxa` reconstructs the design as $\log(X)A$, where $A$ aggregates features along the
+taxonomy, so that coefficients are associated with clades rather than individual species.
+The design grows from 100 columns to 133, the additional 33 corresponding to internal
+taxonomic nodes.
 
-This works here because the mOTUs lineage has a property trac needs and not every
-taxonomy has: its leaf rank is `m__<mOTU_id>`, so all **100 leaves are unique** even
-where two mOTUs share a species name. A taxonomy with duplicate leaves silently merges
-distinct features into one node.
+This requires distinct leaf labels, which not all taxonomies provide. The mOTUs lineage
+terminates in `m__<mOTU_id>`, so all 100 leaves are distinct even where two mOTUs share a
+species name. A taxonomy containing duplicate leaves merges the corresponding features
+into a single node.
 
 ```bash
 qiime classo regress \
@@ -287,25 +324,44 @@ qiime classo regress \
     --o-result motus-regress-age.qza
 ```
 
+**Explanation:**
+
+- `--p-concomitant` estimates the noise scale jointly with the coefficients, so the
+  penalty does not have to be calibrated against an assumed residual variance.
+- `--p-path` and `--p-cv` are two independent grids. The path is for display; the
+  cross-validation grid is what selects the model. Both are set to 60 points down to
+  $10^{-3}\lambda_{\max}$ here so that the two agree.
+- `--p-no-cv-one-se` selects the cross-validated minimum rather than the sparsest model
+  within one standard error of it. On this dataset the two differ; see below.
+- `--p-no-stabsel` and `--p-no-lamfixed` suppress two further selection procedures that
+  would otherwise run and lengthen the fit.
+
 ```
 Saved CLASSOProblem to: motus-regress-age.qza
 ```
 
-```{figure} ../../images/png/generated/motus-trac-coefficients.png
-:name: fig-motus-trac
-:width: 100%
+The cross-validated refit retains two of the 133 candidate clades:
 
-The three clades the cross-validated refit keeps, of 134 candidates. Proteobacteria
-rising and Actinobacteria falling with postnatal age is the textbook preterm gut
-trajectory, which is a good sign: the method recovers something a neonatologist would
-recognise.
+| clade | coefficient |
+|---|---|
+| `o__Enterobacterales` | +5.2475 |
+| `p__Bacteroidetes` | −5.2475 |
+
+Enterobacterales increases and Bacteroidetes decreases with postnatal age over the 10–47
+day window sampled here. The two coefficients are exact negatives and sum to zero to
+machine precision, which is the zero-sum constraint of the log-contrast formulation: the
+model is a single balance between two clades, and only their ratio is identified. The
+fitted intercept is +21.7318; postnatal age has mean 25.8 and median 20.5 days over these
+34 samples.
+
+```{warning}
+Read coefficient labels from the artifact, never by position. c-lasso prepends the
+intercept to the coefficient vector, so the 133-column design yields 134 coefficients. A
+label list taken from the design columns is then shifted by one against them, and every
+selected clade is reported as its predecessor in the column order. The coefficient labels
+are stored beside the coefficients in the artifact and are also exported as `CV-beta.csv`
+inside the `.qzv`.
 ```
-
-**`--p-no-cv-one-se` is doing real work here.** The one-standard-error rule returns the
-sparsest model within one standard error of the cross-validated minimum, and on this
-dataset that is the intercept-only model — it selects **1** coefficient where the CV
-minimum selects **9** on an identical CV curve. Neither is wrong; the rule is more
-conservative than this sample size can afford.
 
 ```bash
 qiime classo summarize \
@@ -314,71 +370,98 @@ qiime classo summarize \
     --o-visualization motus-regress-summary.qzv
 ```
 
-📊 **[motus-regress-summary.qzv](../../_static/qzv/motus-regress-summary.qzv)** — the
-$\lambda$ path, the CV curve and the selected coefficients. `--p-maxplot` matters after
-`add-taxa`, because the design is wider than the table you started from.
-
-## Reading the result honestly
-
-Four things about these numbers, none of which should be discovered by a reader later.
-
-**The network is real, but it is dense.** 481 edges is 9.7% of all pairs, against 0.48%
-for the 300-ASV Atacama network. Estimating 481 edges from 34 samples is
-over-parameterised however good the criterion. What justifies believing there is
-*structure* is not the count but a null: re-solving five times with every feature column
-permuted independently across samples — destroying all between-feature dependence while
-preserving each feature's exact marginal, zeros included — yields a mean of **0.2 edges**
-and a maximum of 1.
-
-**Cross-validation here leaks, and the direction is not what you expect.** Each infant
-contributes two samples and `--p-cv-subsets` splits at random with no grouping option, so
-one of a pair lands in training and the other in testing. Holding out whole infants
-instead:
-
-| outcome | | baseline | subject-holdout | sample-holdout | leakage |
-|---|---|---|---|---|---|
-| `host_age_days` | R² | 0.0 | **+0.164** | −0.041 | −0.205 |
-| `diagnosis` | accuracy | 0.500 | **0.471** | 0.588 | +0.118 |
-
-The signs are opposite, and the reason is structural. `diagnosis` is a property of the
-*infant*, so a paired sample gives the label away and random folds flatter the classifier
-by +0.118. `host_age_days` varies *within* an infant, so a paired sample reveals nothing
-and the leaky estimate is merely noisier. "Grouped CV always inflates" is the intuition
-most people carry, and it is wrong.
-
-```{important}
-q2-classo exposes `--p-cv-subsets` and `--p-cv-seed` but **no grouping parameter**. The
-subject-held-out figures above were produced by driving the `classo` API directly
-(`analysis/slurm/42_subject_holdout.sh`). If your design has repeated measures, the
-plugin's cross-validation cannot express what you need, and you should say so in your
-methods rather than quote its number.
+```
+Saved Visualization to: motus-regress-summary.qzv
 ```
 
-**The classification reproduces the published null.** Held out by infant, predicting
-maternal asthma from the microbiome scores 0.471 against a 0.500 majority baseline —
-worse than guessing. With 9 versus 9 infants a 95% interval on any accuracy here spans
-roughly ±0.23, so this is not evidence of *absence*; it is an absence of evidence,
-consistent with what {cite}`baitong2022map` reported from a much fuller analysis. It is
-included because a tutorial that only ever shows the method succeeding teaches the wrong
-reflex.
+```{figure} ../../images/png/generated/motus-qzv-cv.png
+:name: fig-motus-cv
+:width: 100%
 
-**Eighteen infants is the binding constraint**, not the profiler and not the filter. It
-is why $\gamma$ has to come down to 0.15, why the network is dense, and why the R² of
-0.164 is a real result rather than a strong one.
+The cross-validation curve from `motus-regress-summary.qzv`. The horizontal axis is
+$-\log_{10}(\lambda / \lambda_{\max})$, so the left edge is the maximal penalty and the
+right edge the minimal one. Mean-squared error is 168.2 at $\lambda_{\max}$, falls to a
+minimum of 163.2, and rises to 438.6 as the penalty is removed and the model overfits.
+The two vertical lines mark the cross-validated minimum and the one-standard-error
+choice.
+```
 
-## What you should have now
+`--p-no-cv-one-se` is material to this result. The one-standard-error rule returns the
+sparsest model within one standard error of the cross-validated minimum. Here the minimum
+is 163.2 with a standard error of 14.1, so the rule admits any model scoring below 177.3 —
+and the intercept-only model, at 168.2, qualifies. The one-standard-error line in
+{numref}`fig-motus-cv` therefore sits at $\lambda_{\max}$, where no coefficient is active.
+Both rules read the same cross-validation curve; they differ only in which point on it
+they take.
 
-| artifact | what it is |
+```{caution}
+The selected model improves on the intercept-only model by 5.0 mean-squared-error units,
+which is 0.35 standard errors. The two clades are the best that cross-validation can find,
+but the curve does not establish that they beat predicting the mean.
+```
+
+Download: **[motus-regress-summary.qzv](../../_static/qzv/motus-regress-summary.qzv)** —
+the $\lambda$ path, cross-validation curve and selected coefficients. `--p-maxplot`
+applies to the aggregated design, which is wider than the input table.
+
+## Limitations and interpretation
+
+**Network density.** 481 edges represent 9.7% of all pairs, against 0.48% for the
+300-ASV Atacama network. Estimating 481 edges from 34 samples is over-parameterised
+irrespective of the selection criterion. Evidence that the estimate reflects structure
+rather than noise comes from a permutation null: re-solving five times with each feature
+column permuted independently across samples — removing all between-feature dependence
+while preserving each marginal distribution, including its zeros — yields a mean of 0.2
+edges and a maximum of 1.
+
+**Cross-validation leakage.** Sixteen infants contribute two samples each, and
+`--p-cv-subsets` partitions at random with no grouping option, so one sample of a pair may
+fall in the training set and the other in the test set. Holding out whole infants instead
+gives:
+
+| response | metric | baseline | subject holdout | sample holdout | difference |
+|---|---|---|---|---|---|
+| `host_age_days` | $R^2$ | 0.0 | **+0.164** | −0.041 | −0.205 |
+| `diagnosis` | accuracy | 0.500 | **0.471** | 0.588 | +0.118 |
+
+The differences have opposite signs. `diagnosis` is a property of the infant, so a paired
+sample discloses the label and the random partition inflates the estimate. Postnatal age
+varies within an infant, so a paired sample discloses nothing about it and the leaky
+estimate is merely noisier. The direction of the bias therefore depends on whether the
+response is constant within a subject.
+
+```{important}
+q2-classo exposes `--p-cv-subsets` and `--p-cv-seed` but no grouping parameter. The
+subject-held-out figures above were obtained by calling the `classo` API directly
+(`analysis/slurm/42_subject_holdout.sh`). For designs with repeated measures the
+plugin's cross-validation does not implement the required partition. State this in any
+methods description that relies on it.
+```
+
+**The classification result is negative.** Held out by infant, prediction of maternal
+asthma from the microbiome achieves 0.471 accuracy against a majority-class baseline of
+0.500. With 9 subjects per group a 95% confidence interval on any accuracy estimate
+spans approximately ±0.23, so this does not demonstrate the absence of an effect; it is
+consistent with the conclusion reported by {cite}`baitong2022map` from a more complete
+analysis.
+
+**Sample size is the limiting factor.** Eighteen infants, rather than the choice of
+profiler or filter, is what requires $\gamma$ to be reduced to 0.15, produces a network
+of this density, and bounds the achievable $R^2$.
+
+## Outputs
+
+| artifact | contents |
 |---|---|
-| `motus-sgl-path.qza` | the $\lambda_1$ path, eBIC at 20 grid points |
-| `motus-slr-mu5.qza` | the selected model: $\lambda_1 = 0.30$, rank 3 |
+| `motus-sgl-path.qza` | the $\lambda_1$ path with extended BIC at 20 grid points |
+| `motus-slr-mu5.qza` | the selected model, $\lambda_1 = 0.30$ at rank 3 |
 | `motus-regress-age.qza` | the trac regression of postnatal age |
 | three `.qzv` files | linked above |
 
-The headline: **481 edges at $\lambda_1 = 0.30$**, reduced to **217** once three latent
-factors are allowed, and **three clades** carrying postnatal age at a
-subject-held-out R² of **+0.164**.
+The principal results are 481 edges at $\lambda_1 = 0.30$, reduced to 217 when three
+latent factors are admitted, and a two-clade balance associated with postnatal age at a
+subject-held-out $R^2$ of +0.164.
 
-Compare [Interpretation](06_interpretation.md), which asks the same closing question of
-the Atacama data — whether the structure the network attributes to unobserved drivers is
-the structure the log-contrast model exploits.
+[Interpretation](06_interpretation.md) addresses the corresponding question for the
+Atacama data: whether the structure the network attributes to unobserved drivers is the
+structure the log-contrast model exploits.

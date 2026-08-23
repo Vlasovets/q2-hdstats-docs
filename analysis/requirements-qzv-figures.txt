@@ -1,0 +1,24 @@
+# Dependencies for analysis/scripts/render_qzv_figures.py.
+#
+# Kept separate from requirements-figures.txt on purpose. That file's promise is that
+# `pip install -r` alone rebuilds every matplotlib figure; playwright breaks it, because
+# the wheel is useless without a browser binary that pip does not fetch:
+#
+#     pip install -r analysis/requirements-qzv-figures.txt
+#     playwright install chromium          # <- second step, ~150 MB, not a pip package
+#     python analysis/scripts/render_qzv_figures.py
+#
+# A headless browser is needed because a .qzv IS a web page. The three figures this
+# renders are the visualizations q2-gglasso and q2-classo emit -- captured from the same
+# .qzv files the chapter offers for download, rather than redrawn from exported tables.
+# Redrawing them would let the book's picture and the reader's download disagree.
+#
+# The committed PNGs were produced with playwright 1.62.0 driving Chrome Headless Shell
+# 151.0.7922.34 (playwright browser build chromium_headless_shell-1234). A different
+# browser build may shift text metrics by a pixel or two; nothing downstream depends on
+# exact pixels, and the numeric claims the captions make are all asserted elsewhere
+# against committed TSVs.
+#
+# On an HPC login node without a sandbox, chromium needs --no-sandbox; the script already
+# passes it.
+playwright>=1.62.0
