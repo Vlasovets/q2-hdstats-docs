@@ -394,7 +394,7 @@ and the intercept-only model, at 168.2, qualifies. The one-standard-error line i
 Both rules read the same cross-validation curve; they differ only in which point on it
 they take.
 
-```{caution}
+```{note}
 The selected model improves on the intercept-only model by 5.0 mean-squared-error units,
 which is 0.35 standard errors. The two clades are the best that cross-validation can find,
 but the curve does not establish that they beat predicting the mean.
