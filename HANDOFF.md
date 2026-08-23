@@ -25,6 +25,7 @@ are merged; both default branches are green.
 | q2-gglasso | `main` | PR #7 merged 2026-08-09, CI green |
 | q2-classo | `master` | PR #3 merged 2026-08-09, CI green |
 | q2-hdstats-docs | `main` | pushed; Pages deploy verified against the live build stamp |
+| q2-mOTUs | `qiime2-2026.7` on `Vlasovets/q2-mOTUs` | ported to 2026.7, four defects fixed, 21 tests, CI added |
 
 The book: **20 figures across 17 of 48 chapters** (from 8 across 5), no
 uncaptioned images, no `{warning}` blocks, `jupyter-book build --warningiserror`
@@ -126,12 +127,32 @@ These are all **offline-fixable** — they are prose and markdown.
 
 ## Blocked until the cluster is back
 
-- **Tier-3 metagenomics is no longer pending — it was removed** (2026-08-14). The
-  five chapters carried placeholder numbers and had no stage script, so rather
-  than leave them published with invented values they were deleted, with
-  `rediraffe` redirects pointing their URLs at tier 2. If the gut-to-soil analysis
-  is ever run, the chapters are recoverable from git history.
 - **Any re-solve**, since every `qiime` command needs the conda env.
+
+## Metagenomics: replaced, not pending
+
+The five gut-to-soil tier-3 chapters were **deleted** on 2026-08-14 — they carried
+placeholder numbers and had no stage script, so rather than publish invented values they
+were removed, with `rediraffe` redirects pointing their URLs at tier 2.
+
+They have been **superseded** by a shotgun section inside the high-dimensional chapter:
+`docs/chapters/04_highdim_atacama/07_motus_shotgun.md`, built on Qiita study 13241 (the
+MAP preterm-infant study) profiled with a ported q2-mOTUs. Unlike its predecessor every
+command in it was run and every number came from a committed table —
+`analysis/slurm/44_motus_tutorial_run.sh` produces both.
+
+The configuration, if you need it in one line: **mOTUs species level, top-100 by
+abundance, p=100 n=34**, γ=0.15 selecting λ=0.30 with 481 edges against a permutation
+null of 0.2; latent block at μ₁=5 gives rank 3 and 217 edges; trac selects 3 clades for
+`host_age_days` at a leave-one-subject-out R² of +0.164.
+
+Three things about it that are easy to get wrong and are argued in the page: filter by
+**abundance not prevalence** (prevalence filtering makes eBIC select the empty graph),
+γ=0.15 is a **reported choice** not a default, and q2-classo's CV **leaks** on this
+paired design with a sign that depends on whether the outcome is subject-constant.
+
+Stages 32–44 cover fetch, profile, the model sweeps and the tutorial run. Reports:
+`analysis/reports/mgl-verification.md`, `analysis/reports/figure-audit.md`.
 
 ## Needs you, not the cluster
 
@@ -155,7 +176,7 @@ These are all **offline-fixable** — they are prose and markdown.
 | `requirements.txt` | docs toolchain |
 | `analysis/requirements-figures.txt` | figure generator |
 
-A 36 MB bundle of the cluster-only artifacts (raw `.qza`, PCA outputs, solver
+A 36 MB bundle of the pre-mOTUs cluster-only artifacts (raw `.qza`, PCA outputs, solver
 figures, the exact pip freeze of the wiped scratch venv) was staged at
 `/lustre/scratch/users/oleg.vlasovets/offline-2026-08-09.tar.gz`. You only need
 it to re-run the pipeline.
