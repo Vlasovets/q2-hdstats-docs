@@ -1,15 +1,17 @@
 # Data Preparation
 
-We'll use the Atacama soil microbiome dataset {cite}`neilson2017significant`, which contains:
+The Atacama soil microbiome dataset {cite}`neilson2017significant` contains:
+
 - $N = 50$ samples from Atacama Desert soil
 - $p = 13$ microbial taxa (ASVs)
 - $q = 5$ environmental covariates: pH, elevation, temperature, humidity, and vegetation
 
-For more details about this dataset, see [Data Overview](../00_getting_started/02_datasets.md).
+[Data Overview](../00_getting_started/02_datasets.md) describes the dataset in more detail.
 
-## Data Transformation
+## Transforming the counts
 
-Microbiome data represents relative abundances constrained to sum to a constant.
+Microbiome counts represent relative abundances constrained to sum to a constant. Transform them
+before estimating a covariance.
 
 ```bash
 # Transform compositional data using mCLR transformation
@@ -23,14 +25,11 @@ qiime gglasso transform-features \
      --o-transformed-table data/atacama-table-mclr.qza
 ```
 
-This transformation:
-- Converts compositional data to unconstrained space
-- Handles zeros without adding pseudo-counts
-- Preserves the relative information between taxa
+The modified centred log-ratio moves the table into an unconstrained space, handles zeros
+without adding pseudo-counts, and preserves the relative information between taxa. For the
+standard centred log-ratio instead, pass `--p-transformation clr`.
 
-**Note:** You can also use standard CLR transformation with `--p-transformation clr`.
-
-## Create an input correlation
+## Building the input correlation
 
 ```bash
 qiime gglasso calculate-covariance \
@@ -38,8 +37,9 @@ qiime gglasso calculate-covariance \
      --i-table data/atacama-table-mclr.qza \
      --o-covariance-matrix data/atacama-table-corr.qza
 ```
-This method:
-- Calculate a scaled covariance, also known as the Pearson correlation.
-- One can also use a simple covaraince with `--p-method unscaled`
 
-**Note:** Input for the graphical lasso problem must be a [positive semi-definite matrix](https://statproofbook.github.io/P/covmat-psd.html).
+A scaled covariance is the Pearson correlation. For the covariance itself, pass
+`--p-method unscaled`.
+
+The input to the graphical lasso problem must be a
+[positive semi-definite matrix](https://statproofbook.github.io/P/covmat-psd.html).

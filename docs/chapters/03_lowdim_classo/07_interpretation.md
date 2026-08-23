@@ -1,8 +1,9 @@
-# Models Interpretation and Analysis
+# Interpreting Log-Contrast Models
 
-## Understanding Log-Contrast Model Results
+## What the coefficients describe
 
-Log-contrast models transform compositional data to overcome the challenges of working with constrained data that sums to a constant. The interpretation of results requires careful consideration of the log-ratio nature of the transformations.
+A log-contrast model works on log-ratios, which is what lets it fit data
+constrained to sum to a constant. Read the taxon coefficients it reports as statements about ratios between taxa rather than about abundances.
 
 ```{figure} ../../images/png/slc_fig.png
 :name: fig-logcontrast-anatomy
@@ -22,21 +23,23 @@ taxonomic tree — coefficients attach to internal nodes from kingdom up to
 order, so a single $\beta$ can act on a whole clade instead of one ASV.
 ```
 
-### Regression Tasks
+### Regression
 
-In regression scenarios, log-contrast models predict continuous outcomes based on compositional predictors. The coefficients represent the effect of log-ratio changes in the composition on the response variable. 
+A regression predicts a continuous outcome from the composition, and each
+coefficient carries the effect of one log-ratio on that outcome:
 
-Key interpretation points:
-- Coefficients indicate how a unit change in the log-contrast affects the predicted outcome
-- Positive coefficients suggest that increases in the numerator taxa relative to the denominator taxa are associated with higher predicted values
-- The baseline (denominator) taxa serve as the reference for all comparisons
+- A unit change in the log-contrast moves the predicted outcome by the coefficient
+- A positive coefficient suggests that a higher abundance of the numerator taxa
+  relative to the denominator taxa is associated with higher predicted values
+- The denominator taxa are the reference for every comparison
 
-### Classification Tasks
+### Classification
 
-For classification problems, log-contrast models use compositional features to predict categorical outcomes. The model learns decision boundaries in the log-ratio space.
+A classification predicts a categorical outcome from the same predictors, with
+the decision boundary drawn in log-ratio space:
 
-Important considerations:
-- Feature importance reflects which log-contrasts best discriminate between classes
-- Class probabilities are based on the transformed compositional space
-- Interpretation should focus on relative abundance changes rather than absolute values
-- Model selection procedures help assess model reliability across different compositional profiles
+- The features that carry weight are the log-contrasts that separate the classes
+- Class probabilities are computed in the transformed space
+- Read the result as a statement about relative abundance, not absolute abundance
+- Model-selection procedures help assess how reliable the model is across
+  different compositional profiles

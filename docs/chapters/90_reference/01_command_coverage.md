@@ -1,53 +1,46 @@
 # Command Coverage Matrix
 
-"Comprehensive coverage of every command" is a claim, and claims about
-documentation rot quietly. This page exists to make the claim **checkable**: it
-maps every registered action of both plugins, broken down by parameter group, to
-the one chapter that owns it and to the chapters that reuse it.
+Every registered action of both plugins, broken down by parameter group, mapped
+to the one chapter that owns it and to the chapters that reuse it.
 
-Read it two ways. Forwards, it is a table of contents organised by command rather
-than by narrative — if you want to know where `--p-stabsel-b` is explained, look
-it up here. Backwards, it is the input to a CI check: if a new parameter is
-registered in a plugin and nothing here claims it, the build should fail.
+Look up `--p-stabsel-b` here to find the chapter that explains it. The same rows
+feed a CI check: if a plugin registers a parameter that no row claims, the build
+should fail.
 
-There are **6 q2-gglasso actions** and **8 q2-classo actions**. Every one appears
-below, together with every **parameter** (`--p-`) and **input** (`--i-`, `--m-`)
-group listed in [q2-gglasso Parameter Reference](02_gglasso_parameters.md) and
+There are 6 q2-gglasso actions and 8 q2-classo actions. Every one appears below,
+together with every parameter (`--p-`) and input (`--i-`, `--m-`) group listed in
+[q2-gglasso Parameter Reference](02_gglasso_parameters.md) and
 [q2-classo Parameter Reference](03_classo_parameters.md).
 
 ```{note}
-**Outputs are deliberately out of scope here.** Each action has a fixed output
-signature that does not vary by chapter, so tracking `--o-` flags row by row adds
-noise without adding coverage. The one exception below (`--o-group-array`) is
-listed because the artifact it produces cannot be fed back into `solve-problem`
-through the type system, which is a fact about the workflow rather than about the
-output itself. Full output signatures live in the two reference pages, and CI
-check 2 below is scoped to parameters accordingly.
+**Outputs are out of scope.** Each action has a fixed output signature that does
+not vary by chapter, so tracking `--o-` flags row by row adds noise without adding
+coverage. `--o-group-array` is the one exception listed below, because the
+artifact it produces cannot be fed back into `solve-problem` through the type
+system — a fact about the workflow rather than about the output. Full output
+signatures live in the two reference pages, and CI check 2 below is scoped to
+parameters accordingly.
 ```
 
 ## How to read the matrix
 
-Each row is an **action x parameter group** — not an action and not a single
-parameter. Grouping is what makes the table usable: `--p-stabsel-b`,
-`--p-stabsel-q` and `--p-stabsel-threshold` interact so tightly that documenting
-them apart would be worse than useless, so they share a row and a primary
-chapter.
+Each row is an **action x parameter group**, not an action and not a single
+parameter. `--p-stabsel-b`, `--p-stabsel-q` and `--p-stabsel-threshold` interact
+too closely to document apart, so they share a row and a primary chapter.
 
 Two columns carry the traceability:
 
-- **Primary** — the single chapter that *introduces* the group, explains why the
-  parameters matter, and is responsible for keeping the explanation correct.
-  Exactly one chapter per row. If you are fixing an error about a parameter, fix
-  it here first.
+- **Primary** — the single chapter that *introduces* the group, explains why the parameters matter, and is responsible for keeping the explanation correct. Exactly one chapter per
+  row. Fix any error about a parameter in its primary chapter first.
 - **Also in** — chapters that use the group again at a different scale or on a
-  different dataset without re-explaining it. These should link back to the
-  primary rather than duplicate it.
+  different dataset without re-explaining it. Link back to the primary rather
+  than duplicating it.
 
-The book's structure intends tier 1 to be the reference tier: every action gets
-its canonical demonstration on the 13-ASV Atacama table, and the later tiers
-introduce new *values* and new *questions*, not new commands. Where a row's
-primary chapter is not in tier 1, that is a deliberate exception or an outstanding
-gap — {ref}`coverage-debt` lists them all.
+Tier 1 is meant to be the reference tier: each action gets its canonical
+demonstration on the 13-ASV Atacama table, and the later tiers introduce new
+*values* and new *questions* rather than new commands. Where a row's primary
+chapter is not in tier 1, that is a deliberate exception or an outstanding gap —
+{ref}`coverage-debt` lists them all.
 
 ### Chapter keys
 
@@ -86,9 +79,7 @@ The matrix uses short keys so the tables stay narrow.
 | `H-INT` | [Interpretation (tier 2)](../04_highdim_atacama/06_interpretation.md) |
 | `R-GG` | [q2-gglasso Parameter Reference](02_gglasso_parameters.md) |
 | `R-CL` | [q2-classo Parameter Reference](03_classo_parameters.md) |
-| `R-TS` | [Troubleshooting & Known Gotchas](04_troubleshooting.md) |
-
----
+| `R-TS` | [Troubleshooting & Known Failure Modes](04_troubleshooting.md) |
 
 ## q2-gglasso
 
@@ -103,11 +94,10 @@ The matrix uses short keys so the tables stay narrow.
 | Feature relabelling | `--p-keep-original-id` | `H-DATA` | `G-INT` |
 | The unused required input | `--i-taxonomy` | `G-PREP` | `DL`, `R-TS` |
 
-`--p-transformation` and the metadata switches are the two decisions that change
-what the network *means*, which is why both are owned by `G-PREP` rather than
-being scattered. `--i-taxonomy` gets a row of its own because it is a trap, not a
-parameter: it is required by the registration and never read by the function, so
-readers hit it before they hit anything statistical.
+`--p-transformation` and the metadata switches change what the network *means*,
+so `G-PREP` owns both rather than leaving them scattered. `--i-taxonomy` has a row
+of its own because the registration requires it and the function never reads it,
+so readers hit it before they hit anything statistical.
 
 ### `build-groups`
 
@@ -117,12 +107,11 @@ readers hit it before they hit anything statistical.
 | The `TensorData` -> `List[Int]` gap | (export workaround) | `G-MGL` | `R-GG`, `R-TS` |
 
 ```{important}
-`build-groups` emits a `TensorData` **artifact** while `solve-problem` accepts
-`group_array` as a `List[Int]` **parameter**. They do not chain through the QIIME 2
-type system, so the only way to connect them is to export the artifact and pass
-the indices by hand with `--p-group-array`. This is a **known gap**, not a
-documentation shortcut, and `G-MGL` is the one chapter responsible for spelling
-out the workaround.
+`build-groups` emits a `TensorData` artifact while `solve-problem` accepts
+`group_array` as a `List[Int]` parameter. They do not chain through the QIIME 2
+type system, and there is no other route: export the artifact and pass the
+indices by hand with `--p-group-array`. This is a known gap in the plugins, and
+`G-MGL` is the one chapter responsible for spelling out the workaround.
 ```
 
 ### `calculate-covariance`
@@ -135,9 +124,8 @@ out the workaround.
 
 ### `solve-problem`
 
-The largest surface in either plugin, and the reason this page is organised by
-group. Its twenty parameters divide into eight concerns, and no chapter tries to
-cover more than two of them at once.
+The largest parameter surface in either plugin. Its twenty parameters divide into
+eight concerns, and no chapter tries to cover more than two of them at once.
 
 | Parameter group | Flags | Primary | Also in |
 |---|---|---|---|
@@ -152,27 +140,25 @@ cover more than two of them at once.
 | Model-selection criterion | `--p-gamma` | `G-PATH` | `G-SGL`, `G-SLR`, `G-ADAPT`, `G-MGL`, `H-LAM`, `H-RANK` |
 
 ```{important}
-Two behaviours cut across the grid rows above and must be repeated wherever a
-grid is set, because getting them wrong produces a plausible-looking result
-rather than an error.
+Two behaviours cut across the grid rows above, and getting either wrong produces
+a plausible-looking result rather than an error. Restate both wherever a chapter
+sets a grid.
 
 **Defaults appear silently.** Leaving a grid entirely unset substitutes a
-built-in path and emits a warning; setting only one bound substitutes the other
+built-in path and emits a warning. Setting only one bound substitutes the other
 one with no warning at all.
 
-**Model selection runs only if at least one grid has more than one value** — and
-for a latent problem, `lambda1`, `lambda2` *and* `mu1` must all be singletons
-before the run counts as a single fit. `G-PATH` owns the full explanation;
-`H-LAM` and `H-RANK` reuse it.
+**Model selection runs only if at least one grid has more than one value.** For a
+latent problem, `lambda1`, `lambda2` *and* `mu1` must all be singletons before the
+run counts as a single fit. `G-PATH` owns the full explanation; `H-LAM` and
+`H-RANK` reuse it.
 ```
 
-`--p-rank` is the one row whose primary chapter exists mainly to talk you out of
-the parameter. It **always raises** on every released GGLasso up to and including
+`--p-rank` always raises on every released GGLasso up to and including
 0.3.0 — `ValueError` if `--p-latent` is not set, `NotImplementedError`
 otherwise — because no release can fix the rank of the low-rank component.
-`H-RANK` therefore documents the alternative — steer the rank through `mu1`,
-where a **larger `mu1` gives a smaller rank** — and reads the achieved rank back
-out of the solution.
+`H-RANK` documents the alternative: steer the rank through `mu1`, where a larger
+`mu1` gives a smaller rank, and read the achieved rank back out of the solution.
 
 ### `pca` (visualizer)
 
@@ -182,13 +168,13 @@ out of the solution.
 | Projection and colouring | `--p-n-components`, `--p-color-by` | `G-PCA` | `H-PCA` |
 
 ```{note}
-`pca` has two prerequisites that the signature does not state.
+`pca` has two prerequisites the signature does not state.
 
-The solution must have been produced with `--p-latent True` — the visualizer
-reads `solution/lowrank_`, which a sparse-only SGL solution does not have.
+Solve with `--p-latent True` first — the visualizer reads `solution/lowrank_`,
+which a sparse-only SGL solution does not have.
 
-And `--m-sample-metadata-file` is **optional in the signature but required in
-practice**: it is dereferenced unconditionally, so omitting it crashes with an
+Pass `--m-sample-metadata-file` even though the signature marks it optional: the
+visualizer dereferences it unconditionally, so omitting it crashes with an
 `AttributeError`. `G-PCA` states both before its first command.
 ```
 
@@ -201,11 +187,9 @@ practice**: it is dereferenced unconditionally, so omitting it crashes with an
 | Canvas size | `--p-width`, `--p-height` | `G-SUM` | `H-RANK` |
 | Covariate block separation | `--p-n-cov` | `G-SUM` | `G-ADAPT`, `G-INT`, `H-DATA` |
 
-`--p-n-cov` is paired with `--p-add-metadata`: it tells the heatmaps how many
+`--p-n-cov` pairs with `--p-add-metadata`: it tells the heatmaps how many
 *trailing* variables are covariates rather than taxa, so the two blocks cluster
-separately. Anyone who turned metadata into nodes in `G-PREP` needs it here.
-
----
+separately. Set it if you turned metadata into nodes in `G-PREP`.
 
 ## q2-classo
 
@@ -219,8 +203,8 @@ separately. Anyone who turned metadata into nodes in `G-PREP` needs it here.
 | The `randomy.tsv` side effect | (no flag) | `C-GEN` | `R-CL` |
 
 ```{note}
-`generate-data` writes `randomy.tsv` into the **current working directory** — the
-generated response is not returned as an artifact. It is overwritten on every
+`generate-data` writes `randomy.tsv` into the current working directory — the
+generated response is not returned as an artifact — and overwrites it on every
 call. `C-GEN` is the only chapter that runs this action, and it says where to run
 it from.
 ```
@@ -232,11 +216,11 @@ it from.
 | Input features | `--i-features` | `C-PREP` | `C-GEN`, `C-REG`, `C-RTRAC`, `C-CLF`, `C-CTRAC` |
 | CLR transform and pseudocount | `--p-transformation`, `--p-coef` | `C-PREP` | `C-GEN`, `C-REG`, `C-RTRAC`, `C-CLF`, `C-CTRAC` |
 
-This is a **different** implementation from `qiime gglasso transform-features`:
+This is a different implementation from `qiime gglasso transform-features`:
 `coef` rather than `pseudo_count`, no `mclr`, no metadata handling, and a
-sample-major output because `regress` wants samples in rows. `C-PREP` says so
-explicitly, because the shared action name is the single most common source of
-confusion between the two plugins.
+sample-major output because `regress` wants samples in rows. The shared action
+name is the most common source of confusion between the two plugins, and `C-PREP`
+says so explicitly.
 
 ### `add-taxa`
 
@@ -253,16 +237,15 @@ confusion between the two plugins.
 | Rescaling numeric covariates | `--p-rescale` | `H-CV` | — |
 
 Categorical columns are expanded to one-hot indicators labelled
-`<name> = <value>`, spaces included, and those labels are what appear in the
-`summarize` coefficient plots — so one categorical covariate contributes several
-rows to the output. `C-PREP` owns that fact.
+`<name> = <value>`, spaces included. Those labels appear in the `summarize`
+coefficient plots, so one categorical covariate contributes several rows to the
+output. `C-PREP` owns that fact.
 
 ### `regress`
 
-The four model-selection procedures — PATH, CV, StabSel, LAMfixed — are all **on
-by default**, each has its own prefix, and each has its own numerical method. That
-structure is why the rows below look repetitive: they are genuinely four parallel
-blocks over the same fitted path.
+The four model-selection procedures — PATH, CV, StabSel, LAMfixed — are all on by
+default, and each has its own prefix and its own numerical method. They are four
+parallel blocks over the same fitted path.
 
 | Parameter group | Flags | Primary | Also in |
 |---|---|---|---|
@@ -278,18 +261,17 @@ blocks over the same fitted path.
 | LAMfixed | `--p-lamfixed`, `--p-lamfixed-lam`, `--p-lamfixed-true-lam`, `--p-lamfixed-numerical-method` | `C-MSEL` | `C-GEN`, `C-REG`, `C-RTRAC`, `C-CLF`, `C-CTRAC`, `H-CV` |
 
 ```{note}
-`--p-cv--nlam` — two dashes — is not a typo in this book. The parameter was
-originally registered as `cv__nlam` with a double underscore, which QIIME 2
-renders literally. **`--p-cv-nlam` is the current spelling**; the old one still
-works and emits a `DeprecationWarning`. New commands should use `--p-cv-nlam`,
-and the deprecated form should appear only where it is being explained.
+`--p-cv--nlam` — two dashes — is not a typo. The parameter was originally
+registered as `cv__nlam` with a double underscore, which QIIME 2 renders
+literally. `--p-cv-nlam` is the current spelling; the old one still works and
+emits a `DeprecationWarning`. Use `--p-cv-nlam` in new commands, and confine the
+deprecated form to the places where it is being explained.
 ```
 
 ### `classify`
 
-`classify` shares the PATH, CV, StabSel and LAMfixed blocks with `regress` — same
-names, same defaults — so those rows are not repeated. Only the differences are
-owned separately.
+`classify` shares the PATH, CV, StabSel and LAMfixed blocks with `regress`, under
+the same names and the same defaults. Only the differences are owned separately.
 
 | Parameter group | Flags | Primary | Also in |
 |---|---|---|---|
@@ -315,8 +297,8 @@ since `rho` defaults to `0.0` here rather than the `1.345` used by `regress`.
 | Inputs (no parameters) | `--i-features`, `--i-problem` | `C-PRED` | `C-REG`, `C-RTRAC`, `C-CLF`, `C-CTRAC`, `C-MSEL` |
 
 `predict` emits one prediction set per model selection present in the problem, so
-switching CV or StabSel off at fit time silently reduces what you get here. That
-coupling is `C-PRED`'s to explain.
+switching CV or StabSel off at fit time silently reduces what you get back.
+`C-PRED` explains the coupling.
 
 ### `summarize` (visualizer)
 
@@ -325,13 +307,10 @@ coupling is `C-PRED`'s to explain.
 | Inputs | `--i-problem`, `--i-taxa`, `--i-predictions` | `C-PRED` | `C-GEN`, `C-REG`, `C-RTRAC`, `C-CLF`, `C-CTRAC`, `C-MSEL` |
 | Plot truncation | `--p-maxplot` | `C-PRED` | `C-GEN`, `C-MSEL` |
 
----
-
 ## Supporting QIIME 2 commands
 
-The tutorial does not run in a vacuum. These commands are not part of either
-plugin, but a reader who skips them cannot complete the chapters, so they get the
-same treatment: one owning chapter each.
+These commands are not part of either plugin, but a reader who skips them cannot
+complete the chapters, so each has an owning chapter below.
 
 | Command | What the tutorial uses it for | Primary | Also in |
 |---|---|---|---|
@@ -348,18 +327,18 @@ same treatment: one owning chapter each.
 
 ```{tip}
 `qiime feature-table summarize` earns its place because `--p-n-samples` is the
-only `solve-problem` parameter with no default, and the value you give is passed
+only `solve-problem` parameter with no default, and the value you give passes
 straight through as the sample size `N` of the underlying problem — the same `N`
-that the model-selection criterion is computed against. Read it off the table
-rather than from memory.
+the model-selection criterion is computed against. Read it off the table rather
+than from memory.
 ```
 
 (coverage-debt)=
 ## Coverage debt
 
-Rows whose primary chapter is not in tier 1, i.e. where the "tier 1 is the
-reference tier" rule is currently broken. These are tracked deliberately; each is
-either a justified exception or work outstanding.
+Rows whose primary chapter is not in tier 1, i.e. where tier 1 does not give the
+group its canonical demonstration. Each is either a justified exception or work
+outstanding.
 
 | Group | Current primary | Why, or what is missing |
 |---|---|---|
@@ -375,29 +354,27 @@ columns record where a flag is *written*, not where it has been *observed to
 work*. The distinction disappears once the CI checks below run.
 ```
 
-## How this page gets checked
+## Checks worth wiring
 
-The two parameter reference pages are meant to be **generated, not written**:
-`qiime gglasso <action> --help` and `qiime classo <action> --help` captured into
-`docs/_data/help/<plugin>-<action>.txt` at build time and rendered with
+The two parameter reference pages are meant to be generated rather than written:
+capture `qiime gglasso <action> --help` and `qiime classo <action> --help` into
+`docs/_data/help/<plugin>-<action>.txt` at build time and render them with
 `{literalinclude}`. Once the flag list on those pages comes from the plugin rather
-than from a human, this matrix becomes machine-checkable, because both sides of
-every comparison are then mechanical.
+than from a human, both sides of every comparison are mechanical and the matrix
+becomes machine-checkable.
 
-The checks worth wiring, in rough order of value:
+In rough order of value:
 
 1. **No invented flags.** Every `--p-`, `--i-`, `--o-` and `--m-` token appearing
    in a fenced `bash` block anywhere under `docs/chapters/` must appear in one of
-   the captured help files. This is the check that catches a documented parameter
-   that does not exist.
+   the captured help files. This catches a documented parameter that does not
+   exist.
 2. **No missing parameters.** Every `--p-`, `--i-` and `--m-` flag in a captured
-   help file must appear in at least one row of this matrix. This is the check
-   that turns "comprehensive coverage" from a claim into a build failure. Scoped
-   to parameters and inputs — outputs are covered by the reference pages, per the
-   note at the top of this page.
-3. **Primaries resolve.** Every chapter key used in a **Primary** cell must
-   resolve to a file listed in `docs/_toc.yml`, and each row must name exactly
-   one.
+   help file must appear in at least one row of this matrix. This turns coverage
+   from a claim into a build failure. Scoped to parameters and inputs; the
+   reference pages carry the outputs.
+3. **Primaries resolve.** Every chapter key used in a Primary cell must resolve
+   to a file listed in `docs/_toc.yml`, and each row must name exactly one.
 4. **Reference pages agree with the matrix.** The chapter named in the
    *Demonstrated in* column of `R-GG` and `R-CL` must appear in this matrix as
    either the primary or an "Also in" chapter for that parameter's group.
@@ -412,7 +389,7 @@ The checks worth wiring, in rough order of value:
 build, and the parameter reference pages are maintained by hand in the meantime.
 Until that changes, treat
 `qiime <plugin> <action> --help` on your own installation as the final authority,
-this matrix as the intent, and any disagreement between them as a bug worth
+the matrix as the intent, and any disagreement between them as a bug worth
 filing.
 ```
 
@@ -422,5 +399,5 @@ filing.
   and default for the 6 gglasso actions.
 - [q2-classo Parameter Reference](03_classo_parameters.md) — the same for the 8
   classo actions, organised by model-selection procedure.
-- [Troubleshooting & Known Gotchas](04_troubleshooting.md) — the traps referenced
-  throughout this page, with the symptom you will actually see.
+- [Troubleshooting & Known Failure Modes](04_troubleshooting.md) — the traps named
+  above, with the symptom you will see.

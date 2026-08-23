@@ -1,24 +1,23 @@
 # Single Graphical Lasso
 
-This tutorial demonstrates how to estimate a sparse inverse covariance matrix using the **Single Graphical Lasso** (SGL) method. This approach identifies conditional dependencies between features (e.g., microbial taxa) by solving an L1-penalized maximum likelihood problem, encouraging sparsity in the precision matrix.
+The single graphical lasso (SGL) estimates a sparse inverse covariance matrix from a
+precomputed covariance by solving an L1-penalized maximum likelihood problem. The penalty
+encourages sparsity in the precision matrix. Each non-zero entry is a conditional
+dependence between two features — a direct association between two taxa, with the
+indirect paths through the remaining taxa removed — and its magnitude gives the
+strength of that association.
 
-**Purpose**: Estimates sparse direct associations between microbial taxa
+The penalty is a single uniform L1 weight, λ₁, applied to every candidate edge, so all
+pairs are treated alike. Raising λ₁ removes edges. The environmental covariates are absent
+from this table, so an edge may also record two taxa responding to the same gradient
+rather than interacting.
 
-**Key characteristics**:
-- Assumes all edges have equal importance
-- Uses uniform L1 penalty (λ₁) across all potential connections
-- Identifies direct conditional dependencies in the network
-- Best for: Initial network exploration and identifying core microbial interactions
+Fit SGL first on a new table: it gives an initial view of the network and the core
+interactions among taxa, before you add weights or a latent block.
 
-**Interpretation**:
-- Edges represent direct associations after removing indirect effects
-- Edge thickness indicates association strength
-- Network sparsity controlled by λ₁ parameter
-- May include environment-mediated associations
+## Fitting the model
 
-## Step 1: Estimate a Sparse Model
-
-We begin by estimating the inverse covariance (precision) matrix from a precomputed covariance matrix:
+Estimate the precision matrix from the correlation matrix you computed earlier:
 
 ```bash
 # sparse model
@@ -36,16 +35,16 @@ qiime gglasso solve-problem \
 
 **Explanation:**
 
-- `--p-n-samples 50`: Number of individuals used to compute the input covariance matrix.
-- `--p-lambda1-min`: Lower-bound for the sparsity penalty (λ₁).
-- `--p-lambda1-max`: Upper-bound for the sparsity penalty (λ₁).
-- `--p-n-lambda1`: Number of grid points between the min and max lambda values.
-- `--p-gamma 0.01`: Controls the model selection criterion (e.g., eBIC).
-- `--p-latent False`: Indicates that this is a standard graphical lasso (not a latent variable model).
-- `--i-covariance-matrix`: Input covariance matrix in QIIME 2 format.
-- `--o-solution`: Output artifact containing the estimated sparse inverse covariance matrix.
+- `--p-n-samples 50`: the number of samples the input covariance was computed from.
+- `--p-lambda1-min`: lower bound of the sparsity penalty λ₁.
+- `--p-lambda1-max`: upper bound of the sparsity penalty λ₁.
+- `--p-n-lambda1`: number of grid points between the two bounds.
+- `--p-gamma 0.01`: the extended BIC parameter.
+- `--p-latent False`: fits the standard graphical lasso, with no low-rank component.
+- `--i-covariance-matrix`: the input covariance, as a QIIME 2 artifact.
+- `--o-solution`: the output artifact holding the estimated sparse precision matrix.
 
-## Step 2: Visualize the Estimated Network
+## Visualising the network
 
 ```bash
 # visualize the results
@@ -57,6 +56,6 @@ qiime gglasso summarize \
 
 **Explanation:**
 
-- Generates an interactive QIIME 2 visualization of the estimated network.
-- `--p-label-size 25pt`: Sets the font size of node labels in the network plot.
-- The output `.qzv` file can be viewed using [QIIME 2 View](https://view.qiime2.org/).
+- The action writes an interactive QIIME 2 visualization of the estimated network.
+- `--p-label-size 25pt`: font size of the node labels in the network plot.
+- Open the resulting `.qzv` at [QIIME 2 View](https://view.qiime2.org/).

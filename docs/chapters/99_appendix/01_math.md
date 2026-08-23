@@ -1,20 +1,19 @@
 # Appendix: Mathematical Background
 
-This appendix collects the models and selection criteria used throughout the
-tutorial. It draws on the general log-contrast and perspective-estimation
-framework of {cite}`combettes2021regression,combettes2020perspective`, the
-tree-aggregation model of {cite}`bien2021tree`, and the latent (sparse +
-low-rank) graphical model of {cite}`chandrasekaran2010latent,kurtz2019disentangling`.
+The models and selection criteria used throughout the tutorial draw on the
+general log-contrast and perspective-estimation framework of
+{cite}`combettes2021regression,combettes2020perspective`, the tree-aggregation
+model of {cite}`bien2021tree`, and the latent (sparse + low-rank) graphical
+model of {cite}`chandrasekaran2010latent,kurtz2019disentangling`.
 
 ## Notation
 
 Let $X \in \mathbb{R}^{n \times p}$ be the transformed abundance matrix for
-$n$ samples and $p$ features (ASVs). Compositional counts are mapped to
-Euclidean space with the centered log-ratio (clr) or modified clr (mclr)
-transform {cite}`yoon2019microbial`. For the tutorial's high-dimensional example
-$n = 54$ and $p = 300$. We write $S$ for the empirical covariance (or
-correlation) matrix of $X$ and $\hat{\Theta}$ for an estimated precision
-(inverse covariance) matrix.
+$n$ samples and $p$ features (ASVs). The centered log-ratio (clr) and modified
+clr (mclr) transforms map compositional counts into Euclidean space
+{cite}`yoon2019microbial`. For the 300-ASV Atacama table $n = 54$ and $p = 300$. $S$
+denotes the empirical covariance (or correlation) matrix of $X$, and
+$\hat{\Theta}$ an estimated precision (inverse covariance) matrix.
 
 ## Log-contrast regression
 
@@ -33,20 +32,20 @@ invariant to the compositional scale.
 :name: fig-simplex-zero-sum
 :width: 100%
 
-Why that constraint is there. **Left:** a count vector and any rescaling of it —
-$(10, 20, 30)$ and $(100, 200, 300)$ — are the same point of the simplex, so
-sequencing depth is not recoverable from the data and only ratios between
-features carry information. **Right:** requiring $\sum_i \beta_i = 0$ is what
-makes the fit depend on those ratios alone. A coefficient is therefore a
-statement about one feature *relative to* the negatively-weighted ones, and
-cannot be read on its own.
+Scale invariance and the zero-sum constraint. **Left:** a count vector and any
+rescaling of it — $(10, 20, 30)$ and $(100, 200, 300)$ — are the same point of
+the simplex, so sequencing depth is not recoverable from the data and only
+ratios between features carry information. **Right:** requiring
+$\sum_i \beta_i = 0$ makes the fit depend on those ratios alone. A coefficient
+is therefore a statement about one feature *relative to* the negatively-weighted
+ones, and cannot be read on its own.
 ```
 
-The constraint is not a regularisation choice — it is what makes the model
+The constraint is not a regularisation choice: it is what makes the model
 well-posed. Without it, adding a constant to every $\beta_i$ would change the
 prediction whenever the total count changes, so the fit would depend on
-sequencing depth, which is an artefact of the run rather than of the biology. The loss $f$ selects the c-lasso
-formulation:
+sequencing depth — an artefact of the run rather than of the biology. The loss
+$f$ selects the c-lasso formulation:
 
 - **R1 — standard (least squares):** $f = \lVert y - X\beta \rVert_2^2$, with
   $\sigma$ fixed.
@@ -58,7 +57,7 @@ formulation:
   $n\,\sigma$.
 
 The concomitant formulations R3/R4 estimate the noise level $\sigma$ jointly
-with $\beta$ and have **no tuning parameter for $\sigma$**: the coefficients
+with $\beta$ and have no tuning parameter for $\sigma$: the coefficients
 $n/2$ (R3) and $n$ (R4) are fixed constants that fall out of the *perspective
 function* of the respective loss {cite}`combettes2020perspective,combettes2018perspective`,
 not hyperparameters.
@@ -67,15 +66,15 @@ not hyperparameters.
 
 The **trac** model {cite}`bien2021tree` reparameterizes the log-contrast problem
 on the taxonomic tree. With $A$ the binary ancestor matrix mapping the $p$ leaves
-to their $t$ tree nodes, one solves for node coefficients $\gamma$ with
+to their $t$ tree nodes, the solver fits node coefficients $\gamma$ with
 $\beta = A\gamma$ under a weighted $\ell_1$ penalty $\lVert w \odot \gamma
 \rVert_1$, so that selection acts on internal nodes (aggregated clades) rather
 than individual ASVs — "tree-aggregation of compositional data".
 
 ## Graphical lasso
 
-Microbial association networks are estimated with the **graphical lasso**
-{cite}`friedman2008sparse,dempster1972covariance`,
+The **graphical lasso** {cite}`friedman2008sparse,dempster1972covariance`
+estimates microbial association networks,
 
 $$
 \min_{\Theta \succ 0}\ -\log\det \Theta + \langle S, \Theta \rangle
@@ -99,16 +98,16 @@ $$
 $$
 
 with $\lVert \cdot \rVert_\star$ the nuclear norm. The sparse part carries the
-direct microbial interactions; the rank of $\hat{L}$ counts the latent factors.
-A larger $\mu$ shrinks the rank. The low-rank subspace can be recovered by robust
-PCA {cite}`candes2011robust`.
+direct microbial interactions. The rank of $\hat{L}$ counts the latent factors,
+and a larger $\mu$ shrinks that rank. Robust PCA can recover the low-rank
+subspace {cite}`candes2011robust`.
 
 ## Model selection
 
 ### eBIC for the single graphical lasso
 
-Along a path of $\lambda$ values we score each fitted $\hat{\Theta}$ with the
-**extended BIC** {cite}`foygel2010extended`:
+Along a path of $\lambda$ values the solver scores each fitted $\hat{\Theta}$
+with the **extended BIC** {cite}`foygel2010extended`:
 
 $$
 \mathrm{eBIC}_\gamma(\hat{\Theta}) =
@@ -118,22 +117,22 @@ $$
 
 where $|E| = \tfrac{1}{2}\big(\#\{\hat{\Theta}_{ij} \neq 0\} - p\big)$ is the
 number of off-diagonal edges and $\gamma \in [0,1]$ tunes the extra
-edge penalty. $\gamma = 0.5$ is the conventional choice; the tutorial uses
-$\gamma = 0.3$, which selects $\lambda = 0.8$ for the 300-ASV network.
+edge penalty. $\gamma = 0.5$ is the conventional choice. The Atacama chapters
+use $\gamma = 0.3$, which selects $\lambda = 0.8$ for the 300-ASV network.
 
 ### Cross-validation for log-contrast regression
 
 Log-contrast models are selected by $k$-fold cross-validation with the
 one-standard-error rule, or alternatively by stability selection
 {cite}`meinshausen2010stability` or a theoretically-derived fixed penalty
-{cite}`shi2016regression`. The reported out-of-sample $R^2$ is averaged over the
-folds.
+{cite}`shi2016regression`. The reported out-of-sample $R^2$ is the average over
+the folds.
 
 ## Comparing the latent subspace and the regression coefficients
 
-To relate the graphical model's latent structure to the regression tasks, the
-tutorial defines (with $\hat{L} = U\Lambda U^\top$ truncated to the top two
-eigenvectors, giving loadings $\ell_j = u_j / \sqrt{\lambda_j}$):
+Two quantities relate the graphical model's latent structure to the regression
+tasks, with $\hat{L} = U\Lambda U^\top$ truncated to the top two eigenvectors,
+giving loadings $\ell_j = u_j / \sqrt{\lambda_j}$:
 
 - **Robust-PC / covariate association** $m_t = \max_j \lvert \operatorname{cor}(z_j, y^{(t)}) \rvert$,
   the strongest correlation of any robust principal component $z_j$ with task
@@ -143,6 +142,6 @@ eigenvectors, giving loadings $\ell_j = u_j / \sqrt{\lambda_j}$):
   subspace, with a permutation $p$-value.
 
 Across tasks, $m_t$ and $q_t$ are strongly rank-correlated (Spearman
-$\rho = 0.90$), which is the quantitative basis for choosing **rank 2**.
+$\rho = 0.90$), which is the quantitative basis for choosing rank 2.
 
 All references are collected on the [References](../../references.md) page.

@@ -2,11 +2,18 @@
 
 ## Introduction
 
-Microbiome data typically contains a large number of microbial features (also called "taxa") identified in high-throughput sequencing experiments. High-dimensional statistics provides methods tailored to handle the intricacies of microbiome data. These methods assess microbial interactions and unveil patterns that may be indicative of biological phenomena, such as shifts in community composition or associations with specific environmental factors.
+A high-throughput sequencing experiment typically identifies a large number of microbial
+features, also called taxa. High-dimensional statistics supplies estimators built for
+that regime.
+They assess interactions between taxa and reveal patterns that may be indicative of
+biological phenomena — shifts in community composition, associations with
+environmental factors.
 
-## Why q2-classo and q2-gglasso?
+## The two plugins
 
-QIIME2 has a collection of plugins specifically developed to preprocess raw sequences from high-throughput sequencing datasets, preparing them for downstream analyses. Nevertheless, to conduct advanced statistical analyses on biological samples users often lack "out of the box" options.
+QIIME2 ships a collection of plugins that preprocess raw sequences into feature tables
+ready for downstream analysis. For advanced statistical analysis of those tables, you
+often have no out-of-the-box option.
 
 ```{figure} ../../images/png/overview.png
 ---
@@ -18,22 +25,26 @@ align: center
 High-dimensional statistics with QIIME2.
 ```
 
-The pipeline depicted above outlines the functionality implemented in two QIIME2 plugins namely **q2-gglasso** for network learning and **q2-classo** for regression and classification tasks. Together, these plugins address gaps in the existing functionality within QIIME2, offering:
+The pipeline above is implemented by two QIIME2 plugins: **q2-gglasso** for network
+learning and **q2-classo** for regression and classification. Together they close gaps in
+QIIME2, adding:
 
-- **Network inference** through sparse inverse covariance estimation to identify microbial associations (e.g., discovering which taxa co-occur within communities)
-- **Sparse log-contrast models** for classification and regression tasks (e.g., predicting covariate information, such as disease status or environmental factors, from microbiome data)
-- **Compositionally-aware estimators** that properly handle microbiome data constraints and sparsity
-- **Interactive visualizations** with publication-ready network graphs and model performance plots
-- **Seamless QIIME2 integration** using standard artifact formats and command-line interfaces
+- **Network inference** through sparse inverse covariance estimation, which identifies
+  microbial associations, for example which taxa co-occur within a community
+- **Sparse log-contrast models** for classification and regression, which predict a
+  measured covariate, such as disease status or an environmental factor, from the counts
+- **Compositionally-aware estimators** that account for the constraints and the sparsity
+  of microbiome counts
+- **Interactive visualizations** with publication-ready network graphs and model
+  performance plots
+- **QIIME2 integration** using standard artifact formats and command-line interfaces
 
-## What You'll Learn
+## Scope
 
-In this documentation, you will learn how to:
+These chapters cover:
 
 1. Install and set up the q2-gglasso and q2-classo plugins
 2. Apply graphical lasso methods for network inference
 3. Use log-contrast models for regression and classification
 4. Interpret results and create publication-ready visualizations
 5. Integrate these methods into reproducible QIIME2 workflows
-
-Let's get started with installation and your first analysis!

@@ -1,15 +1,11 @@
 # Download the Tutorial Data
 
-This is the canonical place for download URLs. Every later chapter assumes the
-files are already on disk under a `data/` directory and refers to them by path
-alone. If a command in a later chapter cannot find its input, the fix is here,
-not there.
+Every later chapter assumes the tutorial files are already on disk under a
+`data/` directory and refers to them by path alone. If a command in a later
+chapter cannot find its input, the fix is here, not there.
 
-What each dataset contains and why it is in the book is described alongside its
-download block below, tier by tier; the Tier 1 study itself, and the
-`ASV-1` … `ASV-13` labelling, are covered in
-[Atacama Soil Microbiome](02_datasets.md). Otherwise this page is purely
-mechanical: fetch, verify, lay out.
+The Atacama study behind tier 1 and the `ASV-1` … `ASV-13` labelling are covered in
+[Atacama Soil Microbiome](02_datasets.md).
 
 ## Where the files go
 
@@ -31,20 +27,18 @@ Either `cd data` before running those, or add the prefix. Nothing else changes.
 
 The Atacama artifacts (tiers 1 and 2) are published as a single Zenodo record,
 **`q2-hdstats-tutorial-data` v1.0.0**. Publishing them rather than pointing at
-the plugin repositories means the exact bytes used to build this book stay
-citable and stay put.
+the plugin repositories keeps the exact bytes citable and fixed.
 
 ```{note}
 **The DOI has not been minted yet.** Wherever a base URL is needed below, the
 literal placeholder `ZENODO_DOI_PENDING` stands in for it. The tier 1 and tier 2
-commands on this page therefore cannot be run as written yet — they are the
-shape of the final commands, with one substitution outstanding. Search the
-sources for `ZENODO_DOI_PENDING` to find every place that has to change when the
-record goes live.
+commands therefore cannot be run as written yet — they carry one outstanding
+substitution. Search the sources for `ZENODO_DOI_PENDING` to find every place
+that has to change when the record goes live.
 ```
 
-Set the base URL once and reuse it. Every tier 1 and tier 2 block on this page
-assumes this variable is exported in your shell:
+Set the base URL once and reuse it. Every tier 1 and tier 2 block below assumes
+this variable is exported in your shell:
 
 ```bash
 # Substitute the real record URL here once the DOI is minted.
@@ -64,7 +58,7 @@ everything the tutorial downloads. It has five tab-separated columns:
 | `sha256` | Expected checksum |
 | `url` | Where it came from (Zenodo for both tiers) |
 
-Prose can drift out of date; the manifest cannot, because it is what the
+Prose can drift out of date. The manifest cannot, because it is what the
 verification steps below read. Treat it as authoritative when the two disagree,
 and open an issue.
 
@@ -84,15 +78,15 @@ tier_checklist () {
 each was verified against the file it describes. `tier_checklist N | sha256sum -c`
 reports `OK` for every tier, so the verification steps below work today.
 
-The one thing still outstanding is the **`url` column for tiers 1 and 2**, which
-reads `ZENODO_DOI_PENDING` until the record is minted. So you can verify files you
+The `url` column for tiers 1 and 2 is the one entry still outstanding: it reads
+`ZENODO_DOI_PENDING` until the record is minted. You can verify files you
 already have, but the `curl` commands cannot fetch them yet.
 ```
 
 ## Tier 1 — Atacama, 13 ASVs
 
-The reference tier. Every action in both plugins gets its one canonical
-demonstration here, on a table small enough to print in full.
+Every action in both plugins gets its one canonical demonstration on this table,
+which is small enough to print in full.
 
 ```bash
 cd ~/q2-hdstats-tutorial/data
@@ -127,16 +121,16 @@ although its function body never reads it. See
 registration warts.
 
 ```{note}
-**On the sample count.** The tier 1 table is **13 features × 50 samples**, read
-directly from the artifact. Earlier drafts of this book said 49 in prose while
-every command passed `--p-n-samples 50`; the commands were right and the prose
-was wrong. The metadata TSV has 75 rows because it covers the full Atacama
-tutorial, of which 50 samples appear in this table.
+**On the sample count.** The tier 1 table is 13 features × 50 samples, read
+directly from the artifact. Earlier drafts said 49 in prose while every command
+passed `--p-n-samples 50`; the commands were right. The metadata TSV has 75 rows
+because it covers the full Atacama tutorial, of which 50 samples appear in this
+table.
 ```
 
 ## Tier 2 — Atacama, 300 ASVs
 
-The same study, scaled up: the 300 most abundant ASVs, used to show model
+The same study, scaled up: the 300 most abundant ASVs, which demonstrate model
 selection and latent-rank choice in a regime where you cannot eyeball the matrix.
 
 ```bash
@@ -157,7 +151,7 @@ curl -L -O "${ZENODO_BASE}/atacama-classo-outcomes-mean-imputed.tsv"
 | `atacama-top-300-correlation.qza` | `PairwiseFeatureData` — the direct input to `qiime gglasso solve-problem` |
 | `atacama-taxonomy-silva138.qza` | `FeatureData[Taxonomy]` for the 300 ASVs |
 | `sample-metadata.tsv` | Full sample metadata, including `transect-name` (Baquedano, Yungay) and `vegetation` (yes/no) — the two natural grouping variables for the multiple-graphical-lasso and PCA chapters |
-| `top-300-asvs.tsv` | Total abundance per feature, keyed on `feature-id`. Useful for filtering or for reporting how abundant a hub is. Its `abundance-rank` column is **not** an identifier: 209 of the 300 features are tied on total abundance, so the rank order within a tie is arbitrary. Do not use it to map `ASV-k` labels back to features — see [Interpretation](../04_highdim_atacama/06_interpretation.md) |
+| `top-300-asvs.tsv` | Total abundance per feature, keyed on `feature-id`. Useful for filtering or for reporting how abundant a hub is. Its `abundance-rank` column is not an identifier: 209 of the 300 features are tied on total abundance, so the rank order within a tie is arbitrary. Do not use it to map `ASV-k` labels back to features — see [Interpretation](../04_highdim_atacama/06_interpretation.md) |
 | `atacama-classo-outcomes-mean-imputed.tsv` | The regression outcomes with missing values mean-imputed, as used by the q2-classo cross-validation chapter |
 
 Verify:
@@ -167,29 +161,29 @@ tier_checklist 2 > ~/q2-hdstats-tutorial/data/SHA256SUMS.tier2
 cd ~/q2-hdstats-tutorial/data && sha256sum --ignore-missing -c SHA256SUMS.tier2
 ```
 
-The transformed table and the correlation matrix are both included on purpose.
-Recomputing them from `atacama-top-300-table.qza` is the first exercise of the
-tier 2 chapters; having the reference versions on disk means a mismatch is
-visible immediately rather than propagating into the network.
+Recomputing the transformed table and the correlation matrix from
+`atacama-top-300-table.qza` is the first exercise of the tier 2 chapters, and
+holding the reference versions on disk makes a mismatch visible immediately
+rather than letting it propagate into the network.
 
 ## The cocoa appendix has no download
 
-The MOSHPIT cocoa fermentation example (14 shotgun metagenomes, BioProject
-PRJNA552479) is an **appendix**, not a tier, precisely because there is nothing
-to download: no feature table is published for it. Reproducing one means running
-assembly and binning and holding local Kraken2/Kaiju databases. See
+No feature table is published for the MOSHPIT cocoa fermentation example
+(14 shotgun metagenomes, BioProject PRJNA552479), so there is nothing to fetch.
+Reproducing one means running assembly and binning and holding local
+Kraken2/Kaiju databases. See
 [Appendix: Shotgun Metagenomics (MOSHPIT cocoa)](../99_appendix/02_moshpit_cocoa_note.md)
 for what that involves before you commit compute to it.
 
-## Why the checksums are not ceremony
+## Verifying the download
 
 A truncated `.qza` is still a valid ZIP prefix. QIIME 2 will often load it
-without complaint and the failure will surface much later, inside a solver, as
+without complaint, and the failure surfaces much later, inside a solver, as
 something that looks like a numerical problem rather than a broken file. Ten
 seconds of `sha256sum` saves an afternoon of debugging the wrong layer.
 
-Once the checksums pass, confirm that QIIME 2 agrees the artifacts are what the
-tutorial thinks they are:
+Once the checksums pass, confirm that QIIME 2 reads the artifacts as the types
+the tutorial expects:
 
 ```bash
 cd ~/q2-hdstats-tutorial
@@ -200,8 +194,8 @@ qiime tools peek data/classification.qza
 ```{note}
 The expected `qiime tools peek` output — UUID, semantic type and format — is
 pending verification against QIIME 2 2026.7. Most of this book has not yet been
-re-run against that release, and the UUID is per-download in any case, so no
-captured output is shown here.
+re-run against that release, and the UUID differs with every download, so no
+captured output accompanies the commands above.
 ```
 
 ## The resulting tree
@@ -222,7 +216,7 @@ After both tiers:
     └── sample-metadata.tsv
 ```
 
-Everything else the tutorial uses is **derived**: each chapter writes its
+Everything else the tutorial uses is derived: each chapter writes its
 transformed tables, covariance matrices, solutions and visualizations back into
 `data/`, so the directory grows as you work through the book. Only the files
 above have to be fetched.
@@ -230,8 +224,8 @@ above have to be fetched.
 ```{note}
 The tier 2 chapters also build a design-matrix table and a mean-imputed outcomes
 TSV for the q2-classo section. Whether those ship on the Zenodo record or are
-produced by the chapter commands is being settled as the record is assembled; the
-manifest is the place that will say.
+produced by the chapter commands is being settled as the record is assembled.
+The manifest will say which.
 ```
 
 ## Next
@@ -239,6 +233,6 @@ manifest is the place that will say.
 With the data in place, continue to
 [Prerequisites & Installation](../01_installation/01_prerequisites.md), then
 [Verifying Your Installation](../01_installation/04_verify.md) — the last step of
-which reads one of the artifacts you just downloaded. If you want to see which
-chapter demonstrates which command before you start, the
+which reads one of the artifacts you just downloaded. To see which chapter
+demonstrates which command before you start, the
 [Command Coverage Matrix](../90_reference/01_command_coverage.md) is the map.

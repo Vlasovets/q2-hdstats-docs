@@ -1,8 +1,8 @@
 # Log-Contrast Classification
 
 [Log-Contrast Regression](../03_regression/01_logcontrast.md) predicted a
-continuous outcome. This chapter asks a yes/no question of the same community:
-can you tell a vegetated site from a bare one by its microbes alone?
+continuous outcome. The same community now faces a yes/no question: can you tell
+a vegetated site from a bare one by its microbes alone?
 
 The compositional problem is unchanged — only ratios between features are
 meaningful — so the zero-sum constraint on the coefficients carries over. What
@@ -10,8 +10,8 @@ changes is the loss: a hinge loss on a binary label instead of squared error, an
 a misclassification rate instead of $R^2$.
 
 ```{important}
-`qiime classo classify` has **no** `--p-concomitant` parameter. It is forced off
-internally, and passing it fails. The regression action accepts it; the
+`qiime classo classify` has no `--p-concomitant` parameter. It is forced off
+internally, and passing it fails. The regression action accepts it. The
 classification action does not.
 ```
 
@@ -84,12 +84,12 @@ qiime classo classify \
 
 **Parameters explained:**
 - `--i-features`: Training feature table
-- `--i-c`: C matrix for log-contrast constraints
+- `--i-c`: C matrix carrying the log-contrast constraints
 - `--i-weights`: Feature weights
-- `--m-y-column vegetation`: Target variable (vegetation presence/absence)
+- `--m-y-column vegetation`: Target variable, vegetation presence or absence
 - `--p-huber False`: Use standard logistic loss
-- `--p-stabsel`: Enable stability selection for feature selection
-- `--p-cv`: Perform cross-validation
+- `--p-stabsel`: Run stability selection alongside the path fit
+- `--p-cv`: Choose the penalty by cross-validation
 - `--p-stabsel-threshold 0.5`: Stability selection threshold
 
 ## Step 5: Make Predictions
@@ -105,7 +105,7 @@ qiime classo predict \
 
 ## Step 6: Generate Summary Visualization
 
-Create a comprehensive summary of the classification results:
+Render the fitted classifier and its predictions as a report:
 
 ```bash
 qiime classo summarize \
@@ -129,40 +129,39 @@ one-standard-error choice. **Right:** the coefficients of the seven ASVs the
 selected model retains.
 ```
 
-**The cross-validation is not confident here, and the figure shows it.** The
-misclassification rate sits between roughly 0.22 and 0.33 across the whole path,
-and the error bars overlap almost everywhere. The two candidate penalties — the
-minimum and the one-standard-error rule — land on top of each other, which
-happens when the curve has no clear minimum to separate them. On 50 samples with
-a binary outcome that is unsurprising, and it is the honest reading: this model
-distinguishes vegetated from bare sites better than a coin, and not much more.
+**The cross-validation is not confident here.** The misclassification rate
+sits between roughly 0.22 and 0.33 across the whole path, and the error bars
+overlap almost everywhere. The two candidate penalties — the minimum and the
+one-standard-error rule — land on top of each other, which happens when the curve
+has no clear minimum to separate them. On 50 samples with a binary outcome, expect
+a curve like this one. The model distinguishes vegetated from bare sites better
+than a coin, and not much more.
 
 Do not skip past that to the coefficient panel. A coefficient list from a model
 whose error curve is flat tells you which features the optimiser happened to keep
 at one point on a path where neighbouring points would have kept others.
 [Model Selection](../05_advanced/02_model_selection.md) covers what to do about
-it; stability selection, as in the regression chapter, is the usual answer.
+it. Stability selection, as in the regression workflow, is the usual answer.
 
-**The coefficients come in opposing groups, and must.** Seven ASVs are retained,
-three with positive weight and four negative, and they sum to approximately zero
-— that is the log-contrast constraint, not a coincidence of the fit. It also
-means no single coefficient can be read alone: ASV-6's $+0.26$ is a statement
-about ASV-6 *relative to* the negatively-weighted set, not about its abundance.
+**The coefficients come in opposing groups.** Seven ASVs are retained, three with
+positive weight and four negative, and they sum to approximately zero — the
+log-contrast constraint, not a coincidence of the fit. No single coefficient can
+be read alone: ASV-6's $+0.26$ is a statement about ASV-6 *relative to* the
+negatively-weighted set, not about its abundance.
 
 ```{note}
-The legend in this figure labels the plotted series **"Accuracy"** while the axis
-is **misclassification rate**. The axis is correct — the values are error rates,
-so a lower curve is a better model. The legend is mislabelled.
+The legend labels the plotted series "Accuracy" while the axis is labelled
+misclassification rate. The axis is correct: the values are error rates, so a
+lower curve is a better model. The legend is wrong.
 ```
 
-## What you should have now
+## Outputs
 
-`data/classifytaxa_lc.qza` with the fitted classifier, predictions on the
-held-out split, and a `.qzv` showing both panels above.
+`data/classifytaxa_lc.qza` holds the fitted classifier. Beside it sit the
+predictions on the held-out split and a `.qzv` showing both panels above.
 
 Before drawing conclusions from the selected taxa, read
-[Model Interpretation](../07_interpretation.md) — and note that with an error
-curve this flat, the comparison in [Tree-Aggregated
-Classification](02_trac.md) is the more informative next step: if aggregating to
-clades sharpens the CV curve, the signal is phylogenetic rather than
-ASV-specific.
+[Model Interpretation](../07_interpretation.md). With an error curve this flat,
+the comparison in [Tree-Aggregated Classification](02_trac.md) is the more
+informative next step: if aggregating to clades sharpens the CV curve, the signal
+is phylogenetic rather than ASV-specific.

@@ -2,36 +2,34 @@
 
 ## Prerequisites
 
-Before installing q2-classo and q2-gglasso, ensure you have:
+Before installing q2-classo and q2-gglasso, you need:
 
-- QIIME 2 version **2026.7** or later
-- Python **3.10** or later (the 2026.7 distribution ships Python 3.12)
+- QIIME 2 version 2026.7 or later
+- Python 3.10 or later (the 2026.7 distribution ships Python 3.12)
 
 Both plugins were migrated to the 2026.7 stack (Python 3.12, NumPy 2.x,
 pandas 2.3). They will not install into a NumPy 1.x environment.
 
 ```{note}
-**Two upstream renames you will run into.** In QIIME 2 **2026.4** the `amplicon`
-distribution was renamed to **`qiime2`**, and the environment files were renamed
-from `qiime2-*` to **`rachis-*`** — the framework package itself was rebranded
-from `qiime2` to `rachis`. A compatibility shim keeps `import qiime2` working, so
-existing analysis scripts do not need to change, but every install URL does.
+**Two upstream renames.** In QIIME 2 2026.4 the `amplicon` distribution was
+renamed to `qiime2`, and the environment files were renamed from `qiime2-*` to
+`rachis-*` — the framework package itself was rebranded from `qiime2` to
+`rachis`. A compatibility shim keeps `import qiime2` working, so existing
+analysis scripts need no change, but every install URL does.
 ```
 
 ## Installing QIIME 2
 
-If you don't have QIIME 2 installed, follow the official installation guide at
+If you do not have QIIME 2 installed, follow the official installation guide at
 [library.qiime2.org](https://library.qiime2.org/quickstart/qiime2).
 
-Available distributions are `qiime2` (what this tutorial uses), `moshpit`,
-`pathogenome` and `tiny`. Platform support for the `qiime2` distribution is
-`linux-64` and `osx-64`; there is no `osx-arm64` build.
+The distributions are `qiime2` (the one this book uses), `moshpit`,
+`pathogenome` and `tiny`. The `qiime2` distribution builds for `linux-64` and
+`osx-64`. There is no `osx-arm64` build.
 
----
+## Support
 
-## Getting Help
-
-If you encounter issues:
+When an install fails or an action misbehaves:
 
 1. Check the [QIIME 2 Forum](https://forum.qiime2.org/)
 2. Visit the plugin repositories:
@@ -41,6 +39,8 @@ If you encounter issues:
    - [gglasso documentation](https://gglasso.readthedocs.io/en/latest/#)
    - [classo documentation](https://c-lasso.readthedocs.io/en/latest/index.html#)
 
-## Next Steps
+## Installing the plugins
 
-Once installation is complete, proceed to the installation of q2-gglasso and q2-classo. Both plugins are independent from each other, so you can install each one of them separately if you only want to do network analysis (q2-gglasso) or classification/regression tasks (q2-classo).
+Install q2-gglasso and q2-classo next. The plugins are independent of each
+other: install q2-gglasso alone for network analysis, or q2-classo alone for
+classification and regression.

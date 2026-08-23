@@ -1,9 +1,7 @@
-# Troubleshooting & Known Gotchas
+# Troubleshooting & Known Failure Modes
 
-Every trap in one place. Each entry gives the symptom you will actually see, the
-cause, and the workaround.
-
----
+Each entry gives the symptom you will actually see, the cause, and the
+workaround.
 
 ## Installation
 
@@ -31,13 +29,11 @@ create the environment from your edited copy.
 
 ### pip silently breaks a working environment
 
-**Cause.** pip cannot see conda's pins and will happily install a wheel over
+**Cause.** pip cannot see conda's pins and will install a wheel over
 `numpy=2.4.2`.
 
 **Workaround.** Always `pip install --no-deps` inside a QIIME 2 environment.
 Check with `conda list numpy pandas scipy` afterwards.
-
----
 
 ## q2-gglasso
 
@@ -53,8 +49,8 @@ the low-rank component. It exposes only the continuous `mu1` penalty and reports
 the achieved rank as an *output*. The parameter is registered but guarded so it
 raises rather than being silently ignored.
 
-**Workaround.** Size the low-rank block through `mu1`: a **larger `mu1` gives a
-smaller rank**. Scout a small `mu1` grid and read the achieved rank out of the
+**Workaround.** Size the low-rank block through `mu1`: a larger `mu1` gives a
+smaller rank. Scout a small `mu1` grid and read the achieved rank out of the
 solution — see [Choosing the Latent Rank](../04_highdim_atacama/03_slr_ranks.md).
 Explicit rank selection becomes available when GGLasso PR #50
 (`fix_latent_rank`) is merged and released.
@@ -72,8 +68,8 @@ solution cannot be used with `pca`.
 **Cause.** `--p-n-components` defaults to 3, but the achieved rank of the
 low-rank component falls as `mu1` rises, and you cannot take more components
 than there are. On the 300-ASV Atacama data the map is μ = 15 → rank 2,
-μ = 10 → rank 5, μ = 7.5 → rank 10 — so the *headline* fit at μ = 15 is exactly
-the one the default breaks on.
+μ = 10 → rank 5, μ = 7.5 → rank 10. The default therefore breaks on the
+*headline* fit at μ = 15.
 
 **Workaround.** Pass `--p-n-components 2` at μ = 15, or in a script derive it
 from the solution rather than hardcoding:
@@ -91,17 +87,17 @@ mismatch and failed later inside `utils.PCA` with an unrelated matmul error.
 **Cause.** The transformed table was built with `--p-no-keep-original-id`, so its
 features are `ASV-1` … `ASV-p` positional labels, while the taxonomy artifact is
 keyed on 32-character hexadecimal feature IDs. `df.join(tax)` finds no overlap
-and fills with `NaN`; `.reindex()` does the same. Nothing raises, so the failure
-reads as "this dataset has no taxonomy".
+and fills with `NaN`, and `.reindex()` does the same. Nothing raises, so the
+failure reads as "this dataset has no taxonomy".
 
-**Workaround.** Rebuild with `--p-keep-original-id` (the default). Do **not**
-try to map `ASV-k` back through an abundance ranking — `ASV-k` is assigned by
-position, and ties in total abundance make the mapping ambiguous. On the 300-ASV
-table, 209 of 300 features share a total-abundance value and are therefore at
-risk; a rank-based mapping was measured to place **146 of 300** features
-differently from the plugin's own ordering. Within a tie group a feature can
-still land correctly by coincidence, which is why the measured count is below
-the at-risk count — but you cannot tell which ones did. See
+**Workaround.** Rebuild with `--p-keep-original-id` (the default). Do not try to
+map `ASV-k` back through an abundance ranking — `ASV-k` is assigned by position,
+and ties in total abundance make the mapping ambiguous. On the 300-ASV table,
+209 of 300 features share a total-abundance value and are therefore at risk.
+Measured against the plugin's own ordering, a rank-based mapping placed 146 of
+300 features differently. Within a tie group a feature can still land correctly
+by coincidence, which is why the measured count is below the at-risk count — but
+you cannot tell which ones did. See
 [Interpretation](../04_highdim_atacama/06_interpretation.md).
 
 **How to notice.** Assert rather than eyeball:
@@ -109,8 +105,8 @@ the at-risk count — but you cannot tell which ones did. See
 
 ### `qiime gglasso pca` crashes with `AttributeError` on metadata
 
-**Cause.** `--m-sample-metadata-file` is optional in the signature but is
-dereferenced unconditionally.
+**Cause.** `--m-sample-metadata-file` is optional in the signature, but the
+action dereferences it unconditionally.
 
 **Workaround.** Always pass `--m-sample-metadata-file`. Treat it as required.
 
@@ -124,8 +120,8 @@ not affect the result.
 
 ### `build-groups` output cannot be fed to `solve-problem`
 
-**Cause.** `build-groups` emits a `TensorData` **artifact**, but `solve-problem`
-takes `group_array` as a `List[Int]` **parameter**. They do not chain through the
+**Cause.** `build-groups` emits a `TensorData` artifact, but `solve-problem`
+takes `group_array` as a `List[Int]` parameter. They do not chain through the
 QIIME 2 type system.
 
 **Workaround.** Export the artifact and pass the group index explicitly as
@@ -144,23 +140,22 @@ build. Confirm by unzipping the `.qzv` and grepping `index.html` for `bokeh-2.`.
 
 ### Model selection ran even though I only wanted a single fit
 
-**Cause.** The solver performs model selection whenever at least one grid has
+**Cause.** The solver performs model selection whenever at least one grid holds
 more than one value, so a single fit requires `lambda1` *and* `lambda2` — plus
-`mu1` for a **latent** problem — to each resolve to exactly one value. Leaving
-`--p-lambda2-min` / `--p-lambda2-max` unset does not count as one value: an unset
-pair of bounds expands to the 5-point default `np.logspace(-1, -4, 5)` and warns
-`Default values for lambda2 have been used.`. That alone is enough to switch
-model selection on, which is why a lone `--p-lambda1-min 0.5 --p-lambda1-max 0.5`
-still gives you a path. (`lambda2` is not used by the single-instance solver
-otherwise; it only decides this branch.)
+`mu1` on a latent problem — to each resolve to exactly one value. Leaving
+`--p-lambda2-min` / `--p-lambda2-max` unset does not count as one value: the
+solver expands an unset pair of bounds to the 5-point default
+`np.logspace(-1, -4, 5)` and warns `Default values for lambda2 have been used.`.
+That alone switches model selection on, so a lone
+`--p-lambda1-min 0.5 --p-lambda1-max 0.5` still gives you a path. (The
+single-instance solver does not otherwise use `lambda2`; it only decides this
+branch.)
 
 **Workaround.** Pin `λ₂` explicitly — pass the same value to
 `--p-lambda2-min` and `--p-lambda2-max` — and do the same for `--p-mu1-min` /
 `--p-mu1-max` on a latent problem. Check the result by looking for a
 `modelselect_stats` group in the solution: a single fit has none, and `summarize`
 reduces its statistics tab accordingly.
-
----
 
 ## q2-classo
 
@@ -169,12 +164,12 @@ reduces its statistics tab accordingly.
 **No.** The parameter really was named `cv__nlam` with a double underscore, which
 QIIME 2 renders as `--p-cv--nlam`.
 
-It is now spelled **`cv_nlam`** (`--p-cv-nlam`). The old spelling still works but
+It is now spelled `cv_nlam` (`--p-cv-nlam`). The old spelling still works but
 emits a `DeprecationWarning`. Passing both with *different* values raises — but
 only if `cv_nlam` was changed from its registered default of `100`. QIIME 2 fills
 that default in whether or not you typed it, so `100` is indistinguishable from
 "not given" and is treated as unset: `--p-cv-nlam 100 --p-cv--nlam 50` does *not*
-raise, it silently uses 50.
+raise — it silently uses 50.
 
 ### `qiime classo classify --p-concomitant True` is rejected
 
@@ -195,8 +190,7 @@ the fix — the action still works, it is only mislabelled.
 ### Every plot pane in the `summarize` `.qzv` is blank
 
 **Cause.** The plot-writing calls were commented out while the templates still
-referenced 16 `<iframe>` files. No error was raised; the panes just rendered
-empty.
+referenced 16 `<iframe>` files. No error was raised. The panes rendered empty.
 
 **Workaround.** Fixed in current q2-classo. A regression test now asserts that
 every iframe the templates reference has something that writes it.
@@ -207,8 +201,6 @@ every iframe the templates reference has something that writes it.
 `--p-cv-logscale False`.
 
 **Workaround.** Fixed in current q2-classo.
-
----
 
 ## Both plugins
 
@@ -225,9 +217,9 @@ accepts any string and the check happens inside the function. Affects
 `--p-*-numerical-method` parameters.
 
 **Workaround.** Check spelling against the
-[parameter reference](02_gglasso_parameters.md). Note that the
-`*_numerical_method` parameters default to the literal string
-`"not specified"`, so a typo there is silently accepted.
+[parameter reference](02_gglasso_parameters.md). The `*_numerical_method`
+parameters default to the literal string `"not specified"`, so a typo there is
+silently accepted.
 
 ### The CLR transform produces obviously wrong values
 

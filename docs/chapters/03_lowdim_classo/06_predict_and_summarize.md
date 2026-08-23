@@ -10,16 +10,16 @@ Run them in that order. `summarize` accepts predictions as an optional input and
 adds a held-out-performance panel to every model-selection tab when you supply
 them; without them you get the fit and nothing about generalization.
 
-This chapter uses the log-contrast regression artifacts built in
+The commands below run on the log-contrast regression artifacts built in
 [Log-Contrast Regression](03_regression/01_logcontrast.md) —
 `data/regresstaxa_lc.qza` for the model, `data/regress-xtest_lc.qza` for the
-held-out table — and the trac artifacts from
+held-out table — and on the trac artifacts from
 [Log-Contrast Regression with trac](03_regression/02_trac.md) where a taxonomy is
 needed.
 
-All commands in this chapter run from the tutorial root `~/q2-hdstats-tutorial` —
-the directory that contains `data/` — not from the `smoke-test/` directory used
-in [Synthetic Data with Known Truth](01_generate_data.md).
+Run them from the tutorial root `~/q2-hdstats-tutorial` — the directory that
+contains `data/` — and not from the `smoke-test/` directory used in
+[Synthetic Data with Known Truth](01_generate_data.md).
 
 ## Predicting on a held-out table
 
@@ -40,7 +40,7 @@ at fit time:
 | `--p-path` | one vector per λ on the path |
 | `--p-cv` | one vector, from the CV refit coefficients |
 | `--p-stabsel` | one vector, from the stability-selection refit coefficients |
-| `--p-lamfixed` | **two** vectors, before and after refit |
+| `--p-lamfixed` | two vectors, before and after refit |
 
 ```{important}
 **The prediction table must contain every column the model was trained on, by
@@ -48,13 +48,13 @@ name.** `predict` does not align tables positionally; it walks the model's store
 label vector and pulls each column out of your table by name. A missing or
 renamed column is a hard failure, not a silently dropped feature.
 
-In practice this means the held-out table has to come from the *same* feature
-table as the training table — which is exactly what
-`qiime sample-classifier split-table` gives you, since it splits rows and leaves
-columns untouched. Do not hand `predict` a table you built with a separate
-`add-covariates` call: the one-hot expansion of a categorical covariate names its
-columns after the values it happens to observe, so a different subset of samples
-can yield a different set of columns.
+The held-out table therefore has to come from the *same* feature table as the
+training table — which is exactly what `qiime sample-classifier split-table`
+gives you, since it splits rows and leaves columns untouched. Do not hand
+`predict` a table you built with a separate `add-covariates` call: the one-hot
+expansion of a categorical covariate names its columns after the values it
+happens to observe, so a different subset of samples can yield a different set
+of columns.
 ```
 
 The `intercept` entry is handled specially: it is not looked up in your table,
@@ -64,10 +64,10 @@ no `intercept` column in the prediction table, and adding one would be ignored.
 ```{note}
 `predict` emits an artifact of type `CLASSOProblem` — the *same* type as the
 output of `regress`. It does not contain a problem, it contains predictions, and
-the two are not interchangeable. Because the types match, QIIME 2 will happily
-accept a predictions artifact for `summarize --i-problem`, or a problem artifact
-for `summarize --i-predictions`, and the failure surfaces as a confusing key
-error deep inside the visualizer. Keep the two apart by filename.
+the two are not interchangeable. Because the types match, QIIME 2 accepts a
+predictions artifact for `summarize --i-problem`, or a problem artifact for
+`summarize --i-predictions`, and the failure surfaces as a confusing key error
+deep inside the visualizer. Keep the two apart by filename.
 ```
 
 ## Summarizing without a taxonomy
@@ -101,15 +101,15 @@ to the Stability Selection tab, the latter with the selected nodes highlighted
 against the unselected ones.
 
 The tree is built by pruning the taxonomy down to the nodes whose names appear in
-the model's label vector. That is why the panel is worth having on a **trac**
-model, whose labels *are* internal taxonomic nodes produced by
+the model's label vector. That is why the panel is worth having on a trac model,
+whose labels *are* internal taxonomic nodes produced by
 `qiime classo add-taxa`: the plot then shows you where in the hierarchy the
 selected aggregates sit. On a plain log-contrast model the labels are tips
 (individual ASV IDs) plus covariate column names, so the pruned tree collapses to
 a root with its tips and tells you very little.
 
 Covariate columns added by `add-covariates` are never in the taxonomy. They are
-simply absent from the tree panel; this is expected and is not an error.
+absent from the tree panel, which is expected and is not an error.
 
 ```{note}
 Pass the *same* taxonomy artifact you used to build the model. A taxonomy whose
@@ -123,7 +123,7 @@ without complaining.
 coefficient and stability plots. It is a plotting parameter only: nothing errors,
 nothing is logged, and no exported data is affected.
 
-It governs two different rules.
+It governs two rules.
 
 **Coefficient bar plots** (`cv-refit.html`, `stabsel-refit.html`,
 `lam-beta.html`, `lam-refit.html`). Zero coefficients are always dropped. If the
@@ -135,17 +135,17 @@ sparse solution.
 **The stability-selection profile** (`stabsel-graph.html`). This plot is
 different: it shows *every* coefficient, selected or not, because the point of
 the profile is to see the whole distribution of selection probabilities against
-the threshold line. The cap is therefore compared against the **total** number of
+the threshold line. The cap is therefore compared against the total number of
 coefficients, and if that total exceeds `--p-maxplot` the plot keeps only the
 `maxplot` features with the highest selection probability.
 
-That is why **`--p-maxplot` should be at least the number of design columns**:
-the number of features in the model, plus one for the intercept. Below that
-value the profile silently loses its low-probability tail. The selected features
-survive — they are the highest-probability ones by construction — but the
-threshold line no longer has anything to separate them from, the bar index on the
-x-axis stops corresponding to feature position, and a truncated profile looks
-exactly like a genuinely concentrated one.
+Set `--p-maxplot` to at least the number of design columns, which is the number
+of features in the model plus one for the intercept. Below that value the profile
+silently loses its low-probability tail. The selected features survive — they are
+the highest-probability ones by construction — but the threshold line no longer
+has anything to separate them from, the bar index on the x-axis stops
+corresponding to feature position, and a truncated profile looks exactly like a
+genuinely concentrated one.
 
 You do not have to guess the number. Build the `.qzv` once, read **Number of
 features** off the Overview tab, add one for the intercept, and rebuild with
@@ -198,8 +198,8 @@ right and coefficients leave zero as you move right.
 ```
 
 [Log-Contrast Regression](03_regression/01_logcontrast.md) shows the same run as
-a four-panel composite that also includes the Cross-Validation page. Use that one
-for the overview; this one is the readable version when you need to identify
+a four-panel composite that also includes the Cross-Validation page. Use the
+composite for an overview and the figure above when you need to identify
 individual features.
 
 ### Overview
@@ -274,7 +274,7 @@ taxonomic tree with the selected nodes highlighted if `--i-taxa` was given.
 template has a panel for it, and the underlying data exists for
 `--p-stabsel-method first`, but the flag that controls the panel is
 unconditionally forced off in the visualizer. You get the profile at the selected
-λ, not its evolution along the path. Nothing errors; the panel is simply absent.
+λ, not its evolution along the path. Nothing errors; the panel is absent.
 ```
 
 ### LAM fixed
@@ -283,11 +283,10 @@ Requires `--p-lamfixed`. Reports the numerical method, whether λ was given as a
 true λ or as a fraction of λ_max, λ_max itself and the theoretical λ; then the
 solve time, the λ actually used, and the estimated σ.
 
-Two coefficient plots, and the distinction between them matters: the **refit**
-coefficients, re-estimated on the selected support without the penalty, and the
-**pre-refit** penalized coefficients. Quote the refit values as effect sizes;
-read the pre-refit values to see how hard the penalty is biting. With predictions
-supplied you get a prediction panel for each.
+Two coefficient plots: the **refit** coefficients, re-estimated on the selected
+support without the penalty, and the **pre-refit** penalized coefficients. Quote
+the refit values as effect sizes; read the pre-refit values to see how hard the
+penalty is biting. With predictions supplied you get a prediction panel for each.
 
 ## Reading the performance table
 
@@ -299,21 +298,21 @@ and false negatives, and a classification fit shows `inappropriate` for R². Tha
 is expected output, not a bug.
 
 ```{important}
-The value labelled **R square** is the **squared Pearson correlation** between
+The value labelled **R square** is the squared Pearson correlation between
 observed and predicted values, not the fraction of variance explained. The two
 coincide only for an unbiased, correctly scaled predictor. A shrunken lasso fit
 is neither, so the reported number is systematically the more flattering of the
-two — it is invariant to any linear rescaling of the predictions, and will not
+two: it is invariant to any linear rescaling of the predictions, and it will not
 notice that your model is uniformly biased. Read it as a measure of *rank
 agreement*, and read the observed-versus-predicted scatter against the identity
-line to see whether the calibration is actually there.
+line to see whether the calibration is there.
 ```
 
 The **Number of sample** row counts the samples common to the prediction table
 and the response column. Predict on a held-out table and it is your test-set
 size; predict on the full table and it silently becomes an in-sample number.
 
-## Gotchas
+## Known failure modes
 
 * **`--i-problem` and `--i-predictions` have the same semantic type.** Swapping
   them type-checks and then fails inside the visualizer.
@@ -329,10 +328,10 @@ size; predict on the full table and it silently becomes an in-sample number.
   [Troubleshooting](../90_reference/04_troubleshooting.md).
 
 ```{note}
-No R² values, sample counts, selected supports or runtimes are quoted in this
-chapter. None of these commands has been re-run for this text. The descriptions
-of what each page contains are taken from the templates and the visualizer code;
-the numbers they will show are yours to generate.
+No R² values, sample counts, selected supports or runtimes are quoted here,
+because none of these commands has been re-run. The description of each page
+comes from the templates and the visualizer code; the numbers they will show are
+yours to generate.
 ```
 
 ## Next

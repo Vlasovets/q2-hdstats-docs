@@ -108,7 +108,7 @@ parts:
       - file: chapters/90_reference/03_classo_parameters
         title: q2-classo Parameter Reference
       - file: chapters/90_reference/04_troubleshooting
-        title: Troubleshooting & Known Gotchas
+        title: Troubleshooting & Known Failure Modes
       - file: chapters/99_appendix/01_math
         title: "Appendix: Mathematical Background"
       - file: chapters/99_appendix/02_moshpit_cocoa_note

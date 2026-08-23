@@ -84,8 +84,17 @@ if "$VENV/bin/jupyter-book" build docs --warningiserror > "$SCRATCH/build.log" 2
   rc=0
 else
   echo "DOCS CI PARITY: FAIL"
+  # The tail of a jupyter-book failure is a click traceback that names no file and
+  # no cause. --warningiserror means the real message is a WARNING line further up,
+  # so print those first, and keep the whole log on persistent storage: $SCRATCH is
+  # node-local and is gone by the time anyone reads this.
+  echo "--- warnings (the actual cause) ---"
+  sed -e 's/\x1b\[[0-9;]*m//g' "$SCRATCH/build.log" | grep -nE "WARNING|ERROR|SEVERE" || \
+    echo "  (no WARNING lines -- see the full log)"
   echo "--- last 25 lines ---"
   sed -e 's/\x1b\[[0-9;]*m//g' "$SCRATCH/build.log" | tail -25
+  cp "$SCRATCH/build.log" "$ROOT/slurm/logs/docs_ci_build_${SLURM_JOB_ID:-manual}.log" 2>/dev/null \
+    && echo "--- full log: analysis/slurm/logs/docs_ci_build_${SLURM_JOB_ID:-manual}.log ---"
   rc=1
 fi
 

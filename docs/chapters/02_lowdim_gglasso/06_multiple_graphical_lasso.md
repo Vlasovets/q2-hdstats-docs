@@ -1,11 +1,11 @@
 # Multiple Graphical Lasso (GGL / FGL)
 
-Everything so far has estimated **one** network from **one** covariance matrix.
-The Multiple Graphical Lasso (MGL) estimates $K$ networks at once from $K$
+Everything so far has estimated one network from one covariance matrix. The
+Multiple Graphical Lasso (MGL) estimates $K$ networks at once from $K$
 covariance matrices and couples them, so that an edge supported in several
-groups is easier to keep than an edge supported in only one. You use it when
-your samples fall into groups that you expect to share most of their structure —
-two sampling transects, treated and untreated, vegetated and bare soil — and you
+groups is easier to keep than an edge supported in only one. Use it when your
+samples fall into groups that you expect to share most of their structure — two
+sampling transects, treated and untreated, vegetated and bare soil — and you
 want the differences between the groups rather than $K$ independently noisy
 networks.
 
@@ -26,34 +26,33 @@ groups are tied together. Setting $\lambda_2 = 0$ recovers $K$ independent
 single graphical lassos.
 
 ```{important}
-**Read the "Known gaps" section in Step 3 before you invest time here.** The
-flags documented on this page all exist and all validate, but in the current
-release the MGL path does not close end-to-end through the QIIME 2 CLI.
+**Read "Known gaps" in Step 3 before you invest time here.** The flags below all
+exist and all validate, but in the current release the MGL path does not close
+end-to-end through the QIIME 2 CLI.
 
-Every claim on this page has now been executed against QIIME 2 2026.7 by
-`analysis/slurm/31_mgl_verify.sh`; the three gaps are reproduced, not inferred.
-Full transcript in `analysis/reports/mgl-verification.md`.
+`analysis/slurm/31_mgl_verify.sh` executes every claim on this page against
+QIIME 2 2026.7; the three gaps are reproduced, not inferred. Full transcript in
+`analysis/reports/mgl-verification.md`.
 ```
 
 ## Step 1: Split the toy table into two instances
 
-The Atacama study samples two transects, and the 13-ASV table splits **25 / 25**
+The Atacama study samples two transects, and the 13-ASV table splits 25 / 25
 between them (measured, not assumed).
 
 ```{important}
 **The grouping column is not in the tier-1 metadata.** `transect-name` exists in
-the 75-sample Atacama metadata used by [Tier 2](../04_highdim_atacama/01_data.md)
-(Baquedano 32, Yungay 43), but the file shipped with the plugin,
-`data/selected-atacama-sample-metadata.tsv`, has only five columns:
+the 75-sample Atacama metadata (Baquedano 32, Yungay 43) described under
+[the larger Atacama dataset](../04_highdim_atacama/01_data.md), but the file
+shipped with the plugin, `data/selected-atacama-sample-metadata.tsv`, has only
+five columns:
 
     sample-id, ph, average-soil-relative-humidity, elevation, average-soil-temperature
 
 Filtering on `[transect-name]` against it fails with
-`Selection of IDs failed with query`. The transect is still recoverable, because
-it is encoded in the sample identifier: `BAQ…` for Baquedano, `YUN…` for Yungay.
-Build a two-column metadata file from that prefix and filter on it. This chapter
-originally took the grouping variable from one dataset and the table from
-another; the mismatch was caught by running it.
+`Selection of IDs failed with query`. The transect survives in the sample
+identifier — `BAQ…` for Baquedano, `YUN…` for Yungay. Build a two-column
+metadata file from that prefix and filter on that.
 ```
 
 Build one feature table per transect with the standard `q2-feature-table`
@@ -77,15 +76,15 @@ qiime feature-table filter-samples \
 `--p-where` is a SQLite `WHERE` clause over the metadata, so a column name
 containing a hyphen must be bracketed.
 
-Note **which** metadata file the filters read. The tier 1
+Check which metadata file the filters read. The tier 1
 `selected-atacama-sample-metadata.tsv` carries only `ph`,
 `average-soil-relative-humidity`, `elevation` and `average-soil-temperature` —
 there is no `transect-name` column in it, and passing it here fails with
 `ValueError: Selection of IDs failed with query: ...`. `transect-name` lives in
 the tier 2 `sample-metadata.tsv` (see
 [Download the Tutorial Data](../00_getting_started/03_download_data.md)), which
-covers all 50 samples of the 13-ASV table. On that table the split is even:
-**25 samples in Baquedano and 25 in Yungay**.
+covers all 50 samples of the 13-ASV table. On that table the split is even: 25
+samples in Baquedano and 25 in Yungay.
 ```
 
 ```bash
@@ -96,9 +95,8 @@ qiime metadata tabulate \
 ```
 
 Each instance then gets its own transformation and its own covariance matrix.
-Transform and covariance are per-instance operations: the whole point of MGL is
-that the $K$ covariance matrices are estimated separately and only the
-*precision* matrices are coupled.
+Transform and covariance are per-instance operations: MGL estimates the $K$
+covariance matrices separately and couples only the *precision* matrices.
 
 ```bash
 qiime gglasso transform-features \
@@ -175,32 +173,31 @@ If every table carries the same labels it prints *"All datasets have exactly the
 same number of features."* and returns nothing, which QIIME 2 cannot turn into a
 `TensorData` artifact — the action fails instead of producing an empty result.
 
-There is also a discrepancy worth knowing about: the difference check is applied
-to the **column** labels of each `biom.Table.to_dataframe()`, which are sample
-identifiers, while the reported $p_k$ counts rows, which are features. Two
-tables produced by splitting one table on a metadata column always have disjoint
-sample sets, so the check will report them as differing even when their feature
-sets are identical. Inspect the exported array (next section) before relying on
-it.
+The difference check is applied to the column labels of each
+`biom.Table.to_dataframe()`, which are sample identifiers, while the reported
+$p_k$ counts rows, which are features. Two tables produced by splitting one
+table on a metadata column always have disjoint sample sets, so the check
+reports them as differing even when their feature sets are identical. Inspect
+the exported array (next section) before relying on it.
 
-Both behaviours are now confirmed by running them. Two tables split from one
-table on a metadata column report `p_k = [13, 13]` — **identical feature sets** —
-and `build-groups` still produces an array for them, which is exactly what
-comparing sample labels predicts. Handing it two genuinely identical tables
-fails with `Expected output view type 'ndarray', received 'NoneType'`.
+Both behaviours are confirmed by running them. Two tables split from one table
+on a metadata column report `p_k = [13, 13]` — identical feature sets — and
+`build-groups` still produces an array for them, which is what comparing sample
+labels predicts. Handing it two genuinely identical tables fails with
+`Expected output view type 'ndarray', received 'NoneType'`.
 ```
 
 ## Step 3: The chaining gap, and the export workaround
 
-`build-groups` emits `group_array` as a **`TensorData` artifact**. `solve-problem`
-accepts `group_array` as a **`List[Int]` parameter**. These are different kinds
-of thing in the QIIME 2 type system — one is `--o-`/`--i-`, the other is `--p-` —
-so the two actions **do not chain**. There is no pipeline, no transformer and no
+`build-groups` emits `group_array` as a `TensorData` artifact. `solve-problem`
+accepts `group_array` as a `List[Int]` parameter. These are different kinds of
+thing in the QIIME 2 type system — one is `--o-`/`--i-`, the other is `--p-` —
+so the two actions do not chain. There is no pipeline, no transformer and no
 `--i-group-array` input that connects them.
 
-The workaround is to export the artifact and pass the values on the command
-line. `TensorData` is a single-file directory format holding a zarr `ZipStore`
-called `tensor.zip`, with the array stored under the key `tensor`:
+Export the artifact and pass the values on the command line. `TensorData` is a
+single-file directory format holding a zarr `ZipStore` called `tensor.zip`, with
+the array stored under the key `tensor`:
 
 ```bash
 qiime tools export \
@@ -220,8 +217,8 @@ print(G.shape)                                  # (2, L, K)
 print(" ".join(str(int(v)) for v in G.ravel())) # paste into --p-group-array
 ```
 
-The printed integers go straight into the solver call. Note that only one
-covariance artifact appears here, for the reason spelled out in gap 3 below:
+The printed integers go straight into the solver call. Only one covariance
+artifact appears here, for the reason spelled out in gap 3 below:
 
 ```bash
 qiime gglasso solve-problem \
@@ -238,9 +235,8 @@ qiime gglasso solve-problem \
 
 ```{important}
 `--p-group-array 0 1 2 0 1 2` is a syntactically valid six-integer list, not the
-array your data produces. Substitute the integers your own export prints. The
-values shown here exist only to make the command shape unambiguous; they are
-**not** a result.
+array your data produces. It fixes the shape of the command and nothing else.
+Substitute the integers your own export prints.
 
 `--p-n-samples 25 25` are the Baquedano and Yungay sample counts of the 13-ASV
 tier 1 table (50 samples, split evenly); the full 75-sample Atacama metadata
@@ -250,8 +246,8 @@ filtered tables report if you are working from a different subset.
 
 ### Known gaps
 
-Three separate things are broken or missing on this path. **All three have been
-reproduced against QIIME 2 2026.7** — see `analysis/reports/mgl-verification.md`.
+Three things are broken or missing on this path, all three of them reproduced
+against QIIME 2 2026.7 — see `analysis/reports/mgl-verification.md`.
 
 1. **The artifact does not chain to the parameter.** As above. Documented in
    [Troubleshooting](../90_reference/04_troubleshooting.md); the clean fix is
@@ -273,15 +269,14 @@ reproduced against QIIME 2 2026.7** — see `analysis/reports/mgl-verification.m
    **And it exits 0.** Running `solve-problem` with `--p-non-conforming True`
    and a `--p-group-array` against a single covariance succeeds and writes a
    solution whose `precision_` has shape `(13, 13)` — two dimensions, so SGL.
-   You get a valid artifact containing the answer to a different question, with
-   no warning. This is the one to watch: a command that fails is a nuisance, a
-   command that quietly answers something else is a retraction.
+   You get a valid artifact answering a different question, with no warning: a
+   command that fails is a nuisance, a command that quietly answers something
+   else is a retraction.
 
 Gap 3 is the blocking one: until a semantic type exists that can carry a stack of
 covariance matrices, MGL is reachable from the GGLasso Python API but not from
-the QIIME 2 interface. The parameters remain documented here because they are
-registered, they will be the interface once the input type lands, and their
-meaning does not change.
+the QIIME 2 interface. The parameters below are registered and will be the
+interface once the input type lands; their meaning does not change.
 
 ## Step 4: GGL versus FGL, and the $\lambda_2$ grid
 
@@ -294,8 +289,8 @@ unset pair of bounds falls back to `np.logspace(-1, -4, 5)`, and there is no
 
 Both commands below name only `atacama-corr-baquedano.qza`, because
 `--i-covariance-matrix` accepts exactly one artifact — the Yungay matrix has
-nowhere to go. That is gap 3 in plain sight. Treat the two commands as the
-documented flag shape for MGL rather than as a runnable two-group fit.
+nowhere to go, which is gap 3. Treat the two commands as the documented flag
+shape for MGL rather than as a runnable two-group fit.
 
 ```bash
 # Group Graphical Lasso: shared support, free edge weights
@@ -325,23 +320,20 @@ qiime gglasso solve-problem \
 
 Because both $\lambda_1$ and $\lambda_2$ hold ten and five values respectively,
 these runs perform model selection over a 50-point grid and eBIC picks the pair.
-Two consequences follow from the rule in the previous chapter. First, the cost is
-the *product* of the grids, so a 10 × 5 MGL search is fifty solves of a problem
-that is itself $K$ times larger than the SGL equivalent. Second, if you want a
-single MGL fit you must pin both grids — `--p-lambda2-min 0.01 --p-lambda2-max
+The cost is the *product* of the grids, so a 10 × 5 MGL search is fifty solves
+of a problem that is itself $K$ times larger than the SGL equivalent. For a
+single MGL fit, pin both grids — `--p-lambda2-min 0.01 --p-lambda2-max
 0.01 --p-n-lambda2 1` alongside the equivalent for $\lambda_1$.
 
 The boundary check described in the previous chapter extends to $\lambda_2$ on
 multiple-instance problems: a selection at either end of the $\lambda_2$ grid
 warns `lambda is on the edge of the interval, try SMALLER lambda2` (or
-`try BIGGER lambda2`) — the GGL/FGL branch's general follow-up is shorter than
-the one quoted in the previous chapter, just
+`try BIGGER lambda2`) — the GGL/FGL branch's general follow-up is the shorter
 `The solution might have not reached global minimum!`, without the
 `lambda is on the edge of the interval,` prefix used by the single-instance and
-non-conforming branches. A $\lambda_2$ selected at the bottom of the range is the
-most informative version of that warning — it is the estimator telling you it
-would rather not couple the groups at all, which is an argument for fitting them
-independently.
+non-conforming branches. A $\lambda_2$ selected at the bottom of the range means
+the estimator would rather not couple the groups at all — an argument for
+fitting them independently.
 
 ```{important}
 `--p-reg` accepts any string — it is registered as a bare `Str` with no
@@ -352,15 +344,15 @@ input exists, only `GGL` and `FGL` will be valid and they are case-sensitive.
 ```
 
 ```{note}
-**These numbers cannot be produced through the CLI at all, and that is gap 3,
-not an omission.** Selected $(\lambda_1, \lambda_2)$ pairs, per-group edge counts
-and the GGL-versus-FGL difference all require the multi-instance branch, which
-is only entered for a three-dimensional covariance stack — and no semantic type
-can carry one. Verified against QIIME 2 2026.7: a run with `--p-non-conforming`
+**Gap 3, not an omission: the CLI cannot produce these numbers at all.**
+Selected $(\lambda_1, \lambda_2)$ pairs, per-group edge counts and the
+GGL-versus-FGL difference all require the multi-instance branch, which is only
+entered for a three-dimensional covariance stack — and no semantic type can
+carry one. Verified against QIIME 2 2026.7: a run with `--p-non-conforming`
 and a group array returns a `(13, 13)` precision matrix, i.e. a single graph.
 
-They are reachable today only through the GGLasso Python API directly. Until an
-input type lands, treat every $\lambda_2$ and `--p-reg` value on this page as
+They are reachable today only through the GGLasso Python API. Until an input
+type lands, treat every $\lambda_2$ and `--p-reg` value on this page as
 documented-but-inert.
 ```
 
@@ -370,8 +362,8 @@ The runs above assume both instances measure the same features. That assumption
 breaks as soon as you filter each group independently — a taxon observed in
 vegetated soil may be absent from bare soil entirely. `--p-non-conforming True`
 switches the solver to the variant that handles unequal feature sets, applying
-the group penalty only to pairs of variables that actually exist in more than one
-instance. It always uses the `GGL` coupling; `--p-reg` is ignored in this mode,
+the group penalty only to pairs of variables that exist in more than one
+instance. It always uses the `GGL` coupling, and ignores `--p-reg` in this mode,
 because a fused penalty on an edge that exists in only one group is undefined.
 
 Split on `vegetation` and then drop, per group, the features that group never
@@ -423,17 +415,18 @@ gap 3 only one of the two resulting matrices can be passed to
 `--i-covariance-matrix`.
 
 ```{important}
-On the tier 1 table the vegetation split really does produce different feature
-sets: after `--p-min-samples 1` the vegetated subtable keeps 13 features (33
-samples) and the bare subtable keeps 9 (17 samples). And in any case
-`build-groups` bases its match / no-match decision on the **sample**
-identifiers rather than the feature identifiers, so a table split on a metadata
-column always yields an array — the "datasets match" path is not reachable this
-way. Inspect the exported array (Step 3) before relying on it.
+On the tier 1 table the vegetation split does produce different feature sets:
+after `--p-min-samples 1` the vegetated subtable keeps 13 features (33 samples)
+and the bare subtable keeps 9 (17 samples). `build-groups` bases its match /
+no-match decision on the sample identifiers rather than the feature identifiers,
+so a table split on a metadata column always yields an array — the "datasets
+match" path is not reachable this way. Inspect the exported array (Step 3)
+before relying on it.
 
 A larger feature space remains the realistic setting for non-conforming MGL: the
-300-ASV table in [Tier 2](../04_highdim_atacama/00_index.md) is where the mode
-earns its keep.
+300-ASV table in
+[the high-dimensional Atacama chapters](../04_highdim_atacama/00_index.md) is
+where the mode earns its keep.
 ```
 
 ## When GGL beats FGL
@@ -454,8 +447,8 @@ forced toward its coefficient values.
 penalty on pairwise *differences* is the right prior for a time course, a dose
 series, or technical replicates, where you expect adjacent conditions to have
 almost the same numbers and you want the estimator to shrink small differences
-away. Applied to two ecologically distinct habitats, that same prior actively
-suppresses the between-group differences you were trying to find.
+away. Applied to two ecologically distinct habitats, that same prior suppresses
+the between-group differences you were trying to find.
 
 **Use $K$ separate single graphical lassos when the groups may not share
 structure at all.** MGL with an aggressive $\lambda_2$ will manufacture agreement
@@ -464,16 +457,13 @@ share edges, fit them independently and compare the results — that comparison 
 an honest answer, whereas a jointly-estimated pair of near-identical networks is
 partly an artifact of the penalty.
 
-A useful diagnostic, once the CLI path is complete, is to fit at
-$\lambda_2 \approx 0$ and at the eBIC-selected $\lambda_2$ and compare. If the
-networks barely move, the coupling is not doing anything and the simpler
-independent fits are preferable. If they move a great deal, check that the shared
-edges are ones you can defend on biological grounds rather than ones the penalty
-invented.
+Once the CLI path is complete, fit at $\lambda_2 \approx 0$ and at the
+eBIC-selected $\lambda_2$ and compare the two. If the networks barely move, the
+coupling is doing nothing and the simpler independent fits are preferable. If
+they move a great deal, check that the shared edges are ones you can defend on
+biological grounds rather than ones the penalty invented.
 
----
-
-Next: [Latent-Component PCA](07_pca.md) uses the low-rank part of a latent
-solution to place samples in a covariate-aware space, and
+[Latent-Component PCA](07_pca.md) uses the low-rank part of a latent solution to
+place samples in a covariate-aware space, and
 [Interpretation](09_interpretation.md) compares all the Tier 1 models
 side by side.

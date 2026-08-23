@@ -1,8 +1,8 @@
 # Verifying Your Installation
 
-Two minutes of checking here saves a lot of confusion later. Plugin registration
-failures do not appear until you actually invoke an action, and several of them
-produce errors that point somewhere other than the real cause.
+Plugin registration failures do not appear until you invoke an action, and
+several of them raise errors that point somewhere other than the real cause.
+Run these five checks before starting the tutorial.
 
 ## 1. The framework
 
@@ -10,9 +10,9 @@ produce errors that point somewhere other than the real cause.
 qiime info
 ```
 
-Expect QIIME 2 **2026.7**. Since the 2026.1 rebrand the framework package is
-called `rachis`, so `qiime info` reports that name — this is expected, and
-`import qiime2` still works through a compatibility shim.
+Expect QIIME 2 2026.7. The framework package has been called `rachis` since the
+2026.1 rebrand, so `qiime info` reports that name. `import qiime2` still works
+through a compatibility shim.
 
 ## 2. Both plugins are registered
 
@@ -22,7 +22,7 @@ qiime gglasso --help
 qiime classo --help
 ```
 
-`qiime gglasso --help` must list **six** actions:
+`qiime gglasso --help` must list six actions:
 
 ```
   build-groups          build-groups
@@ -38,21 +38,20 @@ registered `name=` as its short help, and four of the six register that field as
 the action name itself. A description column that repeats the action name is
 therefore expected, not a sign of a broken registration.
 
-`qiime classo --help` must list **eight**: `add-covariates`, `add-taxa`,
+`qiime classo --help` must list eight: `add-covariates`, `add-taxa`,
 `classify`, `generate-data`, `predict`, `regress`, `summarize`,
 `transform-features`.
 
 ```{note}
-If two actions are both shown as **regress**, your q2-classo predates the fix for
-`classify` having been registered under the wrong name. The action works; it is
+If two actions are both shown as regress, your q2-classo predates the fix for
+`classify` having been registered under the wrong name. The action works and is
 only mislabelled. Update to a current checkout.
 ```
 
-## 3. The scientific stack is the one you expect
+## 3. The scientific stack
 
-The most common failure mode is not a missing package but a *wrong* one: `pip`
-cannot see conda's pins and will happily install a wheel over the distribution's
-NumPy.
+The most common failure mode is a wrong package rather than a missing one: `pip`
+cannot see conda's pins and will install a wheel over the distribution's NumPy.
 
 ```bash
 python -c "import numpy, pandas, scipy, numba, bokeh, zarr; \
@@ -70,7 +69,7 @@ Expected on a clean 2026.7 environment:
 | scipy | 1.17.x | distribution pin |
 | numba | 0.66.x | compiles GGLasso's JIT solver kernels |
 | bokeh | 3.x | 2.4.3 cannot render the visualizations |
-| zarr | 2.18.x | **must be < 3** — zarr 3 removed `zarr.hierarchy.Group` |
+| zarr | 2.18.x | must be < 3 — zarr 3 removed `zarr.hierarchy.Group` |
 
 And the two solver libraries:
 
@@ -78,9 +77,9 @@ And the two solver libraries:
 python -c "import gglasso, classo; print('gglasso', gglasso.__version__)"
 ```
 
-`gglasso` should be **0.3.0** or later.
+Expect `gglasso` 0.3.0 or later.
 
-## 4. A solver actually runs
+## 4. The solver runs
 
 Registration succeeding does not mean the numerics work — the JIT kernels are
 compiled on first call, and that is where a numba/NumPy mismatch surfaces.
@@ -105,7 +104,7 @@ The first call is slow — that is numba compiling, not a hang.
 ```{note}
 If this raises a `TypingError` or `LoweringError`, you have hit a numba/NumPy
 incompatibility rather than a q2-gglasso bug. Re-run with `NUMBA_DISABLE_JIT=1`
-to confirm: the kernels are valid pure Python and will work, just slowly.
+to confirm: the kernels are valid pure Python and will run, more slowly.
 ```
 
 ## 5. Read an artifact
@@ -114,13 +113,13 @@ to confirm: the kernels are valid pure Python and will work, just slowly.
 qiime tools peek data/atacama-counts.qza
 ```
 
-This confirms the artifact API and the type system agree with what the tutorial
-expects.
+A successful peek confirms that the artifact API and the type system agree with
+what the tutorial expects.
 
 ## Known rough edges
 
-Neither plugin declares `Choices()` on its string parameters, so a misspelled
-enum value is accepted by the CLI and only fails inside the function at runtime:
+Neither plugin declares `Choices()` on its string parameters, so the CLI accepts
+a misspelled enum value and the call fails inside the function at runtime:
 
 ```
 ValueError: Unknown transformation name, use clr and not 'clrr'

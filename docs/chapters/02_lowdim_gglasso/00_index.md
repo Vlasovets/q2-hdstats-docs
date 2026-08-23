@@ -1,16 +1,14 @@
 # Graphical Lasso Models
 
-This is the **reference tier**. Every q2-gglasso action gets its one canonical
-demonstration here, on a dataset small enough that you can see the whole
-covariance matrix at once: **50 samples × 13 ASVs** from the Atacama soil study,
-plus five environmental covariates.
+Every q2-gglasso action gets one canonical demonstration on the same dataset: 50 samples
+× 13 ASVs from the Atacama soil study, plus five environmental covariates. The tables
+are small enough that you can read a whole covariance matrix at once, and each command
+finishes in seconds, so you can check its output by eye before trusting the same command
+on 300 features in [the high-dimensional Atacama
+chapters](../04_highdim_atacama/00_index.md). None of these fits is meant to be a
+scientific result.
 
-Nothing here is meant to be a scientific result. The point is that each command
-runs in seconds, and you can check the output by eye before trusting the same
-command on 300 features in
-[Tier 2](../04_highdim_atacama/00_index.md).
-
-## What each chapter adds
+## Actions by chapter
 
 | Chapter | Action it owns | New parameters |
 |---|---|---|
@@ -27,17 +25,16 @@ command on 300 features in
 A machine-checkable version of this mapping lives in the
 [Command Coverage Matrix](../90_reference/01_command_coverage.md).
 
-## Before you start
+## Prerequisites
 
-These chapters assume `data/` is populated as described in
-[Download the Tutorial Data](../00_getting_started/03_download_data.md), and that
-`qiime gglasso --help` lists all six actions — see
+Populate `data/` as described in
+[Download the Tutorial Data](../00_getting_started/03_download_data.md), and
+confirm that `qiime gglasso --help` lists all six actions — see
 [Verifying Your Installation](../01_installation/04_verify.md).
 
 ```{tip}
-Several q2-gglasso actions have sharp edges that are easy to hit and hard to
-diagnose — `pca` silently requires a latent solution, `transform-features`
-demands a taxonomy it never reads, and `--p-rank` always raises. Each chapter
-flags its own at the point you would hit it, and they are collected in
-[Troubleshooting](../90_reference/04_troubleshooting.md).
+Several q2-gglasso actions fail in ways that are easy to hit and hard to
+diagnose: `pca` requires a latent solution without saying so,
+`transform-features` demands a taxonomy it never reads, and `--p-rank` always
+raises. [Troubleshooting](../90_reference/04_troubleshooting.md) collects them.
 ```

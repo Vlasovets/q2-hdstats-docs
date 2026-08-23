@@ -1,13 +1,12 @@
 # Installing q2-classo
 
-## Conda Environment
+## Conda environment
 
 q2-classo installs into the same QIIME 2 2026.7 environment as q2-gglasso — if
-you already created it while following the previous page, activate it and skip
-straight to the clone step.
+you have already created it, activate it and start at the clone step.
 
 ```{note}
-Two upstream renames landed in QIIME 2 **2026.4**: the `amplicon` distribution is
+Two upstream renames landed in QIIME 2 2026.4: the `amplicon` distribution is
 now called `qiime2` (so paths contain `/qiime2/`, not `/amplicon/`), and the
 environment files are named `rachis-*` because the framework package was
 rebranded from `qiime2` to `rachis`. A compatibility shim keeps `import qiime2`
@@ -41,9 +40,9 @@ Older instructions pointed at a repository called `q2-classo-latest` under the
 `python setup.py install` is deprecated and redundant with `pip install -e .`.
 ```
 
-## Docker Installation
+## Docker installation
 
-Docker image of q2-classo is available through Docker Hub:
+A q2-classo image is published on Docker Hub:
 
 ```bash
 # Pull the Docker image
@@ -58,24 +57,24 @@ docker run -it -v /path/to/your/data:/data ovlasovets/q2-classo:latest qiime cla
 
 ```{note}
 The published `:latest` image is built on the retired `amplicon` base image and
-has not yet been rebuilt for 2026.7. Prefer the conda instructions above until it
+has not yet been rebuilt for 2026.7. Use the conda instructions above until it
 has been.
 ```
 
 ### Verification
 
-To verify that q2-classo is correctly installed:
+Confirm that q2-classo is registered:
 
 ```bash
 # Check that classo is available
 qiime classo --help
 ```
 
-You should see all eight actions: `add-covariates`, `add-taxa`, `classify`,
+You should see eight actions: `add-covariates`, `add-taxa`, `classify`,
 `generate-data`, `predict`, `regress`, `summarize` and `transform-features`.
 
 ```{note}
-In releases before this one, `classify` was mistakenly registered under the name
-`regress`, so `qiime classo --help` showed two actions with the same name. If you
-see that, your q2-classo predates the fix.
+In releases before this one, `classify` was registered under the name `regress`,
+so `qiime classo --help` listed two actions with the same name. If you see that,
+your q2-classo predates the fix.
 ```

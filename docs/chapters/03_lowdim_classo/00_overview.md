@@ -10,67 +10,75 @@ the sequencing run happened to produce.
 :name: fig-simplex-overview
 :width: 100%
 
-The constraint this whole tier is built around. See
+Scale invariance and the zero-sum constraint. See
 [Appendix: Mathematical Background](../99_appendix/01_math.md) for the
 formulation it comes from.
 ```
 
-This chapter covers both regression and classification tasks using
-log-contrast transformations.
+## The formulation
 
-## What are Log-Contrast Models?
+Relative abundances sum to a constant, so a composition occupies a simplex
+rather than the whole of Euclidean space. A log-contrast model works around
+that in three steps:
 
-Compositional data (like microbiome relative abundances) sum to a constant and exist in a constrained space. Log-contrast models:
-- Transform data using centered log-ratio (CLR) or other log-ratio transformations
-- Apply regularized regression/classification in the transformed space
-- Provide interpretable results in terms of relative abundance changes
+- transform the counts with the centered log-ratio (CLR) or another log-ratio
+  map;
+- fit a regularized regression or classifier in the transformed space;
+- read the coefficients as changes in relative abundance.
 
-## Chapter Organization
+The same three steps serve a continuous response and a categorical one.
 
-This chapter is organized into the following sections:
+## Contents
 
-### 1. Data Preparation
-Learn how to transform your microbiome data and prepare it for log-contrast modeling.
+### 1. Data preparation
+Transform a count table to log-ratios, aggregate it on the taxonomy, append
+environmental covariates, and split it into training and test sets.
 
-### 2. Regression Models
-Predict continuous outcomes (e.g., temperature, pH) from microbiome composition:
-- **Log-Contrast Regression**: Basic approach using CLR transformation
-- **trac**: Incorporates taxonomic hierarchical information for better feature selection
+### 2. Regression models
+Predict a continuous outcome (temperature, pH) from community composition:
+- **Log-Contrast Regression**: CLR-transformed features, without the taxonomy
+- **trac**: aggregates features along the taxonomic hierarchy before selection
 
-### 3. Classification Models
-Predict categorical outcomes (e.g., disease status, habitat type):
-- **Log-Contrast Classification**: Basic approach for classification tasks
-- **trac**: Uses taxonomic structure to identify predictive taxonomic groups
+### 3. Classification models
+Predict a categorical outcome such as disease status or habitat type:
+- **Log-Contrast Classification**: the same design matrix against a categorical
+  response
+- **trac**: identifies predictive taxonomic groups, not only individual features
 
-### 4. Advanced Topics
-- **Concomitant Formulation**: Joint estimation of coefficients and noise level for heteroscedastic data
+### 4. Advanced topics
+- **Concomitant Formulation**: joint estimation of the coefficients and the
+  noise level, for data with heterogeneous variance
 
 ### 5. Interpretation
-Understand how to interpret log-contrast model results and extract biological insights.
+What a fitted log-contrast model does and does not say about the community.
 
-## Key Concepts
+## Key concepts
 
-**Log-Ratio Transformations**: Convert compositional data to unrestricted space
-- CLR (Centered Log-Ratio): Most common, centers data around geometric mean
-- ALR (Additive Log-Ratio): Uses one component as reference
+**Log-Ratio Transformations**: convert compositional data to unrestricted space
+- CLR (Centered Log-Ratio): the usual choice; centres each sample on its
+  geometric mean
+- ALR (Additive Log-Ratio): divides by one component taken as the reference
 
-**Regularization**: Prevents overfitting in high-dimensional microbiome data
-- L1 penalty (Lasso): Encourages sparsity, selects subset of features
-- Stability selection: Identifies robust features across subsamples
+**Regularization**: prevents overfitting in high-dimensional microbiome data
+- L1 penalty (Lasso): drives coefficients to exactly zero and so selects a
+  subset of features
+- Stability selection: keeps the features whose selection probability across
+  subsamples clears a threshold
 
-**trac (tree-aggregation of compositional data)**: Leverages phylogenetic structure
-- Computes adaptive weights based on taxonomic hierarchy
-- Groups related taxa for more interpretable results
+**trac (tree-aggregation of compositional data)**: uses phylogenetic structure
+- trac computes adaptive weights from the taxonomic hierarchy
+- It groups related taxa, so a coefficient attaches to a clade
 
 ## Prerequisites
 
-Before working through this chapter, ensure you have:
-- Completed the [Installation](../01_installation/01_prerequisites.md) section
-- Familiarized yourself with the [Atacama dataset](../00_getting_started/02_datasets.md)
-- Basic understanding of regression and classification concepts
+- Install the plugins, following
+  [Installation](../01_installation/01_prerequisites.md).
+- Read the description of the [Atacama dataset](../00_getting_started/02_datasets.md).
+- You will need a working knowledge of regression and classification.
 
-## Getting Started
+## Reading order
 
-Begin with [Data Preparation](02_data_preparation.md) to learn how to transform and prepare your data, then choose your analysis path:
-- For continuous outcomes → [Regression](03_regression/01_logcontrast.md)
-- For categorical outcomes → [Classification](04_classification/01_logcontrast.md)
+Begin with [Data Preparation](02_data_preparation.md), then take the branch that
+matches your response variable:
+- continuous → [Regression](03_regression/01_logcontrast.md)
+- categorical → [Classification](04_classification/01_logcontrast.md)

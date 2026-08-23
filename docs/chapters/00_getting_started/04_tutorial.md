@@ -1,13 +1,9 @@
 # End-to-End Tutorial
 
-This page runs both plugins from raw counts to interpreted output, twice: once on
-a 13-feature table where everything is inspectable by eye, and once on a
-300-feature table where it is not. Every command is copy-pasteable and every
-number quoted was read from a committed results table, not from prose.
-
-It is deliberately a *path*, not a reference. Each step links to the chapter that
-explains it properly — follow the link when you want the reasoning, stay here when
-you want the workflow.
+The workflow below runs both plugins from raw counts to interpreted output,
+twice: once on a 13-feature table where everything is inspectable by eye, and
+once on a 300-feature table where it is not. Follow the link at each step when you
+want the reasoning behind it.
 
 ```{admonition} What you need before you start
 :class: tip
@@ -23,10 +19,10 @@ A sequencing run does not measure how much of each taxon is present. It measures
 the library preparation, not by biology. Two samples with identical composition
 but different sequencing depth give different count vectors.
 
-This has a sharp consequence: **an increase in one taxon's count forces a decrease
-in the others**, whether or not anything biological changed. Correlations computed
-on raw counts pick this up as signal, which is why naive co-occurrence networks are
-full of edges that are artifacts of the constraint rather than of biology.
+An increase in one taxon's count therefore forces a decrease in the others,
+whether or not anything biological changed. Correlations computed on raw counts
+pick this up as signal, which is why naive co-occurrence networks are full of
+edges that are artifacts of the constraint rather than of biology.
 
 Both plugins deal with it the same way — they work with **log-ratios** between
 features rather than with features themselves. A ratio is unchanged when you
@@ -39,7 +35,7 @@ alt: Three-part compositions lie on a triangular simplex; log-contrast coefficie
 width: 640px
 align: center
 ---
-Why compositions need special treatment. Sequencing data lives on a simplex — the
+Sequencing data lives on a simplex — the
 proportions must sum to one — so features cannot vary independently. Log-ratio
 transforms map the simplex to ordinary Euclidean space, where standard estimators
 apply. The zero-sum constraint on log-contrast coefficients is the regression
@@ -57,14 +53,12 @@ They are not interchangeable. An edge involves no outcome variable; a log-contra
 coefficient is a weight inside a zero-sum combination, not a property of one taxon
 on its own.
 
----
-
 ## Part 1 — Low-dimensional: 13 taxa, 50 samples
 
 With 13 features and 50 samples there are 78 possible pairs and the sample
-covariance is full rank and invertible. **Penalisation here is a modelling choice,
-not a necessity** — you could fit an unpenalised model. That makes this the right
-place to learn what each command does, because you can check every number by hand.
+covariance is full rank and invertible. Penalisation here is a modelling choice,
+not a necessity — you could fit an unpenalised model, and you can check every
+number below by hand.
 
 ### Step 1.1 — Transform the counts
 
@@ -82,11 +76,11 @@ qiime gglasso transform-features \
 `mclr` is the *modified* centred log-ratio: it takes logs of the observed positive
 counts and leaves zeros at a common floor below every observed value, rather than
 replacing them with an invented number. The alternative, `clr`, substitutes a
-pseudo-count for every zero — which matters more than it sounds, because in a
-typical amplicon table most cells *are* zero. See
-{doc}`../02_lowdim_gglasso/01_data_preparation`.
+pseudo-count for every zero, and in a typical amplicon table most cells are zero,
+so the substitution touches most of the table.
+See {doc}`../02_lowdim_gglasso/01_data_preparation`.
 
-```{admonition} A gotcha worth knowing now
+```{admonition} A trap worth knowing now
 :class: warning
 `--i-taxonomy` is registered as required but is not read by the transform: the
 output is numerically identical whatever valid taxonomy you pass. Pass the correct
@@ -102,10 +96,10 @@ qiime gglasso calculate-covariance \
     --o-covariance-matrix data/atacama-table-corr.qza
 ```
 
-`scaled` divides through by the diagonal, giving a correlation matrix. This matters
-for interpreting the penalty: on a correlation scale one value of $\lambda_1$ means
-roughly the same thing for every feature pair, which it would not on a covariance
-scale where high-variance features dominate.
+`scaled` divides through by the diagonal, giving a correlation matrix. On a
+correlation scale one value of $\lambda_1$ means roughly the same thing for every
+feature pair, which it would not on a covariance scale where high-variance
+features dominate.
 
 ### Step 1.3 — Fit the network
 
@@ -138,7 +132,7 @@ intended single fit into a model-selection run at values you did not choose. Alw
 pass the grid explicitly, and run with `--verbose`.
 ```
 
-### Step 1.4 — Read the result, including when it is uninformative
+### Step 1.4 — Read the result
 
 ```bash
 qiime gglasso summarize \
@@ -147,13 +141,13 @@ qiime gglasso summarize \
     --o-visualization data/sgl-summary.qzv
 ```
 
-Here is what the criterion actually returns on this table:
+The criterion returns:
 
 | $\gamma$ | selected $\lambda_1$ | edges (of 78 pairs) |
 |---|---|---|
 | 0.01 | 0.489 | 1 |
 | 0.10 | 0.489 | 1 |
-| 0.30 | 0.621 | **0** |
+| 0.30 | 0.621 | 0 |
 | 0.50 | 0.621 | 0 |
 | 0.70 | 0.621 | 0 |
 
@@ -169,18 +163,16 @@ five curves decrease monotonically toward the sparse end of the path and the ope
 circles — each criterion's choice — cluster at $\lambda_1 \approx 0.5$–$0.6$.
 ```
 
-**This is the honest outcome and it is worth sitting with.** Thirteen abundant
-taxa across fifty samples do not contain enough conditional-dependence signal for
-eBIC to prefer a network over no network. The tier exists so you can see the
-machinery clearly, not because it yields a biological finding.
+Thirteen abundant taxa across fifty samples do not contain enough
+conditional-dependence signal for eBIC to prefer a network over no network.
 
-Notice also that $\gamma$ barely matters here — every value lands in the same
-place. Hold on to that, because it is exactly what changes in Part 2.
+$\gamma$ barely matters here — every value lands in the same place. That is what
+changes in Part 2.
 
 ### Step 1.5 — The same table with q2-classo
 
-Now we ask the other question: does a combination of these taxa predict soil
-temperature?
+The other question is whether a combination of these taxa predicts soil
+temperature.
 
 ```bash
 # 1. centred log-ratio, with an adaptive floor for zeros
@@ -231,7 +223,7 @@ qiime classo regress \
     --o-result data/regresstaxa_lc.qza
 ```
 
-Two things in that fit deserve attention.
+Two flags in that fit are worth attention.
 
 **`--i-c` is the zero-sum constraint.** It is what makes this a *log-contrast*
 model rather than an ordinary regression on transformed features: the coefficients
@@ -257,12 +249,10 @@ permutation-based negative controls are the honest substitutes — see
 
 Full walkthrough: {doc}`../03_lowdim_classo/03_regression/01_logcontrast`.
 
----
-
 ## Part 2 — High-dimensional: 300 taxa, 54 samples
 
-Now the regime changes in kind, not just in size. With $p = 300$ and $n = 54$,
-$p/n = 5.56$ and the sample covariance is **singular by construction** — its rank
+The regime now changes in kind, not just in size. With $p = 300$ and $n = 54$,
+$p/n = 5.56$ and the sample covariance is singular by construction — its rank
 cannot exceed $n - 1 = 53$, so 247 of its 300 eigenvalues are numerically zero.
 There is no unpenalised model to fall back on. Penalisation is what makes the
 estimator defined at all.
@@ -291,9 +281,9 @@ width: 720px
 align: center
 ---
 Model selection on 300 features. The dark curve is eBIC at $\gamma = 0.3$ (lower is
-better), minimised at $\lambda_1 = 0.8$ with **216 edges**; the pale curve is edge
+better), minimised at $\lambda_1 = 0.8$ with 216 edges; the pale curve is edge
 count on the right axis. Unlike the 13-feature case the criterion has a clear
-interior minimum — but note how sharply the curve rises on either side.
+interior minimum, and the curve rises sharply on either side of it.
 ```
 
 The selected model has eBIC 16130.0988 at $\lambda_1 = 0.8$, giving 216 edges out
@@ -301,8 +291,8 @@ of 44,850 possible pairs.
 
 ```{admonition} gamma is now a decision, not a default
 :class: warning
-Where $\gamma$ was irrelevant on 13 features, here it is decisive: over the
-conventional range the selected model spans **1405 edges → 216 → the empty graph**.
+Where $\gamma$ was irrelevant on 13 features, here it decides the answer: over the
+conventional range the selected model spans 1405 edges → 216 → the empty graph.
 Report the $\gamma$ you used and check the sensitivity around it. The plugin
 default of 0.01 was reasonable for a small table and is far too permissive at this
 size. See {doc}`../04_highdim_atacama/02_model_selection`.
@@ -317,7 +307,7 @@ edges. The sparse-plus-low-rank model splits them:
 $$\hat{\Theta} = \hat{\Theta}_S - \hat{L}$$
 
 where $\hat{\Theta}_S$ holds the sparse taxon–taxon edges and $\hat{L}$ is a
-low-rank block absorbing the shared gradients.
+low-rank block carrying the shared gradients.
 
 ```bash
 qiime gglasso solve-problem \
@@ -330,8 +320,8 @@ qiime gglasso solve-problem \
     --o-solution data/atacama-top-300-slr-lambda0.8-rank2.qza
 ```
 
-**You do not set the rank — you set `--p-mu1` and the rank comes out.** This is the
-single most common source of confusion with this action:
+You do not set the rank — you set `--p-mu1` and read the achieved rank back from
+the solution:
 
 | `--p-mu1` | achieved rank | sparse edges | connected nodes |
 |---|---|---|---|
@@ -346,14 +336,14 @@ alt: Step plot of sparse edge count and connected node count against achieved la
 width: 680px
 align: center
 ---
-What each latent dimension absorbs. Every dimension added to $\hat{L}$ removes
-edges from the sparse block. Rank 2 keeps 94% of the rank-0 edges; rank 10 keeps
-half. The shaded region marks the choice made here.
+Every dimension added to $\hat{L}$ removes edges from the sparse block. Rank 2
+keeps 94% of the rank-0 edges; rank 10 keeps half. The shaded region marks the
+choice made here.
 ```
 
 Comparing the two edge sets directly is the useful diagnostic: 202 edges are
-shared, 14 are removed by the latent block, and **none are added**. That says the
-14 removed edges were attributable to shared gradients and the remaining 202 are
+shared, 14 are removed by the latent block, and none are added. That says the 14
+removed edges were attributable to shared gradients and the remaining 202 are
 not — a stronger statement about those 202 than the sparse-only fit could make.
 `qiime gglasso summarize` reports the edge set for each solution, so you can make
 this comparison yourself without drawing a network.
@@ -379,10 +369,11 @@ qiime classo regress \
 
 At this scale cross-validation replaces a fixed penalty: `--p-cv-subsets 5` splits
 the data five ways and `--p-cv-one-se` applies the one-standard-error rule, which
-prefers the sparsest model within one standard error of the best — a deliberate bias
-toward parsimony that is standard practice and worth stating in a methods section.
+prefers the sparsest model within one standard error of the best. That is a
+deliberate bias toward parsimony and standard practice; state it in any methods
+description that relies on the fit.
 
-Across 15 environmental outcomes the fits select between **1 and 33** of the 300
+Across 15 environmental outcomes the fits select between 1 and 33 of the 300
 features. Three outcomes (`depth`, `ec`, `toc`) select a single feature, which is
 the model saying it found nothing usable rather than finding one decisive taxon.
 
@@ -396,9 +387,7 @@ distorts any fit that uses it. Look at your outcome's distribution first.
 
 Full treatment: {doc}`../04_highdim_atacama/05_classo_cv`.
 
----
-
-## What the two regimes taught us
+## The two regimes compared
 
 | | 13 taxa, 50 samples | 300 taxa, 54 samples |
 |---|---|---|
@@ -410,17 +399,15 @@ Full treatment: {doc}`../04_highdim_atacama/05_classo_cv`.
 | Effect of $\gamma$ | negligible | 1405 → 216 → 0 edges |
 | Verification | inspect the matrix | model selection and calibration |
 
-The transferable lesson is the last row. On a small table you can look at the
-answer and judge it. On a high-dimensional table you cannot, so the penalty, the
-selection criterion, and its sensitivity **are** the result — report them alongside
-the network, not as an afterthought.
+The last row is the transferable one. On a small table you can look at the answer
+and judge it. On a high-dimensional table you cannot, so the penalty, the
+selection criterion and its sensitivity are the result. Report them alongside the
+network.
 
----
+## Reproducing the results
 
-## Reproducing all of it
-
-Every figure and number on this page regenerates from committed inputs, with no
-cluster and no QIIME 2 installation:
+Every figure and number here regenerates from committed inputs, with no cluster
+and no QIIME 2 installation:
 
 ```bash
 git clone https://github.com/Vlasovets/q2-hdstats-docs
@@ -429,8 +416,8 @@ pip install -r analysis/requirements-figures.txt
 python analysis/scripts/make_docs_figures.py
 ```
 
-The inputs are 103 KB of TSV under `analysis/results/`, committed for exactly this
-purpose. To rebuild this book locally:
+The inputs are 103 KB of TSV under `analysis/results/`. To rebuild this book
+locally:
 
 ```bash
 pip install -r requirements.txt

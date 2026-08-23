@@ -1,29 +1,26 @@
 # Latent Components & Covariates
 
 [Choosing the Latent Rank](03_slr_ranks.md) produced a low-rank block $\hat{L}$
-and an integer — its rank — and then argued about which integer to keep. That
-argument was made on parsimony and identifiability grounds, without once looking
-at what the latent dimensions actually *are*. This page looks.
+and an integer — its rank — and argued about which integer to keep on parsimony
+and identifiability grounds, without looking at what the latent dimensions
+actually *are*.
 
 `qiime gglasso pca` projects the samples onto the eigenvectors of $\hat{L}$ and
-plots them. The mechanics were covered in
-[Latent-Component PCA](../02_lowdim_gglasso/07_pca.md) and are not repeated. What
-Tier 2 adds is the thing the 13-ASV example could not support: **a real question
-with a checkable answer**. Is the latent block modelling the Atacama aridity
-transect, or is it modelling sequencing depth? A rank-2 subspace has exactly two
-directions, the study has a small number of plausible global drivers, and there
-are measured covariates for most of them. That makes the correspondence testable
-rather than decorative.
+plots them; [Latent-Component PCA](../02_lowdim_gglasso/07_pca.md) covers the
+mechanics. At rank 2 this table supports a question the 13-ASV example could
+not: is the latent block modelling the Atacama aridity transect, or is it
+modelling sequencing depth? A rank-2 subspace has exactly two directions, the
+study has a small number of plausible global drivers, and there are measured
+covariates for most of them, so the correspondence is testable.
 
 ```{note}
-No figure, correlation or component-to-covariate assignment on this page has been
-computed; everything here is **pending verification against QIIME 2 2026.7**. The
-procedure is what is being documented — not its result.
+No figure, correlation or component-to-covariate assignment below has been
+computed; all of it is **pending verification against QIIME 2 2026.7**.
 ```
 
-## Before you run it
+## Two prerequisites
 
-Two prerequisites, both of which fail unhelpfully:
+Both fail unhelpfully:
 
 ```{important}
 **The solution must come from `--p-latent`.** `pca` reads `solution/lowrank_`,
@@ -35,8 +32,7 @@ optional `Metadata` parameter but is dereferenced unconditionally; omitting it
 raises an `AttributeError` on `NoneType`.
 ```
 
-Both are in [Troubleshooting](../90_reference/04_troubleshooting.md). A third
-constraint is specific to this tier and is worth its own section.
+[Troubleshooting](../90_reference/04_troubleshooting.md) records both.
 
 ## `--p-n-components` must not exceed the achieved rank
 
@@ -59,14 +55,14 @@ limit is the rank itself, not one below it:
 | `atacama-top-300-slr-lambda0.8-mu7.5.qza` | 7.5 | 10 | 10 | up to 45 panels |
 
 ```{note}
-These ranks are **measured**, not targets — each was read out of the fitted
-solution, and they are the same values the generated map in
+These ranks are measured, not targets: each was read out of the fitted solution,
+and they are the values the generated map in
 [Choosing the Latent Rank](03_slr_ranks.md) reports.
 ```
 
 ```{note}
-Still read the achieved rank out of *your own* solution before choosing
-`--p-n-components` rather than copying the table: a different $\lambda$, a
+Read the achieved rank out of *your own* solution before choosing
+`--p-n-components`, rather than copying the table: a different $\lambda$, a
 different covariance matrix, or a different GGLasso build can all shift it. If the
 rank came back lower than expected, the command fails on the guard rather than on
 anything you can see in the CLI. Leave yourself a margin rather than sizing
@@ -75,12 +71,11 @@ tolerance is far finer than the `1e-9` eigenvalue cut the projection itself
 applies, so it can admit a value for which fewer components actually materialize.
 ```
 
-The canonical rank-2 model is still the thin case. Rank 2 admits at most
+The canonical rank-2 model is the thin case. Rank 2 admits at most
 `--p-n-components 2`, which fills exactly one panel of the pair-plot grid — PC1
-against PC2, the same scatter the **Single plot** tab draws by default. So at
-rank 2 the pair-plot tells you nothing the single plot does not, and the single
-plot shows you the entire latent subspace in one scatter. That is not a
-consolation prize — it is the whole model.
+against PC2, the same scatter the **Single plot** tab draws by default. At rank 2
+the pair-plot therefore adds nothing to the single plot, and the single plot
+shows you the entire latent subspace in one scatter.
 
 ```{note}
 At `--p-n-components 1` there is no pair for the grid to draw at all. Whether
@@ -93,8 +88,8 @@ QIIME 2 2026.7**; either way, read the Single plot tab.
 If you omit `--p-color-by`, the visualizer sums each sample's row of the input
 table, rescales those sums to $[0, 1]$, adds them as a `seq-depth` column and
 colours by that. On a count table that row sum is the library size. On the
-clr-transformed table used here it is not — read the warning below before you
-draw any conclusion from these colours.
+clr-transformed table used here it is not — read the note below before you draw
+any conclusion from these colours.
 
 ```bash
 qiime gglasso pca \
@@ -107,7 +102,7 @@ qiime gglasso pca \
 
 **Explanation:**
 
-- `--i-table`: the **transformed** table — the same artifact that
+- `--i-table`: the transformed table — the same artifact that
   `calculate-covariance` consumed in [The 300-ASV Dataset](01_data.md). The
   projection is a matrix product between this table and the eigenvectors of
   $\hat{L}$, so the features must be the same 300, in the same order. Raw counts
@@ -121,12 +116,11 @@ qiime gglasso pca \
 - `--o-visualization`: view with `qiime tools view` or at
   [QIIME 2 View](https://view.qiime2.org/).
 
-The question worth settling before any biological reading is whether the leading
-latent direction is a technical artefact. A low-rank block is exactly the sort of
-structure that library-size variation produces, and if PC1 lines up with library
-size then the first latent dimension is bookkeeping, not ecology, and every
-biological reading below is unsafe. Rule it out first, in writing, before moving
-on.
+Settle one question before any biological reading: is the leading latent
+direction a technical artefact? A low-rank block is the sort of structure that
+library-size variation produces, and if PC1 lines up with library size then the
+first latent dimension is bookkeeping, not ecology, and every biological reading
+below is unsafe. Rule that out first, in writing.
 
 ```{note}
 The default `seq-depth` colouring cannot settle it on a clr table. clr centres
@@ -135,7 +129,7 @@ zero up to floating-point error; `seq-depth` then rescales that residual numeric
 noise to $[0, 1]$ and produces a full colour gradient that carries no information
 about library size. It looks like a depth gradient and is not one, and "PC1 does
 not track `seq-depth`" on this table is a guaranteed pass rather than a result.
-To run the check for real, add the per-sample total of the **raw** count table to
+To run the check for real, add the per-sample total of the raw count table to
 `sample-metadata.tsv` as a numeric column and pass that column via
 `--p-color-by`. Treat the run above as a smoke test that the projection renders.
 ```
@@ -149,7 +143,7 @@ default is therefore safe to carry over to tables with more samples than
 features.
 ```
 
-## Then: colour by an environmental variable
+## Colouring by an environmental variable
 
 ```bash
 qiime gglasso pca \
@@ -165,8 +159,8 @@ Repeat with `--p-color-by ph` and
 `--p-color-by average-soil-relative-humidity`. Elevation is the natural first
 choice here because the Atacama sampling design is a transect
 {cite}`neilson2017significant`: elevation is a proxy for the aridity gradient
-that organises the whole study, and if any single measured variable is going to
-be standing behind a latent dimension, it is that one.
+that organises the whole study, and it is the measured variable most likely to
+stand behind a latent dimension.
 
 The higher-rank fits are where the pair-plot earns its place:
 
@@ -180,26 +174,26 @@ qiime gglasso pca \
     --o-visualization atacama-top-300-mu10-pca-elevation.qzv
 ```
 
-Use it to answer one question: **do components 3 and 4 separate anything?** If
+Use it to answer one question: do components 3 and 4 separate anything? If
 the rank-5 fit's extra dimensions show no structure against any covariate you
 measured, that is direct support for the rank-2 choice made on other grounds in
 [Choosing the Latent Rank](03_slr_ranks.md). If they do show structure, the
 rank-2 model is throwing away something real and the argument has to be reopened.
 
 ```{note}
-The rendered visualizations are not reproduced here, and no component has been
-matched to a covariate. Pending verification against QIIME 2 2026.7.
+No component has yet been matched to a covariate. Pending verification against
+QIIME 2 2026.7.
 ```
 
-### Two practical points about the metadata
+### Metadata size and missing values
 
-The visualizer builds a plot grid for **every** numeric metadata column and then
+The visualizer builds a plot grid for every numeric metadata column and then
 displays the one named by `--p-color-by`. With the full Atacama metadata that is
 a lot of grids, at six panels each for the rank-5 fit above (`--p-n-components 4`
 gives $\binom{4}{2} = 6$ scatter panels, laid out on a 4 × 4 grid), and the run
 time scales with the number of numeric columns rather than with the number you
-asked to see. If it is slow, pass a reduced metadata TSV containing only the
-columns you care about.
+asked to see. If it is slow, pass a reduced metadata TSV holding only the
+columns you need.
 
 The colour scale is built from the plain minimum and maximum of the chosen
 column and is not missing-value aware. A column with `NaN` entries can produce a
@@ -213,9 +207,8 @@ different treatment of missingness — do not mix the two and then compare plots
 `--p-color-by` sees numeric columns only: the metadata is filtered with
 `filter_columns(column_type="numeric")` before anything is plotted, so
 `transect-name` and `vegetation` are gone by the time your string is looked up,
-and naming either one fails on a missing column. This is not a small loss —
-`transect-name` (Baquedano vs Yungay) is the top-level design variable of the
-study.
+and naming either one fails on a missing column. `transect-name` (Baquedano vs
+Yungay) is the top-level design variable of the study.
 
 Recode them into numeric indicators in a copy of the metadata:
 
@@ -243,17 +236,17 @@ A 0/1 column drawn on a continuous colour scale is a crude two-colour plot, and
 that is all it should be used for: seeing whether the two groups fall in
 different regions of the latent plane. It is not a test. If the separation looks
 real, test it properly — a Mann–Whitney or permutation test on the component
-scores — rather than reporting the picture. The same recoding trick is what makes
-these variables usable as grouping factors in
+scores — rather than reporting the picture. The same recoding makes these
+variables usable as grouping factors in
 [Multiple Graphical Lasso](../02_lowdim_gglasso/06_multiple_graphical_lasso.md).
 ```
 
-## Correlating the components with covariates properly
+## Correlating the components with covariates
 
-The plots tell you where to look. The number you report should come from a
-correlation computed outside the visualizer, over every component and every
-covariate at once. This is the quantity the appendix calls $m_t$: the strongest
-association between any robust principal component and outcome $t$
+The plots tell you where to look. Compute the number you report outside the
+visualizer, over every component and every covariate at once. This is the
+quantity the appendix calls $m_t$: the strongest association between any robust
+principal component and outcome $t$
 (see [Appendix: Mathematical Background](../99_appendix/01_math.md)).
 
 Export the solution and the transformed table:
@@ -332,14 +325,13 @@ and the `pca` visualizer both build their component lists from the reported rank
 — so if you use those helpers instead, the same caveat applies.
 ```
 
-Four things about that code deserve a comment, because they are where this
-analysis usually goes wrong.
+This analysis usually goes wrong in four places.
 
-**The orientation check is not paranoia.** `X` must have samples in rows and the
-$p$ features in columns for the matrix product to mean anything, and the stored
-orientation of a transformed q2-gglasso table is not the one you would guess for
-a feature table. Checking the shape against `L` costs nothing and catches a
-transposition that would otherwise produce numbers rather than an error.
+**The orientation check.** `X` must have samples in rows and the $p$ features in
+columns for the matrix product to mean anything, and the stored orientation of a
+transformed q2-gglasso table is not the one you would guess for a feature table.
+Checking the shape against `L` costs nothing and catches a transposition that
+would otherwise produce numbers rather than an error.
 
 **Spearman rather than Pearson.** Environmental covariates in this study are not
 symmetric and the relationship between a latent axis and a gradient need not be
@@ -369,7 +361,7 @@ ones, so a covariate that correlates with two components is reported only for th
 last of them.
 ```
 
-### What the answer looks like when it works
+### A resolved component-to-covariate assignment
 
 ```{figure} ../../images/png/scatter_pc.png
 :name: fig-atacama-pc1-covariates
@@ -381,23 +373,22 @@ analysis. PC1 tracks average soil temperature ($r = 0.61$, $p \approx 2\times
 ($r = -0.67$, $p \approx 1\times 10^{-7}$). Each point is one of the 54 samples.
 ```
 
-This is the outcome worth hoping for: a latent axis that is not a technical
-artefact and not a mystery, but a stand-in for a gradient you measured. Elevation
-and soil temperature are themselves strongly related along the Atacama transect,
-so these are two views of one physical gradient rather than two independent
-findings — PC1 is the transect.
+The outcome worth hoping for is a latent axis that stands in for a gradient you
+measured. Elevation and soil temperature are themselves strongly related along
+the Atacama transect, so these are two views of one physical gradient rather
+than two independent findings — PC1 is the transect.
 
-Note what that licenses and what it does not. It says the rank-2 block is
-absorbing environmental structure rather than batch or library size, which is the
-check [First run](#first-run-the-default-seq-depth-colouring) set out to make. It
-does **not** say the remaining edges are free of environmental confounding: a
-covariate correlated with a latent axis at $r = -0.67$ still leaves plenty
-unexplained. The follow-up is to put elevation into the model explicitly with
+That result says the rank-2 block is absorbing environmental structure rather
+than batch or library size, which is the check
+[First run](#first-run-the-default-seq-depth-colouring) set out to make. It does
+not say the remaining edges are free of environmental confounding: a covariate
+correlated with a latent axis at $r = -0.67$ still leaves plenty unexplained.
+Put elevation into the model explicitly with
 `transform-features --p-add-metadata` and compare edge sets, as
 [What to do with the answer](#what-to-do-with-the-answer) describes.
 
 ```{note}
-These correlations come from the reference analysis and have **not** been re-run
+These correlations come from the reference analysis and have not been re-run
 under QIIME 2 2026.7 — the figure shows what a resolved component-to-covariate
 assignment looks like, not a verified result for this build. The p-value
 annotations inside the image are also mis-rendered (`2.02 − e6` should read
@@ -449,8 +440,8 @@ into "these specific edges were environment-mediated" —
 
 **A component tracks nothing you measured.** A candidate unmeasured driver: an
 unrecorded gradient, a collection batch, an extraction run. It is a hypothesis to
-take back to the study design, not a finding. Note that this is the case the
-sparse + low-rank model exists for {cite}`chandrasekaran2010latent,kurtz2019disentangling`
+take back to the study design, not a finding. This is the case the sparse +
+low-rank model exists for {cite}`chandrasekaran2010latent,kurtz2019disentangling`
 — being unable to name the axis does not mean the decomposition failed.
 
 ## Next

@@ -1,10 +1,6 @@
-# Log-Contrast Classification with trac (tree-aggregation of compositional data)
+# Tree-Aggregated Classification (trac)
 
-This tutorial demonstrates how to leverage taxonomic hierarchical information in log-contrast classification to predict vegetation presence. trac (tree-aggregation of compositional data) {cite}`bien2021tree` improves feature selection by aggregating predictors along the taxonomic tree.
-
-## Overview
-
-trac classification incorporates taxonomic classifications and computes adaptive weights based on the taxonomic hierarchy. This approach can identify which taxonomic groups (not just individual taxa) are most predictive of your target variable, leading to more interpretable and potentially more accurate classifications.
+trac (tree-aggregation of compositional data) {cite}`bien2021tree` places coefficients on nodes of the taxonomy, not only on individual ASVs. Weights derived from the hierarchy make an internal node — a genus, an order, a phylum — competitive with its members, so the fitted classifier can name the clades whose aggregated abundance tracks the split between vegetated and bare sites. A named clade is easier to interpret than the ASVs beneath it, and may classify more accurately.
 
 ## Step 1: Transform Features
 
@@ -20,7 +16,7 @@ qiime classo transform-features \
 
 ## Step 2: Add Taxonomic Information
 
-Incorporate taxonomic classifications and compute adaptive weights:
+Attach the taxonomy to the design and derive an adaptive weight for every node:
 
 ```bash
 qiime classo add-taxa \
@@ -30,14 +26,11 @@ qiime classo add-taxa \
     --o-aweights data/wtaxa
 ```
 
-This step:
-- Uses taxonomic hierarchy to structure feature relationships
-- Computes adaptive weights based on taxonomic distances
-- Encourages selection of taxa that share taxonomic relatives
+The action uses the taxonomic hierarchy to structure the relationships between features and derives each adaptive weight from the taxonomic distances, which encourages the fit to select taxa that share taxonomic relatives.
 
 ## Step 3: Add Covariates
 
-Include environmental metadata with custom weights, combined with taxonomic features:
+Include environmental metadata with custom weights, alongside the taxonomic features:
 
 ```bash
 qiime classo add-covariates \
@@ -71,7 +64,7 @@ qiime sample-classifier split-table \
 
 ## Step 5: Train the Classification Model
 
-Train a log-contrast classifier with taxonomic information:
+Fit the classifier on the aggregated design:
 
 ```bash
 qiime classo classify \
@@ -93,12 +86,12 @@ qiime classo classify \
 
 **Parameters explained:**
 - `--i-features`: Training feature table
-- `--i-c`: C matrix for log-contrast constraints
-- `--i-weights`: Feature weights (including taxonomic weights)
+- `--i-c`: C matrix carrying the log-contrast constraints
+- `--i-weights`: Feature weights, taxonomic weights included
 - `--m-y-column vegetation`: Target variable
 - `--p-huber False`: Use standard logistic loss
-- `--p-stabsel`: Enable stability selection for feature selection
-- `--p-cv`: Perform cross-validation
+- `--p-stabsel`: Run stability selection alongside the path fit
+- `--p-cv`: Choose the penalty by cross-validation
 - `--p-stabsel-threshold 0.5`: Stability selection threshold
 
 ## Step 6: Make Predictions
@@ -114,7 +107,7 @@ qiime classo predict \
 
 ## Step 7: Generate Summary Visualization
 
-Create a comprehensive summary including taxonomic information:
+Render the fit, the taxonomy and the predictions as a single report:
 
 ```bash
 qiime classo summarize \
@@ -124,25 +117,17 @@ qiime classo summarize \
     --o-visualization data/classifytaxa_C1_trac.qzv
 ```
 
-**Output visualization:**
 The `.qzv` file contains:
-- Selected taxa with taxonomic context
-- Model performance metrics (accuracy, precision, recall, F1-score)
-- Taxonomic group importances
-- Confusion matrix for test predictions
-- Cross-validation curves
+- the selected taxa with their taxonomic context
+- model performance metrics (accuracy, precision, recall, F1-score)
+- taxonomic group importances
+- a confusion matrix for the test predictions
+- cross-validation curves
 
 View the results at [QIIME 2 View](https://view.qiime2.org/).
 
-## Comparing Log-Contrast vs trac
+## Log-contrast and trac side by side
 
-**Log-Contrast:**
-- Treats each taxon independently
-- Faster computation
-- Useful for exploratory analysis
+**Log-contrast** treats each taxon as an independent predictor, fits faster, and suits exploratory work.
 
-**trac:**
-- Leverages taxonomic relationships
-- More interpretable results
-- Better feature selection for hierarchically structured data
-- Slightly increased computation time
+**trac** uses the taxonomic relationships, reports coefficients on named clades, selects features better when the structure is hierarchical, and takes somewhat longer to fit.

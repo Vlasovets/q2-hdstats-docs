@@ -1,29 +1,25 @@
 # Interpretation
 
-By this point Tier 2 has produced four things: a sparse network at
+The Atacama chapters of Tier 2 have produced four results: a sparse network at
 $\lambda_1 = 0.8$ ([Selecting lambda](02_model_selection.md)), a sparse + low-rank
 decomposition at $\mu_1 = 15$ ([Choosing the Latent Rank](03_slr_ranks.md)), a
 reading of what the latent axes correspond to
 ([Latent Components & Covariates](04_latent_pca.md)), and a set of
 cross-validated log-contrast models, one per environmental outcome
-([Log-Contrast Models at Scale](05_classo_cv.md)).
-
-This page is about what those four things say **together**, and — at least as
-importantly — what they do not say. It fits no models and introduces no
-parameters.
+([Log-Contrast Models at Scale](05_classo_cv.md)). Each limits how you can read
+the others.
 
 ```{note}
-**Which numbers on this page are verified.** The recompute has run under QIIME 2
-2026.7, but it did not cover everything, so the claims below are not uniformly
-solid:
+**Which numbers are verified.** The recompute ran under QIIME 2 2026.7 but did
+not cover everything, so the claims below are not uniformly solid:
 
 | quantity | status |
 |---|---|
 | $\lambda = 0.8$, 216 edges, eBIC 16130.0988 | reproduced through the CLI |
 | $\mu_1 \rightarrow$ rank map, and the edge/node counts at each rank | reproduced |
 | taxonomy of individual nodes | resolves for all 300 features since the bundle was rebuilt with real feature IDs |
-| correlations between components and covariates | **not** re-run |
-| $R^2$ values | **not** re-run — the recompute reports cross-validated *error*; converting it needs a held-out `predict` pass |
+| correlations between components and covariates | not re-run |
+| $R^2$ values | not re-run — the recompute reports cross-validated *error*; converting it needs a held-out `predict` pass |
 | named taxa in the narrative below | carried over from the reference analysis |
 
 Read the unverified rows as "how to read this number once you have it", not as a
@@ -41,31 +37,28 @@ $$
 
 and the two terms are estimated jointly, competing for the same covariance
 {cite}`chandrasekaran2010latent,kurtz2019disentangling`. Neither is meaningful
-without the other being stated.
+unless the other is stated.
 
-Concretely, this changes what an edge *is*. In the SGL network of
+This changes what an edge *is*. In the SGL network of
 [Selecting lambda](02_model_selection.md), a nonzero $\hat{\Theta}_{ij}$ means
-taxa $i$ and $j$ are conditionally dependent **given the other 298 taxa in the
-table**. In the SLR network, it means they are conditionally dependent given the
-other 298 taxa **and given the $r$ latent directions**. Those are different
-claims about the world, and an edge that survives the second is a stronger
-statement than an edge that only satisfies the first.
+taxa $i$ and $j$ are conditionally dependent given the other 298 taxa in the
+table. In the SLR network it means they are conditionally dependent given the
+other 298 taxa and given the $r$ latent directions. Those are different claims
+about the world, and the SLR edge is the stronger of the two.
 
 Symmetrically, the loadings of $\hat{L}$ are not a nuisance parameter. A taxon
 with a large loading on a latent component is one whose abundance is largely
-explained by a global gradient shared across the community. It may have very few
-edges precisely *because* the latent block already accounts for most of its
-covariance. Low degree in $\hat{\Theta}_S$ plus high loading in $\hat{L}$ is a
-recognisable and interpretable profile: a generalist responding to the
-environment rather than to its neighbours. Reading only the sparse block would
-record such a taxon as uninteresting.
+explained by a global gradient shared across the community, and it may carry very
+few edges precisely *because* the latent block already accounts for most of its
+covariance. Low degree in $\hat{\Theta}_S$ plus high loading in $\hat{L}$ is an
+interpretable profile: a generalist responding to the environment rather than to
+its neighbours. Read only the sparse block and such a taxon looks uninteresting.
 
 ## Reading a taxon's neighbourhood
 
-The unit of interpretation is not the whole 300-node graph — at this size the
-full picture is a hairball, and the `summarize` heatmap is for spotting block
-structure, not for reading individual relationships. The unit is one taxon and
-its neighbours.
+Interpret one taxon and its neighbours rather than the whole 300-node graph. At
+this size the full picture is a hairball, and the `summarize` heatmap is for
+spotting block structure, not for reading individual relationships.
 
 Export the solution, convert the precision matrix to partial correlations, and
 join the taxonomy:
@@ -120,19 +113,18 @@ print(neighbours.to_frame("partial_r").join(tax["Taxon"]))
 ```
 
 ```{note}
-`solution/precision_` holds the **sparse** block $\hat{\Theta}_S$; the low-rank
-part is stored separately as `solution/lowrank_`. Reading edges off
-`precision_` therefore gives you the sparse network conditional on the latent
-directions, which is what you want here — but it is not the full precision
-matrix, and the two should never be conflated in a figure caption.
+`solution/precision_` holds the sparse block $\hat{\Theta}_S$. The low-rank part
+is stored separately as `solution/lowrank_`. Reading edges off `precision_`
+therefore gives you the sparse network conditional on the latent directions,
+which is what you want here — but it is not the full precision matrix, so never
+conflate the two in a figure caption.
 
-The solution artifact does not store only matrices. Alongside the blocks it
-carries an ordered `labels/` group — one entry per feature, in the order the
-covariance matrix was built in — taken from the column names of the input
-correlation matrix. That group is the authoritative ID list, which is why the
-snippet reads IDs from it and uses the exported table only as a cross-check. If
-the assertion fires, do not silently reorder: a mismatched order relabels the
-whole network.
+Alongside the blocks the artifact carries an ordered `labels/` group — one
+entry per feature, in the order the covariance matrix was built in — taken from
+the column names of the input correlation matrix. That group is the authoritative
+ID list, which is why the snippet reads IDs from it and uses the exported table
+only as a cross-check. If the assertion fires, do not silently reorder: a
+mismatched order relabels the whole network.
 ```
 
 ```{note}
@@ -145,36 +137,35 @@ same 32-character hexadecimal IDs that key
 
 If you are working from an older copy whose features are `ASV-1` … `ASV-300`, the
 join will not raise — it returns all-`NaN`, which is easy to miss. Rebuild with
-`--p-keep-original-id` as [The 300-ASV Dataset](01_data.md) shows rather than
-attempting to map the names back; the next box explains why mapping cannot work.
+`--p-keep-original-id` as [The 300-ASV Dataset](01_data.md) shows, rather than
+mapping the names back, because the mapping cannot be recovered.
 ```
 
 ```{important}
 **Do not recover the mapping from `top-300-asvs.tsv` by abundance rank.** It is
 tempting — the file has `feature-id` / `total-abundance` / `abundance-rank`, the
-relabelling helper sorts **ascending** by total abundance, so `ASV-1` is the
-*least* abundant and the mapping looks like
+relabelling helper sorts ascending by total abundance, so `ASV-1` is the *least*
+abundant and the mapping looks like
 $\texttt{ASV-}n \longleftrightarrow \texttt{abundance-rank} = 301 - n$.
 
-**It does not work, and it fails silently.** Total abundance is not unique:
-**209 of these 300 features share a total-abundance value with another feature**
-(61 tie groups, the largest holding 13). Within a tie group the rank order is
-arbitrary, so `abundance-rank` and the plugin's internal ordering are free to
-disagree — and they do. Permuting the correlation matrix by this mapping fails to
-reproduce the shipped one, off by 1.137. Only the **91** features with a unique
-total abundance are placed correctly; the rest get a neighbour's taxonomy, and
-nothing raises.
+The mapping fails, and it fails silently. Total abundance is not unique: 209 of
+these 300 features share a total-abundance value with another feature (61 tie
+groups, the largest holding 13). Within a tie group the rank order is arbitrary,
+so `abundance-rank` and the plugin's internal ordering are free to disagree — and
+they do. Permuting the correlation matrix by this mapping fails to reproduce the
+shipped one, off by 1.137. Only the 91 features with a unique total abundance are
+placed correctly. The rest get a neighbour's taxonomy, and nothing raises.
 
-This is not a hypothetical drift. The helper originally ordered features with
-`df.sort_index()`, whose default quicksort is **not stable**; a later change to a
-stable sort moved **158 of the 300** features to different `ASV-k` labels. Every
+The drift is not hypothetical. The helper originally ordered features with
+`df.sort_index()`, whose default quicksort is not stable, and a later change to a
+stable sort moved 158 of the 300 features to different `ASV-k` labels. Every
 published number was unaffected — the graphical-lasso objective is invariant
 under permutation, so the λ path, the eBIC at every grid point and the 216 edges
 are bit-identical — but every *feature identity* shifted.
 
-The lesson generalises: with `--p-no-keep-original-id`, `ASV-k` is a position, not
-an identifier. It is only meaningful within the single artifact that defines it,
-and it is never a key you can join on across artifacts.
+With `--p-no-keep-original-id`, `ASV-k` is a position, not an identifier. It is
+only meaningful within the single artifact that defines it, and it is never a
+key you can join on across artifacts.
 ```
 
 ```{note}
@@ -198,37 +189,32 @@ two vary together after conditioning on everything else in the table", full stop
 
 **Degree.** A high-degree node is a candidate hub, but degree is a function of
 $\lambda_1$ before it is a function of biology: at a smaller penalty every degree
-goes up. Comparing degrees *within* one fitted network is legitimate; quoting a
-degree as a property of the organism is not.
+goes up. Compare degrees *within* one fitted network. Do not quote a degree as a
+property of the organism.
 
 **The sub-composition.** Every edge is conditional on the top-300 table. Removing
-or adding features changes the CLR reference and therefore the whole geometry —
-the warning in [The 300-ASV Dataset](01_data.md) applies to every statement on
-this page. "Taxon A and taxon B are conditionally associated" always carries the
+or adding features changes the CLR reference and therefore the whole geometry, so the warning in [The 300-ASV Dataset](01_data.md) applies to every statement on this page. "Taxon A and taxon B are conditionally associated" always carries the
 silent suffix "within this sub-composition, at this $\lambda_1$ and this
 $\gamma$".
 
-## What the SGL-to-SLR difference buys you
+## Edges the latent block removes
 
-The most informative comparison in this tier costs nothing extra: the edges
-present in the SGL network but absent in the SLR network at the same
+The most informative comparison for the Atacama data costs nothing extra: the
+edges present in the SGL network but absent in the SLR network at the same
 $\lambda_1$. Those are the associations that a small number of global directions
 can explain — candidate environment-mediated or batch-mediated edges. The edges
 present in both are the ones that survive conditioning on the latent subspace.
 
 On this dataset the difference is small and highly structured. Adding two latent
-dimensions removes 14 of the 216 edges and adds none, and the removed edges are
-not scattered: they fall into three components — one of 6 nodes carrying 9 of them,
-one of 4 nodes carrying 4, and a single isolated pair. The remaining 202 edges are
-common to both models.
-
-Two things make that difference interpretable rather than incidental.
+dimensions removes 14 of the 216 edges and adds none, and the removed edges fall
+into three components — one of 6 nodes carrying 9 of them, one of 4 nodes carrying
+4, and a single isolated pair. The remaining 202 edges are common to both models.
 
 **The removed edges were the weak ones.** Their partial correlations have median
 $|r| = 0.021$ against $0.116$ for the edges that survive — and the strongest edge
 the latent block removed, $|r| = 0.062$, is weaker than the *median* surviving
-edge. The latent component is not competing with the strong structure in the
-network; it is absorbing a haze at the bottom of the edge-weight distribution.
+edge. The latent component does not compete with the strong structure in the
+network. It removes edges from the bottom of the edge-weight distribution.
 
 **They are clustered, not spread.** Fourteen edges over 12 nodes, nine of them
 inside a single 6-node group that was nearly complete before the latent block was
@@ -237,10 +223,7 @@ of taxa at once and induces weak mutual correlation among all of them. A driver
 acting on the whole community would have thinned edges everywhere instead.
 
 Neither observation proves the driver is environmental — see
-[What you cannot conclude](#what-you-cannot-conclude) — but together they say the
-rank-2 block is doing something specific and local rather than shaving the
-network uniformly, which is what makes those 12 nodes worth looking up in the
-taxonomy.
+[What you cannot conclude](#what-you-cannot-conclude) — but together they say the rank-2 block is doing something specific and local rather than shaving the network uniformly, which is what makes those 12 nodes worth looking up in the taxonomy.
 
 Export the sparse-only solution alongside the one you already unpacked:
 
@@ -268,16 +251,15 @@ print("both     :", len(sgl & slr))
 print("SLR only :", len(slr - sgl))
 ```
 
-The third number is the one people forget to look at. Edges can also *appear*
-when the latent block is added, because removing a dense confounding direction
-can unmask a direct association that was previously cancelled out. A model where
-the SLR network is a strict subset of the SGL network is a possible outcome, not
-a guaranteed one, and an "SLR only" set of any size is worth inspecting
-individually.
+Check the third count. Edges can also *appear* when the latent block is added,
+because removing a dense confounding direction can unmask a direct association
+that was previously cancelled out. An SLR network that is a strict subset of the
+SGL network is a possible outcome, not a guaranteed one. Inspect an "SLR only"
+set of any size edge by edge.
 
 ```{note}
-The three counts, and the taxonomy of the edges in each set, are **pending
-recompute**. The comparison figures that circulated with the superseded
+The three counts, and the taxonomy of the edges in each set, are pending
+recompute. The comparison figures that circulated with the superseded
 $\lambda = 0.95$ bundle described in the [overview](00_index.md) cannot be used
 for this — they were computed at a different penalty.
 ```
@@ -286,11 +268,8 @@ for this — they were computed at a different penalty.
 
 [Log-Contrast Models at Scale](05_classo_cv.md) fits, for each environmental
 outcome $t$, a sparse coefficient vector $\hat{\beta}^{(t)}$ subject to
-$\mathbf{1}^\top \beta = 0$. That is a completely different estimator on the same
-matrix, and the interesting question is whether the two agree.
-
-They are not measuring the same thing, and the difference matters before any
-comparison is attempted:
+$\mathbf{1}^\top \beta = 0$ — a different estimator on the same matrix. The two
+do not estimate the same quantity:
 
 - An **edge** is a conditional dependence between two taxa. It involves no
   outcome variable at all.
@@ -299,7 +278,7 @@ comparison is attempted:
   taxa in the contrast* {cite}`aitchison1984log,lin2014variable,shi2016regression`;
   the coefficient of a single feature has no meaning in isolation.
 
-With that stated, there are three comparisons worth making.
+Three comparisons follow from that.
 
 **1. Are the selected taxa neighbours?** Take the features with nonzero
 $\hat{\beta}^{(t)}$ for one outcome and look them up in the partial-correlation
@@ -323,13 +302,13 @@ external check the rank-2 choice rests on. For each task $t$ it defines
 If $m_t$ and $q_t$ are rank-correlated across tasks, then the outcomes the
 regression can predict are exactly the outcomes aligned with the latent subspace,
 and two dimensions are carrying the predictable structure. That is a statement
-about the *rank*, which is why it belongs in the rank argument in
-[Choosing the Latent Rank](03_slr_ranks.md) as well as here.
+about the *rank*, which is why it also belongs to the rank argument in
+[Choosing the Latent Rank](03_slr_ranks.md).
 
 ```{important}
 The Spearman correlation between $m_t$ and $q_t$ that appears in the appendix and
-in the earlier drafts of this tier is **pending recompute** and must not be
-quoted until it has been recomputed at $\lambda_1 = 0.8$, $\gamma = 0.3$,
+in the earlier drafts of the Atacama chapters is pending recompute. Do not quote
+it until it has been recomputed at $\lambda_1 = 0.8$, $\gamma = 0.3$,
 $\mu_1 = 15$. It is also a correlation over a small number of tasks with strongly
 inter-correlated outcomes: report it with the number of tasks and a permutation
 $p$-value, and do not treat it as an independent confirmation of anything.
@@ -338,17 +317,17 @@ $p$-value, and do not treat it as an independent confirmation of anything.
 **3. Watch for the same signal counted twice.** If a latent component tracks
 elevation and a log-contrast model predicts elevation well, you have observed one
 gradient through two instruments, not two independent lines of evidence. The
-filtered-covariate analysis on the [q2-classo page](05_classo_cv.md) exists for
-the same reason: when a covariate is nearly a proxy for the outcome, adding it as
-a predictor inflates $R^2$ without adding microbial information. Apply the same
-scepticism to a network-to-regression agreement.
+filtered-covariate analysis on the [q2-classo page](05_classo_cv.md) guards
+against the same failure: when a covariate is nearly a proxy for the outcome,
+adding it as a predictor inflates $R^2$ without adding microbial information.
+Apply the same scepticism to a network-to-regression agreement.
 
 ## What you cannot conclude
 
 ```{important}
-**Nothing here is causal.** Conditional dependence is not interaction; a
-coefficient is not an effect. Every result in this tier is observational, from a
-single sampling campaign, with $n = 54$.
+**Nothing here is causal.** Conditional dependence is not interaction. A
+coefficient is not an effect. Every result for the Atacama data is
+observational, from a single sampling campaign, with $n = 54$.
 
 **Nothing here is about absolute abundance.** The model lives in log-ratio
 coordinates. An edge or a coefficient describes relative structure within the
@@ -363,45 +342,44 @@ all of them, or the result is not reproducible even in principle.
 **The sample size limits what is checkable.** With 54 samples, 300 features and
 strongly inter-correlated covariates, individual edges are not stably estimated.
 Read modules and gradients, not single links. If a specific edge carries the
-weight of an argument, it needs a stability check — refitting on subsamples and
-recording selection frequency {cite}`meinshausen2010stability` — not a
-correlation coefficient.
+weight of an argument, check its stability: refit on subsamples and record the
+selection frequency {cite}`meinshausen2010stability`.
 ```
 
 ```{note}
-Earlier drafts of this tier named a *Pseudarthrobacter* ASV as the leading
-selected feature across the log-contrast models, a genus well described in
-hyperarid Atacama soils
+Earlier drafts of the Atacama chapters named a *Pseudarthrobacter* ASV as the
+leading selected feature across the log-contrast models, a genus well described
+in hyperarid Atacama soils
 {cite}`finger2018pseudarthrobacter,horstmann2025subsurface,neilson2017significant`.
 That reading is plausible, but the identity of the leading feature is an output
-of a model that has not been re-run, and it is **pending verification against
-QIIME 2 2026.7** like everything else on this page.
+of a model that has not been re-run, and it is pending verification against
+QIIME 2 2026.7.
 ```
 
-## A reporting checklist
+## Reporting checklist
 
-If you take one thing from Tier 2 to your own data, take this. A network result
-is reportable when it comes with:
+Carry this from Tier 2 to your own data. A network result is reportable when it
+comes with:
 
 1. the table it was estimated on — feature count, sample count, and the filtering
    rule that produced them;
 2. the transform (`clr` or `mclr`) and the pseudo-count, if any;
 3. `--p-method` for the covariance and whether it was scaled;
 4. $\lambda_1$, $\gamma$, and how $\lambda_1$ was selected;
-5. for an SLR model, $\mu_1$ **and** the achieved rank, since the rank is an
+5. for an SLR model, $\mu_1$ and the achieved rank, since the rank is an
    output;
 6. what the latent components correlated with, including the sequencing-depth
    check;
 7. the software versions of both the plugin and GGLasso itself.
 
-Points 5 and 7 are the ones most often missing, and they are the two that make a
-sparse + low-rank result impossible to reproduce when they are.
+Points 5 and 7 go missing most often, and without them a sparse + low-rank result
+cannot be reproduced.
 
-## Where to go next
+## Further reading
 
-The method-level comparison of SGL, SLR and the adaptive
-model is in the Tier 1 chapter
-[Network Interpretation and Analysis](../02_lowdim_gglasso/09_interpretation.md);
-the definitions behind $m_t$, $q_t$ and the eBIC are in
-[Appendix: Mathematical Background](../99_appendix/01_math.md); and all the works
-cited here are collected on the [References](../../references.md) page.
+The method-level comparison of SGL, SLR and the adaptive model is in the Tier 1
+chapter
+[Network Interpretation and Analysis](../02_lowdim_gglasso/09_interpretation.md).
+The definitions behind $m_t$, $q_t$ and the eBIC are in
+[Appendix: Mathematical Background](../99_appendix/01_math.md). The works cited
+here are collected on the [References](../../references.md) page.

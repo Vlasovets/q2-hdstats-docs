@@ -1,23 +1,23 @@
 # Installing q2-gglasso
 
-## Conda Environment
+## Conda environment
 
 Create a dedicated conda environment for q2-gglasso.
 
 ```{note}
-Two upstream renames landed in QIIME 2 **2026.4** and change every install
-command you may have seen in older tutorials:
+Two upstream renames landed in QIIME 2 2026.4 and change every install command
+written for an earlier release:
 
-* the **`amplicon` distribution is now called `qiime2`**, so the channel and file
+* the `amplicon` distribution is now called `qiime2`, so the channel and file
   paths contain `/qiime2/` rather than `/amplicon/`;
-* the environment files are named **`rachis-*`** rather than `qiime2-*`, because
+* the environment files are named `rachis-*` rather than `qiime2-*`, because
   the framework package was rebranded from `qiime2` to `rachis`. A compatibility
-  shim keeps `import qiime2` working, so existing scripts do not need changes.
+  shim keeps `import qiime2` working, so existing scripts need no change.
 ```
 
-Pick the file matching your platform. `linux-64` and `osx-64` are available;
-there is no `osx-arm64` build of this distribution, so Apple Silicon users should
-run the `osx-64` build under Rosetta or use Docker.
+Pick the file matching your platform. `linux-64` and `osx-64` are available.
+There is no `osx-arm64` build of this distribution, so on Apple Silicon run the
+`osx-64` build under Rosetta or use Docker.
 
 ```bash
 # Create the QIIME 2 2026.7 environment (linux-64 shown)
@@ -45,20 +45,20 @@ If `conda env create` fails with
     can be installed
 
 you have hit a known defect in the upstream 2026.7 `linux-64` file: it pins
-`zlib=1.3.2` while every `sortmerna` 2.0 build requires `zlib <1.3`. `deblur` is
-not used anywhere in this tutorial. Download the environment file, delete the
-`deblur`, `q2-deblur` and `sortmerna` lines, and create the environment from your
-edited copy.
+`zlib=1.3.2` while every `sortmerna` 2.0 build requires `zlib <1.3`. Nothing in
+this book uses `deblur`. Download the environment file, delete the `deblur`,
+`q2-deblur` and `sortmerna` lines, and create the environment from your edited
+copy.
 ```
 
 ```{note}
-`python setup.py install` used to appear in these instructions. It is deprecated
-and redundant with `pip install -e .` — use the latter only.
+Older instructions ran `python setup.py install`. It is deprecated and redundant
+with `pip install -e .` — use the latter alone.
 ```
 
-## Docker Installation
+## Docker installation
 
-Docker image of q2-gglasso is available through Docker Hub:
+A q2-gglasso image is published on Docker Hub:
 
 ```bash
 # Pull the Docker image
@@ -73,20 +73,20 @@ docker run -it -v /path/to/your/data:/data ovlasovets/q2-gglasso:latest qiime gg
 
 ```{note}
 The published `:latest` image is built on the retired `amplicon` base image and
-has not yet been rebuilt for 2026.7. Prefer the conda instructions above until it
+has not yet been rebuilt for 2026.7. Use the conda instructions above until it
 has been.
 ```
 
 ### Verification
 
-To verify that q2-gglasso is correctly installed:
+Confirm that q2-gglasso is registered:
 
 ```bash
 # Check that gglasso is available
 qiime gglasso --help
 ```
 
-You should see all six actions listed: `build-groups`, `calculate-covariance`,
+You should see six actions: `build-groups`, `calculate-covariance`,
 `pca`, `solve-problem`, `summarize` and `transform-features`.
 
-The installation is now complete! You can proceed to explore the plugin's functionality.
+If all six appear, the installation is complete.

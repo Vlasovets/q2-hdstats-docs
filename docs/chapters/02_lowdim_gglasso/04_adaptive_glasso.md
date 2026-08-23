@@ -1,24 +1,18 @@
 # Adaptive Graphical Lasso
 
-This tutorial demonstrates how to incorporate **environmental covariates** into sparse inverse covariance estimation using the **Adaptive Graphical Lasso** model. This method allows users to assign custom penalty weights to selected covariates, enabling more flexible and biologically informed regularization.
+The adaptive graphical lasso appends the environmental covariates to the feature table
+as additional variables and gives them their own penalty weights. Edges between taxa
+then represent associations that survive once the measured environment is modelled
+explicitly rather than left to confound them.
 
-**Purpose**: Incorporates prior knowledge about environmental covariates
+The weights carry prior knowledge and have to come from you: penalise the associations you
+take to be environment-mediated more heavily, and the connections you take to be
+biologically meaningful less. Nothing in the data chooses them.
 
-**Key characteristics**:
-- Applies differential penalties to different types of associations
-- Lower penalties for biologically meaningful connections
-- Higher penalties for environment-mediated associations
-- Integrates environmental metadata directly into the model
+## Adding the covariates to the table
 
-**Interpretation**:
-- Edges represent environment-independent microbial interactions
-- Environmental covariates explicitly modeled rather than confounded
-- Most biologically interpretable results
-- Requires domain knowledge for penalty weight selection
-
-## Step 1: Add Metadata
-
-First, apply a modified centered log-ratio (mCLR) transformation and standardize environmental covariates alongside microbiome features:
+Apply the modified centred log-ratio (mCLR) transform and standardise the environmental
+covariates alongside the microbiome features:
 
 ```bash
 # standardise covariates 
@@ -33,13 +27,13 @@ qiime gglasso transform-features \
 
 **Explanation:**
 
-- `--p-add-metadata True`: Appends covariates (e.g., environmental features) to the feature table.
-- `--p-transformation mclr`: Applies mCLR transformation to address compositionality.
-- The output table contains both standardized microbial and environmental data.
+- `--p-add-metadata True`: appends the covariates from the sample metadata to the feature table.
+- `--p-transformation mclr`: applies the mCLR transform, which addresses compositionality.
+- The output table holds the standardised microbial and environmental variables together.
 
-## Step 2: Calculate new Covariance Matrix
+## Covariance over features and covariates
 
-Next, compute the scaled covariance matrix for the transformed table:
+Compute the scaled covariance of the combined table:
 
 ```bash
 # calculate correlation including covariates
@@ -51,12 +45,12 @@ qiime gglasso calculate-covariance \
 
 **Explanation:**
 
-- `--p-method scaled`: Produces a Pearson correlation matrix (i.e., scaled covariance).
-- Covariates are included in the input table and will be treated equally with other features.
+- `--p-method scaled`: produces a Pearson correlation matrix, the scaled covariance.
+- The covariates sit in the input table and are treated like any other feature at this stage.
 
-## Step 3: Fit the Adaptive Graphical Lasso Model
+## Fitting the adaptive model
 
-Use adaptive penalty weights for selected covariates to guide the network estimation:
+Give the selected covariates their own penalty weights:
 
 ```bash
 # sparse model with specific weights for covariates
@@ -74,19 +68,19 @@ qiime gglasso solve-problem \
 ```
 
 **Explanation:**
-- `--p-n-samples 50`: Number of individuals used to compute the input covariance matrix.
-- `--p-lambda1-min`: Lower-bound for the sparsity penalty (λ₁).
-- `--p-lambda1-max`: Upper-bound for the sparsity penalty (λ₁).
-- `--p-n-lambda1`: Number of grid points between the min and max lambda values.
-- `--p-gamma 0.01`: Controls the model selection criterion (e.g., eBIC).
-- `--p-weights`: Assigns individual penalty weights to selected covariates.
-- `--p-latent False`: Indicates that this is a standard graphical lasso w/o low-rank.
-- `--i-covariance-matrix`: Input covariance matrix in QIIME 2 format.
-- `--o-solution`: Output artifact containing the estimated sparse inverse covariance matrix.
+- `--p-n-samples 50`: the number of samples the input covariance was computed from.
+- `--p-lambda1-min`: lower bound of the sparsity penalty λ₁.
+- `--p-lambda1-max`: upper bound of the sparsity penalty λ₁.
+- `--p-n-lambda1`: number of grid points between the two bounds.
+- `--p-gamma 0.01`: the extended BIC parameter.
+- `--p-weights`: assigns an individual penalty weight to each named covariate.
+- `--p-latent False`: fits the standard graphical lasso, with no low-rank component.
+- `--i-covariance-matrix`: the input covariance, as a QIIME 2 artifact.
+- `--o-solution`: the output artifact holding the estimated sparse precision matrix.
 
-## Step 4: Visualize the Estimated Network
+## Visualising the network with covariates
 
-Generate a visualization that includes covariates in the network:
+Draw the covariates into the network alongside the taxa:
 
 ```bash
 # visualize the results
@@ -98,7 +92,7 @@ qiime gglasso summarize \
 ```
 
 **Explanation:**
-- Generates an interactive QIIME 2 visualization of the estimated network.
-- `--p-label-size 25pt`: Sets the font size of node labels in the network plot.
-- `--p-n-cov 4`: Indicates the number of covariates included, so they are treated as separate nodes.
-- The output `.qzv` file can be viewed using [QIIME 2 View](https://view.qiime2.org/).
+- The action writes an interactive QIIME 2 visualization of the estimated network.
+- `--p-label-size 25pt`: font size of the node labels in the network plot.
+- `--p-n-cov 4`: the number of covariates in the table, so that they are treated as separate nodes.
+- Open the resulting `.qzv` at [QIIME 2 View](https://view.qiime2.org/).

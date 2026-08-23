@@ -7,27 +7,26 @@ same way than two from different phyla.
 
 trac {cite}`bien2021tree` uses that structure. Instead of selecting individual
 ASVs it can select an internal node — a genus, an order, a phylum — and use the
-aggregated abundance of everything beneath it. The practical consequence is
-interpretability: "*Nitriliruptorales* predicts temperature" is a more useful and
-more testable statement than a list of four ASV hashes that happen to belong to
-it.
+aggregated abundance of everything beneath it. That changes what the result says:
+"*Nitriliruptorales* predicts temperature" is more useful and more testable than
+a list of four ASV hashes that happen to belong to it.
 
 ```{figure} ../../../images/png/reg_tree.png
 :name: fig-trac-tree
 :width: 100%
 
 The taxonomy trac aggregates over. Each level is a rank, each node a taxon, and
-trac may place a coefficient on any node — not only the leaves. Selecting a node
-high in the tree is a claim about a whole clade; selecting a leaf is a claim
+trac may place a coefficient on any node, not only on the leaves. Selecting a
+node high in the tree is a claim about a whole clade. Selecting a leaf is a claim
 about one ASV.
 ```
 
 ```{note}
-Two things to read past in that figure. The axis numbers are layout coordinates
-from the plotting routine, not data — ignore them. And the top row is labelled
-"kingdom", but the SILVA 138 taxonomy used here has no kingdom rank: its strings
-run `d__` (domain), `p__`, `c__`, `o__`, `f__`, `g__`, `s__`. That row is the
-tree's artificial root, and the row below it, "domain", is `d__Bacteria`.
+Ignore the axis numbers: they are layout coordinates from the plotting routine,
+not data. The top row is labelled "kingdom", but the SILVA 138 taxonomy used here
+has no kingdom rank — its strings run `d__` (domain), `p__`, `c__`, `o__`, `f__`,
+`g__`, `s__`. That row is the tree's artificial root, and the row below it,
+"domain", is `d__Bacteria`.
 ```
 
 ## Step 1: Transform Features
@@ -44,7 +43,7 @@ qiime classo transform-features \
 
 ## Step 2: Add Taxonomic Information
 
-Incorporate taxonomic classifications and compute adaptive weights based on taxonomy:
+Attach the taxonomy to the design and derive an adaptive weight for every node:
 
 ```bash
 qiime classo add-taxa \
@@ -54,14 +53,13 @@ qiime classo add-taxa \
     --o-aweights data/wtaxa
 ```
 
-This step:
-- Uses taxonomic hierarchy to structure feature relationships
-- Computes adaptive weights based on taxonomic distances
-- Encourages selection of taxa that share taxonomic relatives
+The action uses the taxonomic hierarchy to structure the relationships between
+features and derives each adaptive weight from the taxonomic distances, which
+encourages the fit to select taxa that share taxonomic relatives.
 
 ## Step 3: Add Covariates
 
-Include environmental metadata with custom weights, combined with taxonomic features:
+Include environmental metadata with custom weights, alongside the taxonomic features:
 
 ```bash
 qiime classo add-covariates \
@@ -95,7 +93,7 @@ qiime sample-classifier split-table \
 
 ## Step 5: Train the Regression Model
 
-Use log-contrast regression with taxonomic information and stability selection:
+Fit the model on the aggregated design, with stability selection alongside it:
 
 ```bash
 qiime classo regress \
@@ -116,10 +114,10 @@ qiime classo regress \
 ```
 
 **Key parameters:**
-- `--p-stabsel`: Enable stability selection for robust feature selection
-- `--p-stabsel-threshold 0.5`: Features selected in >50% of subsamples
-- `--p-cv`: Use cross-validation for model selection
-- `--p-concomitant False`: Use standard formulation
+- `--p-stabsel`: Run stability selection alongside the path fit
+- `--p-stabsel-threshold 0.5`: Keep features selected in more than 50% of subsamples
+- `--p-cv`: Choose the penalty by cross-validation
+- `--p-concomitant False`: Hold the noise scale fixed rather than estimating it
 
 ## Step 6: Make Predictions
 
@@ -134,7 +132,7 @@ qiime classo predict \
 
 ## Step 7: Visualize Results
 
-Generate a comprehensive summary including taxonomic information:
+Render the fit, the taxonomy and the predictions as a single report:
 
 ```bash
 qiime classo summarize \
@@ -144,25 +142,17 @@ qiime classo summarize \
     --o-visualization data/regresstaxa_R1_trac.qzv
 ```
 
-**Output visualization:**
 The `.qzv` file contains:
-- Selected taxa with taxonomic context
-- Model performance metrics (R², RMSE, etc.)
-- Taxonomic group importances
-- Cross-validation curves
-- Prediction accuracy on test data
+- the selected taxa with their taxonomic context
+- model performance metrics (R², RMSE, and others)
+- taxonomic group importances
+- cross-validation curves
+- prediction accuracy on the test data
 
 View the results at [QIIME 2 View](https://view.qiime2.org/).
 
-## Comparing Log-Contrast vs trac
+## Log-contrast and trac side by side
 
-**Log-Contrast:**
-- Treats each taxon independently
-- Faster computation
-- Useful for exploratory analysis
+**Log-contrast** treats each taxon as an independent predictor, fits faster, and suits exploratory work.
 
-**trac:**
-- Leverages taxonomic relationships
-- More interpretable results
-- Better feature selection for hierarchically structured data
-- Slightly increased computation time
+**trac** uses the taxonomic relationships, reports coefficients on named clades, selects features better when the structure is hierarchical, and takes somewhat longer to fit.

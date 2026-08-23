@@ -1,10 +1,21 @@
 # Atacama Soil Microbiome
 
-In our example, we showcase the application of our QIIME2 plugins for high-dimensional statistics using the Atacama soil microbiome dataset {cite}`neilson2017significant`. With q2-gglasso we solve various graphical lasso problems to identify microbial associations which we later assess by fitting sparse log-contrast models implemented in q2-classo. Microbiome bioinformatics analyses were conducted using QIIME 2 version 2026.7 {cite}`bolyen2019reproducible`. The processing of raw sequence data involved demultiplexing and quality filtering, facilitated by the q2-demux plugin. Subsequent denoising was performed using DADA2 {cite}`callahan2016dada2` through the q2-dada2 plugin. Taxonomic assignments for Amplicon Sequence Variants (ASVs) were accomplished using the q2-feature-classifier {cite}`bokulich2018q2` with the naive Bayes taxonomy classifier, trained on the Silva Database {cite}`quast2012silva`.
+These chapters demonstrate the QIIME2 plugins for high-dimensional statistics on the
+Atacama soil microbiome dataset {cite}`neilson2017significant`. q2-gglasso solves a
+range of graphical lasso problems to identify microbial associations, and q2-classo
+assesses those associations by fitting sparse log-contrast models. The sequence data
+were processed under QIIME 2 version 2026.7 {cite}`bolyen2019reproducible`: the
+q2-demux plugin demultiplexed and quality-filtered the raw reads, DADA2
+{cite}`callahan2016dada2` denoised them through the q2-dada2 plugin, and the
+q2-feature-classifier {cite}`bokulich2018q2` assigned taxonomy to the amplicon
+sequence variants (ASVs) with a naive Bayes classifier trained on the Silva database
+{cite}`quast2012silva`.
 
-## Data Preprocessing Pipeline
+## Data preprocessing pipeline
 
-Here is the original code for Atacama example data [preprocessing](https://amplicon-docs.qiime2.org/en/latest/tutorials/atacama-soils.html). One can simply follow the original Atacama tutorial, but we wanted to give these ASVs meaningful names for the sake of this example. That's why we rename the ASV keys as follows:
+Preprocessing follows the published Atacama
+[tutorial](https://amplicon-docs.qiime2.org/en/latest/tutorials/atacama-soils.html).
+To give these ASVs meaningful names, this book renames the ASV keys as follows:
 
 | ASV label | Real ASV ID                      |
 | --------- | -------------------------------- |
@@ -22,12 +33,13 @@ Here is the original code for Atacama example data [preprocessing](https://ampli
 | ASV-12    | a7b877ae6d2f079a15b6b192a4425620 |
 | ASV-13    | 409faa5f5353e543bf6d99125c7c0e83 |
 
-## Data for Downstream analysis
+## Data for downstream analysis
 
-We'll use the Atacama soil microbiome dataset {cite}`neilson2017significant`, which contains:
-- 50 samples from Atacama Desert soil;
+The Atacama soil microbiome dataset {cite}`neilson2017significant` supplies:
+
+- 50 samples from Atacama Desert soil
 - 13 microbial taxa (ASVs)
-- Environmental covariates: pH, elevation, temperature, humidity, and vegetation
+- Environmental covariates: pH, elevation, temperature, humidity and vegetation
 
 The original data is available through the European Nucleotide Archive under accession [ERP019482](https://www.ebi.ac.uk/ena/browser/view/PRJEB17617).
 
@@ -40,16 +52,19 @@ The original data is available through the European Nucleotide Archive under acc
 | YUN3856.2 | 6.0 | 13.0 | 26.0 | ... | 0.0 | 0.0 | 104.0 | 3856 | 7.43 | 99.44 | 9.51 | yes |
 | YUN3856.3 | 21.0 | 36.0 | 23.0 | ... | 33.0 | 0.0 | 0.0 | 3856 | 7.43 | 99.44 | 9.51 | yes |
 
-QIIME2 .qza file can be downloaded from this [link](https://github.com/Vlasovets/q2-gglasso/blob/main/data/atacama-counts.qza), here is the snapshot of the count data and corresponding [metadata](https://data.qiime2.org/2026.7/tutorials/atacama-soils/sample_metadata.tsv) we're using in our example.
+The table above is a snapshot of the counts. Download the QIIME2
+[artifact](https://github.com/Vlasovets/q2-gglasso/blob/main/data/atacama-counts.qza) and
+the matching
+[metadata](https://data.qiime2.org/2026.7/tutorials/atacama-soils/sample_metadata.tsv).
 
-## The covariates, and a caveat worth knowing before you model
+## Covariates and missing values
 
-Four numeric covariates travel with these samples — pH, elevation, average soil
+Four numeric covariates accompany these samples — pH, elevation, average soil
 relative humidity and average soil temperature. They are the outcomes and the
 adjustment variables in the [log-contrast regression](../03_lowdim_classo/03_regression/01_logcontrast.md)
-chapters, and they are what the latent components in
-[Latent Components & Covariates](../04_highdim_atacama/04_latent_pca.md) are
-tested against.
+chapters, and the latent components in
+[Latent Components & Covariates](../04_highdim_atacama/04_latent_pca.md) are tested
+against them.
 
 ```{figure} ../../images/png/ph.png
 :name: fig-covariate-ph
@@ -57,7 +72,7 @@ tested against.
 
 Soil pH across the 75 samples, before and after scaling. The bulk of the
 distribution sits between 6 and 9 — alkaline, as expected for this desert. The
-bar at zero is the problem described below.
+bar at zero holds the samples whose pH was never recorded.
 ```
 
 ```{important}
@@ -66,7 +81,7 @@ directly from `atacama-selected-covariates-veg.tsv` (75 samples):
 
 | covariate | zeros | plausible as a real value? |
 |---|---|---|
-| `ph` | **8** | No — soil pH of 0 is not physically possible |
+| `ph` | 8 | No — soil pH of 0 is not physically possible |
 | `average-soil-relative-humidity` | 3 | Implausible |
 | `average-soil-temperature` | 3 | Possible at altitude, but suspicious |
 | `elevation` | 0 | — (range 895–4700 m) |
@@ -76,11 +91,11 @@ is also a pH-zero sample, so this is per-measurement missingness rather than
 eight incomplete records. The eight pH-zero samples are `BAQ1370.3`, `BAQ1552.2`,
 `BAQ895.2`, `BAQ895.3`, `YUN1005.2`, `YUN3008.2`, `YUN3008.3` and `YUN3184.2`.
 
-This matters because a zero is not neutral. Scaled, those eight samples land at
-$-2.80$ — the minimum of the distribution — so a regression that takes them
-at face value is being told that eight sites are radically more acidic than any
-other, when in fact their pH was never recorded. Decide explicitly whether to
-drop those samples, impute, or exclude pH as a covariate, and say which you did.
-The tutorials that follow pass the file through unchanged; that is a
-demonstration of the commands, not a recommendation.
+A zero is not neutral. Scaled, those eight samples land at $-2.80$ — the minimum
+of the distribution — so a regression that takes them at face value is told that
+eight sites are far more acidic than any other, when their pH was never
+recorded. Decide whether to drop those samples, impute them, or exclude pH as a
+covariate, and state which you did. The tutorials that follow pass the file
+through unchanged, which demonstrates the commands rather than a treatment of
+missing data.
 ```
