@@ -96,6 +96,8 @@ parts:
             title: Log-Contrast Models at Scale
           - file: chapters/04_highdim_atacama/06_interpretation
             title: Interpretation
+          - file: chapters/04_highdim_atacama/07_motus_shotgun
+            title: "Shotgun: mOTUs Profiles"
 
   - caption: Reference
     chapters:
