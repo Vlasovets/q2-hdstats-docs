@@ -5,3 +5,6 @@ docs/_build/*
 atacama-q2-gglasso-share.zip
 Atacama-q2-gglasso-q2-classo-tutorial.zip
 _Application_Note__*.pdf
+
+# Download bundles built by analysis/scripts/make_paper_bundle.py
+dist/
