@@ -16,6 +16,9 @@ Writes:
   analysis/results/tables/motus-profile-summary.tsv    per-sample depth and richness
   analysis/results/tables/motus-feature-prevalence.tsv per-feature prevalence and totals
   analysis/results/motus-merged/table.tsv              the merged samples x features table
+  analysis/results/motus-merged/table-raw-with-unassigned.tsv   the same, before
+                                                      'unassigned' is dropped
+  analysis/results/motus-merged/taxonomy-<p>.tsv       lineage for every merged feature
 
 Usage:
     python analysis/scripts/aggregate_motus_profiles.py
@@ -129,6 +132,18 @@ def main() -> None:
     }).sort_values(["prevalence", "total_counts"], ascending=False)
     feat.to_csv(DEFAULT_TABLES / "motus-feature-prevalence.tsv", sep="\t", index=False)
     bio.to_csv(DEFAULT_MERGED / "table.tsv", sep="\t")
+
+    # The two tables below are the profiler's output before this script makes any
+    # choice about it, and they exist so the filtering chain can be shown from its
+    # true start. `table.tsv` above already has 'unassigned' dropped, which is the
+    # first editorial decision in the pipeline; a reader given only that table cannot
+    # see what was removed or how much of the library it accounted for.
+    mat.to_csv(DEFAULT_MERGED / "table-raw-with-unassigned.tsv", sep="\t")
+    pd.DataFrame({"Feature ID": bio.columns,
+                  "Taxon": [tax.get(f, "") for f in bio.columns]}).to_csv(
+        DEFAULT_MERGED / f"taxonomy-{bio.shape[1]}.tsv", sep="\t", index=False)
+    una_share = 100 * unassigned.sum() / mat.to_numpy().sum()
+    print(f"  'unassigned' accounts for {una_share:.1f}% of all counts")
 
     print("\n  --- per-sample assigned depth ---")
     print(f"    min {depth.min():.0f}   median {depth.median():.0f}   max {depth.max():.0f}")
