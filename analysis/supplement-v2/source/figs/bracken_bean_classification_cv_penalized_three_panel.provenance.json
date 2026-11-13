@@ -1,0 +1,102 @@
+{
+  "include": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/_Application_Note__High_dimensional_regression_and_network_inference_in_QIIME_2_with_q2_classo_and_q2_gglasso/03_supplement/figs/bracken_bean_classification_cv_penalized_three_panel.pdf",
+  "source": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/bracken-beans/figures/bracken-bean-classification-cv-penalized-three-panel.pdf",
+  "generator": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/bracken-beans/scripts/plot_bracken_final_classification.py",
+  "source_provenance": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/bracken-beans/provenance/bracken-bean-classification-cv-penalized-three-panel.json",
+  "source_file": {
+    "path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/bracken-beans/figures/bracken-bean-classification-cv-penalized-three-panel.pdf",
+    "exists": true,
+    "sha256": "20303c2dfd5c05e23517ee4e39115435c5dc6c86d377cd0186c32cf4bad341f0",
+    "size_bytes": 17673
+  },
+  "included_before": {
+    "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/_Application_Note__High_dimensional_regression_and_network_inference_in_QIIME_2_with_q2_classo_and_q2_gglasso/03_supplement/figs/bracken_bean_classification_cv_penalized_three_panel.pdf",
+    "exists": true,
+    "sha256": "e5a51cfd431ac8a46cef24f226a9b9342161dfcf0ee51d91493044f0a527eb11",
+    "size_bytes": 17665
+  },
+  "generator_file": {
+    "path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/bracken-beans/scripts/plot_bracken_final_classification.py",
+    "exists": true,
+    "sha256": "e00e95928c495e50501c213422507228dcdb8f23e23a326bf740e66f2ea567b6",
+    "size_bytes": 10701
+  },
+  "inputs": [
+    {
+      "path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/bracken-beans/artifacts/bracken-bean-type-train-clr05-c2-rho0-cv-no-refit-pr60.qza",
+      "exists": true,
+      "sha256": "62d2e12437a59b6f65205579489ff53d2f1c09d99b205949712f5f6601e70fe3",
+      "size_bytes": 3627222,
+      "recorded_sha256": "62d2e12437a59b6f65205579489ff53d2f1c09d99b205949712f5f6601e70fe3",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/bracken-beans/artifacts/bracken-species-prev14-total50k-clr05.qza",
+      "exists": true,
+      "sha256": "94e762464a3a454feb460675f279da4d6702bc8f7c285d8f747f752726eea548",
+      "size_bytes": 3617526,
+      "recorded_sha256": "94e762464a3a454feb460675f279da4d6702bc8f7c285d8f747f752726eea548",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/bracken-beans/metadata.tsv",
+      "exists": true,
+      "sha256": "c44dce33e2aad10300247d6d63ede90ee29772291c919c2145a74123e97c9c41",
+      "size_bytes": 495,
+      "recorded_sha256": "c44dce33e2aad10300247d6d63ede90ee29772291c919c2145a74123e97c9c41",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/bracken-beans/artifacts/bracken-species-taxonomy.qza",
+      "exists": true,
+      "sha256": "5bdf12fd58b068d0a36b7bdd4eff12ed61c57b6796dae11ccac2d9f1a8435f96",
+      "size_bytes": 3793994,
+      "recorded_sha256": "5bdf12fd58b068d0a36b7bdd4eff12ed61c57b6796dae11ccac2d9f1a8435f96",
+      "hash_matches": true
+    }
+  ],
+  "scripts": [
+    {
+      "path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/bracken-beans/scripts/plot_bracken_final_classification.py",
+      "exists": true,
+      "sha256": "e00e95928c495e50501c213422507228dcdb8f23e23a326bf740e66f2ea567b6",
+      "size_bytes": 10701
+    },
+    {
+      "path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/tutorial-figure-generation/tutorial_plotting.py",
+      "exists": true,
+      "sha256": "580cf110a78dceb02143da3f8de81ef50bb9300c6a6e7c8a588bfc603bb45bf4",
+      "size_bytes": 2833
+    }
+  ],
+  "script_dependencies": [
+    {
+      "importer": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/bracken-beans/scripts/plot_bracken_final_classification.py",
+      "module": "tutorial_plotting",
+      "path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/tutorial-figure-generation/tutorial_plotting.py",
+      "exists": true,
+      "sha256": "580cf110a78dceb02143da3f8de81ef50bb9300c6a6e7c8a588bfc603bb45bf4",
+      "size_bytes": 2833
+    }
+  ],
+  "provenance": [
+    {
+      "path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/bracken-beans/provenance/bracken-bean-classification-cv-penalized-three-panel.json",
+      "exists": true,
+      "sha256": "0ec31a7d5c3c4eef70a9765e2466016ad4d1fc82fd83c81b42356d0592318c35",
+      "size_bytes": 1063
+    }
+  ],
+  "flags": [],
+  "matches_before": false,
+  "installed_at_utc": "2026-11-12T11:04:21.188790+00:00",
+  "installer": {
+    "path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/finalize_tutorial_figure_registry.py",
+    "exists": true,
+    "sha256": "984ecd52129dfd12e4f04c66751b91905af36bf395d7cf8a50c90f67434af5ec",
+    "size_bytes": 18147
+  },
+  "backups": [
+    "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/reproducibility-audit-2026-11-12/previous-included-figures/bracken_bean_classification_cv_penalized_three_panel.e5a51cfd431ac8a46cef24f226a9b9342161dfcf0ee51d91493044f0a527eb11.pdf"
+  ]
+}

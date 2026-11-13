@@ -1,0 +1,67 @@
+{
+  "description": "Prepared Atacama top15 inputs, no fitted models",
+  "samples": 53,
+  "features": 15,
+  "train": 39,
+  "test": 14,
+  "filter": "prevalence on 53 analysis samples; ties by total relative abundance, total count, feature identifier",
+  "files": [
+    {
+      "file": "atacama-top15-prevalence-53-table.qza",
+      "source_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top15/atacama-top15-prevalence-53-table.qza",
+      "sha256": "59e127b1fb666a3ea9e538b4edae77f3b764b1c3a4397c4e2715d8ae36597eab",
+      "artifact_uuid": "b31a235f-e519-4cba-98f3-24ce7cd3226d"
+    },
+    {
+      "file": "train-test-split-53-q2.tsv",
+      "source_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top15/train-test-split-53-q2.tsv",
+      "sha256": "78c96ecb1b6f18f6f4d68c87014d51a9c7db5af506e89cbf3c64bde6c6b52b0c"
+    },
+    {
+      "file": "train-test-split-53-samples.tsv",
+      "source_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top15/train-test-split-53-samples.tsv",
+      "sha256": "77c5cefb9244cf944a64c15f5e0a48ab4887511e52c4a9081fadebbcda8f1ed2"
+    },
+    {
+      "file": "elevation-train-53-metadata-q2.tsv",
+      "source_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top15/elevation-train-53-metadata-q2.tsv",
+      "sha256": "dc533092a72feaa18f10add3cbe82068ac2580616740b4f5d1439c6ec3ceab78"
+    },
+    {
+      "file": "vegetation-train-53-metadata-q2.tsv",
+      "source_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top15/vegetation-train-53-metadata-q2.tsv",
+      "sha256": "fdc84719fc897340ffc933a399668c573d858106b4e962e5620df32d51ee79b3"
+    },
+    {
+      "file": "atacama-53-sample-metadata.tsv",
+      "source_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top15/atacama-53-sample-metadata.tsv",
+      "sha256": "78f97679b14ac54e28bafc1900fa104a2923421ff17f3699a2c52c4d17891db3"
+    },
+    {
+      "file": "top15-asv-label-map.tsv",
+      "source_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top15/top15-asv-label-map.tsv",
+      "sha256": "3f099e28ff552337398a430d01726551e6ba09816bf36baf360093a7ad449ada"
+    },
+    {
+      "file": "top15-prevalence-ranking-from-53-samples.tsv",
+      "source_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top15/top15-prevalence-ranking-from-53-samples.tsv",
+      "sha256": "2cbb2ec3c55a548d7c91234319072cb78b80cbff4e0fa4e5bd73a59c21103bf0"
+    },
+    {
+      "file": "atacama-top15-53-curated-metadata-for-gglasso.tsv",
+      "source_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top15/atacama-top15-53-curated-metadata-for-gglasso.tsv",
+      "sha256": "babda23883a534c609d9ade1c5851c5e9842b49e3fc52f61c67fd80896e8da0e"
+    },
+    {
+      "file": "atacama-top15-53-curated-metadata-imputation-summary.tsv",
+      "source_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top15/atacama-top15-53-curated-metadata-imputation-summary.tsv",
+      "sha256": "35f455850e2b8fc981d32ebe4fc81065ca6f693ca6a90472f3f95e446037e707"
+    },
+    {
+      "file": "atacama-taxonomy.qza",
+      "source_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/atacama-q2-gglasso/atacama-taxonomy-silva138.qza",
+      "sha256": "38daef65f03bfdb9459e9a2da41ad79f77c87bb3bfd37b4688d66845513950e5",
+      "artifact_uuid": "097e51db-0ed2-4826-9e57-ca6d6fdb12cf"
+    }
+  ]
+}

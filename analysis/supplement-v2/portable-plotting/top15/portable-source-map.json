@@ -1,0 +1,42 @@
+[
+  {
+    "bundled_file": "style_atacama.py",
+    "source": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top15/plot_top15_classo_qiime_figures.py",
+    "source_sha256": "eaeb471d499dc5b20ee36b3442948b3298205f5ef585d11ece3bf50c8528ce81",
+    "bundled_sha256": "dd9b2d5045477c9782f10f35f8faaf8f36d913bf757448275959e1c9c8e7b69e",
+    "function_bodies_preserved": true,
+    "allowed_changes": "Portable path/global setup; optional input-directory argument for Figure S3."
+  },
+  {
+    "bundled_file": "extract_atacama.py",
+    "source": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top15/extract_top15_classo_qiime_results.py",
+    "source_sha256": "7991abfaf85e4b1404c05a39d72cbdfe8289bc38e2d56fabb036cfdcad44cf30",
+    "bundled_sha256": "d52d0fbfbea100b402c1fe259c558735b7be015e1ae3d7bff56b16ae70578c5a",
+    "function_bodies_preserved": true,
+    "allowed_changes": "Portable path/global setup; optional input-directory argument for Figure S3."
+  },
+  {
+    "bundled_file": "selection_atacama.py",
+    "source": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/tutorial-figure-generation/replot_first_three.py",
+    "source_sha256": "1915bb8c4ab0ab2d7f824f554038de5a435588e2a9f98672d2f3285140560f50",
+    "bundled_sha256": "b37d741f4f564e9015d987923fe4eef9ea973188b8af7b46f55ea2ec2b2d82c7",
+    "function_bodies_preserved": true,
+    "allowed_changes": "Portable path/global setup; optional input-directory argument for Figure S3."
+  },
+  {
+    "bundled_file": "tutorial_plotting.py",
+    "source": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/tutorial-figure-generation/tutorial_plotting.py",
+    "source_sha256": "c9c40ccb24e59ffca9f21b9e7f119d44b2bcc72a7bdc8d9340fc05a4bcc8a9d2",
+    "bundled_sha256": "c9c40ccb24e59ffca9f21b9e7f119d44b2bcc72a7bdc8d9340fc05a4bcc8a9d2",
+    "function_bodies_preserved": true,
+    "allowed_changes": "Portable path/global setup; optional input-directory argument for Figure S3."
+  },
+  {
+    "bundled_file": "provenance_utils.py",
+    "source": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/tutorial-figure-generation/provenance_utils.py",
+    "source_sha256": "716f92b7d8af002c390972969ca7dd296bfb07077afdd3f17d3a7e52303baa18",
+    "bundled_sha256": "716f92b7d8af002c390972969ca7dd296bfb07077afdd3f17d3a7e52303baa18",
+    "function_bodies_preserved": true,
+    "allowed_changes": "Portable path/global setup; optional input-directory argument for Figure S3."
+  }
+]

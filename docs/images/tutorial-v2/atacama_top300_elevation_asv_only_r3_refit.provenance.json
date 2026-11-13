@@ -1,0 +1,183 @@
+{
+  "include": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/_Application_Note__High_dimensional_regression_and_network_inference_in_QIIME_2_with_q2_classo_and_q2_gglasso/03_supplement/figs/atacama_top300_elevation_asv_only_r3_refit.pdf",
+  "source": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/atacama-top300-elevation-asv-only-r3-cv-three-panel-coefficients-in-oos-matched-style.pdf",
+  "generator": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/plot_top300_classo_elevation_matched_style.py",
+  "source_provenance": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/atacama-top300-elevation-asv-only-r3-cv-three-panel-coefficients-in-oos-matched-style.provenance.json",
+  "source_file": {
+    "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/atacama-top300-elevation-asv-only-r3-cv-three-panel-coefficients-in-oos-matched-style.pdf",
+    "exists": true,
+    "sha256": "017ae7ef7e27676c003fa4d7ae4f4f53fc83d540d89faa1d2ba4d1c66f91a5e9",
+    "size_bytes": 19274
+  },
+  "included_before": {
+    "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/_Application_Note__High_dimensional_regression_and_network_inference_in_QIIME_2_with_q2_classo_and_q2_gglasso/03_supplement/figs/atacama_top300_elevation_asv_only_r3_refit.pdf",
+    "exists": true,
+    "sha256": "0886d15d881ed8b5bfb65faabb13c76c79662530a0b74d7d6fd7a1ef9fa9c4c2",
+    "size_bytes": 19274
+  },
+  "generator_file": {
+    "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/plot_top300_classo_elevation_matched_style.py",
+    "exists": true,
+    "sha256": "dbb62cfa7d5aaeeb2c9ec16fbd8e2bd66528240d36e1c63d3d046daf4661a87a",
+    "size_bytes": 12763
+  },
+  "inputs": [
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/top300-elevation-asv-vs-covariate-augmented-predictions.tsv",
+      "exists": true,
+      "sha256": "205c280e8030669745ac51235b3ace6b2b715b2332a40baf98d7ee79986e8f52",
+      "size_bytes": 7623,
+      "recorded_sha256": "205c280e8030669745ac51235b3ace6b2b715b2332a40baf98d7ee79986e8f52",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/top300-elevation-asv-vs-covariate-augmented-selected-coefficients.tsv",
+      "exists": true,
+      "sha256": "cd5d48dfc61163a7fc487f6fd5cb1cbfd74610891ea1d15190a55cf21d583cdb",
+      "size_bytes": 2552,
+      "recorded_sha256": "cd5d48dfc61163a7fc487f6fd5cb1cbfd74610891ea1d15190a55cf21d583cdb",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/top300-elevation-asv-vs-covariate-augmented-metrics.tsv",
+      "exists": true,
+      "sha256": "625ec0b1e5b16a3689115edf5ab167424dca2656da1a7cbbd7cb683e9881f249",
+      "size_bytes": 652,
+      "recorded_sha256": "625ec0b1e5b16a3689115edf5ab167424dca2656da1a7cbbd7cb683e9881f249",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/top300-asv-label-map.tsv",
+      "exists": true,
+      "sha256": "b72acfecef75b3178d60041d1aacdbe765ab21e35b0af019a01ca6303a932d41",
+      "size_bytes": 29351,
+      "recorded_sha256": "b72acfecef75b3178d60041d1aacdbe765ab21e35b0af019a01ca6303a932d41",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/atacama-top300-elevation-asv-only-r3-cv.qza",
+      "exists": true,
+      "sha256": "3cc19d41ddb4794bd669a5dfd84f6f998fe22029c35d75d885835c7d1f82a2ce",
+      "size_bytes": 76304,
+      "recorded_sha256": "3cc19d41ddb4794bd669a5dfd84f6f998fe22029c35d75d885835c7d1f82a2ce",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/atacama-top300-elevation-asv-only-r3-train-predictions.qza",
+      "exists": true,
+      "sha256": "0fc2c915c70fdd81e0d67a37f5c919fe7fa3ffbc03006014ff4842ab68678381",
+      "size_bytes": 46529,
+      "recorded_sha256": "0fc2c915c70fdd81e0d67a37f5c919fe7fa3ffbc03006014ff4842ab68678381",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/atacama-top300-elevation-asv-only-r3-test-predictions.qza",
+      "exists": true,
+      "sha256": "23137d90f907f364c57f043b4455c523d0c4d153bc0193a7feae0f19632b1753",
+      "size_bytes": 59372,
+      "recorded_sha256": "23137d90f907f364c57f043b4455c523d0c4d153bc0193a7feae0f19632b1753",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/atacama-top300-elevation-covariate-augmented-equalweights-r3-cv.qza",
+      "exists": true,
+      "sha256": "6ef627ed9d18cc825ae401f0b81bff0188cf600374f2f541a33255228c2a5331",
+      "size_bytes": 117129,
+      "recorded_sha256": "6ef627ed9d18cc825ae401f0b81bff0188cf600374f2f541a33255228c2a5331",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/atacama-top300-elevation-covariate-augmented-equalweights-r3-train-predictions.qza",
+      "exists": true,
+      "sha256": "a6370476079771237cb5f13c515f7641360375aa4221b732012ea6e7818ca5ec",
+      "size_bytes": 84695,
+      "recorded_sha256": "a6370476079771237cb5f13c515f7641360375aa4221b732012ea6e7818ca5ec",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/atacama-top300-elevation-covariate-augmented-equalweights-r3-test-predictions.qza",
+      "exists": true,
+      "sha256": "ba0a59b6a23514886748be5e89aff508e5f127aeca100e8778d65e5f3d281bf9",
+      "size_bytes": 106476,
+      "recorded_sha256": "ba0a59b6a23514886748be5e89aff508e5f127aeca100e8778d65e5f3d281bf9",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top15/atacama-53-sample-metadata.tsv",
+      "exists": true,
+      "sha256": "78f97679b14ac54e28bafc1900fa104a2923421ff17f3699a2c52c4d17891db3",
+      "size_bytes": 6836,
+      "recorded_sha256": "78f97679b14ac54e28bafc1900fa104a2923421ff17f3699a2c52c4d17891db3",
+      "hash_matches": true
+    }
+  ],
+  "scripts": [
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/plot_top300_classo_elevation_matched_style.py",
+      "exists": true,
+      "sha256": "dbb62cfa7d5aaeeb2c9ec16fbd8e2bd66528240d36e1c63d3d046daf4661a87a",
+      "size_bytes": 12763,
+      "recorded_sha256": "dbb62cfa7d5aaeeb2c9ec16fbd8e2bd66528240d36e1c63d3d046daf4661a87a",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/extract_top300_classo_qiime_results.py",
+      "exists": true,
+      "sha256": "186645b3398e340268379fea302e69ed9db8ebca4e560c05cc56de3362fd3d52",
+      "size_bytes": 12536,
+      "recorded_sha256": "186645b3398e340268379fea302e69ed9db8ebca4e560c05cc56de3362fd3d52",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/tutorial-figure-generation/provenance_utils.py",
+      "exists": true,
+      "sha256": "716f92b7d8af002c390972969ca7dd296bfb07077afdd3f17d3a7e52303baa18",
+      "size_bytes": 2768
+    }
+  ],
+  "script_dependencies": [
+    {
+      "importer": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/plot_top300_classo_elevation_matched_style.py",
+      "module": "provenance_utils",
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/tutorial-figure-generation/provenance_utils.py",
+      "exists": true,
+      "sha256": "716f92b7d8af002c390972969ca7dd296bfb07077afdd3f17d3a7e52303baa18",
+      "size_bytes": 2768
+    },
+    {
+      "importer": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/extract_top300_classo_qiime_results.py",
+      "module": "provenance_utils",
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/tutorial-figure-generation/provenance_utils.py",
+      "exists": true,
+      "sha256": "716f92b7d8af002c390972969ca7dd296bfb07077afdd3f17d3a7e52303baa18",
+      "size_bytes": 2768
+    }
+  ],
+  "provenance": [
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/atacama-top300-elevation-asv-only-r3-cv-three-panel-coefficients-in-oos-matched-style.provenance.json",
+      "exists": true,
+      "sha256": "3bd3bb1e73f22d960b1f52704396ac6d3156d17749e0f78f867f6cd580aaccc1",
+      "size_bytes": 4741
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/top300-elevation-asv-vs-covariate-augmented-qza-extraction.provenance.json",
+      "exists": true,
+      "sha256": "7cb135824b1629af095534757bb4c5e79953b2f62225824f783941c36da07245",
+      "size_bytes": 7435
+    }
+  ],
+  "flags": [],
+  "matches_before": false,
+  "installed_at_utc": "2026-11-12T11:04:21.188790+00:00",
+  "installer": {
+    "path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/finalize_tutorial_figure_registry.py",
+    "exists": true,
+    "sha256": "984ecd52129dfd12e4f04c66751b91905af36bf395d7cf8a50c90f67434af5ec",
+    "size_bytes": 18147
+  },
+  "backups": [
+    "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/reproducibility-audit-2026-11-12/previous-included-figures/atacama_top300_elevation_asv_only_r3_refit.0886d15d881ed8b5bfb65faabb13c76c79662530a0b74d7d6fd7a1ef9fa9c4c2.pdf",
+    "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/reproducibility-audit-2026-11-12/previous-included-figures/atacama_top300_elevation_asv_only_r3_refit.provenance.2b0139a40405a1468cd1f4af78583776e7ed96f8cef0b31dfd6fa912a2ea24c6.json"
+  ]
+}

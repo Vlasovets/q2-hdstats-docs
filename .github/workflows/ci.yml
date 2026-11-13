@@ -8,6 +8,7 @@ on:
     branches:
     - main
     - tutorial-restructure
+    - supplement-to-tutorial-v2
   pull_request:
     branches:
     - main
@@ -51,17 +52,25 @@ jobs:
     # -W turns Sphinx warnings into errors: a broken cross-reference or a
     # redirect pointing at a page that no longer exists should fail the build
     # rather than silently ship. The book is currently warning-clean.
+    - name: Check supplement correspondence and branding
+      run: python analysis/scripts/check_supplement_migration.py .
+
     - name: Build the book
       run: jupyter-book build docs --warningiserror
+
+    - name: Check built tutorial links and images
+      run: python analysis/scripts/check_built_tutorial.py .
 
     - name: Sanity-check the built tree
       run: |
         set -euo pipefail
         for f in \
           docs/_build/html/index.html \
-          docs/_build/html/chapters/02_lowdim_gglasso/01_data_preparation.html \
-          docs/_build/html/chapters/04_highdim_atacama/01_data.html \
-          docs/_build/html/chapters/90_reference/01_command_coverage.html
+          docs/_build/html/tutorial/s2-01.html \
+          docs/_build/html/tutorial/s2-02.html \
+          docs/_build/html/tutorial/s3-01.html \
+          docs/_build/html/tutorial/s4-01.html \
+          docs/_build/html/tutorial/s5.html
         do
           [[ -s "$f" ]] || { echo "missing or empty: $f"; exit 1; }
         done
@@ -81,6 +90,13 @@ jobs:
       uses: actions/upload-pages-artifact@v3
       with:
         path: docs/_build/html
+
+    - name: Upload downloadable tutorial preview
+      uses: actions/upload-artifact@v4
+      with:
+        name: tutorial-preview
+        path: docs/_build/html
+        retention-days: 14
 
   deploy:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
@@ -127,9 +143,11 @@ jobs:
           live=$(curl -sS -L --max-time 30 "$base/build-id.txt?cb=$GITHUB_RUN_ID-$attempt" 2>/dev/null) || live=""
           if [[ "$live" != "$want" ]]; then ok=0; last="build-id is '${live:-<none>}'"; fi
           for p in \
-            "chapters/02_lowdim_gglasso/01_data_preparation.html" \
-            "chapters/04_highdim_atacama/01_data.html" \
-            "chapters/90_reference/01_command_coverage.html"
+            "tutorial/s2-01.html" \
+            "tutorial/s2-02.html" \
+            "tutorial/s3-01.html" \
+            "tutorial/s4-01.html" \
+            "tutorial/s5.html"
           do
             code=$(curl -sS -o /dev/null -w '%{http_code}' -L --max-time 30 "$base/$p?cb=$GITHUB_RUN_ID-$attempt" || echo 000)
             [[ "$code" == "200" ]] || { ok=0; last="$code $p"; }

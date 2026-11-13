@@ -1,53 +1,22 @@
 # High-Dimensional Statistics with QIIME 2
 
-Two plugins extend the [QIIME 2](https://qiime2.org/) microbiome multi-omics platform
-{cite}`bolyen2019reproducible` with methods for data where the number of features exceeds
-the number of samples:
+Use **q2-classo** to fit regression and classification models, and
+**q2-gglasso** to estimate microbial association networks in QIIME 2.
 
-- [**q2-gglasso**](https://github.com/Vlasovets/q2-gglasso) estimates microbial
-  association networks by sparse inverse covariance estimation, including the
-  sparse-plus-low-rank and multiple-group formulations
-  {cite}`Schaipp2021, friedman2008sparse`.
-- [**q2-classo**](https://github.com/Vlasovets/q2-classo) fits sparse log-contrast
-  regression and classification models, with taxonomic aggregation through trac
-  {cite}`Simpson2021, combettes2021regression`.
+Begin with [Getting started](getting-started.md), then follow the Atacama
+example. You will first inspect the data and sample metadata, work with a small
+set of ASVs, and then repeat the analyses with a larger feature table.
 
-<!-- ```{figure} images/png/overview.png
----
-name: q2-overview
-alt: High-dimensional statistics with QIIME2 overview
-width: 600px
-align: center
----
-High-dimensional statistics with QIIME2.
-``` -->
+| Tutorial | What you will do |
+| --- | --- |
+| [Atacama soil microbiome](tutorial/s2.md) | Predict elevation, classify vegetation, and estimate networks from soil ASVs |
+| [MAP study metagenomics](tutorial/s3.md) | Predict infant age with sparse log-contrast and trac models, then estimate mOTU networks |
+| [Cocoa-bean fermentation](tutorial/s4.md) | Train a bean-type classifier and evaluate it on later fermentation time points |
 
-Both read and write QIIME 2 artifacts, so a network or a regression carries the same
-provenance record as any other step in a QIIME 2 analysis.
+You do not need to read the full statistical background before starting.
+Consult [Statistical background](tutorial/s1.md) for the model formulations and
+[Summary tables](tutorial/s5.md) for notation, assumptions, and limitations.
 
-## What the plugins do
-
-- **Estimate association networks** under a penalty, where the sample covariance is
-  singular and cannot be inverted directly.
-- **Separate direct associations from shared latent drivers**, by decomposing the
-  precision matrix into a sparse component and a low-rank one.
-- **Fit interpretable regression and classification models** on compositional data, where
-  only ratios between features are identified.
-- **Aggregate features along a taxonomy**, so that coefficients name clades rather than
-  individual sequence variants.
-
-## How this book is organised
-
-Each action is demonstrated once on a dataset small enough to check by eye, then applied
-to a problem where the answer is not obvious:
-
-| Part | Data | What it establishes |
-|---|---|---|
-| [Graphical Lasso Models](chapters/02_lowdim_gglasso/00_index.md) | 50 samples × 13 ASVs, Atacama soil | every q2-gglasso action, output verifiable by inspection |
-| [Log-Contrast Models](chapters/03_lowdim_classo/00_overview.md) | synthetic, known ground truth | every q2-classo action, against a known answer |
-| [Scale up](chapters/04_highdim_atacama/00_index.md) | 300 ASVs and 100 mOTUs species | model selection when $p > n$ and the penalty decides the model |
-| [Reference](chapters/90_reference/01_command_coverage.md) | — | every parameter, and the failure modes worth knowing |
-
-Start with [Prerequisites & Installation](chapters/01_installation/01_prerequisites.md),
-or read [Why High-Dimensional Statistics?](chapters/00_getting_started/01_intro.md) for
-the problem the plugins address.
+These examples use the analyses developed for the paper's supplementary
+material. The website puts the applications first; the underlying methods,
+results, and figure provenance are unchanged.

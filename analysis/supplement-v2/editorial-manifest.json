@@ -1,0 +1,24 @@
+{
+  "tutorial/s2": {
+    "baseline": "baselines/s2.md",
+    "published_sha256": "f54900b5bb30d77f8c0013c5f47e461e831e77bc087d794436a73f718e36e0c5",
+    "purpose": "Step-by-step QIIME tutorial with optional artifact-derived plotting",
+    "command_filename_replacements": {},
+    "notes": [
+      "Removes the incorrect geographic Figure S1 sentence; the source supplement is retained unchanged."
+    ]
+  },
+  "tutorial/s2-01": {
+    "baseline": "baselines/s2-01.md",
+    "published_sha256": "331a97d33944db27c533b2bcaf4c0e6c985686ba419c779d2ca8f76ab3d52861",
+    "purpose": "Step-by-step QIIME tutorial with optional artifact-derived plotting",
+    "command_filename_replacements": {
+      "atacama-top15-53-q2-gglasso-mclr.qza": "atacama-top15-53-mclr.qza"
+    },
+    "notes": [
+      "No model, split, filtering rule, hyperparameter, result, or original figure changed.",
+      "Adds input bundle, sample splitting, in-sample predictions, QIIME summaries, and optional plotting.",
+      "Restores 15 source feature IDs dropped by the initial LaTeX conversion."
+    ]
+  }
+}

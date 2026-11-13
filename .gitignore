@@ -1,6 +1,8 @@
 # Ignore Jupyter Book build output
 docs/_build/*
 .DS_Store
+.codex-history/
+__pycache__/
 
 atacama-q2-gglasso-share.zip
 Atacama-q2-gglasso-q2-classo-tutorial.zip

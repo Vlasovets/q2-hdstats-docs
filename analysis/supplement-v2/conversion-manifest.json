@@ -1,0 +1,592 @@
+{
+  "source_sha256": "747d259adf9e5a5be0ae3d72f12db0e9e9d108910469ff57d7dac4f5c8f3e080",
+  "sections": [
+    {
+      "page": "tutorial/s1",
+      "title": "Statistical background",
+      "level": 1,
+      "section": 1,
+      "sha256": "13b73ceda6e4fd46883484dc3fa75c32e3fa63df41d956c8c70bd49f4455544a"
+    },
+    {
+      "page": "tutorial/s1-01",
+      "title": "Compositional data",
+      "level": 2,
+      "section": 1,
+      "sha256": "185a1722b279c071431d2b8d8c18ff2aab81806cad551d3807b75c2cb54d450f"
+    },
+    {
+      "page": "tutorial/s1-02",
+      "title": "Generalized log-contrast regression and classification with **q2-classo**",
+      "level": 2,
+      "section": 1,
+      "sha256": "e2c33bc5a59016f15588cee3be2092a88a8c574d84624de41820c4289d7eb110"
+    },
+    {
+      "page": "tutorial/s1-03",
+      "title": "General graphical model estimation with **q2-gglasso**",
+      "level": 2,
+      "section": 1,
+      "sha256": "0203b31f8ce8475c702eafaafd08743b9e41a3e9279029ac3fff97b502d4d31b"
+    },
+    {
+      "page": "tutorial/s2",
+      "title": "Atacama soil microbiome case study",
+      "level": 1,
+      "section": 2,
+      "sha256": "a06513e3d4d9f84a04bad197b3f08e37e2b24da966e7522e8554e51302d687cb"
+    },
+    {
+      "page": "tutorial/s2-01",
+      "title": "Getting started - analysis of the Atacama top-15 ASV data",
+      "level": 2,
+      "section": 2,
+      "sha256": "5bb04ea150b19a69ef14a62bad3dfb4c2e6418740ef16ba17131ac1cd8eade5a"
+    },
+    {
+      "page": "tutorial/s2-02",
+      "title": "Advanced high-dimensional Atacama analysis with q2-classo and q2-gglasso",
+      "level": 2,
+      "section": 2,
+      "sha256": "f0b49e843b15c2dd6e9494deaad681f740f0de136eb9f39042ac5a569ae29d98"
+    },
+    {
+      "page": "tutorial/s3",
+      "title": "Metagenomics example: the MAP study",
+      "level": 1,
+      "section": 3,
+      "sha256": "b620c419f3dabe2e286bbaea187a712681ef93314e0d2df71e72b7ddfdab6814"
+    },
+    {
+      "page": "tutorial/s3-01",
+      "title": "Postnatal infant age prediction with **q2-classo**",
+      "level": 2,
+      "section": 3,
+      "sha256": "0a96d604571eaac45f38b4c95709476715d604fd7ce10cf570021b8030109fc8"
+    },
+    {
+      "page": "tutorial/s3-02",
+      "title": "Association-network estimation with **q2-gglasso**",
+      "level": 2,
+      "section": 3,
+      "sha256": "4a6f1754a5e86f2223716b845ba7378fd5cb5df16271e1a11f4848039c978344"
+    },
+    {
+      "page": "tutorial/s4",
+      "title": "MOSHPIT cocoa-bean fermentation example",
+      "level": 1,
+      "section": 4,
+      "sha256": "c32ec54e961703fd1c6e04846955983970cc490848031517f8595017a33587b6"
+    },
+    {
+      "page": "tutorial/s4-01",
+      "title": "Bean-type classification with **q2-classo**",
+      "level": 2,
+      "section": 4,
+      "sha256": "e9891d2931ded077e7005a921af00d8185574714049744a2d48eb0f99295e0dd"
+    },
+    {
+      "page": "tutorial/s5",
+      "title": "Summary tables",
+      "level": 1,
+      "section": 5,
+      "sha256": "d5faa432b258a52d5933d8198d2fd0ddc3880ddb01d373a42a04de74314c3355"
+    }
+  ],
+  "figures": [
+    {
+      "number": 1,
+      "label": "fig:atacama-covariates-overview",
+      "pdf": "atacama_covariates_overview.pdf",
+      "sha256": "f992e56ddc494767b890a6efb5d8f96cf6dde68413a6d14c3eb51d754b969eec",
+      "png_sha256": "8e0b21759b8c22c4f112b3460730212b09064498bd8a9105c8e7edf0d9fe7a58"
+    },
+    {
+      "number": 2,
+      "label": "fig:top15-clr-mclr",
+      "pdf": "atacama_top15_clr_mclr_heatmaps.pdf",
+      "sha256": "49631f6ed74e9e0b1b0443dba6390ce49291796c39df7d436fb14aff3e9b4249",
+      "png_sha256": "5835012d532831e7f859c501fb2efb97c9c11b97c926abcbfbc1b3eef31b8c17"
+    },
+    {
+      "number": 3,
+      "label": "fig:top15-classo-selection",
+      "pdf": "atacama_top15_classo_selection_large_type.pdf",
+      "sha256": "6b45fd393f30d5977f0a2341a1ee80aeff77c778f797973397e66f4c8f702568",
+      "png_sha256": "efba9c0e70b5457fbbf0b218c8a71019d123028896bb2d131d47812b8d87f19d"
+    },
+    {
+      "number": 4,
+      "label": "fig:top15-classo-cv",
+      "pdf": "atacama_top15_classo_cv_refit.pdf",
+      "sha256": "0fa6c62377045277ca2ef5a4de5b3aca5e450a387b45aef18207641cc3985221",
+      "png_sha256": "989e33a22aafe4d5a8add7fb51e5c1c5ebe68539c0eec22982890c46e388716b"
+    },
+    {
+      "number": 5,
+      "label": "fig:top15-classo-stabsel",
+      "pdf": "atacama_top15_classo_stabsel_refit.pdf",
+      "sha256": "c151cb9832e9e7c3c7d090b871dbdb60ff7c78a59afe4b02564d02e7c38172e0",
+      "png_sha256": "96095a4172fcf41bff21b585eab7dc03a23e6734cbe659e119a5c92292d9b9e7"
+    },
+    {
+      "number": 6,
+      "label": "fig:top15-classo-vegetation-selection",
+      "pdf": "atacama_top15_classo_vegetation_cv_curve.pdf",
+      "sha256": "51d95b7734ea1f66698cd9ebac1b785d7f43ae18d44be7557e1daee66333a84c",
+      "png_sha256": "d15988f4eeb752e0e0b9792432b07d47f72b42929046a10ec6595f946bfdfcb4"
+    },
+    {
+      "number": 7,
+      "label": "fig:top15-classo-vegetation",
+      "pdf": "atacama_top15_classo_vegetation_cv_refit.pdf",
+      "sha256": "4596a50ba3e88cb41bf850b6af5b9ca68fbfd7bc1ac5e781e9997c5204f13ae7",
+      "png_sha256": "37049bc73bd3611a1067e8c8ee57a9520c87479470775b24bdc491513170f05b"
+    },
+    {
+      "number": 8,
+      "label": "fig:top15-gglasso-four-panel",
+      "pdf": "atacama_top15_gglasso_four_matrix_comparison.pdf",
+      "sha256": "4866be74ced9c0c5626157a3cb594fd8d130e89f157cb5889304e58aed789ee1",
+      "png_sha256": "49bda802d9fa1911b18f98870b551dd0fb073993e8437a6ee206a8820776f0ec"
+    },
+    {
+      "number": 9,
+      "label": "fig:top300-classo-elevation-selection",
+      "pdf": "atacama_top300_elevation_r3_equalweights_cv_curves.pdf",
+      "sha256": "7472f5a89927a7bef8d46e0fa41f494e8fc5c154c2090c9c987b9e3dba1da639",
+      "png_sha256": "24a196f92532c5c38cf379a8b385c452107a578e72483a75a9d5236c07c3ddf1"
+    },
+    {
+      "number": 10,
+      "label": "fig:top300-classo-elevation-asv-only",
+      "pdf": "atacama_top300_elevation_asv_only_r3_refit.pdf",
+      "sha256": "017ae7ef7e27676c003fa4d7ae4f4f53fc83d540d89faa1d2ba4d1c66f91a5e9",
+      "png_sha256": "fa9677857955de64dc49bd119986f69229e3c560cc52fbff67cf8ec5529b545b"
+    },
+    {
+      "number": 11,
+      "label": "fig:top300-classo-elevation-joint",
+      "pdf": "atacama_top300_elevation_equalweights_joint_r3_refit.pdf",
+      "sha256": "cbad4d823fe6fdb7cf3790bfa43f8cc299f3c88ee382690fd67faebf2677d3cb",
+      "png_sha256": "845f8ecc1054e3f43738d12029c4ed8ea9e2f6874c4e71179ec496c4d675c320"
+    },
+    {
+      "number": 12,
+      "label": "fig:top300-classo-vegetation-selection",
+      "pdf": "atacama_top300_vegetation_classification_cv_and_stabsel_selection.pdf",
+      "sha256": "479dd9be80c8c0104293b638445675ace9707c0ddf0f5919ca7293d238c538aa",
+      "png_sha256": "7ce81d9f97d781e5473319ed0713adeeef3c519fa6efa10be52b8fb724aecadb"
+    },
+    {
+      "number": 13,
+      "label": "fig:top300-classo-vegetation-cv",
+      "pdf": "atacama_top300_vegetation_classification_cv_refit.pdf",
+      "sha256": "ff3fc98fa1371ea4b0a4914746e559371a1ddc6daa2d972b07b23b1a0ee28d78",
+      "png_sha256": "00ac366876de94a4f672892006a746e318061a0671896c2866c8406fb8869f40"
+    },
+    {
+      "number": 14,
+      "label": "fig:top300-classo-vegetation-stabsel",
+      "pdf": "atacama_top300_vegetation_classification_stabsel_refit.pdf",
+      "sha256": "1bc46f2a1fbedfc04e49e75c6f4de5ed9b71f10c4e84c88771ff4d01b84338c8",
+      "png_sha256": "c6474ac84d9b4298bf496983b165b1d6b38d9bcf7610b89c4d35b2fe3353f9d7"
+    },
+    {
+      "number": 15,
+      "label": "fig:top300-gglasso-networks",
+      "pdf": "atacama_top300_gglasso_active_asv_networks.pdf",
+      "sha256": "9064493af79ef0300f3103536cc9f5894b6455928d4e30e60a2d1d311517d654",
+      "png_sha256": "a94191a59bb9e71cb915cafbee0e9317d06335c2ef88d6e4c1ebab7dd36471c3"
+    },
+    {
+      "number": 16,
+      "label": "fig:highdim-latent-covariates",
+      "pdf": "atacama_top300_slr_rank2_robust_pca_covariates.pdf",
+      "sha256": "caa25131dcf3d92a68e0f5ad4be12037255eab1da4b5101be16a51e9ae640684",
+      "png_sha256": "e5d0adbcead2eba35cdbc86ccf6c0339d9c5f513496fcab6d12d570d10568237"
+    },
+    {
+      "number": 17,
+      "label": "fig:motus-slc-selection",
+      "pdf": "motus_age_slc_r3_model_selection.pdf",
+      "sha256": "f150d27f301142b01762bddae3953e9cfe23a953351a00abed6c5de08b9e18d3",
+      "png_sha256": "19226efa4591743d15a7c28ad098473a6026d297741c1648134abbe760c81a18"
+    },
+    {
+      "number": 18,
+      "label": "fig:motus-slc-refit",
+      "pdf": "motus_age_slc_r3_cv_refit.pdf",
+      "sha256": "b688704d6d34d7139b40b448cd4653b8fd3289318b296bc4ae22e64bc47734e5",
+      "png_sha256": "0616e334ecd65c562a4a185dfd93319b4b6c0174de06995552c01a880c50e60d"
+    },
+    {
+      "number": 19,
+      "label": "fig:motus-trac-selection",
+      "pdf": "motus_age_trac_r3_model_selection.pdf",
+      "sha256": "b0bad03799a0dc0ee9e19af822b18e200f4b2a10910e2a05181cff7c9b46b595",
+      "png_sha256": "a131f094acced2cea1e734b155db21a84f2191da91f98864d40f6f7f910f6b2f"
+    },
+    {
+      "number": 20,
+      "label": "fig:motus-trac-refit",
+      "pdf": "motus_age_trac_r3_cv_refit.pdf",
+      "sha256": "903ec37aafe2d8a977721c5755b6c17c7c3dae977a499560ed6ed2a21366fac2",
+      "png_sha256": "3b4434efe10500993b275c9622bb230cf50991d913661f9e5af392249726ef17"
+    },
+    {
+      "number": 21,
+      "label": "fig:motus-trac-stabsel-refit",
+      "pdf": "motus_age_trac_r3_stabsel_refit.pdf",
+      "sha256": "f8e3eae33a056be0fc33f5fff29cffd820afa5336bc29f9101b77418d8bff245",
+      "png_sha256": "b0a022f038069fd7bf60844bb60fda85bfd7439dd3176408d551776c81ef634b"
+    },
+    {
+      "number": 22,
+      "label": "fig:motus-gglasso-matrices",
+      "pdf": "motus_60_clr_sgl_lowrank_sparse_matrices.pdf",
+      "sha256": "8167390b5805f7c90ec249a417add96f2b59b22752de4af6c9a45fea5e3fe3b5",
+      "png_sha256": "2ba15c6e566add5ccb585549173eef214b296095ba7d1fd4407ab9a7cafdb4da"
+    },
+    {
+      "number": 23,
+      "label": "fig:motus-latent-factor",
+      "pdf": "motus_60_slr_selected_lowrank_and_covariates.pdf",
+      "sha256": "606684dc89c6216c398e7b38cf135d091ec8d7eef9cc27e68b319cd35ebd6398",
+      "png_sha256": "4673d51053ecec3ba1b5b1c636f3a74cb5f8cf30f1a648a9a5448c9bdda1fd72"
+    },
+    {
+      "number": 24,
+      "label": "fig:bracken-data",
+      "pdf": "bracken_bean_clr_filtered_data_sorted_by_label.pdf",
+      "sha256": "47af21a2dd1b3e77cb6a496d19ee6b6eb3d4dfdc584e907f4cb72f14e5df4846",
+      "png_sha256": "df68e197ea1db6fe7f771fc59b0b2235e11e840810990e73cf18a4d7eedecbfa"
+    },
+    {
+      "number": 25,
+      "label": "fig:bracken-cv",
+      "pdf": "bracken_bean_classification_cv.pdf",
+      "sha256": "364198f2d37b04a1a2302c8ce7040fa571769cf18518211b4477993ea846bffd",
+      "png_sha256": "8e105260236dd87cb8f744e896a7380c7c6c57bd1aba942beebc4149458523d3"
+    },
+    {
+      "number": 26,
+      "label": "fig:bracken-penalized",
+      "pdf": "bracken_bean_classification_cv_penalized_three_panel.pdf",
+      "sha256": "20303c2dfd5c05e23517ee4e39115435c5dc6c86d377cd0186c32cf4bad341f0",
+      "png_sha256": "c78d68c03db6449af706a33a9da9baf5cee14fb8930cd15fcdd7f938685dcf2a"
+    }
+  ],
+  "commands": [
+    {
+      "sha256": "96d2e7d3e048d9fffd3e69f7f33284a65b83f319b0106fed4180127a191d4af9",
+      "text": "# q2-classo: replace zeros by coef, then apply CLR\nqiime classo transform-features \\\n    --i-features counts.qza \\\n    --p-transformation clr \\\n    --p-coef 0.5 \\\n    --o-x Z-classo-clr.qza\n\n# q2-gglasso: add a pseudo-count, then apply CLR\nqiime gglasso transform-features \\\n    --i-table counts.qza \\\n    --i-taxonomy taxonomy.qza \\\n    --p-transformation clr \\\n    --p-pseudo-count 1 \\\n    --o-transformed-table Z-gglasso-clr.qza"
+    },
+    {
+      "sha256": "b96b4ca7d3e95bba7a66b10c7d9e7ae33b433cc3265ee976232feb93ca728ff4",
+      "text": "# q2-gglasso implements mCLR directly\nqiime gglasso transform-features \\\n    --i-table counts.qza \\\n    --i-taxonomy taxonomy.qza \\\n    --p-transformation mclr \\\n    --o-transformed-table Z-mclr.qza\n\n# q2-classo can use the resulting transformed table as its design\nqiime classo regress \\\n    --i-features Z-mclr.qza \\\n    --m-y-file metadata.tsv --m-y-column y \\\n    --o-result fit-regression.qza"
+    },
+    {
+      "sha256": "2e3b7ff5a3945bf80a07faba60a001e7a3ce9ad01ca92437285c442c9c6aef80",
+      "text": "# R3: concomitant least squares (default)\nqiime classo regress \\\n    --i-features Z-classo-clr.qza \\\n    --m-y-file metadata.tsv --m-y-column y \\\n    --o-result fit.qza\n\n# R1: least squares\nqiime classo regress ... --p-no-concomitant --p-no-huber\n\n# R2: Huber\nqiime classo regress ... --p-no-concomitant --p-huber\n\n# R4: concomitant Huber\nqiime classo regress ... --p-concomitant --p-huber"
+    },
+    {
+      "sha256": "4cc8348c5a8f67c3ca381b60f35653ac2231af09abe3327d0ec3b8567f775cf2",
+      "text": "# binary classification\nqiime classo classify \\\n    --i-features Z-classo-clr.qza \\\n    --m-y-file metadata.tsv --m-y-column y \\\n    --o-result fit-class.qza\n\n# C2: Huberized-hinge classification\nqiime classo classify \\\n    --i-features Z-classo-clr.qza \\\n    --m-y-file metadata.tsv --m-y-column y \\\n    --p-huber --p-rho 0 \\\n    --o-result fit-class-c2.qza"
+    },
+    {
+      "sha256": "dcc25ff0603489782d7ab5f2f6ee5ba53bc9b901bd9e610a8b93c55fcb326d26",
+      "text": "qiime classo add-taxa \\\n    --i-features Z-classo-clr.qza \\\n    --i-taxa taxonomy.qza \\\n    --o-x design-trac.qza --o-aweights weights-trac.qza\n\nqiime classo regress \\\n    --i-features design-trac.qza --i-weights weights-trac.qza \\\n    --m-y-file metadata.tsv --m-y-column y \\\n    --o-result fit-trac.qza"
+    },
+    {
+      "sha256": "03099f2ad7da17bb36a9261a5fcfb1a8faf85cba136593e5aadf4a0efcb0942d",
+      "text": "# adding covariates\nqiime classo add-covariates \\\n    --i-features Z-classo-clr.qza \\\n    --m-covariates-file metadata.tsv \\\n    --p-to-add ph elevation \\\n    --o-new-features design-cov.qza --o-new-c C-cov.qza \\\n    --o-new-w weights-cov.qza\n\n# solving regression\nqiime classo regress \\\n    --i-features design-cov.qza --i-c C-cov.qza \\\n    --i-weights weights-cov.qza \\\n    --m-y-file metadata.tsv --m-y-column y \\\n    --o-result fit-cov.qza"
+    },
+    {
+      "sha256": "526d5fde99ea5dfde862eeb86dc559d5688af0026ef60646dc25006c320d8d79",
+      "text": "# transformed table Z -> covariance or correlation S\nqiime gglasso calculate-covariance \\\n    --i-table Z-gglasso-clr.qza \\\n    --o-covariance-matrix S.qza"
+    },
+    {
+      "sha256": "1c8e8048b83cd702637471ac92cc00a9aa8c29bffd9773abdfd6df481960460c",
+      "text": "# solving SGL\nqiime gglasso solve-problem \\\n    --i-covariance-matrix S.qza \\\n    --p-n-samples <value> \\\n    --p-lambda1-path <value> \\\n    --o-solution fit-sgl.qza"
+    },
+    {
+      "sha256": "afd8a815bc2154900bd31d57003287b71634b3365bd66317671d09b682402cf1",
+      "text": "# adding covariates at the transform step\nqiime gglasso transform-features \\\n    --i-table counts.qza \\\n    --i-taxonomy taxonomy.qza \\\n    --p-transformation clr \\\n    --m-sample-metadata-file metadata.tsv \\\n    --p-add-metadata --p-scale-metadata \\\n    --o-transformed-table Z-with-metadata.qza\n\nqiime gglasso calculate-covariance \\\n    --i-table Z-with-metadata.qza \\\n    --o-covariance-matrix S-with-metadata.qza\n\n# solving mixed graphical lasso with label-based penalty multipliers\nqiime gglasso solve-problem \\\n    --i-covariance-matrix S-with-metadata.qza \\\n    --p-n-samples <value> --p-lambda1-path <value> \\\n    --p-weights <label weight ...> \\\n    --o-solution fit-adaptive.qza"
+    },
+    {
+      "sha256": "f0ba02a3ccbcee01d086cef86de0af4159453ee0cf22e6132cac854056af82a4",
+      "text": "# solving MGL problem\nqiime gglasso solve-problem \\\n    --i-covariance-matrix S.qza \\\n    --p-n-samples <value> --p-n-samples <value> --p-n-samples <value> \\\n    --p-reg GGL \\\n    --p-lambda1-path <value> \\\n    --p-lambda2-min <value> --p-lambda2-max <value> --p-n-lambda2 <value> \\\n    --o-solution fit-mgl.qza"
+    },
+    {
+      "sha256": "fb38450f3ba728156bf3c14fcf61ae0a6b3bc2455d60cf89441bacc128d937c6",
+      "text": "# solving latent-variable graphical lasso\nqiime gglasso solve-problem \\\n    --i-covariance-matrix S.qza \\\n    --p-n-samples <value> --p-latent \\\n    --p-lambda1-path <value> --p-mu1-path <value> \\\n    --o-solution fit-slr.qza"
+    },
+    {
+      "sha256": "6c9aef45af54c97e28fda80f878339f666afa5e23b7e073591cef1fc8ec2655f",
+      "text": "# solving problem for a particular lambda\nqiime gglasso solve-problem \\\n    --i-covariance-matrix S.qza \\\n    --p-n-samples <value> \\\n    --p-lambda1-path <single value> \\\n    --o-solution fit-single.qza\n\n# model selection over a lambda path\nqiime gglasso solve-problem \\\n    --i-covariance-matrix S.qza \\\n    --p-n-samples <value> \\\n    --p-lambda1-min <value> --p-lambda1-max <value> --p-n-lambda1 <value> \\\n    --p-path-scale linear \\\n    --p-gamma <value> \\\n    --o-solution fit-selected.qza"
+    },
+    {
+      "sha256": "f43d47266ad6379a12dab146cf3181744a03da2229287c72aed7dad8a69db16a",
+      "text": "# q2-classo CLR on the full 53-sample top-15 ASV table for display\nqiime classo transform-features \\\n    --i-features atacama-top15-prevalence-53-table.qza \\\n    --p-transformation clr \\\n    --p-coef 0.5 \\\n    --o-x atacama-top15-53-q2-classo-clr-coef05.qza\n\n# q2-classo CLR on the training and held-out tables for regression\nqiime classo transform-features \\\n    --i-features atacama-top15-train-53-table.qza \\\n    --p-transformation clr \\\n    --p-coef 0.5 \\\n    --o-x atacama-top15-train-53-clr.qza\n\nqiime classo transform-features \\\n    --i-features atacama-top15-test-53-table.qza \\\n    --p-transformation clr \\\n    --p-coef 0.5 \\\n    --o-x atacama-top15-test-53-clr.qza\n\n# q2-gglasso mCLR on the full 53-sample table for graphical models\nqiime gglasso transform-features \\\n    --i-table atacama-top15-prevalence-53-table.qza \\\n    --i-taxonomy atacama-taxonomy.qza \\\n    --p-transformation mclr \\\n    --o-transformed-table atacama-top15-53-q2-gglasso-mclr.qza"
+    },
+    {
+      "sha256": "e371fed4cd9e0980d32621542ee9708786bb11a2bcef6a6f229e1620959269f8",
+      "text": "# R3: concomitant least-squares c-lasso with 5-fold CV and 1SE selection\nqiime classo regress \\\n    --i-features atacama-top15-train-53-clr.qza \\\n    --m-y-file elevation-train-53-metadata-q2.tsv \\\n    --m-y-column elevation \\\n    --p-no-path --p-cv --p-cv-seed 1 --p-cv-subsets 5 --p-cv-one-se \\\n    --p-cv--nlam 100 --p-cv-lamin 0.001 \\\n    --p-no-stabsel --p-no-lamfixed \\\n    --p-concomitant --p-no-huber --p-intercept \\\n    --o-result atacama-top15-elevation-r3-cv.qza\n\nqiime classo predict \\\n    --i-features atacama-top15-test-53-clr.qza \\\n    --i-problem atacama-top15-elevation-r3-cv.qza \\\n    --o-predictions atacama-top15-elevation-r3-test-predictions.qza\n\n# R3 stability selection with the same training data\nqiime classo regress \\\n    --i-features atacama-top15-train-53-clr.qza \\\n    --m-y-file elevation-train-53-metadata-q2.tsv \\\n    --m-y-column elevation \\\n    --p-no-path --p-no-cv --p-stabsel --p-no-lamfixed \\\n    --p-stabsel-seed 1 --p-stabsel-b 100 --p-stabsel-q 4 \\\n    --p-stabsel-percent-ns 0.5 --p-stabsel-threshold 0.3333333333333333 \\\n    --p-concomitant --p-no-huber --p-intercept \\\n    --o-result atacama-top15-elevation-r3-stabsel-q4-b100-threshold-third.qza\n\nqiime classo predict \\\n    --i-features atacama-top15-test-53-clr.qza \\\n    --i-problem atacama-top15-elevation-r3-stabsel-q4-b100-threshold-third.qza \\\n    --o-predictions atacama-top15-elevation-r3-stabsel-threshold-third-test-predictions.qza"
+    },
+    {
+      "sha256": "a7a2612fdfb7e68df405c247cddd506fa2e3cbd39cbb4845ab50a54ba0b74a22",
+      "text": "qiime classo classify \\\n    --i-features atacama-top15-train-53-clr.qza \\\n    --m-y-file vegetation-train-53-metadata-q2.tsv \\\n    --m-y-column vegetation \\\n    --p-no-path --p-cv --p-cv-one-se \\\n    --p-cv-seed 1 --p-cv-subsets 5 \\\n    --p-cv--nlam 100 --p-cv-lamin 0.001 \\\n    --p-no-stabsel --p-no-lamfixed \\\n    --p-no-huber --p-intercept \\\n    --o-result atacama-top15-vegetation-classification-cv.qza\n\nqiime classo predict \\\n    --i-features atacama-top15-test-53-clr.qza \\\n    --i-problem atacama-top15-vegetation-classification-cv.qza \\\n    --o-predictions atacama-top15-vegetation-classification-cv-test-predictions.qza"
+    },
+    {
+      "sha256": "0f9929bbd182f7325650d6332069febfbdd5924855cf24fe9ad1ef0af766759a",
+      "text": "# empirical mCLR correlation of the top-15 ASV table\nqiime gglasso calculate-covariance \\\n    --i-table atacama-top15-53-mclr.qza \\\n    --p-method scaled \\\n    --p-bias \\\n    --o-covariance-matrix atacama-top15-53-mclr-correlation.qza\n\n# ASV-only SGL with eBIC model selection\nqiime gglasso solve-problem \\\n    --i-covariance-matrix atacama-top15-53-mclr-correlation.qza \\\n    --p-n-samples 53 \\\n    --p-no-latent \\\n    --p-lambda1-path 1.0 0.9 0.8 0.7 0.6 0.5 0.4 0.3 0.2 \\\n        0.15 0.1 0.075 0.05 0.035 0.025 0.015 0.01 \\\n    --p-gamma 0.01 \\\n    --o-solution atacama-top15-53-sgl-ebic-gamma001.qza"
+    },
+    {
+      "sha256": "9686bab3f14d41249a8e66adae8215cf1a16a3f687a1784b7aa40d0c8bf6de51",
+      "text": "# append standardized measured covariates to the mCLR ASV table\nqiime gglasso transform-features \\\n    --i-table atacama-top15-prevalence-53-table.qza \\\n    --i-taxonomy atacama-taxonomy.qza \\\n    --m-sample-metadata-file atacama-top15-53-curated-metadata-for-gglasso.tsv \\\n    --p-transformation mclr \\\n    --p-add-metadata \\\n    --p-scale-metadata \\\n    --o-transformed-table atacama-top15-53-mclr-with-curated-covariates.qza\n\nqiime gglasso calculate-covariance \\\n    --i-table atacama-top15-53-mclr-with-curated-covariates.qza \\\n    --p-method scaled \\\n    --p-bias \\\n    --o-covariance-matrix atacama-top15-53-mclr-curated-covariate-correlation.qza\n\nqiime gglasso solve-problem \\\n    --i-covariance-matrix atacama-top15-53-mclr-curated-covariate-correlation.qza \\\n    --p-n-samples 53 \\\n    --p-no-latent \\\n    --p-lambda1-path 1.0 0.9 0.8 0.7 0.6 0.5 0.4 0.3 0.2 \\\n        0.15 0.1 0.075 0.05 0.035 0.025 0.015 0.01 \\\n    --p-weights elevation 0.05 ph 0.05 average-soil-relative-humidity 0.05 \\\n        average-soil-temperature 0.05 percentcover 0.05 \\\n        log10-extract-concen 0.05 \\\n    --p-gamma 0.01 \\\n    --o-solution atacama-top15-53-mixed-curated-covariates-weight005-ebic-gamma001.qza"
+    },
+    {
+      "sha256": "baf6c082e9debab189eb73c9ddec5c06a696dbb23e04e37f66eb6cce96a91dea",
+      "text": "qiime gglasso solve-problem \\\n    --i-covariance-matrix atacama-top15-53-mclr-correlation.qza \\\n    --p-n-samples 53 \\\n    --p-latent \\\n    --p-lambda1-path 1.0 0.9 0.8 0.7 0.6 0.5 0.4 0.3 0.2 \\\n        0.15 0.1 0.075 0.05 0.035 0.025 0.015 0.01 \\\n    --p-mu1-path 5.0 3.0 2.0 1.5 1.0 0.75 0.5 0.3 0.2 0.1 \\\n    --p-gamma 0.01 \\\n    --o-solution atacama-top15-53-slr-ebic-gamma001-mu-grid.qza"
+    },
+    {
+      "sha256": "2724f89338f468d72c84109aec0b00646da73ecaeafd525ad575961f704b2db3",
+      "text": "# Generate the training-supported feature list and training-derived covariates.\npython prepare_top300_inputs.py\n\n# Retain the same training-supported ASVs before splitting and transforming.\nqiime feature-table filter-features \\\n    --i-table atacama-top300-prevalence-53-table.qza \\\n    --m-metadata-file top300-training-supported-feature-ids.tsv \\\n    --o-filtered-table atacama-top300-training-supported-53-table.qza\n\nqiime feature-table filter-samples \\\n    --i-table atacama-top300-training-supported-53-table.qza \\\n    --m-metadata-file train-test-split-53-q2.tsv \\\n    --p-where \"[split]='train'\" --p-no-filter-empty-features \\\n    --o-filtered-table atacama-top300-train-53-table.qza\n\nqiime feature-table filter-samples \\\n    --i-table atacama-top300-training-supported-53-table.qza \\\n    --m-metadata-file train-test-split-53-q2.tsv \\\n    --p-where \"[split]='test'\" --p-no-filter-empty-features \\\n    --o-filtered-table atacama-top300-test-53-table.qza\n\n# CLR transformation of the training-supported ASV training table\nqiime classo transform-features \\\n    --i-features atacama-top300-train-53-table.qza \\\n    --p-transformation clr \\\n    --p-coef 0.5 \\\n    --o-x atacama-top300-train-53-clr.qza\n\nqiime classo transform-features \\\n    --i-features atacama-top300-test-53-table.qza \\\n    --p-transformation clr --p-coef 0.5 \\\n    --o-x atacama-top300-test-53-clr.qza\n\n# ASV-only elevation model\nqiime classo regress \\\n    --i-features atacama-top300-train-53-clr.qza \\\n    --m-y-file elevation-train-53-metadata-q2.tsv \\\n    --m-y-column elevation \\\n    --p-no-path --p-cv --p-cv-seed 1 --p-cv-subsets 5 --p-cv-one-se \\\n    --p-cv--nlam 120 --p-cv-lamin 0.0001 \\\n    --p-no-stabsel --p-no-lamfixed \\\n    --p-concomitant --p-no-huber --p-intercept \\\n    --o-result atacama-top300-elevation-asv-only-r3-cv.qza\n\n# Construct the 285-feature constraint and weights before adding covariates.\npython create_classo_constraint_weights.py\n\nqiime tools import \\\n    --type ConstraintMatrix --input-path top300-zero-sum-constraint.zip \\\n    --output-path top300-zero-sum-constraint.qza\n\nqiime tools import \\\n    --type Weights --input-path top300-unit-weights.zip \\\n    --output-path top300-unit-weights.qza\n\n# append covariates scaled to the median ASV-column length\nqiime classo add-covariates \\\n    --i-features atacama-top300-train-53-clr.qza \\\n    --i-c top300-zero-sum-constraint.qza \\\n    --i-weights top300-unit-weights.qza \\\n    --m-covariates-file top300-elevation-augmented-covariates-normalized-from-train.tsv \\\n    --p-to-add asvscaled-log10-extract-concen --p-no-rescale \\\n    --p-w-to-add 1.0 \\\n    --p-to-add asvscaled-ph --p-no-rescale \\\n    --p-w-to-add 1.0 \\\n    --p-to-add asvscaled-ec --p-no-rescale \\\n    --p-w-to-add 1.0 \\\n    --p-to-add asvscaled-log10-amplicon-concentration --p-no-rescale \\\n    --p-w-to-add 1.0 \\\n    --p-to-add asvscaled-toc --p-no-rescale \\\n    --p-w-to-add 1.0 \\\n    --p-to-add asvscaled-depth --p-no-rescale \\\n    --p-w-to-add 1.0 \\\n    --o-new-features atacama-top300-train-53-clr-plus-asvscaled-covariates-equalweights.qza \\\n    --o-new-c top300-plus-asvscaled-covariates-equalweights-constraint.qza \\\n    --o-new-w top300-plus-asvscaled-covariates-equalweights-weights.qza\n\n# joint ASV-plus-covariate elevation model, conservative 1SE selection\nqiime classo regress \\\n    --i-features atacama-top300-train-53-clr-plus-asvscaled-covariates-equalweights.qza \\\n    --i-c top300-plus-asvscaled-covariates-equalweights-constraint.qza \\\n    --i-weights top300-plus-asvscaled-covariates-equalweights-weights.qza \\\n    --m-y-file elevation-train-53-metadata-q2.tsv \\\n    --m-y-column elevation \\\n    --p-no-path --p-cv --p-cv-seed 1 --p-cv-subsets 5 --p-cv-one-se \\\n    --p-cv--nlam 120 --p-cv-lamin 0.0001 \\\n    --p-no-stabsel --p-no-lamfixed \\\n    --p-concomitant --p-no-huber --p-intercept \\\n    --o-result atacama-top300-elevation-covariate-augmented-equalweights-r3-cv.qza"
+    },
+    {
+      "sha256": "fbab0b811c8a5af856152e244816118a8f62bb5683270135bac8f13424a387a1",
+      "text": "# CV-selected top-300 vegetation classifier\nqiime classo classify \\\n    --i-features atacama-top300-train-53-clr.qza \\\n    --m-y-file vegetation-train-53-metadata-q2.tsv \\\n    --m-y-column vegetation \\\n    --p-no-path --p-cv --p-cv-one-se \\\n    --p-cv-seed 1 --p-cv-subsets 5 \\\n    --p-cv--nlam 100 --p-cv-lamin 0.001 \\\n    --p-no-stabsel --p-no-lamfixed \\\n    --p-no-huber --p-intercept \\\n    --o-result atacama-top300-vegetation-classification-cv.qza\n\nqiime classo predict \\\n    --i-features atacama-top300-test-53-clr.qza \\\n    --i-problem atacama-top300-vegetation-classification-cv.qza \\\n    --o-predictions atacama-top300-vegetation-classification-cv-test-predictions.qza\n\n# stability-selected top-300 vegetation classifier\nSTABSEL=atacama-top300-vegetation-classification\nSTABSEL=${STABSEL}-c1-stabsel-q10-b100-threshold04\nqiime classo classify \\\n    --i-features atacama-top300-train-53-clr.qza \\\n    --m-y-file vegetation-train-53-metadata-q2.tsv \\\n    --m-y-column vegetation \\\n    --p-no-path --p-no-cv --p-stabsel \\\n    --p-stabsel-seed 1 --p-stabsel-b 100 \\\n    --p-stabsel-q 10 --p-stabsel-threshold 0.4 \\\n    --p-stabsel-threshold-label 0.2 \\\n    --p-no-lamfixed --p-no-huber --p-intercept \\\n    --o-result \"${STABSEL}.qza\"\n\nqiime classo predict \\\n    --i-features atacama-top300-test-53-clr.qza \\\n    --i-problem \"${STABSEL}.qza\" \\\n    --o-predictions \"${STABSEL}-test-predictions.qza\""
+    },
+    {
+      "sha256": "9420a6e2039074fdc7d28376e1db5c439ca2658869162f7850162e54c930553e",
+      "text": "# CLR transformation and scaled covariance construction\nqiime gglasso transform-features \\\n    --i-table atacama-top300-prevalence-53-table.qza \\\n    --i-taxonomy taxonomy.qza \\\n    --p-transformation clr \\\n    --p-pseudo-count 1 \\\n    --o-transformed-table atacama-top300-53-clr-pseudocount1.qza\n\nqiime gglasso calculate-covariance \\\n    --i-table atacama-top300-53-clr-pseudocount1.qza \\\n    --p-method scaled \\\n    --p-bias \\\n    --o-covariance-matrix atacama-top300-53-clr-pseudocount1-correlation.qza\n\n# ASV-only single graphical lasso\nqiime gglasso solve-problem \\\n    --i-covariance-matrix atacama-top300-53-clr-pseudocount1-correlation.qza \\\n    --p-n-samples 53 \\\n    --p-no-latent \\\n    --p-lambda1-path 1.00 0.95 0.90 0.85 0.80 0.75 0.70 0.65 \\\n        0.60 0.55 0.50 0.45 0.40 0.35 0.30 \\\n    --p-gamma 0.25 \\\n    --o-solution atacama-top300-53-clr-pseudocount1-sgl-ebic-gamma025.qza"
+    },
+    {
+      "sha256": "412d559aa1154ea88ceae11bd42e93bd4246ec1ca8d07300f7e01e2bd91371c5",
+      "text": "# append measured covariates before covariance construction\nqiime gglasso transform-features \\\n    --i-table atacama-top300-prevalence-53-table.qza \\\n    --i-taxonomy taxonomy.qza \\\n    --m-sample-metadata-file atacama-top300-53-curated-metadata-for-gglasso.tsv \\\n    --p-add-metadata \\\n    --p-scale-metadata \\\n    --p-transformation clr \\\n    --p-pseudo-count 1 \\\n    --o-transformed-table atacama-top300-53-clr-pseudocount1-with-curated-covariates.qza\n\nqiime gglasso calculate-covariance \\\n    --i-table atacama-top300-53-clr-pseudocount1-with-curated-covariates.qza \\\n    --p-method scaled \\\n    --p-bias \\\n    --o-covariance-matrix atacama-top300-53-clr-pseudocount1-curated-covariate-correlation.qza\n\nqiime gglasso solve-problem \\\n    --i-covariance-matrix atacama-top300-53-clr-pseudocount1-curated-covariate-correlation.qza \\\n    --p-n-samples 53 \\\n    --p-no-latent \\\n    --p-lambda1-path 1.00 0.95 0.90 0.85 0.80 0.75 0.70 0.65 \\\n        0.60 0.55 0.50 0.45 0.40 0.35 0.30 \\\n    --p-weights elevation 0.05 ph 0.05 average-soil-relative-humidity 0.05 \\\n        average-soil-temperature 0.05 percentcover 0.05 log10-extract-concen 0.05 \\\n    --p-gamma 0.25 \\\n    --o-solution atacama-top300-mixed-gglasso-gamma025.qza"
+    },
+    {
+      "sha256": "6929f800e3ead12481f5b13b44a7bb2e78a9e3f69c06c8c7924de29fe5601507",
+      "text": "# latent-variable graphical lasso\nqiime gglasso solve-problem \\\n    --i-covariance-matrix atacama-top300-53-clr-pseudocount1-correlation.qza \\\n    --p-n-samples 53 \\\n    --p-latent \\\n    --p-lambda1-path 0.65 \\\n    --p-mu1-path 60 50 40 30 25 20 15 12.5 10 7.5 5 \\\n    --p-gamma 0.25 \\\n    --o-solution atacama-top300-53-clr-pseudocount1-slr-lambda065-mu-sweep-gamma025.qza"
+    },
+    {
+      "sha256": "46a22a1d467c21d7223e9821056653da0f9c07715640f475dfb483ba630a6b9a",
+      "text": "qiime gglasso pca \\\n    --i-table atacama-top300-53-clr-pseudocount1.qza \\\n    --i-solution atacama-top300-53-clr-pseudocount1-slr-lambda065-mu-sweep-gamma025.qza \\\n    --m-sample-metadata-file atacama-top300-53-robust-pca-metadata-q2.tsv \\\n    --p-n-components 2 \\\n    --p-color-by elevation \\\n    --o-visualization atacama-top300-slr-rank2-robust-pca-color-by-elevation.qzv"
+    },
+    {
+      "sha256": "d441821fcaa1c78bb2b29ec0d4817ceabab655052db8ae1b32147a4eacaf95ef",
+      "text": "# Transform the training and held-out tables separately.\nqiime classo transform-features \\\n    --i-features motus-train.qza --p-transformation clr --p-coef 0.5 \\\n    --o-x motus-clr-train.qza\n\nqiime classo transform-features \\\n    --i-features motus-test.qza --p-transformation clr --p-coef 0.5 \\\n    --o-x motus-clr-test.qza\n\n# SLC model selection and prediction\nqiime classo regress \\\n    --i-features motus-clr-train.qza \\\n    --m-y-file outcomes.tsv --m-y-column host_age_days \\\n    --p-concomitant --p-path --p-path-nlam-log 60 --p-path-lamin-log 0.05 \\\n    --p-cv --p-cv-subsets 5 --p-cv-seed 1 --p-no-cv-one-se \\\n    --p-cv--nlam 60 --p-cv-lamin 0.05 --p-cv-logscale \\\n    --p-stabsel --p-stabsel-seed 1 --p-stabsel-b 100 --p-stabsel-q 10 \\\n    --p-stabsel-threshold 0.4 --p-no-lamfixed \\\n    --o-result motus-age-slc-r3.qza\n\nqiime classo predict \\\n    --i-features motus-clr-test.qza --i-problem motus-age-slc-r3.qza \\\n    --o-predictions motus-age-slc-r3-test-predictions.qza"
+    },
+    {
+      "sha256": "e4279a63b3f76e3afca41efd533e737d11ae37ffd7c2295a601ba9bbcabae003",
+      "text": "qiime classo add-taxa \\\n    --i-features motus-clr-train.qza --i-taxa motus-taxonomy.qza \\\n    --o-x motus-clr-trac-train.qza --o-aweights motus-trac-weights.qza\n\nqiime classo regress \\\n    --i-features motus-clr-trac-train.qza --i-weights motus-trac-weights.qza \\\n    --m-y-file outcomes.tsv --m-y-column host_age_days \\\n    --p-concomitant --p-path --p-path-nlam-log 60 --p-path-lamin-log 0.05 \\\n    --p-cv --p-cv-subsets 5 --p-cv-seed 1 --p-no-cv-one-se \\\n    --p-cv--nlam 60 --p-cv-lamin 0.05 --p-cv-logscale \\\n    --p-stabsel --p-stabsel-seed 1 --p-stabsel-b 100 --p-stabsel-q 10 \\\n    --p-stabsel-threshold 0.4 --p-no-lamfixed \\\n    --o-result motus-age-trac-r3.qza"
+    },
+    {
+      "sha256": "9019752439fca4a753e34eec796d477df7f57577ba9ff631b0a3ae0037518b62",
+      "text": "# mCLR transformation and scaled covariance construction\nqiime gglasso transform-features \\\n    --i-table motus-prev10pct.qza \\\n    --i-taxonomy motus-complete-taxonomy.qza \\\n    --p-transformation mclr \\\n    --o-transformed-table motus-60-mclr.qza\n\nqiime gglasso calculate-covariance \\\n    --i-table motus-60-mclr.qza \\\n    --p-method scaled \\\n    --p-bias \\\n    --o-covariance-matrix motus-60-mclr-correlation.qza\n\n# single graphical lasso with eBIC model selection\nqiime gglasso solve-problem \\\n    --i-covariance-matrix motus-60-mclr-correlation.qza \\\n    --p-n-samples 34 \\\n    --p-no-latent \\\n    --p-lambda1-path 3 2 1.5 1.25 1 0.8 0.6 0.5 0.4 0.3 0.25 \\\n        0.2 0.15 0.1 0.075 0.05 \\\n    --p-gamma 0.10 \\\n    --o-solution motus-60-mclr-sgl-ebic-gamma010.qza"
+    },
+    {
+      "sha256": "82e5f06f9b701bd7bfd5b0bb8fb87840fe91ab354e8dc48117256b31ef87b115",
+      "text": "# CLR transformation for the latent-variable model\nqiime gglasso transform-features \\\n    --i-table motus-prev10pct.qza \\\n    --i-taxonomy motus-complete-taxonomy.qza \\\n    --p-transformation clr \\\n    --p-pseudo-count 1 \\\n    --o-transformed-table motus-60-clr-pseudocount1.qza\n\nqiime gglasso calculate-covariance \\\n    --i-table motus-60-clr-pseudocount1.qza \\\n    --p-method scaled \\\n    --p-bias \\\n    --o-covariance-matrix motus-60-clr-pseudocount1-correlation.qza\n\nqiime gglasso solve-problem \\\n    --i-covariance-matrix motus-60-clr-pseudocount1-correlation.qza \\\n    --p-n-samples 34 \\\n    --p-latent \\\n    --p-lambda1-path 3 2 1.5 1.25 1 0.8 0.6 0.5 0.4 0.3 0.25 \\\n        0.2 0.15 0.1 0.075 0.05 \\\n    --p-mu1-path 60 45 30 20 15 10 7.5 5 2.5 1 \\\n    --p-gamma 0.10 \\\n    --o-solution motus-60-clr-slr-ebic-gamma010.qza"
+    },
+    {
+      "sha256": "a70e5d39a7b8d64c114b0debe80529b27184bfc868b641a92cef8e00b98da83b",
+      "text": "qiime feature-table filter-features \\\n    --i-table bracken-species-raw.qza \\\n    --p-min-samples 14 \\\n    --p-min-frequency 50000 \\\n    --o-filtered-table bracken-species-prev14-total50k.qza"
+    },
+    {
+      "sha256": "46291da2f1076f7580b1aba33a949cd6dcfc75771a8b9980a6121e258d25441e",
+      "text": "# Transform training and held-out tables separately.\nqiime classo transform-features \\\n    --i-features bracken-species-prev14-total50k-train.qza \\\n    --p-transformation clr --p-coef 0.5 \\\n    --o-x bracken-species-prev14-total50k-train-clr05.qza\n\nqiime classo transform-features \\\n    --i-features bracken-species-prev14-total50k-test.qza \\\n    --p-transformation clr --p-coef 0.5 \\\n    --o-x bracken-species-prev14-total50k-test-clr05.qza\n\nqiime classo classify \\\n    --i-features bracken-species-prev14-total50k-train-clr05.qza \\\n    --m-y-file metadata.tsv --m-y-column bean_type \\\n    --p-no-path --p-cv --p-no-stabsel \\\n    --p-cv-subsets 5 --p-cv-one-se --p-cv-lamin 0.001 \\\n    --p-huber --p-rho 0 --p-no-refit \\\n    --o-result bracken-bean-type-train-clr05-c2-rho0-cv-no-refit-pr60.qza\n\nqiime classo predict \\\n    --i-features bracken-species-prev14-total50k-test-clr05.qza \\\n    --i-problem bracken-bean-type-train-clr05-c2-rho0-cv-no-refit-pr60.qza \\\n    --o-predictions bracken-bean-type-train-clr05-c2-rho0-cv-no-refit-pr60-test-predictions.qza"
+    }
+  ],
+  "labels": [
+    "eq:R1",
+    "eq:R2",
+    "eq:R3",
+    "eq:R4",
+    "eq:adaptive",
+    "eq:classo-active-set",
+    "eq:classo-cv",
+    "eq:classo-stability",
+    "eq:closure",
+    "eq:clr",
+    "eq:cov_scaling",
+    "eq:covariance",
+    "eq:ebic",
+    "eq:fgl",
+    "eq:fit-criteria",
+    "eq:forward",
+    "eq:general",
+    "eq:ggl",
+    "eq:hinge",
+    "eq:huber",
+    "eq:huber-hinge",
+    "eq:lfactor",
+    "eq:logcontrast-predictor",
+    "eq:logratio-invariance",
+    "eq:mclr",
+    "eq:mclr-shift",
+    "eq:mgl",
+    "eq:partialcor",
+    "eq:positive-geometric-mean",
+    "eq:sgl",
+    "eq:simplex",
+    "eq:slr",
+    "eq:sparse-logcontrast",
+    "eq:total-sum-normalization",
+    "eq:trac",
+    "eq:trac-design",
+    "example",
+    "example-1",
+    "example-10",
+    "example-11",
+    "example-12",
+    "example-13",
+    "example-14",
+    "example-15",
+    "example-16",
+    "example-17",
+    "example-18",
+    "example-19",
+    "example-2",
+    "example-20",
+    "example-21",
+    "example-22",
+    "example-23",
+    "example-24",
+    "example-25",
+    "example-26",
+    "example-27",
+    "example-3",
+    "example-4",
+    "example-5",
+    "example-6",
+    "example-7",
+    "example-8",
+    "example-9",
+    "fig:atacama-covariates-overview",
+    "fig:bracken-cv",
+    "fig:bracken-data",
+    "fig:bracken-penalized",
+    "fig:highdim-latent-covariates",
+    "fig:motus-gglasso-matrices",
+    "fig:motus-latent-factor",
+    "fig:motus-slc-refit",
+    "fig:motus-slc-selection",
+    "fig:motus-trac-refit",
+    "fig:motus-trac-selection",
+    "fig:motus-trac-stabsel-refit",
+    "fig:top15-classo-cv",
+    "fig:top15-classo-selection",
+    "fig:top15-classo-stabsel",
+    "fig:top15-classo-vegetation",
+    "fig:top15-classo-vegetation-selection",
+    "fig:top15-clr-mclr",
+    "fig:top15-gglasso-four-panel",
+    "fig:top300-classo-elevation-asv-only",
+    "fig:top300-classo-elevation-joint",
+    "fig:top300-classo-elevation-selection",
+    "fig:top300-classo-vegetation-cv",
+    "fig:top300-classo-vegetation-selection",
+    "fig:top300-classo-vegetation-stabsel",
+    "fig:top300-gglasso-networks",
+    "joint-regression-with-non-compositional-covariates",
+    "mixed-graphical-model",
+    "regression",
+    "sec:adaptive",
+    "sec:atacama",
+    "sec:classification",
+    "sec:classo-complexity",
+    "sec:classo-inference",
+    "sec:classo-model-selection",
+    "sec:compositional-data",
+    "sec:datasets",
+    "sec:gglasso-complexity",
+    "sec:gglasso-inference",
+    "sec:gglasso-model-selection",
+    "sec:graphical",
+    "sec:highdim",
+    "sec:highdim-classification",
+    "sec:highdim-network",
+    "sec:highdim-regression",
+    "sec:highdim-slr",
+    "sec:highdim-subset",
+    "sec:logcontrast",
+    "sec:lowdim",
+    "sec:lowdim-classification",
+    "sec:lowdim-gglasso",
+    "sec:lowdim-mixed-graph",
+    "sec:lowdim-regression",
+    "sec:lowdim-sgl",
+    "sec:lowdim-slr",
+    "sec:lowdim-subset",
+    "sec:metagenomics",
+    "sec:metagenomics-gglasso",
+    "sec:metagenomics-regression",
+    "sec:metagenomics-sgl",
+    "sec:metagenomics-slr",
+    "sec:mgl",
+    "sec:models",
+    "sec:moshpit",
+    "sec:moshpit-classification",
+    "sec:sgl",
+    "sec:slr",
+    "sec:summary-tables",
+    "sec:trac",
+    "single-graphical-lasso",
+    "tab:atacama-covariates",
+    "tab:atacama-top15-asvs",
+    "tab:compat",
+    "tab:highdim-summary",
+    "tab:lowdim-summary",
+    "tab:methods",
+    "tab:motus-filtering",
+    "tab:notation",
+    "tab:params-classo",
+    "tab:params-gglasso"
+  ],
+  "tables": [
+    {
+      "number": 1,
+      "label": "tab:params-classo"
+    },
+    {
+      "number": 2,
+      "label": "tab:params-gglasso"
+    },
+    {
+      "number": 3,
+      "label": "tab:atacama-covariates"
+    },
+    {
+      "number": 4,
+      "label": "tab:lowdim-summary"
+    },
+    {
+      "number": 5,
+      "label": "tab:atacama-top15-asvs"
+    },
+    {
+      "number": 6,
+      "label": "tab:highdim-summary"
+    },
+    {
+      "number": 7,
+      "label": "tab:motus-filtering"
+    },
+    {
+      "number": 8,
+      "label": "tab:notation"
+    },
+    {
+      "number": 9,
+      "label": "tab:methods"
+    },
+    {
+      "number": 10,
+      "label": "tab:compat"
+    }
+  ],
+  "pandoc_version": "pandoc 3.7.0.2",
+  "poppler_version": "pdftoppm version 26.02.0"
+}

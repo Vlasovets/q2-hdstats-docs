@@ -1,0 +1,221 @@
+[
+  {
+    "check": "atacama-top15-train-53-table.qza",
+    "passed": true,
+    "detail": {
+      "shape": [
+        39,
+        15
+      ],
+      "reference_shape": [
+        39,
+        15
+      ],
+      "max_abs_error": 0.0,
+      "zero_sample_rows": 0,
+      "zero_feature_columns": 0
+    }
+  },
+  {
+    "check": "atacama-top15-test-53-table.qza",
+    "passed": true,
+    "detail": {
+      "shape": [
+        14,
+        15
+      ],
+      "reference_shape": [
+        14,
+        15
+      ],
+      "max_abs_error": 0.0,
+      "zero_sample_rows": 0,
+      "zero_feature_columns": 0
+    }
+  },
+  {
+    "check": "atacama-top15-53-q2-classo-clr-coef05.qza",
+    "passed": true,
+    "detail": {
+      "shape": [
+        53,
+        15
+      ],
+      "reference_shape": [
+        53,
+        15
+      ],
+      "max_abs_error": 0.0,
+      "zero_sample_rows": 0,
+      "zero_feature_columns": 0
+    }
+  },
+  {
+    "check": "atacama-top15-train-53-clr.qza",
+    "passed": true,
+    "detail": {
+      "shape": [
+        39,
+        15
+      ],
+      "reference_shape": [
+        39,
+        15
+      ],
+      "max_abs_error": 0.0,
+      "zero_sample_rows": 0,
+      "zero_feature_columns": 0
+    }
+  },
+  {
+    "check": "atacama-top15-test-53-clr.qza",
+    "passed": true,
+    "detail": {
+      "shape": [
+        14,
+        15
+      ],
+      "reference_shape": [
+        14,
+        15
+      ],
+      "max_abs_error": 0.0,
+      "zero_sample_rows": 0,
+      "zero_feature_columns": 0
+    }
+  },
+  {
+    "check": "full-mCLR",
+    "passed": true,
+    "detail": {
+      "shape": [
+        53,
+        15
+      ],
+      "reference_shape": [
+        53,
+        15
+      ],
+      "max_abs_error": 0.0,
+      "zero_sample_rows": 0,
+      "zero_feature_columns": 0
+    }
+  },
+  {
+    "check": "atacama-top15-elevation-r1-cv.qza",
+    "passed": true,
+    "detail": {
+      "differences": [],
+      "reference": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top15/atacama-top15-elevation-r1-cv.qza",
+      "rerun": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/atacama-walkthrough/sequential-replay/atacama-top15-elevation-r1-cv.qza"
+    }
+  },
+  {
+    "check": "atacama-top15-elevation-r3-cv.qza",
+    "passed": true,
+    "detail": {
+      "differences": [],
+      "reference": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top15/atacama-top15-elevation-r3-cv.qza",
+      "rerun": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/atacama-walkthrough/sequential-replay/atacama-top15-elevation-r3-cv.qza"
+    }
+  },
+  {
+    "check": "atacama-top15-elevation-r3-cv-train-predictions.qza",
+    "passed": true,
+    "detail": {
+      "differences": [],
+      "reference": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top15/atacama-top15-elevation-r3-cv-train-predictions.qza",
+      "rerun": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/atacama-walkthrough/sequential-replay/atacama-top15-elevation-r3-cv-train-predictions.qza"
+    }
+  },
+  {
+    "check": "atacama-top15-elevation-r3-test-predictions.qza",
+    "passed": true,
+    "detail": {
+      "differences": [],
+      "reference": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top15/atacama-top15-elevation-r3-test-predictions.qza",
+      "rerun": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/atacama-walkthrough/sequential-replay/atacama-top15-elevation-r3-test-predictions.qza"
+    }
+  },
+  {
+    "check": "atacama-top15-elevation-r3-stabsel-q4-b100-threshold-third.qza",
+    "passed": true,
+    "detail": {
+      "differences": [],
+      "reference": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top15/atacama-top15-elevation-r3-stabsel-q4-b100-threshold-third.qza",
+      "rerun": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/atacama-walkthrough/sequential-replay/atacama-top15-elevation-r3-stabsel-q4-b100-threshold-third.qza"
+    }
+  },
+  {
+    "check": "atacama-top15-elevation-r3-stabsel-threshold-third-train-predictions.qza",
+    "passed": true,
+    "detail": {
+      "differences": [],
+      "reference": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top15/atacama-top15-elevation-r3-stabsel-threshold-third-train-predictions.qza",
+      "rerun": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/atacama-walkthrough/sequential-replay/atacama-top15-elevation-r3-stabsel-threshold-third-train-predictions.qza"
+    }
+  },
+  {
+    "check": "atacama-top15-elevation-r3-stabsel-threshold-third-test-predictions.qza",
+    "passed": true,
+    "detail": {
+      "differences": [],
+      "reference": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top15/atacama-top15-elevation-r3-stabsel-threshold-third-test-predictions.qza",
+      "rerun": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/atacama-walkthrough/sequential-replay/atacama-top15-elevation-r3-stabsel-threshold-third-test-predictions.qza"
+    }
+  },
+  {
+    "check": "atacama-top15-vegetation-classification-cv.qza",
+    "passed": true,
+    "detail": {
+      "differences": [],
+      "reference": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top15/atacama-top15-vegetation-classification-cv.qza",
+      "rerun": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/atacama-walkthrough/sequential-replay/atacama-top15-vegetation-classification-cv.qza"
+    }
+  },
+  {
+    "check": "atacama-top15-vegetation-classification-cv-train-predictions.qza",
+    "passed": true,
+    "detail": {
+      "differences": [],
+      "reference": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top15/atacama-top15-vegetation-classification-cv-train-predictions.qza",
+      "rerun": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/atacama-walkthrough/sequential-replay/atacama-top15-vegetation-classification-cv-train-predictions.qza"
+    }
+  },
+  {
+    "check": "atacama-top15-vegetation-classification-cv-test-predictions.qza",
+    "passed": true,
+    "detail": {
+      "differences": [],
+      "reference": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top15/atacama-top15-vegetation-classification-cv-test-predictions.qza",
+      "rerun": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/atacama-walkthrough/sequential-replay/atacama-top15-vegetation-classification-cv-test-predictions.qza"
+    }
+  },
+  {
+    "check": "atacama-top15-53-sgl-ebic-gamma001.qza",
+    "passed": true,
+    "detail": {
+      "differences": [],
+      "reference": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top15/atacama-top15-53-sgl-ebic-gamma001.qza",
+      "rerun": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/atacama-walkthrough/sequential-replay/atacama-top15-53-sgl-ebic-gamma001.qza"
+    }
+  },
+  {
+    "check": "atacama-top15-53-mixed-curated-covariates-weight005-ebic-gamma001.qza",
+    "passed": true,
+    "detail": {
+      "differences": [],
+      "reference": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top15/atacama-top15-53-mixed-curated-covariates-weight005-ebic-gamma001.qza",
+      "rerun": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/atacama-walkthrough/sequential-replay/atacama-top15-53-mixed-curated-covariates-weight005-ebic-gamma001.qza"
+    }
+  },
+  {
+    "check": "atacama-top15-53-slr-ebic-gamma001-mu-grid.qza",
+    "passed": true,
+    "detail": {
+      "differences": [],
+      "reference": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top15/atacama-top15-53-slr-ebic-gamma001-mu-grid.qza",
+      "rerun": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/atacama-walkthrough/sequential-replay/atacama-top15-53-slr-ebic-gamma001-mu-grid.qza"
+    }
+  }
+]

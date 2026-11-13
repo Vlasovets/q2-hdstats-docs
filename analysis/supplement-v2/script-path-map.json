@@ -1,0 +1,242 @@
+[
+  {
+    "original_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top15/atacama-top15-elevation-r3-stabsel-threshold-third-commands.sh",
+    "bundled_path": "reproduction/canonical/outputs/fresh-atacama-workflow/q2-classo-top15/atacama-top15-elevation-r3-stabsel-threshold-third-commands.sh",
+    "sha256": "cb6971f890d239dbff40c452e5d3fa435dd88cf2fb4f9d9159f27834b4f92cc6"
+  },
+  {
+    "original_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top15/extract_top15_classo_qiime_results.py",
+    "bundled_path": "reproduction/canonical/outputs/fresh-atacama-workflow/q2-classo-top15/extract_top15_classo_qiime_results.py",
+    "sha256": "7991abfaf85e4b1404c05a39d72cbdfe8289bc38e2d56fabb036cfdcad44cf30"
+  },
+  {
+    "original_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top15/plot_top15_classo_qiime_figures.py",
+    "bundled_path": "reproduction/canonical/outputs/fresh-atacama-workflow/q2-classo-top15/plot_top15_classo_qiime_figures.py",
+    "sha256": "eaeb471d499dc5b20ee36b3442948b3298205f5ef585d11ece3bf50c8528ce81"
+  },
+  {
+    "original_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top15/supplement-q2-classo-top15-commands.sh",
+    "bundled_path": "reproduction/canonical/outputs/fresh-atacama-workflow/q2-classo-top15/supplement-q2-classo-top15-commands.sh",
+    "sha256": "1fba14f1a4209e4ecde6c1f3ce46d2a7296bf3d20aa8d636c113a0192cd99806"
+  },
+  {
+    "original_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top15/supplement-q2-classo-top15-vegetation-classification-commands.sh",
+    "bundled_path": "reproduction/canonical/outputs/fresh-atacama-workflow/q2-classo-top15/supplement-q2-classo-top15-vegetation-classification-commands.sh",
+    "sha256": "41b69abf96729482a79dd5f856c00fa9ce4c4e643fd22139e3ff1ba321e3c685"
+  },
+  {
+    "original_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/create_classo_constraint_weights.py",
+    "bundled_path": "reproduction/canonical/outputs/fresh-atacama-workflow/q2-classo-top300/create_classo_constraint_weights.py",
+    "sha256": "929e4fd50d6280d0317545068c3a41490a0d349d711b936082e9d98fba818095"
+  },
+  {
+    "original_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/extract_top300_classo_qiime_results.py",
+    "bundled_path": "reproduction/canonical/outputs/fresh-atacama-workflow/q2-classo-top300/extract_top300_classo_qiime_results.py",
+    "sha256": "186645b3398e340268379fea302e69ed9db8ebca4e560c05cc56de3362fd3d52"
+  },
+  {
+    "original_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/plot_top300_classo_elevation_matched_style.py",
+    "bundled_path": "reproduction/canonical/outputs/fresh-atacama-workflow/q2-classo-top300/plot_top300_classo_elevation_matched_style.py",
+    "sha256": "dbb62cfa7d5aaeeb2c9ec16fbd8e2bd66528240d36e1c63d3d046daf4661a87a"
+  },
+  {
+    "original_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/plot_top300_r3_honest_minmse.py",
+    "bundled_path": "reproduction/canonical/outputs/fresh-atacama-workflow/q2-classo-top300/plot_top300_r3_honest_minmse.py",
+    "sha256": "efaaf4fa669629080a6382444b66301c7fc4297bac7a5bd503a0e7d03bfac90b"
+  },
+  {
+    "original_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/plot_top300_vegetation_classification.py",
+    "bundled_path": "reproduction/canonical/outputs/fresh-atacama-workflow/q2-classo-top300/plot_top300_vegetation_classification.py",
+    "sha256": "e3b0b8d3d7f652ea7d69b399b2b92cc315c33e470ef18a19971d6d11d6d33c3d"
+  },
+  {
+    "original_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/plot_top300_vegetation_classification_matched_style.py",
+    "bundled_path": "reproduction/canonical/outputs/fresh-atacama-workflow/q2-classo-top300/plot_top300_vegetation_classification_matched_style.py",
+    "sha256": "83f96d64e298e82a005c8cc872a06d21adc27794b5ce286dd284014f81bab4be"
+  },
+  {
+    "original_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/prepare_top300_inputs.py",
+    "bundled_path": "reproduction/canonical/outputs/fresh-atacama-workflow/q2-classo-top300/prepare_top300_inputs.py",
+    "sha256": "580950699f74d312e53abaac22f5b384679d8da4158399aa1c69c832b4b40411"
+  },
+  {
+    "original_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/run_top300_r3_asvscaled_workflow.sh",
+    "bundled_path": "reproduction/canonical/outputs/fresh-atacama-workflow/q2-classo-top300/run_top300_r3_asvscaled_workflow.sh",
+    "sha256": "f5d35de004ffabdd626a7445c80be85893360711480ada55de0f90007806320c"
+  },
+  {
+    "original_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/supplement-q2-classo-top300-vegetation-classification-commands.sh",
+    "bundled_path": "reproduction/canonical/outputs/fresh-atacama-workflow/q2-classo-top300/supplement-q2-classo-top300-vegetation-classification-commands.sh",
+    "sha256": "940ceada2bcfe04e7f6494a63c557dd5c4ad206aa8f96365c938d51788d7d0f5"
+  },
+  {
+    "original_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top15/extract_top15_gglasso_qiime_results.py",
+    "bundled_path": "reproduction/canonical/outputs/fresh-atacama-workflow/q2-gglasso-top15/extract_top15_gglasso_qiime_results.py",
+    "sha256": "c8f6f3a28ffd1a75513674925bcc84f319442536c35d4972122ba013e76b1bf0"
+  },
+  {
+    "original_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top15/plot_top15_gglasso_qiime_figures.py",
+    "bundled_path": "reproduction/canonical/outputs/fresh-atacama-workflow/q2-gglasso-top15/plot_top15_gglasso_qiime_figures.py",
+    "sha256": "a918b81a6f6fa1b021a4c5d4135134e61002bd803edbf2c79c10482c342b572c"
+  },
+  {
+    "original_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top300/extract_top300_gglasso_qiime_results.py",
+    "bundled_path": "reproduction/canonical/outputs/fresh-atacama-workflow/q2-gglasso-top300/extract_top300_gglasso_qiime_results.py",
+    "sha256": "e3962a70d17053404c7d17bc6caaa4d29669e832c5953b06dcc0f86132030893"
+  },
+  {
+    "original_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top300/extract_top300_sgl_qiime_results.py",
+    "bundled_path": "reproduction/canonical/outputs/fresh-atacama-workflow/q2-gglasso-top300/extract_top300_sgl_qiime_results.py",
+    "sha256": "c5386750d205ae6b90755701c28451eee83eee226e67e3f5c9e0496ccebb4c53"
+  },
+  {
+    "original_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top300/plot_top300_gglasso_reduced_matrices.py",
+    "bundled_path": "reproduction/canonical/outputs/fresh-atacama-workflow/q2-gglasso-top300/plot_top300_gglasso_reduced_matrices.py",
+    "sha256": "fea942d18fdeb3b8e134af0bc99c74ad2bfa5774330a6faecf8157fe4028ada0"
+  },
+  {
+    "original_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top300/plot_top300_slr_robust_pca_qiime_export_summary.py",
+    "bundled_path": "reproduction/canonical/outputs/fresh-atacama-workflow/q2-gglasso-top300/plot_top300_slr_robust_pca_qiime_export_summary.py",
+    "sha256": "675d3a53dbdde5ee7a6de09041b4d0689c4becfe29d0973a68dcbee77e95b496"
+  },
+  {
+    "original_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top300/prepare_top300_gglasso_metadata.py",
+    "bundled_path": "reproduction/canonical/outputs/fresh-atacama-workflow/q2-gglasso-top300/prepare_top300_gglasso_metadata.py",
+    "sha256": "8925675af5151a0d5ee0ba72d4f90558eb7d340492118dc3a6f24befdad41ecc"
+  },
+  {
+    "original_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top300/run_top300_mixed_clr_gamma025_qiime_workflow.sh",
+    "bundled_path": "reproduction/canonical/outputs/fresh-atacama-workflow/q2-gglasso-top300/run_top300_mixed_clr_gamma025_qiime_workflow.sh",
+    "sha256": "77314c3b8693342a3ae5b5de9dc3611007d79d9962ac9246db7f1302473bc6b9"
+  },
+  {
+    "original_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top300/run_top300_sgl_clr_qiime_workflow.sh",
+    "bundled_path": "reproduction/canonical/outputs/fresh-atacama-workflow/q2-gglasso-top300/run_top300_sgl_clr_qiime_workflow.sh",
+    "sha256": "f8c3586d72514955114e8b3cab1344f6d9aee79f147d8ad5c014310021cb8bb2"
+  },
+  {
+    "original_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top300/run_top300_sgl_gamma010_qiime_workflow.sh",
+    "bundled_path": "reproduction/canonical/outputs/fresh-atacama-workflow/q2-gglasso-top300/run_top300_sgl_gamma010_qiime_workflow.sh",
+    "sha256": "f4bffae5bac762a84553c8685e5f6740de223b8581fb789222c9deab3928ac26"
+  },
+  {
+    "original_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top300/run_top300_sgl_qiime_workflow.sh",
+    "bundled_path": "reproduction/canonical/outputs/fresh-atacama-workflow/q2-gglasso-top300/run_top300_sgl_qiime_workflow.sh",
+    "sha256": "429f3d67397de09d98201571c42bf68b27422718887170b2d95d7ab43a3ad71a"
+  },
+  {
+    "original_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top300/run_top300_slr_clr_lambda065_mu_sweep_qiime_workflow.sh",
+    "bundled_path": "reproduction/canonical/outputs/fresh-atacama-workflow/q2-gglasso-top300/run_top300_slr_clr_lambda065_mu_sweep_qiime_workflow.sh",
+    "sha256": "4a2f25a0ba65b57488c5d1200064058452deb059f03a7f157d9bd8cc798cf863"
+  },
+  {
+    "original_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top300/run_top300_slr_robust_pca_qiime_workflow.sh",
+    "bundled_path": "reproduction/canonical/outputs/fresh-atacama-workflow/q2-gglasso-top300/run_top300_slr_robust_pca_qiime_workflow.sh",
+    "sha256": "3715795343006ca823a25d4eefebce2eaba548bcf6b55d1620241c14bcdc8b3a"
+  },
+  {
+    "original_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/tutorial-figure-generation/plot_top15_classo_matched_style.py",
+    "bundled_path": "reproduction/canonical/outputs/fresh-atacama-workflow/tutorial-figure-generation/plot_top15_classo_matched_style.py",
+    "sha256": "b7becae59c03d813e4eee588404fc6e8372faaa36a11f495bb8412995bde33f3"
+  },
+  {
+    "original_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/tutorial-figure-generation/provenance_utils.py",
+    "bundled_path": "reproduction/canonical/outputs/fresh-atacama-workflow/tutorial-figure-generation/provenance_utils.py",
+    "sha256": "716f92b7d8af002c390972969ca7dd296bfb07077afdd3f17d3a7e52303baa18"
+  },
+  {
+    "original_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/tutorial-figure-generation/replot_first_three.py",
+    "bundled_path": "reproduction/canonical/outputs/fresh-atacama-workflow/tutorial-figure-generation/replot_first_three.py",
+    "sha256": "1915bb8c4ab0ab2d7f824f554038de5a435588e2a9f98672d2f3285140560f50"
+  },
+  {
+    "original_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/tutorial-figure-generation/run_top300_classo_with_provenance.py",
+    "bundled_path": "reproduction/canonical/outputs/fresh-atacama-workflow/tutorial-figure-generation/run_top300_classo_with_provenance.py",
+    "sha256": "cddcb5d45f6a1b2770b21356a69b00c12097f4139834fe9cf8eec731a4c836e4"
+  },
+  {
+    "original_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/tutorial-figure-generation/tutorial_plotting.py",
+    "bundled_path": "reproduction/canonical/outputs/fresh-atacama-workflow/tutorial-figure-generation/tutorial_plotting.py",
+    "sha256": "c9c40ccb24e59ffca9f21b9e7f119d44b2bcc72a7bdc8d9340fc05a4bcc8a9d2"
+  },
+  {
+    "original_path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/bracken-beans/scripts/plot_bracken_bean_classification_figures.py",
+    "bundled_path": "reproduction/audit-project/outputs/bracken-beans/scripts/plot_bracken_bean_classification_figures.py",
+    "sha256": "97c05fe947f824cca4cdd46234fe5eef2b8b0b5cdf2393b7180ead1be3e8fcf3"
+  },
+  {
+    "original_path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/bracken-beans/scripts/plot_bracken_final_classification.py",
+    "bundled_path": "reproduction/audit-project/outputs/bracken-beans/scripts/plot_bracken_final_classification.py",
+    "sha256": "e00e95928c495e50501c213422507228dcdb8f23e23a326bf740e66f2ea567b6"
+  },
+  {
+    "original_path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/bracken-beans/scripts/prepare_temporal_covariate.py",
+    "bundled_path": "reproduction/audit-project/outputs/bracken-beans/scripts/prepare_temporal_covariate.py",
+    "sha256": "8275aab52ff358835d3c996eb9c7051944b19122a27e47141b1181ee0c0ba5a4"
+  },
+  {
+    "original_path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/bracken-beans/scripts/run_bracken_bean_classification_qiime.sh",
+    "bundled_path": "reproduction/audit-project/outputs/bracken-beans/scripts/run_bracken_bean_classification_qiime.sh",
+    "sha256": "a2348cd9bd40a7fa1b8cf450d294ff36805e7eb9c7c201f39ccd33fcf3ace7fe"
+  },
+  {
+    "original_path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/bracken-beans/scripts/run_bracken_final_classification_qiime.sh",
+    "bundled_path": "reproduction/audit-project/outputs/bracken-beans/scripts/run_bracken_final_classification_qiime.sh",
+    "sha256": "1875c87163cc05a000ae26e403e7948c307bb7469a6e13048374fa17f4d104a9"
+  },
+  {
+    "original_path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/scripts/finalize_motus_gglasso_qiime.sh",
+    "bundled_path": "reproduction/audit-project/outputs/motus-merged/scripts/finalize_motus_gglasso_qiime.sh",
+    "sha256": "28972ce9a886f90bbcae9275a81346468448a7150c1104eab3ad35624f518e8b"
+  },
+  {
+    "original_path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/scripts/plot_motus_gglasso_tutorial_figures.py",
+    "bundled_path": "reproduction/audit-project/outputs/motus-merged/scripts/plot_motus_gglasso_tutorial_figures.py",
+    "sha256": "1be34a0b7a958d49cfea609a127d919e963b1b3fe94de72a205cc22b18bea167"
+  },
+  {
+    "original_path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/scripts/plot_motus_lowrank_covariates.py",
+    "bundled_path": "reproduction/audit-project/outputs/motus-merged/scripts/plot_motus_lowrank_covariates.py",
+    "sha256": "fe46db4718b335688f8f0aa61aabb0f5c88fbbf1a8f56670cee6f17230d51615"
+  },
+  {
+    "original_path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/scripts/plot_motus_slc_trac_tutorial_figures.py",
+    "bundled_path": "reproduction/audit-project/outputs/motus-merged/scripts/plot_motus_slc_trac_tutorial_figures.py",
+    "sha256": "e90a5894bb710d294fa05e0489808a4b553631fe7d427dbe2cc520eaa040ab9c"
+  },
+  {
+    "original_path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/scripts/prepare_complete_motus_inputs.py",
+    "bundled_path": "reproduction/audit-project/outputs/motus-merged/scripts/prepare_complete_motus_inputs.py",
+    "sha256": "d40d03883cf3d5b486f5e444b7eec4775cc5aef5a5bb2c6f51e7635713054455"
+  },
+  {
+    "original_path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/scripts/refit_slc_trac_lambda05_qiime.sh",
+    "bundled_path": "reproduction/audit-project/outputs/motus-merged/scripts/refit_slc_trac_lambda05_qiime.sh",
+    "sha256": "2abed9ad130a806a114d1e9893a72e406bb66a90767aded06252a34820e21fe7"
+  },
+  {
+    "original_path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/scripts/run_motus_gglasso_gamma_sweep_qiime.sh",
+    "bundled_path": "reproduction/audit-project/outputs/motus-merged/scripts/run_motus_gglasso_gamma_sweep_qiime.sh",
+    "sha256": "3349807077e54e18213d629c8f6aaa54a40cc4c7c989054cfe79f32d3347776f"
+  },
+  {
+    "original_path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/scripts/run_motus_gglasso_qiime.sh",
+    "bundled_path": "reproduction/audit-project/outputs/motus-merged/scripts/run_motus_gglasso_qiime.sh",
+    "sha256": "52e7d45943d9a1930b518e2790615f3be4c516fee1735354b3fff2c29c31282e"
+  },
+  {
+    "original_path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/scripts/run_slc_trac_qiime.sh",
+    "bundled_path": "reproduction/audit-project/outputs/motus-merged/scripts/run_slc_trac_qiime.sh",
+    "sha256": "74b229f2f88f2d29eb8eb3896de868f881c63af27808ae79e268f5db1d13bfc2"
+  },
+  {
+    "original_path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/run_top15_stabsel_third.py",
+    "bundled_path": "reproduction/audit-project/outputs/run_top15_stabsel_third.py",
+    "sha256": "970f80422eb0d48c6a23e95c01ba2435805f6db048f8bd67dbf3c276b5bf6783"
+  },
+  {
+    "original_path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/tutorial-figure-generation/tutorial_plotting.py",
+    "bundled_path": "reproduction/audit-project/outputs/tutorial-figure-generation/tutorial_plotting.py",
+    "sha256": "580cf110a78dceb02143da3f8de81ef50bb9300c6a6e7c8a588bfc603bb45bf4"
+  }
+]
