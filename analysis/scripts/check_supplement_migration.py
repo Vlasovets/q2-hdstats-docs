@@ -72,6 +72,20 @@ def main():
     rendered_labels = set(re.findall(r'^\(([^\n]+)\)=$|^:(?:label|name): ([^\n]+)$', rendered, re.M))
     targets = {a or b for a, b in rendered_labels}
     assert not (source_labels - targets), f'Lost labels: {source_labels - targets}'
+    policy = bundle / 'command-harmonization'
+    if policy.exists():
+        from minimize_qiime_commands import simplify_text, resolved
+        defaults_path = policy / 'qiime-interface-defaults.json'
+        defaults = json.loads(defaults_path.read_text())
+        report = json.loads((policy / 'report.json').read_text())
+        assert sha(defaults_path) == report['default_snapshot_sha256'], 'Default snapshot changed'
+        texts = [(source.read_text(), True)] + [(page, False) for page in pages]
+        for text, latex in texts:
+            _, commands = simplify_text(text, defaults, latex)
+            assert not any(cmd['removed'] for cmd in commands), 'Redundant default parameter in displayed command'
+        for file in report['files']:
+            for command in file['commands']:
+                assert resolved(command['before'], defaults) == resolved(command['after'], defaults), 'Effective command settings changed'
     if 'tutorial/s2-01' in editorial:
         import csv
         import io
@@ -89,7 +103,7 @@ def main():
                 relative = Path(member).relative_to('plotting')
                 bundled = bundle / 'portable-plotting/top15' / relative
                 assert archive.read(member) == bundled.read_bytes(), 'Download/script mismatch: ' + member
-    print(f'PASS: {len(pages)} pages; source commands preserved; {len(editorial)} reviewed tutorial adaptations; 26 unchanged PDFs; 10 tables; {len(source_keys)} citation keys; {len(source_labels)} source labels; both original logos.')
+    print(f'PASS: {len(pages)} pages; source commands preserved; {len(editorial)} reviewed tutorial adaptations; 26 unchanged PDFs; 10 tables; {len(source_keys)} citation keys; {len(source_labels)} source labels; both original logos; minimal-command policy checked.')
 
 
 if __name__ == '__main__':

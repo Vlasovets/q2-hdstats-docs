@@ -18,6 +18,20 @@ The c-lasso PyPI release is not a substitute for this audited GitHub revision.
 The numerical audit was an established-environment replay, not a clean-machine
 or cross-platform installation test.
 
+## Reading the Commands
+
+The tutorial and supplement show non-default parameter settings only.
+For example, the basic regression call uses the default R3 formulation;
+the R1 comparison explicitly switches concomitant estimation off.
+The scientific choices are explained beside the commands rather than
+repeating default flags. Version pinning is essential: a different
+plugin release may have different defaults.
+
+The [registered action defaults](/downloads/qiime-interface-defaults.json)
+record the exact interface used for this edition. The command-harmonization
+report retains the previous explicit commands and verifies that omitting
+default-valued options leaves the resolved parameter settings unchanged.
+
 ## Source Correspondence
 
 The repository retains the authoritative supplement in

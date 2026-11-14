@@ -10,11 +10,9 @@
   },
   "tutorial/s2-01": {
     "baseline": "baselines/s2-01.md",
-    "published_sha256": "331a97d33944db27c533b2bcaf4c0e6c985686ba419c779d2ca8f76ab3d52861",
+    "published_sha256": "9ff20b7f0433d94c9cf58967febd94cec7cb07090bb63fb5b8e1c79d51463979",
     "purpose": "Step-by-step QIIME tutorial with optional artifact-derived plotting",
-    "command_filename_replacements": {
-      "atacama-top15-53-q2-gglasso-mclr.qza": "atacama-top15-53-mclr.qza"
-    },
+    "command_filename_replacements": {},
     "notes": [
       "No model, split, filtering rule, hyperparameter, result, or original figure changed.",
       "Adds input bundle, sample splitting, in-sample predictions, QIIME summaries, and optional plotting.",

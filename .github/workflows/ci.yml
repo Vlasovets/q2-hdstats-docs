@@ -55,6 +55,9 @@ jobs:
     - name: Check supplement correspondence and branding
       run: python analysis/scripts/check_supplement_migration.py .
 
+    - name: Check minimal command equivalence
+      run: python analysis/scripts/test_minimal_commands.py
+
     - name: Build the book
       run: jupyter-book build docs --warningiserror
 

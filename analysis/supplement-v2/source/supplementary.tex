@@ -188,6 +188,11 @@ plugin workflows. The remaining subsections describe the mathematical
 formulations of the implemented estimators in \pkg{q2-classo} and \pkg{q2-gglasso}. 
 Table~\ref{tab:notation} collects the symbols used throughout.
 
+Command examples specify non-default parameter settings only. Omitted settings
+use the registered defaults of the pinned plugin versions; the parameter
+tables provide the reference defaults. Inputs and output paths remain
+explicit, and non-default switches disable analyses not used in an example.
+
 \vspace{5pt}
 
 \subsection{Compositional data}
@@ -303,16 +308,12 @@ as \code{-{}-p-coef} in \pkg{q2-classo} and as
 # q2-classo: replace zeros by coef, then apply CLR
 qiime classo transform-features \
     --i-features counts.qza \
-    --p-transformation clr \
-    --p-coef 0.5 \
     --o-x Z-classo-clr.qza
 
 # q2-gglasso: add a pseudo-count, then apply CLR
 qiime gglasso transform-features \
     --i-table counts.qza \
     --i-taxonomy taxonomy.qza \
-    --p-transformation clr \
-    --p-pseudo-count 1 \
     --o-transformed-table Z-gglasso-clr.qza
 \end{PseudoCode}
 
@@ -361,7 +362,8 @@ qiime gglasso transform-features \
 # q2-classo can use the resulting transformed table as its design
 qiime classo regress \
     --i-features Z-mclr.qza \
-    --m-y-file metadata.tsv --m-y-column y \
+    --m-y-file metadata.tsv \
+    --m-y-column y \
     --o-result fit-regression.qza
 \end{PseudoCode}
 
@@ -553,17 +555,22 @@ least-squares formulation. The boolean options \code{-{}-p-concomitant} and
 # R3: concomitant least squares (default)
 qiime classo regress \
     --i-features Z-classo-clr.qza \
-    --m-y-file metadata.tsv --m-y-column y \
+    --m-y-file metadata.tsv \
+    --m-y-column y \
     --o-result fit.qza
 
 # R1: least squares
-qiime classo regress ... --p-no-concomitant --p-no-huber
+qiime classo regress ... \
+    --p-no-concomitant
 
 # R2: Huber
-qiime classo regress ... --p-no-concomitant --p-huber
+qiime classo regress ... \
+    --p-no-concomitant \
+    --p-huber
 
 # R4: concomitant Huber
-qiime classo regress ... --p-concomitant --p-huber
+qiime classo regress ... \
+    --p-huber
 \end{PseudoCode}
 
 \subsubsection{Classification}
@@ -613,14 +620,16 @@ the residual Huber threshold used in R2 and R4.
 # binary classification
 qiime classo classify \
     --i-features Z-classo-clr.qza \
-    --m-y-file metadata.tsv --m-y-column y \
+    --m-y-file metadata.tsv \
+    --m-y-column y \
     --o-result fit-class.qza
 
 # C2: Huberized-hinge classification
 qiime classo classify \
     --i-features Z-classo-clr.qza \
-    --m-y-file metadata.tsv --m-y-column y \
-    --p-huber --p-rho 0 \
+    --m-y-file metadata.tsv \
+    --m-y-column y \
+    --p-huber \
     --o-result fit-class-c2.qza
 \end{PseudoCode}
 
@@ -674,11 +683,14 @@ weights, which are then passed to the \code{regress} or \code{classify} actions.
 qiime classo add-taxa \
     --i-features Z-classo-clr.qza \
     --i-taxa taxonomy.qza \
-    --o-x design-trac.qza --o-aweights weights-trac.qza
+    --o-x design-trac.qza \
+    --o-aweights weights-trac.qza
 
 qiime classo regress \
-    --i-features design-trac.qza --i-weights weights-trac.qza \
-    --m-y-file metadata.tsv --m-y-column y \
+    --i-features design-trac.qza \
+    --i-weights weights-trac.qza \
+    --m-y-file metadata.tsv \
+    --m-y-column y \
     --o-result fit-trac.qza
 \end{PseudoCode}
 
@@ -724,14 +736,17 @@ qiime classo add-covariates \
     --i-features Z-classo-clr.qza \
     --m-covariates-file metadata.tsv \
     --p-to-add ph elevation \
-    --o-new-features design-cov.qza --o-new-c C-cov.qza \
+    --o-new-features design-cov.qza \
+    --o-new-c C-cov.qza \
     --o-new-w weights-cov.qza
 
 # solving regression
 qiime classo regress \
-    --i-features design-cov.qza --i-c C-cov.qza \
+    --i-features design-cov.qza \
+    --i-c C-cov.qza \
     --i-weights weights-cov.qza \
-    --m-y-file metadata.tsv --m-y-column y \
+    --m-y-file metadata.tsv \
+    --m-y-column y \
     --o-result fit-cov.qza
 \end{PseudoCode}
 
@@ -1118,9 +1133,8 @@ label-based penalty multipliers.
 qiime gglasso transform-features \
     --i-table counts.qza \
     --i-taxonomy taxonomy.qza \
-    --p-transformation clr \
     --m-sample-metadata-file metadata.tsv \
-    --p-add-metadata --p-scale-metadata \
+    --p-add-metadata \
     --o-transformed-table Z-with-metadata.qza
 
 qiime gglasso calculate-covariance \
@@ -1130,7 +1144,8 @@ qiime gglasso calculate-covariance \
 # solving mixed graphical lasso with label-based penalty multipliers
 qiime gglasso solve-problem \
     --i-covariance-matrix S-with-metadata.qza \
-    --p-n-samples <value> --p-lambda1-path <value> \
+    --p-n-samples <value> \
+    --p-lambda1-path <value> \
     --p-weights <label weight ...> \
     --o-solution fit-adaptive.qza
 \end{PseudoCode}
@@ -1185,10 +1200,13 @@ must be passed to \code{solve-problem} as \code{-{}-p-group-array}.
 # solving MGL problem
 qiime gglasso solve-problem \
     --i-covariance-matrix S.qza \
-    --p-n-samples <value> --p-n-samples <value> --p-n-samples <value> \
-    --p-reg GGL \
+    --p-n-samples <value> \
+    --p-n-samples <value> \
+    --p-n-samples <value> \
     --p-lambda1-path <value> \
-    --p-lambda2-min <value> --p-lambda2-max <value> --p-n-lambda2 <value> \
+    --p-lambda2-min <value> \
+    --p-lambda2-max <value> \
+    --p-n-lambda2 <value> \
     --o-solution fit-mgl.qza
 \end{PseudoCode}
 
@@ -1248,8 +1266,10 @@ procedure.
 # solving latent-variable graphical lasso
 qiime gglasso solve-problem \
     --i-covariance-matrix S.qza \
-    --p-n-samples <value> --p-latent \
-    --p-lambda1-path <value> --p-mu1-path <value> \
+    --p-n-samples <value> \
+    --p-latent \
+    --p-lambda1-path <value> \
+    --p-mu1-path <value> \
     --o-solution fit-slr.qza
 \end{PseudoCode}
 
@@ -1295,7 +1315,9 @@ qiime gglasso solve-problem \
 qiime gglasso solve-problem \
     --i-covariance-matrix S.qza \
     --p-n-samples <value> \
-    --p-lambda1-min <value> --p-lambda1-max <value> --p-n-lambda1 <value> \
+    --p-lambda1-min <value> \
+    --p-lambda1-max <value> \
+    --p-n-lambda1 <value> \
     --p-path-scale linear \
     --p-gamma <value> \
     --o-solution fit-selected.qza
@@ -1622,21 +1644,15 @@ model estimation.}
 # q2-classo CLR on the full 53-sample top-15 ASV table for display
 qiime classo transform-features \
     --i-features atacama-top15-prevalence-53-table.qza \
-    --p-transformation clr \
-    --p-coef 0.5 \
     --o-x atacama-top15-53-q2-classo-clr-coef05.qza
 
 # q2-classo CLR on the training and held-out tables for regression
 qiime classo transform-features \
     --i-features atacama-top15-train-53-table.qza \
-    --p-transformation clr \
-    --p-coef 0.5 \
     --o-x atacama-top15-train-53-clr.qza
 
 qiime classo transform-features \
     --i-features atacama-top15-test-53-table.qza \
-    --p-transformation clr \
-    --p-coef 0.5 \
     --o-x atacama-top15-test-53-clr.qza
 
 # q2-gglasso mCLR on the full 53-sample table for graphical models
@@ -1644,7 +1660,7 @@ qiime gglasso transform-features \
     --i-table atacama-top15-prevalence-53-table.qza \
     --i-taxonomy atacama-taxonomy.qza \
     --p-transformation mclr \
-    --o-transformed-table atacama-top15-53-q2-gglasso-mclr.qza
+    --o-transformed-table atacama-top15-53-mclr.qza
 \end{PseudoCode}
 
 \subsubsection{Elevation prediction with q2-classo}
@@ -1669,10 +1685,9 @@ qiime classo regress \
     --i-features atacama-top15-train-53-clr.qza \
     --m-y-file elevation-train-53-metadata-q2.tsv \
     --m-y-column elevation \
-    --p-no-path --p-cv --p-cv-seed 1 --p-cv-subsets 5 --p-cv-one-se \
-    --p-cv--nlam 100 --p-cv-lamin 0.001 \
-    --p-no-stabsel --p-no-lamfixed \
-    --p-concomitant --p-no-huber --p-intercept \
+    --p-no-path \
+    --p-no-stabsel \
+    --p-no-lamfixed \
     --o-result atacama-top15-elevation-r3-cv.qza
 
 qiime classo predict \
@@ -1685,10 +1700,13 @@ qiime classo regress \
     --i-features atacama-top15-train-53-clr.qza \
     --m-y-file elevation-train-53-metadata-q2.tsv \
     --m-y-column elevation \
-    --p-no-path --p-no-cv --p-stabsel --p-no-lamfixed \
-    --p-stabsel-seed 1 --p-stabsel-b 100 --p-stabsel-q 4 \
-    --p-stabsel-percent-ns 0.5 --p-stabsel-threshold 0.3333333333333333 \
-    --p-concomitant --p-no-huber --p-intercept \
+    --p-no-path \
+    --p-no-cv \
+    --p-no-lamfixed \
+    --p-stabsel-seed 1 \
+    --p-stabsel-b 100 \
+    --p-stabsel-q 4 \
+    --p-stabsel-threshold 0.3333333333333333 \
     --o-result atacama-top15-elevation-r3-stabsel-q4-b100-threshold-third.qza
 
 qiime classo predict \
@@ -1775,11 +1793,9 @@ qiime classo classify \
     --i-features atacama-top15-train-53-clr.qza \
     --m-y-file vegetation-train-53-metadata-q2.tsv \
     --m-y-column vegetation \
-    --p-no-path --p-cv --p-cv-one-se \
-    --p-cv-seed 1 --p-cv-subsets 5 \
-    --p-cv--nlam 100 --p-cv-lamin 0.001 \
-    --p-no-stabsel --p-no-lamfixed \
-    --p-no-huber --p-intercept \
+    --p-no-path \
+    --p-no-stabsel \
+    --p-no-lamfixed \
     --o-result atacama-top15-vegetation-classification-cv.qza
 
 qiime classo predict \
@@ -1873,8 +1889,6 @@ empirical mCLR correlation matrix to a sparse conditional association network.
 # empirical mCLR correlation of the top-15 ASV table
 qiime gglasso calculate-covariance \
     --i-table atacama-top15-53-mclr.qza \
-    --p-method scaled \
-    --p-bias \
     --o-covariance-matrix atacama-top15-53-mclr-correlation.qza
 
 # ASV-only SGL with eBIC model selection
@@ -1882,9 +1896,8 @@ qiime gglasso solve-problem \
     --i-covariance-matrix atacama-top15-53-mclr-correlation.qza \
     --p-n-samples 53 \
     --p-no-latent \
-    --p-lambda1-path 1.0 0.9 0.8 0.7 0.6 0.5 0.4 0.3 0.2 \
-        0.15 0.1 0.075 0.05 0.035 0.025 0.015 0.01 \
-    --p-gamma 0.01 \
+    --p-lambda1-path 1.0 0.9 0.8 0.7 0.6 0.5 0.4 0.3 0.2 0.15 0.1 0.075 0.05 0.035 0.025 \
+        0.015 0.01 \
     --o-solution atacama-top15-53-sgl-ebic-gamma001.qza
 \end{PseudoCode}
 
@@ -1925,25 +1938,20 @@ qiime gglasso transform-features \
     --m-sample-metadata-file atacama-top15-53-curated-metadata-for-gglasso.tsv \
     --p-transformation mclr \
     --p-add-metadata \
-    --p-scale-metadata \
     --o-transformed-table atacama-top15-53-mclr-with-curated-covariates.qza
 
 qiime gglasso calculate-covariance \
     --i-table atacama-top15-53-mclr-with-curated-covariates.qza \
-    --p-method scaled \
-    --p-bias \
     --o-covariance-matrix atacama-top15-53-mclr-curated-covariate-correlation.qza
 
 qiime gglasso solve-problem \
     --i-covariance-matrix atacama-top15-53-mclr-curated-covariate-correlation.qza \
     --p-n-samples 53 \
     --p-no-latent \
-    --p-lambda1-path 1.0 0.9 0.8 0.7 0.6 0.5 0.4 0.3 0.2 \
-        0.15 0.1 0.075 0.05 0.035 0.025 0.015 0.01 \
+    --p-lambda1-path 1.0 0.9 0.8 0.7 0.6 0.5 0.4 0.3 0.2 0.15 0.1 0.075 0.05 0.035 0.025 \
+        0.015 0.01 \
     --p-weights elevation 0.05 ph 0.05 average-soil-relative-humidity 0.05 \
-        average-soil-temperature 0.05 percentcover 0.05 \
-        log10-extract-concen 0.05 \
-    --p-gamma 0.01 \
+        average-soil-temperature 0.05 percentcover 0.05 log10-extract-concen 0.05 \
     --o-solution atacama-top15-53-mixed-curated-covariates-weight005-ebic-gamma001.qza
 \end{PseudoCode}
 
@@ -1983,10 +1991,9 @@ qiime gglasso solve-problem \
     --i-covariance-matrix atacama-top15-53-mclr-correlation.qza \
     --p-n-samples 53 \
     --p-latent \
-    --p-lambda1-path 1.0 0.9 0.8 0.7 0.6 0.5 0.4 0.3 0.2 \
-        0.15 0.1 0.075 0.05 0.035 0.025 0.015 0.01 \
+    --p-lambda1-path 1.0 0.9 0.8 0.7 0.6 0.5 0.4 0.3 0.2 0.15 0.1 0.075 0.05 0.035 0.025 \
+        0.015 0.01 \
     --p-mu1-path 5.0 3.0 2.0 1.5 1.0 0.75 0.5 0.3 0.2 0.1 \
-    --p-gamma 0.01 \
     --o-solution atacama-top15-53-slr-ebic-gamma001-mu-grid.qza
 \end{PseudoCode}
 
@@ -2129,25 +2136,24 @@ qiime feature-table filter-features \
 qiime feature-table filter-samples \
     --i-table atacama-top300-training-supported-53-table.qza \
     --m-metadata-file train-test-split-53-q2.tsv \
-    --p-where "[split]='train'" --p-no-filter-empty-features \
+    --p-where "[split]='train'" \
+    --p-no-filter-empty-features \
     --o-filtered-table atacama-top300-train-53-table.qza
 
 qiime feature-table filter-samples \
     --i-table atacama-top300-training-supported-53-table.qza \
     --m-metadata-file train-test-split-53-q2.tsv \
-    --p-where "[split]='test'" --p-no-filter-empty-features \
+    --p-where "[split]='test'" \
+    --p-no-filter-empty-features \
     --o-filtered-table atacama-top300-test-53-table.qza
 
 # CLR transformation of the training-supported ASV training table
 qiime classo transform-features \
     --i-features atacama-top300-train-53-table.qza \
-    --p-transformation clr \
-    --p-coef 0.5 \
     --o-x atacama-top300-train-53-clr.qza
 
 qiime classo transform-features \
     --i-features atacama-top300-test-53-table.qza \
-    --p-transformation clr --p-coef 0.5 \
     --o-x atacama-top300-test-53-clr.qza
 
 # ASV-only elevation model
@@ -2155,22 +2161,19 @@ qiime classo regress \
     --i-features atacama-top300-train-53-clr.qza \
     --m-y-file elevation-train-53-metadata-q2.tsv \
     --m-y-column elevation \
-    --p-no-path --p-cv --p-cv-seed 1 --p-cv-subsets 5 --p-cv-one-se \
-    --p-cv--nlam 120 --p-cv-lamin 0.0001 \
-    --p-no-stabsel --p-no-lamfixed \
-    --p-concomitant --p-no-huber --p-intercept \
+    --p-no-path \
+    --p-cv--nlam 120 \
+    --p-cv-lamin 0.0001 \
+    --p-no-stabsel \
+    --p-no-lamfixed \
     --o-result atacama-top300-elevation-asv-only-r3-cv.qza
 
 # Construct the 285-feature constraint and weights before adding covariates.
 python create_classo_constraint_weights.py
 
-qiime tools import \
-    --type ConstraintMatrix --input-path top300-zero-sum-constraint.zip \
-    --output-path top300-zero-sum-constraint.qza
+qiime tools import      --type ConstraintMatrix --input-path top300-zero-sum-constraint.zip      --output-path top300-zero-sum-constraint.qza
 
-qiime tools import \
-    --type Weights --input-path top300-unit-weights.zip \
-    --output-path top300-unit-weights.qza
+qiime tools import      --type Weights --input-path top300-unit-weights.zip      --output-path top300-unit-weights.qza
 
 # append covariates scaled to the median ASV-column length
 qiime classo add-covariates \
@@ -2178,17 +2181,23 @@ qiime classo add-covariates \
     --i-c top300-zero-sum-constraint.qza \
     --i-weights top300-unit-weights.qza \
     --m-covariates-file top300-elevation-augmented-covariates-normalized-from-train.tsv \
-    --p-to-add asvscaled-log10-extract-concen --p-no-rescale \
+    --p-to-add asvscaled-log10-extract-concen \
+    --p-no-rescale \
     --p-w-to-add 1.0 \
-    --p-to-add asvscaled-ph --p-no-rescale \
+    --p-to-add asvscaled-ph \
+    --p-no-rescale \
     --p-w-to-add 1.0 \
-    --p-to-add asvscaled-ec --p-no-rescale \
+    --p-to-add asvscaled-ec \
+    --p-no-rescale \
     --p-w-to-add 1.0 \
-    --p-to-add asvscaled-log10-amplicon-concentration --p-no-rescale \
+    --p-to-add asvscaled-log10-amplicon-concentration \
+    --p-no-rescale \
     --p-w-to-add 1.0 \
-    --p-to-add asvscaled-toc --p-no-rescale \
+    --p-to-add asvscaled-toc \
+    --p-no-rescale \
     --p-w-to-add 1.0 \
-    --p-to-add asvscaled-depth --p-no-rescale \
+    --p-to-add asvscaled-depth \
+    --p-no-rescale \
     --p-w-to-add 1.0 \
     --o-new-features atacama-top300-train-53-clr-plus-asvscaled-covariates-equalweights.qza \
     --o-new-c top300-plus-asvscaled-covariates-equalweights-constraint.qza \
@@ -2201,10 +2210,11 @@ qiime classo regress \
     --i-weights top300-plus-asvscaled-covariates-equalweights-weights.qza \
     --m-y-file elevation-train-53-metadata-q2.tsv \
     --m-y-column elevation \
-    --p-no-path --p-cv --p-cv-seed 1 --p-cv-subsets 5 --p-cv-one-se \
-    --p-cv--nlam 120 --p-cv-lamin 0.0001 \
-    --p-no-stabsel --p-no-lamfixed \
-    --p-concomitant --p-no-huber --p-intercept \
+    --p-no-path \
+    --p-cv--nlam 120 \
+    --p-cv-lamin 0.0001 \
+    --p-no-stabsel \
+    --p-no-lamfixed \
     --o-result atacama-top300-elevation-covariate-augmented-equalweights-r3-cv.qza
 \end{PseudoCode}
 
@@ -2294,11 +2304,9 @@ qiime classo classify \
     --i-features atacama-top300-train-53-clr.qza \
     --m-y-file vegetation-train-53-metadata-q2.tsv \
     --m-y-column vegetation \
-    --p-no-path --p-cv --p-cv-one-se \
-    --p-cv-seed 1 --p-cv-subsets 5 \
-    --p-cv--nlam 100 --p-cv-lamin 0.001 \
-    --p-no-stabsel --p-no-lamfixed \
-    --p-no-huber --p-intercept \
+    --p-no-path \
+    --p-no-stabsel \
+    --p-no-lamfixed \
     --o-result atacama-top300-vegetation-classification-cv.qza
 
 qiime classo predict \
@@ -2313,11 +2321,13 @@ qiime classo classify \
     --i-features atacama-top300-train-53-clr.qza \
     --m-y-file vegetation-train-53-metadata-q2.tsv \
     --m-y-column vegetation \
-    --p-no-path --p-no-cv --p-stabsel \
-    --p-stabsel-seed 1 --p-stabsel-b 100 \
-    --p-stabsel-q 10 --p-stabsel-threshold 0.4 \
+    --p-no-path \
+    --p-no-cv \
+    --p-stabsel-seed 1 \
+    --p-stabsel-b 100 \
+    --p-stabsel-threshold 0.4 \
     --p-stabsel-threshold-label 0.2 \
-    --p-no-lamfixed --p-no-huber --p-intercept \
+    --p-no-lamfixed \
     --o-result "${STABSEL}.qza"
 
 qiime classo predict \
@@ -2424,14 +2434,10 @@ several local correlation blocks as conditional association modules.
 qiime gglasso transform-features \
     --i-table atacama-top300-prevalence-53-table.qza \
     --i-taxonomy taxonomy.qza \
-    --p-transformation clr \
-    --p-pseudo-count 1 \
     --o-transformed-table atacama-top300-53-clr-pseudocount1.qza
 
 qiime gglasso calculate-covariance \
     --i-table atacama-top300-53-clr-pseudocount1.qza \
-    --p-method scaled \
-    --p-bias \
     --o-covariance-matrix atacama-top300-53-clr-pseudocount1-correlation.qza
 
 # ASV-only single graphical lasso
@@ -2439,8 +2445,8 @@ qiime gglasso solve-problem \
     --i-covariance-matrix atacama-top300-53-clr-pseudocount1-correlation.qza \
     --p-n-samples 53 \
     --p-no-latent \
-    --p-lambda1-path 1.00 0.95 0.90 0.85 0.80 0.75 0.70 0.65 \
-        0.60 0.55 0.50 0.45 0.40 0.35 0.30 \
+    --p-lambda1-path 1.00 0.95 0.90 0.85 0.80 0.75 0.70 0.65 0.60 0.55 0.50 0.45 0.40 \
+        0.35 0.30 \
     --p-gamma 0.25 \
     --o-solution atacama-top300-53-clr-pseudocount1-sgl-ebic-gamma025.qza
 \end{PseudoCode}
@@ -2498,23 +2504,18 @@ qiime gglasso transform-features \
     --i-taxonomy taxonomy.qza \
     --m-sample-metadata-file atacama-top300-53-curated-metadata-for-gglasso.tsv \
     --p-add-metadata \
-    --p-scale-metadata \
-    --p-transformation clr \
-    --p-pseudo-count 1 \
     --o-transformed-table atacama-top300-53-clr-pseudocount1-with-curated-covariates.qza
 
 qiime gglasso calculate-covariance \
     --i-table atacama-top300-53-clr-pseudocount1-with-curated-covariates.qza \
-    --p-method scaled \
-    --p-bias \
     --o-covariance-matrix atacama-top300-53-clr-pseudocount1-curated-covariate-correlation.qza
 
 qiime gglasso solve-problem \
     --i-covariance-matrix atacama-top300-53-clr-pseudocount1-curated-covariate-correlation.qza \
     --p-n-samples 53 \
     --p-no-latent \
-    --p-lambda1-path 1.00 0.95 0.90 0.85 0.80 0.75 0.70 0.65 \
-        0.60 0.55 0.50 0.45 0.40 0.35 0.30 \
+    --p-lambda1-path 1.00 0.95 0.90 0.85 0.80 0.75 0.70 0.65 0.60 0.55 0.50 0.45 0.40 \
+        0.35 0.30 \
     --p-weights elevation 0.05 ph 0.05 average-soil-relative-humidity 0.05 \
         average-soil-temperature 0.05 percentcover 0.05 log10-extract-concen 0.05 \
     --p-gamma 0.25 \
@@ -2667,26 +2668,32 @@ subject-disjoint split.
 
 # Transform the training and held-out tables separately.
 qiime classo transform-features \
-    --i-features motus-train.qza --p-transformation clr --p-coef 0.5 \
+    --i-features motus-train.qza \
     --o-x motus-clr-train.qza
 
 qiime classo transform-features \
-    --i-features motus-test.qza --p-transformation clr --p-coef 0.5 \
+    --i-features motus-test.qza \
     --o-x motus-clr-test.qza
 
 # SLC model selection and prediction
 qiime classo regress \
     --i-features motus-clr-train.qza \
-    --m-y-file outcomes.tsv --m-y-column host_age_days \
-    --p-concomitant --p-path --p-path-nlam-log 60 --p-path-lamin-log 0.05 \
-    --p-cv --p-cv-subsets 5 --p-cv-seed 1 --p-no-cv-one-se \
-    --p-cv--nlam 60 --p-cv-lamin 0.05 --p-cv-logscale \
-    --p-stabsel --p-stabsel-seed 1 --p-stabsel-b 100 --p-stabsel-q 10 \
-    --p-stabsel-threshold 0.4 --p-no-lamfixed \
+    --m-y-file outcomes.tsv \
+    --m-y-column host_age_days \
+    --p-path-nlam-log 60 \
+    --p-path-lamin-log 0.05 \
+    --p-no-cv-one-se \
+    --p-cv--nlam 60 \
+    --p-cv-lamin 0.05 \
+    --p-stabsel-seed 1 \
+    --p-stabsel-b 100 \
+    --p-stabsel-threshold 0.4 \
+    --p-no-lamfixed \
     --o-result motus-age-slc-r3.qza
 
 qiime classo predict \
-    --i-features motus-clr-test.qza --i-problem motus-age-slc-r3.qza \
+    --i-features motus-clr-test.qza \
+    --i-problem motus-age-slc-r3.qza \
     --o-predictions motus-age-slc-r3-test-predictions.qza
 \end{PseudoCode}
 
@@ -2725,17 +2732,25 @@ before applying the same training-only selection workflow.
 \paragraph{Example:} \mbox{}
 \begin{PseudoCode}
 qiime classo add-taxa \
-    --i-features motus-clr-train.qza --i-taxa motus-taxonomy.qza \
-    --o-x motus-clr-trac-train.qza --o-aweights motus-trac-weights.qza
+    --i-features motus-clr-train.qza \
+    --i-taxa motus-taxonomy.qza \
+    --o-x motus-clr-trac-train.qza \
+    --o-aweights motus-trac-weights.qza
 
 qiime classo regress \
-    --i-features motus-clr-trac-train.qza --i-weights motus-trac-weights.qza \
-    --m-y-file outcomes.tsv --m-y-column host_age_days \
-    --p-concomitant --p-path --p-path-nlam-log 60 --p-path-lamin-log 0.05 \
-    --p-cv --p-cv-subsets 5 --p-cv-seed 1 --p-no-cv-one-se \
-    --p-cv--nlam 60 --p-cv-lamin 0.05 --p-cv-logscale \
-    --p-stabsel --p-stabsel-seed 1 --p-stabsel-b 100 --p-stabsel-q 10 \
-    --p-stabsel-threshold 0.4 --p-no-lamfixed \
+    --i-features motus-clr-trac-train.qza \
+    --i-weights motus-trac-weights.qza \
+    --m-y-file outcomes.tsv \
+    --m-y-column host_age_days \
+    --p-path-nlam-log 60 \
+    --p-path-lamin-log 0.05 \
+    --p-no-cv-one-se \
+    --p-cv--nlam 60 \
+    --p-cv-lamin 0.05 \
+    --p-stabsel-seed 1 \
+    --p-stabsel-b 100 \
+    --p-stabsel-threshold 0.4 \
+    --p-no-lamfixed \
     --o-result motus-age-trac-r3.qza
 \end{PseudoCode}
 
@@ -2841,8 +2856,6 @@ qiime gglasso transform-features \
 
 qiime gglasso calculate-covariance \
     --i-table motus-60-mclr.qza \
-    --p-method scaled \
-    --p-bias \
     --o-covariance-matrix motus-60-mclr-correlation.qza
 
 # single graphical lasso with eBIC model selection
@@ -2850,8 +2863,7 @@ qiime gglasso solve-problem \
     --i-covariance-matrix motus-60-mclr-correlation.qza \
     --p-n-samples 34 \
     --p-no-latent \
-    --p-lambda1-path 3 2 1.5 1.25 1 0.8 0.6 0.5 0.4 0.3 0.25 \
-        0.2 0.15 0.1 0.075 0.05 \
+    --p-lambda1-path 3 2 1.5 1.25 1 0.8 0.6 0.5 0.4 0.3 0.25 0.2 0.15 0.1 0.075 0.05 \
     --p-gamma 0.10 \
     --o-solution motus-60-mclr-sgl-ebic-gamma010.qza
 \end{PseudoCode}
@@ -2875,22 +2887,17 @@ conditional-association summaries.
 qiime gglasso transform-features \
     --i-table motus-prev10pct.qza \
     --i-taxonomy motus-complete-taxonomy.qza \
-    --p-transformation clr \
-    --p-pseudo-count 1 \
     --o-transformed-table motus-60-clr-pseudocount1.qza
 
 qiime gglasso calculate-covariance \
     --i-table motus-60-clr-pseudocount1.qza \
-    --p-method scaled \
-    --p-bias \
     --o-covariance-matrix motus-60-clr-pseudocount1-correlation.qza
 
 qiime gglasso solve-problem \
     --i-covariance-matrix motus-60-clr-pseudocount1-correlation.qza \
     --p-n-samples 34 \
     --p-latent \
-    --p-lambda1-path 3 2 1.5 1.25 1 0.8 0.6 0.5 0.4 0.3 0.25 \
-        0.2 0.15 0.1 0.075 0.05 \
+    --p-lambda1-path 3 2 1.5 1.25 1 0.8 0.6 0.5 0.4 0.3 0.25 0.2 0.15 0.1 0.075 0.05 \
     --p-mu1-path 60 45 30 20 15 10 7.5 5 2.5 1 \
     --p-gamma 0.10 \
     --o-solution motus-60-clr-slr-ebic-gamma010.qza
@@ -2984,20 +2991,20 @@ the restricted $q=4$ path did not converge reliably.
 # Transform training and held-out tables separately.
 qiime classo transform-features \
     --i-features bracken-species-prev14-total50k-train.qza \
-    --p-transformation clr --p-coef 0.5 \
     --o-x bracken-species-prev14-total50k-train-clr05.qza
 
 qiime classo transform-features \
     --i-features bracken-species-prev14-total50k-test.qza \
-    --p-transformation clr --p-coef 0.5 \
     --o-x bracken-species-prev14-total50k-test-clr05.qza
 
 qiime classo classify \
     --i-features bracken-species-prev14-total50k-train-clr05.qza \
-    --m-y-file metadata.tsv --m-y-column bean_type \
-    --p-no-path --p-cv --p-no-stabsel \
-    --p-cv-subsets 5 --p-cv-one-se --p-cv-lamin 0.001 \
-    --p-huber --p-rho 0 --p-no-refit \
+    --m-y-file metadata.tsv \
+    --m-y-column bean_type \
+    --p-no-path \
+    --p-no-stabsel \
+    --p-huber \
+    --p-no-refit \
     --o-result bracken-bean-type-train-clr05-c2-rho0-cv-no-refit-pr60.qza
 
 qiime classo predict \
