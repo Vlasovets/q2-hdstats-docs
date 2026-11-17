@@ -1,7 +1,10 @@
 # High-Dimensional Statistics with QIIME 2
 
-Use **q2-classo** to fit regression and classification models, and
-**q2-gglasso** to estimate microbial association networks in QIIME 2.
+This tutorial introduces high-dimensional regression, classification, and
+microbial network estimation in QIIME 2 using **q2-classo** and **q2-gglasso**.
+Through worked examples with amplicon and metagenomic data, you will learn how
+to prepare compositional feature tables, select statistical models, evaluate
+held-out predictions, and interpret microbial association networks.
 
 Begin with [Getting started](getting-started.md), then follow the Atacama
 example. You will first inspect the data and sample metadata, work with a small
