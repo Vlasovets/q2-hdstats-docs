@@ -1,0 +1,174 @@
+{
+  "include": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/_Application_Note__High_dimensional_regression_and_network_inference_in_QIIME_2_with_q2_classo_and_q2_gglasso/03_supplement/figs/atacama_top15_gglasso_four_matrix_comparison.pdf",
+  "source": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top15/atacama-top15-q2-gglasso-four-matrix-comparison-final-tight.pdf",
+  "generator": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top15/plot_top15_gglasso_qiime_figures.py",
+  "source_provenance": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top15/atacama-top15-q2-gglasso-four-matrix-comparison-final-tight.provenance.json",
+  "source_file": {
+    "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top15/atacama-top15-q2-gglasso-four-matrix-comparison-final-tight.pdf",
+    "exists": true,
+    "sha256": "4866be74ced9c0c5626157a3cb594fd8d130e89f157cb5889304e58aed789ee1",
+    "size_bytes": 45287
+  },
+  "included_before": {
+    "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/_Application_Note__High_dimensional_regression_and_network_inference_in_QIIME_2_with_q2_classo_and_q2_gglasso/03_supplement/figs/atacama_top15_gglasso_four_matrix_comparison.pdf",
+    "exists": true,
+    "sha256": "4866be74ced9c0c5626157a3cb594fd8d130e89f157cb5889304e58aed789ee1",
+    "size_bytes": 45287
+  },
+  "generator_file": {
+    "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top15/plot_top15_gglasso_qiime_figures.py",
+    "exists": true,
+    "sha256": "a918b81a6f6fa1b021a4c5d4135134e61002bd803edbf2c79c10482c342b572c",
+    "size_bytes": 8459
+  },
+  "inputs": [
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top15/atacama-top15-mclr-correlation-asv-order.tsv",
+      "exists": true,
+      "sha256": "b3dbae96fef672778d0d99dd8196a583f4bd177a9aa778b44f8bc0f3825169b5",
+      "size_bytes": 3065,
+      "recorded_sha256": "b3dbae96fef672778d0d99dd8196a583f4bd177a9aa778b44f8bc0f3825169b5",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top15/atacama-top15-sgl-gamma001-partial-correlation-asv-order.tsv",
+      "exists": true,
+      "sha256": "889987c810cbc1128ec718075bba3e4a5ea3beacc34c16ab17059aee11b8d759",
+      "size_bytes": 1685,
+      "recorded_sha256": "889987c810cbc1128ec718075bba3e4a5ea3beacc34c16ab17059aee11b8d759",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top15/atacama-top15-mixed-weight005-gamma001-full-asv-covariate-partial-correlation.tsv",
+      "exists": true,
+      "sha256": "6ec6b8722e1d1c3f769ce90deedd56a014aa9daa9a140e03e12c494a65115c56",
+      "size_bytes": 5526,
+      "recorded_sha256": "6ec6b8722e1d1c3f769ce90deedd56a014aa9daa9a140e03e12c494a65115c56",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top15/atacama-top15-slr-gamma001-sparse-plus-lv1-augmented-matrix.tsv",
+      "exists": true,
+      "sha256": "1395df7b790af8f950eef64970f8d11abcb2237f16e5cfcfe110d5508276a6e3",
+      "size_bytes": 2012,
+      "recorded_sha256": "1395df7b790af8f950eef64970f8d11abcb2237f16e5cfcfe110d5508276a6e3",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top15/atacama-top15-q2-gglasso-model-selection-summary.tsv",
+      "exists": true,
+      "sha256": "0d668ccc7199de23abb5f01c114128dc38b897e2249e0d13edec393303c8142a",
+      "size_bytes": 137,
+      "recorded_sha256": "0d668ccc7199de23abb5f01c114128dc38b897e2249e0d13edec393303c8142a",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top15/top15-asv-label-map.tsv",
+      "exists": true,
+      "sha256": "3f099e28ff552337398a430d01726551e6ba09816bf36baf360093a7ad449ada",
+      "size_bytes": 1430,
+      "recorded_sha256": "3f099e28ff552337398a430d01726551e6ba09816bf36baf360093a7ad449ada",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top15/atacama-top15-53-mclr-correlation.qza",
+      "exists": true,
+      "sha256": "46b99eb715b76fa7fd8df3e1380033379bca0e2b726a57e0c45f33d4f5203624",
+      "size_bytes": 110729,
+      "recorded_sha256": "46b99eb715b76fa7fd8df3e1380033379bca0e2b726a57e0c45f33d4f5203624",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top15/atacama-top15-53-sgl-ebic-gamma001.qza",
+      "exists": true,
+      "sha256": "c8627f42d6b0f913d52090937d0c19157ee7411e80974fb8da1f7ef1ee46c164",
+      "size_bytes": 130665,
+      "recorded_sha256": "c8627f42d6b0f913d52090937d0c19157ee7411e80974fb8da1f7ef1ee46c164",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top15/atacama-top15-53-mixed-curated-covariates-weight005-ebic-gamma001.qza",
+      "exists": true,
+      "sha256": "d588649aa63dc16547eaaab005563f79ab9d6d828705abcacf789c6e22bb60ed",
+      "size_bytes": 136444,
+      "recorded_sha256": "d588649aa63dc16547eaaab005563f79ab9d6d828705abcacf789c6e22bb60ed",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top15/atacama-top15-53-slr-ebic-gamma001-mu-grid.qza",
+      "exists": true,
+      "sha256": "10f5630fbda5be6237022ac34400a3ce8b69d8acf697fc08f7a2916f7869fb44",
+      "size_bytes": 136245,
+      "recorded_sha256": "10f5630fbda5be6237022ac34400a3ce8b69d8acf697fc08f7a2916f7869fb44",
+      "hash_matches": true
+    }
+  ],
+  "scripts": [
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top15/plot_top15_gglasso_qiime_figures.py",
+      "exists": true,
+      "sha256": "a918b81a6f6fa1b021a4c5d4135134e61002bd803edbf2c79c10482c342b572c",
+      "size_bytes": 8459,
+      "recorded_sha256": "a918b81a6f6fa1b021a4c5d4135134e61002bd803edbf2c79c10482c342b572c",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top15/extract_top15_gglasso_qiime_results.py",
+      "exists": true,
+      "sha256": "c8f6f3a28ffd1a75513674925bcc84f319442536c35d4972122ba013e76b1bf0",
+      "size_bytes": 8415,
+      "recorded_sha256": "c8f6f3a28ffd1a75513674925bcc84f319442536c35d4972122ba013e76b1bf0",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/tutorial-figure-generation/provenance_utils.py",
+      "exists": true,
+      "sha256": "716f92b7d8af002c390972969ca7dd296bfb07077afdd3f17d3a7e52303baa18",
+      "size_bytes": 2768
+    }
+  ],
+  "script_dependencies": [
+    {
+      "importer": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top15/plot_top15_gglasso_qiime_figures.py",
+      "module": "provenance_utils",
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/tutorial-figure-generation/provenance_utils.py",
+      "exists": true,
+      "sha256": "716f92b7d8af002c390972969ca7dd296bfb07077afdd3f17d3a7e52303baa18",
+      "size_bytes": 2768
+    },
+    {
+      "importer": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top15/extract_top15_gglasso_qiime_results.py",
+      "module": "provenance_utils",
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/tutorial-figure-generation/provenance_utils.py",
+      "exists": true,
+      "sha256": "716f92b7d8af002c390972969ca7dd296bfb07077afdd3f17d3a7e52303baa18",
+      "size_bytes": 2768
+    }
+  ],
+  "provenance": [
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top15/atacama-top15-q2-gglasso-four-matrix-comparison-final-tight.provenance.json",
+      "exists": true,
+      "sha256": "446c230643c7625821c6f67638b31348e5285eb00d9660d7e62cd939428a16d4",
+      "size_bytes": 6680
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top15/atacama-top15-q2-gglasso-qza-extraction.provenance.json",
+      "exists": true,
+      "sha256": "b038357be3b5fac69f04ab2e0d9228b6efd77f89d30141d86fe6478ed0b93f4d",
+      "size_bytes": 8225
+    }
+  ],
+  "flags": [],
+  "matches_before": true,
+  "installed_at_utc": "2026-11-12T11:04:21.188790+00:00",
+  "installer": {
+    "path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/finalize_tutorial_figure_registry.py",
+    "exists": true,
+    "sha256": "984ecd52129dfd12e4f04c66751b91905af36bf395d7cf8a50c90f67434af5ec",
+    "size_bytes": 18147
+  },
+  "backups": [
+    "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/reproducibility-audit-2026-11-12/previous-included-figures/atacama_top15_gglasso_four_matrix_comparison.4866be74ced9c0c5626157a3cb594fd8d130e89f157cb5889304e58aed789ee1.pdf"
+  ]
+}

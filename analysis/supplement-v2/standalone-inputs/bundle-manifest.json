@@ -1,0 +1,26 @@
+{
+  "atacama-top300-inputs": {
+    "zip_sha256": "e416d346619202961bd9e2ea4bb3e12374dea2887202f6392bd9379d619b0782",
+    "files": 23,
+    "bytes": 124797,
+    "dimensions": {
+      "samples": 53,
+      "network_features": 300,
+      "prediction_features": 285,
+      "train": 39,
+      "test": 14
+    }
+  },
+  "motus-inputs": {
+    "zip_sha256": "c73f77834d5f9005470a0d5d4a3e5caa4184c85d45aabfa762ca67a00720f4b5",
+    "files": 10,
+    "bytes": 111322,
+    "dimensions": {
+      "samples": 34,
+      "features": 60,
+      "train": 26,
+      "test": 8,
+      "split": "subject-disjoint"
+    }
+  }
+}

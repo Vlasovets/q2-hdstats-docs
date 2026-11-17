@@ -1,65 +1,64 @@
-[![GitHub Pages](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://Vlasovets.github.io/q2-hdstats-docs/)
-[![deploy-book](https://github.com/Vlasovets/q2-hdstats-docs/actions/workflows/ci.yml/badge.svg)](https://github.com/Vlasovets/q2-hdstats-docs/actions/workflows/ci.yml)
+# High-Dimensional Statistics with QIIME 2
 
+[Published documentation](https://bio-datascience.github.io/q2-hdstats-docs/intro.html)
 
-# High-dimensional Statistics with QIIME 2
+This revision rebuilds the q2-classo/q2-gglasso tutorial from the audited
+supplement. Its mathematical models, commands, results, and figure captions
+are the source of truth. The website puts the applications before the detailed
+statistical background; the supplement retains its original S1-S5 order.
+The original light/dark logos, group
+attribution, and Jupyter Book theme are retained.
 
-[![Github Pages](https://img.shields.io/badge/github%20pages-121013?style=for-the-badge&logo=github&logoColor=white)](https://Vlasovets.github.io/q2-hdstats-docs/)
+## Build and Validate
 
-Welcome to the **High-dimensional Statistics with QIIME 2** documentation!  
-This site features tutorials and usage guides for the [`q2-gglasso`](https://github.com/Vlasovets/q2-gglasso) and [`q2-classo`](https://github.com/Vlasovets/q2-classo) plugins, which bring advanced high-dimensional statistical modeling to microbiome analysis within the QIIME 2 framework.
+Use Python 3.11 and the repository's Jupyter Book 1.x requirements:
 
----
-
-## Repository layout
-
-Despite the name, this repository holds **both** the book and the analysis that
-produces the numbers in it.
-
-| path | what it is |
-|---|---|
-| `docs/` | the Jupyter Book. `jupyter-book` reads only this directory (`path_to_book: docs`) |
-| `docs/_data/` | tables the chapters render, **generated** by the analysis — never edited by hand |
-| `analysis/` | the recompute pipeline: SLURM stages, scripts, pinned environment, reports |
-| `main.tex` | the F1000Research Application Note |
-
-The two used to be separate repositories, which meant the analysis wrote its
-generated tables and the data manifest into a *sibling checkout by absolute
-path*. The pipeline consequently ran on one machine only. Keeping them together
-makes those paths relative and gives the manuscript's "Underlying data" section a
-single artifact to cite.
-
-### Running the analysis
-
-Every SLURM stage resolves paths from one variable, so a different checkout needs
-no edits:
-
-```shell
-export Q2_HDSTATS_REPO=/path/to/this/repo    # defaults to the author's checkout
-sbatch analysis/slurm/01_lambda_path.sh
+```bash
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+python analysis/scripts/check_supplement_migration.py .
+jupyter-book build docs --warningiserror
 ```
 
-`analysis/data/`, `analysis/results/` and `analysis/publish/` are gitignored:
-the repository tracks the **recipe**, not the output. Everything regenerates from
-the committed scripts against the pinned environment in `analysis/envs/`.
+Open `docs/_build/html/intro.html` to preview the book. The initial conversion
+uses Pandoc and Poppler. Some pages now have reviewed tutorial adaptations;
+their original conversion baselines and edited hashes are retained separately.
+Do not run the converter over those edits. Convert a new supplement into a clean
+staging copy, compare against the baselines, and review changes before updating
+the tutorial. Validate the edited book with:
 
-Start with `analysis/README.md` for the stage-by-stage description, and
-`analysis/reports/DECISIONS_NEEDED.md` for the decisions taken and the evidence
-behind them.
-
----
-
-## 🚀 Building the Documentation
-
-**Create and activate conda environment:**
-```shell
-mamba create -n jupyter-book -c conda-forge jupyter-book
-
-conda activate jupyter-book
+```bash
+python analysis/scripts/check_supplement_migration.py .
 ```
 
-**Build the book:**
+## Source and Provenance
 
-```shell
-jupyter-book build --all docs
-```
+| Path | Contents |
+| --- | --- |
+| `docs/tutorial/` | Thirteen pages derived from the supplement |
+| `docs/images/tutorial-v2/` | Original figure PDFs, browser PNGs, provenance JSONs |
+| `analysis/supplement-v2/source/` | Authoritative supplement snapshot |
+| `analysis/supplement-v2/conversion-manifest.json` | Section mapping, command blocks, and figure hashes |
+| `analysis/supplement-v2/reproduction/` | Preserved plotting and workflow scripts |
+| `analysis/supplement-v2/script-path-map.json` | Original-to-bundled script paths and hashes |
+| `docs/reproducibility.md` | Exact source pins and publication limitations |
+
+Legacy analysis and tutorial files are retained for history, but are not the
+source of the revised examples. Their old URLs redirect to the new subject areas.
+The style-only invariants in `STYLE.md` concern prose passes on existing content;
+this migration replaces superseded examples with the audited supplement and
+checks that source using `check_supplement_migration.py`.
+
+## Release Status
+
+This branch is a development review version, not a published release. The top-15
+Atacama walkthrough supplies prepared inputs and portable regression/classification
+plotting scripts. Other input downloads, the full installation recipe, and
+remaining plotting adapters still need packaging. Public
+distribution of the supplied Bracken artifacts must be confirmed first. Older
+Zenodo placeholder URLs must not be used as release inputs.
+
+Branch pushes and pull requests build the documentation; only a push to `main`
+deploys GitHub Pages. Do not merge until the input-distribution requirements
+have been resolved.

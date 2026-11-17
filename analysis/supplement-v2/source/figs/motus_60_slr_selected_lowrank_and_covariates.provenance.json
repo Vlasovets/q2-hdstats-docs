@@ -1,0 +1,75 @@
+{
+  "include": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/_Application_Note__High_dimensional_regression_and_network_inference_in_QIIME_2_with_q2_classo_and_q2_gglasso/03_supplement/figs/motus_60_slr_selected_lowrank_and_covariates.pdf",
+  "source": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/figures/motus-60-slr-selected-lowrank-and-covariates.pdf",
+  "generator": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/scripts/plot_motus_lowrank_covariates.py",
+  "source_provenance": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/provenance/motus-60-slr-selected-lowrank-and-covariates.json",
+  "source_file": {
+    "path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/figures/motus-60-slr-selected-lowrank-and-covariates.pdf",
+    "exists": true,
+    "sha256": "606684dc89c6216c398e7b38cf135d091ec8d7eef9cc27e68b319cd35ebd6398",
+    "size_bytes": 19356
+  },
+  "included_before": {
+    "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/_Application_Note__High_dimensional_regression_and_network_inference_in_QIIME_2_with_q2_classo_and_q2_gglasso/03_supplement/figs/motus_60_slr_selected_lowrank_and_covariates.pdf",
+    "exists": true,
+    "sha256": "606684dc89c6216c398e7b38cf135d091ec8d7eef9cc27e68b319cd35ebd6398",
+    "size_bytes": 19356
+  },
+  "generator_file": {
+    "path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/scripts/plot_motus_lowrank_covariates.py",
+    "exists": true,
+    "sha256": "fe46db4718b335688f8f0aa61aabb0f5c88fbbf1a8f56670cee6f17230d51615",
+    "size_bytes": 6080
+  },
+  "inputs": [
+    {
+      "path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/artifacts/motus-60-clr-slr-ebic-gamma010.qza",
+      "exists": true,
+      "sha256": "9785ae775d2e6584580929bd41be82875c56ea3c8284e07342f7b5fa3e2648d4",
+      "size_bytes": 142045,
+      "recorded_sha256": "9785ae775d2e6584580929bd41be82875c56ea3c8284e07342f7b5fa3e2648d4",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/artifacts/motus-60-clr-pseudocount1.qza",
+      "exists": true,
+      "sha256": "7cf46fb88cc6f1381bdd14896e4d34454ef701bd528ee68381ad4818f9c3e087",
+      "size_bytes": 41487
+    },
+    {
+      "path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/exports/motus-outcomes-all36.tsv",
+      "exists": true,
+      "sha256": "10ee4e0bac464eff0584596df7f0f34fae2a6b85709e672a305cf6eae96c6511",
+      "size_bytes": 1174
+    }
+  ],
+  "scripts": [
+    {
+      "path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/scripts/plot_motus_lowrank_covariates.py",
+      "exists": true,
+      "sha256": "fe46db4718b335688f8f0aa61aabb0f5c88fbbf1a8f56670cee6f17230d51615",
+      "size_bytes": 6080
+    }
+  ],
+  "script_dependencies": [],
+  "provenance": [
+    {
+      "path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/provenance/motus-60-slr-selected-lowrank-and-covariates.json",
+      "exists": true,
+      "sha256": "de3113a6d1372ccf76719ef46a3929e103958b03d113837ced63006c8f7eb3f7",
+      "size_bytes": 757
+    }
+  ],
+  "flags": [],
+  "matches_before": true,
+  "installed_at_utc": "2026-11-12T11:04:21.188790+00:00",
+  "installer": {
+    "path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/finalize_tutorial_figure_registry.py",
+    "exists": true,
+    "sha256": "984ecd52129dfd12e4f04c66751b91905af36bf395d7cf8a50c90f67434af5ec",
+    "size_bytes": 18147
+  },
+  "backups": [
+    "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/reproducibility-audit-2026-11-12/previous-included-figures/motus_60_slr_selected_lowrank_and_covariates.606684dc89c6216c398e7b38cf135d091ec8d7eef9cc27e68b319cd35ebd6398.pdf"
+  ]
+}

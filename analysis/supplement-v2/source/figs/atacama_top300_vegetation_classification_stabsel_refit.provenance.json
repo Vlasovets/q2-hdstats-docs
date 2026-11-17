@@ -1,0 +1,196 @@
+{
+  "include": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/_Application_Note__High_dimensional_regression_and_network_inference_in_QIIME_2_with_q2_classo_and_q2_gglasso/03_supplement/figs/atacama_top300_vegetation_classification_stabsel_refit.pdf",
+  "source": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/atacama-top300-vegetation-classification-c1-stabsel-q10-b100-threshold04-three-panel-class-axis.pdf",
+  "generator": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/plot_top300_vegetation_classification_matched_style.py",
+  "source_provenance": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/atacama-top300-vegetation-classification-c1-stabsel-q10-b100-threshold04-three-panel-class-axis.provenance.json",
+  "source_file": {
+    "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/atacama-top300-vegetation-classification-c1-stabsel-q10-b100-threshold04-three-panel-class-axis.pdf",
+    "exists": true,
+    "sha256": "1bc46f2a1fbedfc04e49e75c6f4de5ed9b71f10c4e84c88771ff4d01b84338c8",
+    "size_bytes": 20361
+  },
+  "included_before": {
+    "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/_Application_Note__High_dimensional_regression_and_network_inference_in_QIIME_2_with_q2_classo_and_q2_gglasso/03_supplement/figs/atacama_top300_vegetation_classification_stabsel_refit.pdf",
+    "exists": true,
+    "sha256": "f63ef6733595499b47e078cbca90a545461a22428f6158dfd98507391e271085",
+    "size_bytes": 20361
+  },
+  "generator_file": {
+    "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/plot_top300_vegetation_classification_matched_style.py",
+    "exists": true,
+    "sha256": "83f96d64e298e82a005c8cc872a06d21adc27794b5ce286dd284014f81bab4be",
+    "size_bytes": 10609
+  },
+  "inputs": [
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/atacama-top300-vegetation-classification-c1-stabsel-q10-b100-threshold04-train-test-predictions.tsv",
+      "exists": true,
+      "sha256": "76edbde9323e43fc6c3c43f015904baa5195bdb7ab273f55cdeea16d73e7430e",
+      "size_bytes": 3023,
+      "recorded_sha256": "76edbde9323e43fc6c3c43f015904baa5195bdb7ab273f55cdeea16d73e7430e",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/atacama-top300-vegetation-classification-c1-stabsel-q10-b100-threshold04-metrics.tsv",
+      "exists": true,
+      "sha256": "379b877e32f0d723c5edfca96aafdbed3c3985ebaf79ff10dc06fbc4b8750684",
+      "size_bytes": 125,
+      "recorded_sha256": "379b877e32f0d723c5edfca96aafdbed3c3985ebaf79ff10dc06fbc4b8750684",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/atacama-top300-vegetation-classification-c1-stabsel-q10-b100-threshold04-coefficients.tsv",
+      "exists": true,
+      "sha256": "90a4ee00b25102aa22d11ce653b675c8f2d3eadad0e2c8eeb35fff2daf0d499a",
+      "size_bytes": 26225,
+      "recorded_sha256": "90a4ee00b25102aa22d11ce653b675c8f2d3eadad0e2c8eeb35fff2daf0d499a",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/atacama-top300-vegetation-classification-c1-stabsel-q10-b100-threshold04.qza",
+      "exists": true,
+      "sha256": "5f4c3de4c4b6c050ced4a645c514a56efb4e697405ae1a49779fa26c85cdd020",
+      "size_bytes": 85139,
+      "recorded_sha256": "5f4c3de4c4b6c050ced4a645c514a56efb4e697405ae1a49779fa26c85cdd020",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/top300-asv-label-map.tsv",
+      "exists": true,
+      "sha256": "b72acfecef75b3178d60041d1aacdbe765ab21e35b0af019a01ca6303a932d41",
+      "size_bytes": 29351,
+      "recorded_sha256": "b72acfecef75b3178d60041d1aacdbe765ab21e35b0af019a01ca6303a932d41",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/atacama-top300-vegetation-classification-cv.qza",
+      "exists": true,
+      "sha256": "f6298e75ee825409e30e72b2dbe8b184d686741ab4b9134f71fb815fbe9b3b3c",
+      "size_bytes": 76182,
+      "recorded_sha256": "f6298e75ee825409e30e72b2dbe8b184d686741ab4b9134f71fb815fbe9b3b3c",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/atacama-top300-vegetation-classification-cv-train-predictions.qza",
+      "exists": true,
+      "sha256": "0ab8dd340ca90d84e5ecd5d0e5b10706fecd699bdc44887585a7474cee229359",
+      "size_bytes": 46527,
+      "recorded_sha256": "0ab8dd340ca90d84e5ecd5d0e5b10706fecd699bdc44887585a7474cee229359",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/atacama-top300-vegetation-classification-cv-test-predictions.qza",
+      "exists": true,
+      "sha256": "cd6d52887725c1f1ba02081cd9786dc3a8d5190e3798c339ed719e3c3b3841cc",
+      "size_bytes": 59378,
+      "recorded_sha256": "cd6d52887725c1f1ba02081cd9786dc3a8d5190e3798c339ed719e3c3b3841cc",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/atacama-top300-vegetation-classification-c1-stabsel-q10-b100-threshold04-train-predictions.qza",
+      "exists": true,
+      "sha256": "959bc016d6c85973d152d063505af72dba85ecc133271af76df37f1d630d8cb5",
+      "size_bytes": 46535,
+      "recorded_sha256": "959bc016d6c85973d152d063505af72dba85ecc133271af76df37f1d630d8cb5",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/atacama-top300-vegetation-classification-c1-stabsel-q10-b100-threshold04-test-predictions.qza",
+      "exists": true,
+      "sha256": "ae50d491c69e47d5cb936e2039bab2a6649adb85cc4c1045950c1123558bc867",
+      "size_bytes": 59384,
+      "recorded_sha256": "ae50d491c69e47d5cb936e2039bab2a6649adb85cc4c1045950c1123558bc867",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top15/atacama-53-sample-metadata.tsv",
+      "exists": true,
+      "sha256": "78f97679b14ac54e28bafc1900fa104a2923421ff17f3699a2c52c4d17891db3",
+      "size_bytes": 6836,
+      "recorded_sha256": "78f97679b14ac54e28bafc1900fa104a2923421ff17f3699a2c52c4d17891db3",
+      "hash_matches": true
+    }
+  ],
+  "scripts": [
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/plot_top300_vegetation_classification_matched_style.py",
+      "exists": true,
+      "sha256": "83f96d64e298e82a005c8cc872a06d21adc27794b5ce286dd284014f81bab4be",
+      "size_bytes": 10609,
+      "recorded_sha256": "83f96d64e298e82a005c8cc872a06d21adc27794b5ce286dd284014f81bab4be",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/extract_top300_classo_qiime_results.py",
+      "exists": true,
+      "sha256": "186645b3398e340268379fea302e69ed9db8ebca4e560c05cc56de3362fd3d52",
+      "size_bytes": 12536,
+      "recorded_sha256": "186645b3398e340268379fea302e69ed9db8ebca4e560c05cc56de3362fd3d52",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/tutorial-figure-generation/provenance_utils.py",
+      "exists": true,
+      "sha256": "716f92b7d8af002c390972969ca7dd296bfb07077afdd3f17d3a7e52303baa18",
+      "size_bytes": 2768
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/tutorial-figure-generation/tutorial_plotting.py",
+      "exists": true,
+      "sha256": "c9c40ccb24e59ffca9f21b9e7f119d44b2bcc72a7bdc8d9340fc05a4bcc8a9d2",
+      "size_bytes": 1854
+    }
+  ],
+  "script_dependencies": [
+    {
+      "importer": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/plot_top300_vegetation_classification_matched_style.py",
+      "module": "provenance_utils",
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/tutorial-figure-generation/provenance_utils.py",
+      "exists": true,
+      "sha256": "716f92b7d8af002c390972969ca7dd296bfb07077afdd3f17d3a7e52303baa18",
+      "size_bytes": 2768
+    },
+    {
+      "importer": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/plot_top300_vegetation_classification_matched_style.py",
+      "module": "tutorial_plotting",
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/tutorial-figure-generation/tutorial_plotting.py",
+      "exists": true,
+      "sha256": "c9c40ccb24e59ffca9f21b9e7f119d44b2bcc72a7bdc8d9340fc05a4bcc8a9d2",
+      "size_bytes": 1854
+    },
+    {
+      "importer": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/extract_top300_classo_qiime_results.py",
+      "module": "provenance_utils",
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/tutorial-figure-generation/provenance_utils.py",
+      "exists": true,
+      "sha256": "716f92b7d8af002c390972969ca7dd296bfb07077afdd3f17d3a7e52303baa18",
+      "size_bytes": 2768
+    }
+  ],
+  "provenance": [
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/atacama-top300-vegetation-classification-c1-stabsel-q10-b100-threshold04-three-panel-class-axis.provenance.json",
+      "exists": true,
+      "sha256": "589a31f4e033742be28d5f2892ef28e7d11a85b2e8bff0691d557e289d66a5b3",
+      "size_bytes": 5178
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/atacama-top300-vegetation-classification-qza-extraction.provenance.json",
+      "exists": true,
+      "sha256": "12f491986b934e3c6ed68dc6f5649a434ce5a29752733c3f82d9c3b352becb36",
+      "size_bytes": 9198
+    }
+  ],
+  "flags": [],
+  "matches_before": false,
+  "installed_at_utc": "2026-11-12T11:04:21.188790+00:00",
+  "installer": {
+    "path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/finalize_tutorial_figure_registry.py",
+    "exists": true,
+    "sha256": "984ecd52129dfd12e4f04c66751b91905af36bf395d7cf8a50c90f67434af5ec",
+    "size_bytes": 18147
+  },
+  "backups": [
+    "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/reproducibility-audit-2026-11-12/previous-included-figures/atacama_top300_vegetation_classification_stabsel_refit.f63ef6733595499b47e078cbca90a545461a22428f6158dfd98507391e271085.pdf"
+  ]
+}

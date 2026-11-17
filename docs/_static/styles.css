@@ -1,3 +1,8 @@
 p {
     text-align: justify;
 }
+
+/* Keep the opening title compact without changing other chapter headings. */
+#high-dimensional-statistics-with-qiime-2 > h1 {
+    font-size: 2.25rem;
+}

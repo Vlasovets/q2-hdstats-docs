@@ -1,0 +1,257 @@
+{
+  "include": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/_Application_Note__High_dimensional_regression_and_network_inference_in_QIIME_2_with_q2_classo_and_q2_gglasso/03_supplement/figs/atacama_covariates_overview.pdf",
+  "source": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/reproducibility-audit-2026-11-12/metadata-figures/atacama_covariates_overview.pdf",
+  "generator": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/tutorial-figure-generation/replot_first_three.py",
+  "source_provenance": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/reproducibility-audit-2026-11-12/metadata-figures/figure-provenance.json",
+  "source_file": {
+    "path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/reproducibility-audit-2026-11-12/metadata-figures/atacama_covariates_overview.pdf",
+    "exists": true,
+    "sha256": "f992e56ddc494767b890a6efb5d8f96cf6dde68413a6d14c3eb51d754b969eec",
+    "size_bytes": 27253
+  },
+  "included_before": {
+    "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/_Application_Note__High_dimensional_regression_and_network_inference_in_QIIME_2_with_q2_classo_and_q2_gglasso/03_supplement/figs/atacama_covariates_overview.pdf",
+    "exists": true,
+    "sha256": "9b6bfbe89de7535a4d2719833cdad76f70509ad4fb1c3a7d5563db6fbbd53cf5",
+    "size_bytes": 27253
+  },
+  "generator_file": {
+    "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/tutorial-figure-generation/replot_first_three.py",
+    "exists": true,
+    "sha256": "1915bb8c4ab0ab2d7f824f554038de5a435588e2a9f98672d2f3285140560f50",
+    "size_bytes": 9369
+  },
+  "inputs": [
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/metadata/atacama-54-clustered-covariate-heatmap-display-scaling.tsv",
+      "exists": true,
+      "sha256": "1bc7274cfd1b08c6f7f405ff8d59fc16069db7ec3bdab357b333923eaa69096b",
+      "size_bytes": 1098,
+      "recorded_sha256": "1bc7274cfd1b08c6f7f405ff8d59fc16069db7ec3bdab357b333923eaa69096b",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/metadata/atacama-54-mean-imputed-covariate-pearson-correlation.tsv",
+      "exists": true,
+      "sha256": "dd8df4981979b0b68334b24a1ac96650fa9c14b1ac3a0a076f1a4a5430e1b876",
+      "size_bytes": 4793,
+      "recorded_sha256": "dd8df4981979b0b68334b24a1ac96650fa9c14b1ac3a0a076f1a4a5430e1b876",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/metadata/atacama-54-covariate-cluster-order.tsv",
+      "exists": true,
+      "sha256": "802825fc2e29d651346437978080a9844e5199fefcaa7e924c69034aeab36fb3",
+      "size_bytes": 276,
+      "recorded_sha256": "802825fc2e29d651346437978080a9844e5199fefcaa7e924c69034aeab36fb3",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/metadata/atacama-54-numeric-metadata-mean-imputed-raw-values.tsv",
+      "exists": true,
+      "sha256": "287858b2066ce7b929d044b70727b451e573d9923fb6e5a1cc82a2619bb9475d",
+      "size_bytes": 5742,
+      "recorded_sha256": "287858b2066ce7b929d044b70727b451e573d9923fb6e5a1cc82a2619bb9475d",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/metadata/atacama-54-aligned-covariate-transform-and-display-scaling.tsv",
+      "exists": true,
+      "sha256": "24f62a8e6644aa1002549102d71cd208347fa2953278864f90a3e791ed2186ea",
+      "size_bytes": 1153,
+      "recorded_sha256": "24f62a8e6644aa1002549102d71cd208347fa2953278864f90a3e791ed2186ea",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/metadata/atacama-54-categorical-counts.tsv",
+      "exists": true,
+      "sha256": "d2b8abf0dd8d55330cfb9d806fce24097635ae8262d4f72535e5e44294a8127c",
+      "size_bytes": 441,
+      "recorded_sha256": "d2b8abf0dd8d55330cfb9d806fce24097635ae8262d4f72535e5e44294a8127c",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/metadata/atacama-54-mean-imputed-covariate-zscores.tsv",
+      "exists": true,
+      "sha256": "3ffaea6a9c265b3435cf552a5f4c2817efeefbdae0209baff20e23c370d06074",
+      "size_bytes": 16615,
+      "recorded_sha256": "3ffaea6a9c265b3435cf552a5f4c2817efeefbdae0209baff20e23c370d06074",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/metadata/atacama-54-zscore-heatmap-numerical-row-scales.tsv",
+      "exists": true,
+      "sha256": "c7f441e029c4e985d0f9ab6006e0718e5ad95a1fd69ee9694edb68ca591e9b5f",
+      "size_bytes": 1328,
+      "recorded_sha256": "c7f441e029c4e985d0f9ab6006e0718e5ad95a1fd69ee9694edb68ca591e9b5f",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/metadata/atacama-54-covariate-heatmap-display-scaling.tsv",
+      "exists": true,
+      "sha256": "f34a94276d0eb9209a26380758a795e1c28e3484feedb2e63b1103bd2f0bd48a",
+      "size_bytes": 1046,
+      "recorded_sha256": "f34a94276d0eb9209a26380758a795e1c28e3484feedb2e63b1103bd2f0bd48a",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/metadata/atacama-54-covariate-missingness-mask.tsv",
+      "exists": true,
+      "sha256": "aaf271b639b321392dfbc3dabd94461932feb06e61caa2be9847c60d1b9867a4",
+      "size_bytes": 2468,
+      "recorded_sha256": "aaf271b639b321392dfbc3dabd94461932feb06e61caa2be9847c60d1b9867a4",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/metadata/atacama-54-mean-imputation-report.tsv",
+      "exists": true,
+      "sha256": "e43e22000ffa66bfcbe90b5325200d5ba1b393112cbb5eda96a82522b9962dce",
+      "size_bytes": 624,
+      "recorded_sha256": "e43e22000ffa66bfcbe90b5325200d5ba1b393112cbb5eda96a82522b9962dce",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/metadata/atacama-54-mean-imputed-covariate-pearson-correlation-clustered.tsv",
+      "exists": true,
+      "sha256": "4d369dc2b2f602d7855a22a476fb5087588b95f71f648f0ff33e52e85fb8dd8e",
+      "size_bytes": 4793,
+      "recorded_sha256": "4d369dc2b2f602d7855a22a476fb5087588b95f71f648f0ff33e52e85fb8dd8e",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/metadata/atacama-54-transformed-covariate-zscores.tsv",
+      "exists": true,
+      "sha256": "9785489485ee04ecbf117607182a1f6f4001b65eea92a777dfdb856146cb0c0c",
+      "size_bytes": 16476,
+      "recorded_sha256": "9785489485ee04ecbf117607182a1f6f4001b65eea92a777dfdb856146cb0c0c",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/metadata/atacama-54-transformed-covariate-cluster-order.tsv",
+      "exists": true,
+      "sha256": "67847ce25d677a1c8370e980e3f26dfcf6a1293c8d3340df741eee2cded6e70b",
+      "size_bytes": 276,
+      "recorded_sha256": "67847ce25d677a1c8370e980e3f26dfcf6a1293c8d3340df741eee2cded6e70b",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/metadata/atacama-54-numeric-covariate-summary.tsv",
+      "exists": true,
+      "sha256": "1e194b2c6c873e3cd2151ba469995e589934ced3f1dda34c73f06819d4e77b14",
+      "size_bytes": 1249,
+      "recorded_sha256": "1e194b2c6c873e3cd2151ba469995e589934ced3f1dda34c73f06819d4e77b14",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/metadata/atacama-54-transformed-mean-imputed-covariate-pearson-correlation-clustered.tsv",
+      "exists": true,
+      "sha256": "26a536b59309968e72897ee644e3b73a13392a59efde05590b3a1175c058163c",
+      "size_bytes": 4781,
+      "recorded_sha256": "26a536b59309968e72897ee644e3b73a13392a59efde05590b3a1175c058163c",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/metadata/atacama-54-sample-metadata.tsv",
+      "exists": true,
+      "sha256": "bbe642f12e32107d50edf73eadf3899e49aa24b102d98a47966089ef0566e5bf",
+      "size_bytes": 6949,
+      "recorded_sha256": "bbe642f12e32107d50edf73eadf3899e49aa24b102d98a47966089ef0566e5bf",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/metadata/atacama-54-transformed-covariate-pearson-correlation-clustered.tsv",
+      "exists": true,
+      "sha256": "26a536b59309968e72897ee644e3b73a13392a59efde05590b3a1175c058163c",
+      "size_bytes": 4781,
+      "recorded_sha256": "26a536b59309968e72897ee644e3b73a13392a59efde05590b3a1175c058163c",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/metadata/atacama-54-numeric-metadata-mean-imputed.tsv",
+      "exists": true,
+      "sha256": "2f729db70e234f65e3df7c429f177e63c6be39d077a60d63ed4ed633dba33c4f",
+      "size_bytes": 5872,
+      "recorded_sha256": "2f729db70e234f65e3df7c429f177e63c6be39d077a60d63ed4ed633dba33c4f",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top15/atacama-top15-53-samples-q2-classo-clr-coef05-matrix.tsv",
+      "exists": true,
+      "sha256": "e6cebbf05812660ce1be6cb8f22d8b1509cd221d3b7afe3fa3accddad6f0e75a",
+      "size_bytes": 16595,
+      "recorded_sha256": "e6cebbf05812660ce1be6cb8f22d8b1509cd221d3b7afe3fa3accddad6f0e75a",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top15/atacama-top15-53-samples-q2-gglasso-mclr-matrix.tsv",
+      "exists": true,
+      "sha256": "cdd91c446068b883e5debd3b9abb222730d43dd50443e3b4bdbbeba1e864712b",
+      "size_bytes": 7282,
+      "recorded_sha256": "cdd91c446068b883e5debd3b9abb222730d43dd50443e3b4bdbbeba1e864712b",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top15/atacama-top15-53-q2-classo-clr-coef05.qza",
+      "exists": true,
+      "sha256": "baf7d7c252741d2a3022a269c6e7e1fb9c282dc6e79aef133dcfccb62d27c325",
+      "size_bytes": 37008,
+      "recorded_sha256": "baf7d7c252741d2a3022a269c6e7e1fb9c282dc6e79aef133dcfccb62d27c325",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top15/atacama-top15-53-q2-gglasso-mclr.qza",
+      "exists": true,
+      "sha256": "6f9a904eda28d542dddba5f1df3eb39e38ad5bac4d40244963a3538fda4a69e4",
+      "size_bytes": 101243,
+      "recorded_sha256": "6f9a904eda28d542dddba5f1df3eb39e38ad5bac4d40244963a3538fda4a69e4",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/work/atacama-full/sample-metadata.tsv",
+      "exists": true,
+      "sha256": "7cff810ad86a621ebc78a16b690255d839ea58e2622ad45a11a838d0f8c5b3bd",
+      "size_bytes": 9433,
+      "recorded_sha256": "7cff810ad86a621ebc78a16b690255d839ea58e2622ad45a11a838d0f8c5b3bd",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/work/atacama-full/tutorial-table.qza",
+      "exists": true,
+      "sha256": "278a592a51b9f455745a8ccb8882ffee738a9f67f3ae0be656d914d80797c8d4",
+      "size_bytes": 77050,
+      "recorded_sha256": "278a592a51b9f455745a8ccb8882ffee738a9f67f3ae0be656d914d80797c8d4",
+      "hash_matches": true
+    }
+  ],
+  "scripts": [
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/tutorial-figure-generation/replot_first_three.py",
+      "exists": true,
+      "sha256": "1915bb8c4ab0ab2d7f824f554038de5a435588e2a9f98672d2f3285140560f50",
+      "size_bytes": 9369,
+      "recorded_sha256": "1915bb8c4ab0ab2d7f824f554038de5a435588e2a9f98672d2f3285140560f50",
+      "hash_matches": true
+    }
+  ],
+  "script_dependencies": [],
+  "provenance": [
+    {
+      "path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/reproducibility-audit-2026-11-12/metadata-figures/figure-provenance.json",
+      "exists": true,
+      "sha256": "6b7dd9b59bde259f944495ab1f918fc38e16508795a424f3d1cef01c76ba740e",
+      "size_bytes": 6892
+    }
+  ],
+  "flags": [],
+  "matches_before": false,
+  "installed_at_utc": "2026-11-12T11:04:21.188790+00:00",
+  "installer": {
+    "path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/finalize_tutorial_figure_registry.py",
+    "exists": true,
+    "sha256": "984ecd52129dfd12e4f04c66751b91905af36bf395d7cf8a50c90f67434af5ec",
+    "size_bytes": 18147
+  },
+  "backups": [
+    "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/reproducibility-audit-2026-11-12/previous-included-figures/atacama_covariates_overview.9b6bfbe89de7535a4d2719833cdad76f70509ad4fb1c3a7d5563db6fbbd53cf5.pdf"
+  ]
+}

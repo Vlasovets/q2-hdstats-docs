@@ -1,0 +1,168 @@
+{
+  "include": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/_Application_Note__High_dimensional_regression_and_network_inference_in_QIIME_2_with_q2_classo_and_q2_gglasso/03_supplement/figs/atacama_top300_slr_rank2_robust_pca_covariates.pdf",
+  "source": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top300/atacama-top300-slr-rank2-robust-pca-q2-export-2x3-covariates.pdf",
+  "generator": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top300/plot_top300_slr_robust_pca_qiime_export_summary.py",
+  "source_provenance": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top300/atacama-top300-slr-rank2-robust-pca-q2-export-2x3-covariates.provenance.json",
+  "source_file": {
+    "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top300/atacama-top300-slr-rank2-robust-pca-q2-export-2x3-covariates.pdf",
+    "exists": true,
+    "sha256": "caa25131dcf3d92a68e0f5ad4be12037255eab1da4b5101be16a51e9ae640684",
+    "size_bytes": 45141
+  },
+  "included_before": {
+    "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/_Application_Note__High_dimensional_regression_and_network_inference_in_QIIME_2_with_q2_classo_and_q2_gglasso/03_supplement/figs/atacama_top300_slr_rank2_robust_pca_covariates.pdf",
+    "exists": true,
+    "sha256": "caa25131dcf3d92a68e0f5ad4be12037255eab1da4b5101be16a51e9ae640684",
+    "size_bytes": 45141
+  },
+  "generator_file": {
+    "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top300/plot_top300_slr_robust_pca_qiime_export_summary.py",
+    "exists": true,
+    "sha256": "675d3a53dbdde5ee7a6de09041b4d0689c4becfe29d0973a68dcbee77e95b496",
+    "size_bytes": 9123
+  },
+  "inputs": [
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top300/exported-robust-pca-qzv/atacama-top300-slr-rank2-robust-pca-color-by-elevation/index.html",
+      "exists": true,
+      "sha256": "08bebab4515c709d961192a7389ef5861fff1bc2bcb7b84f3df96fdf2505e408",
+      "size_bytes": 4322773,
+      "recorded_sha256": "08bebab4515c709d961192a7389ef5861fff1bc2bcb7b84f3df96fdf2505e408",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top300/exported-robust-pca-qzv/atacama-top300-slr-rank2-robust-pca-color-by-ph/index.html",
+      "exists": true,
+      "sha256": "60d95eb5ef98337d23d1b94f3001fd1abaf0f7904fadcc691aa669b08ad890ca",
+      "size_bytes": 4322818,
+      "recorded_sha256": "60d95eb5ef98337d23d1b94f3001fd1abaf0f7904fadcc691aa669b08ad890ca",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top300/exported-robust-pca-qzv/atacama-top300-slr-rank2-robust-pca-color-by-average-soil-relative-humidity/index.html",
+      "exists": true,
+      "sha256": "c1e832b13b785f3e1df46cb457be111b85040bae6d2b46ea284d0a314e0de9aa",
+      "size_bytes": 4322926,
+      "recorded_sha256": "c1e832b13b785f3e1df46cb457be111b85040bae6d2b46ea284d0a314e0de9aa",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top300/exported-robust-pca-qzv/atacama-top300-slr-rank2-robust-pca-color-by-average-soil-temperature/index.html",
+      "exists": true,
+      "sha256": "c3e4f27547d64ebd3e6b2a0eb57aca8fadd80f899dbccb0a9913eadcaf008229",
+      "size_bytes": 4322902,
+      "recorded_sha256": "c3e4f27547d64ebd3e6b2a0eb57aca8fadd80f899dbccb0a9913eadcaf008229",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top300/exported-robust-pca-qzv/atacama-top300-slr-rank2-robust-pca-color-by-percentcover/index.html",
+      "exists": true,
+      "sha256": "27524f33ccdf30cd307267cd00e4efa5c3a1e39d68d086e2f1774c76b8fd7f90",
+      "size_bytes": 4322748,
+      "recorded_sha256": "27524f33ccdf30cd307267cd00e4efa5c3a1e39d68d086e2f1774c76b8fd7f90",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top300/exported-robust-pca-qzv/atacama-top300-slr-rank2-robust-pca-color-by-log10-extract-concen/index.html",
+      "exists": true,
+      "sha256": "747a3cf1216b956d0b4dc3396cbaf7218093aaa5a1f2314a68abf63c9d34b98f",
+      "size_bytes": 4323320,
+      "recorded_sha256": "747a3cf1216b956d0b4dc3396cbaf7218093aaa5a1f2314a68abf63c9d34b98f",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top300/atacama-top300-slr-rank2-robust-pca-color-by-elevation.qzv",
+      "exists": true,
+      "sha256": "4ad00e427c6094e852d2a55718a4b93b15556eb1355a52df5ad8eda340ebc43d",
+      "size_bytes": 1378640,
+      "recorded_sha256": "4ad00e427c6094e852d2a55718a4b93b15556eb1355a52df5ad8eda340ebc43d",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top300/atacama-top300-slr-rank2-robust-pca-color-by-ph.qzv",
+      "exists": true,
+      "sha256": "15ea5071f331f701a78fef4dc4de209a4695c43d677f9d190fa9de3c3383a2f6",
+      "size_bytes": 1378648,
+      "recorded_sha256": "15ea5071f331f701a78fef4dc4de209a4695c43d677f9d190fa9de3c3383a2f6",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top300/atacama-top300-slr-rank2-robust-pca-color-by-average-soil-relative-humidity.qzv",
+      "exists": true,
+      "sha256": "df292605b2d4d0a4fd106af7054a1fe802f5eefa5b08cfe10f08db79dcdc76f0",
+      "size_bytes": 1378673,
+      "recorded_sha256": "df292605b2d4d0a4fd106af7054a1fe802f5eefa5b08cfe10f08db79dcdc76f0",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top300/atacama-top300-slr-rank2-robust-pca-color-by-average-soil-temperature.qzv",
+      "exists": true,
+      "sha256": "bf4455e7ed691e9879d9848715c5c4aae445ed359d114fc47d894ccc69523c49",
+      "size_bytes": 1378657,
+      "recorded_sha256": "bf4455e7ed691e9879d9848715c5c4aae445ed359d114fc47d894ccc69523c49",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top300/atacama-top300-slr-rank2-robust-pca-color-by-percentcover.qzv",
+      "exists": true,
+      "sha256": "651b9f456ee5609f6710f8586afec64e52a030d85f398827fdb9c311a74b2ed0",
+      "size_bytes": 1378655,
+      "recorded_sha256": "651b9f456ee5609f6710f8586afec64e52a030d85f398827fdb9c311a74b2ed0",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top300/atacama-top300-slr-rank2-robust-pca-color-by-log10-extract-concen.qzv",
+      "exists": true,
+      "sha256": "c365ec81fe190e6d62e972816e6856ceb4806081b71457d9f0b3a85ae74e7c84",
+      "size_bytes": 1378707,
+      "recorded_sha256": "c365ec81fe190e6d62e972816e6856ceb4806081b71457d9f0b3a85ae74e7c84",
+      "hash_matches": true
+    }
+  ],
+  "scripts": [
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top300/plot_top300_slr_robust_pca_qiime_export_summary.py",
+      "exists": true,
+      "sha256": "675d3a53dbdde5ee7a6de09041b4d0689c4becfe29d0973a68dcbee77e95b496",
+      "size_bytes": 9123,
+      "recorded_sha256": "675d3a53dbdde5ee7a6de09041b4d0689c4becfe29d0973a68dcbee77e95b496",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/tutorial-figure-generation/provenance_utils.py",
+      "exists": true,
+      "sha256": "716f92b7d8af002c390972969ca7dd296bfb07077afdd3f17d3a7e52303baa18",
+      "size_bytes": 2768
+    }
+  ],
+  "script_dependencies": [
+    {
+      "importer": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top300/plot_top300_slr_robust_pca_qiime_export_summary.py",
+      "module": "provenance_utils",
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/tutorial-figure-generation/provenance_utils.py",
+      "exists": true,
+      "sha256": "716f92b7d8af002c390972969ca7dd296bfb07077afdd3f17d3a7e52303baa18",
+      "size_bytes": 2768
+    }
+  ],
+  "provenance": [
+    {
+      "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top300/atacama-top300-slr-rank2-robust-pca-q2-export-2x3-covariates.provenance.json",
+      "exists": true,
+      "sha256": "c4a1c4039f7a5e401d0db8c9817d34bc74119240f0b420f3b552b7a0246f1791",
+      "size_bytes": 10631
+    }
+  ],
+  "flags": [],
+  "matches_before": true,
+  "installed_at_utc": "2026-11-12T11:04:21.188790+00:00",
+  "installer": {
+    "path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/finalize_tutorial_figure_registry.py",
+    "exists": true,
+    "sha256": "984ecd52129dfd12e4f04c66751b91905af36bf395d7cf8a50c90f67434af5ec",
+    "size_bytes": 18147
+  },
+  "backups": [
+    "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/reproducibility-audit-2026-11-12/previous-included-figures/atacama_top300_slr_rank2_robust_pca_covariates.caa25131dcf3d92a68e0f5ad4be12037255eab1da4b5101be16a51e9ae640684.pdf"
+  ]
+}

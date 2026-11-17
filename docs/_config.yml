@@ -1,87 +1,118 @@
-# Book settings
-# Learn more at https://jupyterbook.org/customize/config.html
-
 title: High-dimensional Statistics with QIIME 2
 author: Biomedical Statistics and Data Science Group @ LMU & Helmholtz Munich
-
 sphinx:
   config:
-    copyright: "2026"
-    # Generate anchors for h1-h3 so chapters can link to a specific section,
-    # e.g. [Numerical methods](#numerical-methods). This is a MyST/Sphinx
-    # setting, so it belongs here rather than under the `parse:` key.
+    copyright: '2026'
     myst_heading_anchors: 3
-    bibtex_default_style: "unsrt"  # For numbered citations [1], [2], etc.
-    bibtex_bibfiles: ["references.bib"]
+    bibtex_default_style: unsrt
+    bibtex_bibfiles:
+    - supplementary.bib
     html_theme_options:
       logo:
         image_light: images/logo_light.svg
         image_dark: images/logo_dark.svg
-
-    # The three-tier restructure moved 19 pages. Without these, every existing
-    # link into the published book 404s.
     rediraffe_redirects:
-      chapters/00_getting_started/02_data: chapters/00_getting_started/02_datasets
-      chapters/02_graphical_models/01_data_preparation: chapters/02_lowdim_gglasso/01_data_preparation
-      chapters/02_graphical_models/02_sgl: chapters/02_lowdim_gglasso/02_sgl
-      chapters/02_graphical_models/03_slr: chapters/02_lowdim_gglasso/03_slr
-      chapters/02_graphical_models/04_adaptive_glasso: chapters/02_lowdim_gglasso/04_adaptive_glasso
-      chapters/02_graphical_models/05_interpretation: chapters/02_lowdim_gglasso/09_interpretation
-      chapters/02_graphical_models/06_highdim_atacama: chapters/04_highdim_atacama/02_model_selection
-      chapters/03_logcontrast_models/00_overview: chapters/03_lowdim_classo/00_overview
-      chapters/03_logcontrast_models/01_data_preparation: chapters/03_lowdim_classo/02_data_preparation
-      chapters/03_logcontrast_models/02_regression/00_index: chapters/03_lowdim_classo/03_regression/00_index
-      chapters/03_logcontrast_models/02_regression/01_logcontrast: chapters/03_lowdim_classo/03_regression/01_logcontrast
-      chapters/03_logcontrast_models/02_regression/02_trac: chapters/03_lowdim_classo/03_regression/02_trac
-      chapters/03_logcontrast_models/03_classification/00_index: chapters/03_lowdim_classo/04_classification/00_index
-      chapters/03_logcontrast_models/03_classification/01_logcontrast: chapters/03_lowdim_classo/04_classification/01_logcontrast
-      chapters/03_logcontrast_models/03_classification/02_trac: chapters/03_lowdim_classo/04_classification/02_trac
-      chapters/03_logcontrast_models/04_advanced/01_concomitant_formulation: chapters/03_lowdim_classo/05_advanced/01_concomitant_formulation
-      chapters/03_logcontrast_models/05_interpretation: chapters/03_lowdim_classo/07_interpretation
-      chapters/03_logcontrast_models/06_highdim_classo: chapters/04_highdim_atacama/05_classo_cv
-      chapters/04_appendix/01_math: chapters/99_appendix/01_math
-      # The metagenomics (tier 3) chapters were removed: they were written but
-      # never executed, so every number in them was a placeholder. Point their
-      # URLs at the high-dimensional tier, which covers the same workflow on data
-      # that was actually run.
-      chapters/05_metagenomics/00_index: chapters/04_highdim_atacama/00_index
-      chapters/05_metagenomics/01_gut_to_soil/00_index: chapters/04_highdim_atacama/00_index
-      chapters/05_metagenomics/01_gut_to_soil/01_data: chapters/04_highdim_atacama/01_data
-      chapters/05_metagenomics/01_gut_to_soil/02_network: chapters/04_highdim_atacama/02_model_selection
-      chapters/05_metagenomics/01_gut_to_soil/03_regression: chapters/04_highdim_atacama/05_classo_cv
-
+      chapters/90_reference/02_gglasso_parameters: tutorial/s1-03
+      chapters/90_reference/01_command_coverage: tutorial/s5
+      chapters/90_reference/04_troubleshooting: tutorial/s5
+      chapters/90_reference/03_classo_parameters: tutorial/s1-02
+      chapters/02_lowdim_gglasso/06_multiple_graphical_lasso: tutorial/s1-03
+      chapters/02_lowdim_gglasso/02_sgl: tutorial/s1-03
+      chapters/02_lowdim_gglasso/00_index: tutorial/s1-03
+      chapters/02_lowdim_gglasso/01_data_preparation: tutorial/s1-03
+      chapters/02_lowdim_gglasso/08_summarize: tutorial/s1-03
+      chapters/02_lowdim_gglasso/07_pca: tutorial/s1-03
+      chapters/02_lowdim_gglasso/03_slr: tutorial/s1-03
+      chapters/02_lowdim_gglasso/04_adaptive_glasso: tutorial/s1-03
+      chapters/02_lowdim_gglasso/09_interpretation: tutorial/s1-03
+      chapters/02_lowdim_gglasso/05_lambda_paths: tutorial/s1-03
+      chapters/03_lowdim_classo/06_predict_and_summarize: tutorial/s1-02
+      chapters/03_lowdim_classo/07_interpretation: tutorial/s1-02
+      chapters/03_lowdim_classo/02_data_preparation: tutorial/s1-02
+      chapters/03_lowdim_classo/00_overview: tutorial/s1-02
+      chapters/03_lowdim_classo/01_generate_data: tutorial/s1-02
+      chapters/03_lowdim_classo/05_advanced/02_model_selection: tutorial/s1-02
+      chapters/03_lowdim_classo/05_advanced/01_concomitant_formulation: tutorial/s1-02
+      chapters/03_lowdim_classo/04_classification/00_index: tutorial/s1-02
+      chapters/03_lowdim_classo/04_classification/02_trac: tutorial/s1-02
+      chapters/03_lowdim_classo/04_classification/01_logcontrast: tutorial/s1-02
+      chapters/03_lowdim_classo/03_regression/00_index: tutorial/s1-02
+      chapters/03_lowdim_classo/03_regression/02_trac: tutorial/s1-02
+      chapters/03_lowdim_classo/03_regression/01_logcontrast: tutorial/s1-02
+      chapters/01_installation/01_prerequisites: reproducibility
+      chapters/01_installation/02_q2_gglasso: reproducibility
+      chapters/01_installation/04_verify: reproducibility
+      chapters/01_installation/03_q2_classo: reproducibility
+      chapters/04_highdim_atacama/01_data: tutorial/s2-02
+      chapters/04_highdim_atacama/02_model_selection: tutorial/s2-02
+      chapters/04_highdim_atacama/00_index: tutorial/s2-02
+      chapters/04_highdim_atacama/06_interpretation: tutorial/s2-02
+      chapters/04_highdim_atacama/04_latent_pca: tutorial/s2-02
+      chapters/04_highdim_atacama/05_classo_cv: tutorial/s2-02
+      chapters/04_highdim_atacama/07_motus_shotgun: tutorial/s3
+      chapters/04_highdim_atacama/03_slr_ranks: tutorial/s2-02
+      chapters/00_getting_started/03_download_data: tutorial/s2
+      chapters/00_getting_started/01_intro: tutorial/s2
+      chapters/00_getting_started/02_datasets: tutorial/s2
+      chapters/00_getting_started/04_tutorial: tutorial/s2
+      chapters/99_appendix/01_math: tutorial/s1
+      chapters/99_appendix/02_moshpit_cocoa_note: tutorial/s4
+      chapters/00_getting_started/02_data: tutorial/s2
+      chapters/02_graphical_models/01_data_preparation: tutorial/s1-03
+      chapters/02_graphical_models/02_sgl: tutorial/s1-03
+      chapters/02_graphical_models/03_slr: tutorial/s1-03
+      chapters/02_graphical_models/04_adaptive_glasso: tutorial/s1-03
+      chapters/02_graphical_models/05_interpretation: tutorial/s1-03
+      chapters/02_graphical_models/06_highdim_atacama: tutorial/s2-02
+      chapters/03_logcontrast_models/00_overview: tutorial/s1-02
+      chapters/03_logcontrast_models/01_data_preparation: tutorial/s1-02
+      chapters/03_logcontrast_models/02_regression/00_index: tutorial/s1-02
+      chapters/03_logcontrast_models/02_regression/01_logcontrast: tutorial/s1-02
+      chapters/03_logcontrast_models/02_regression/02_trac: tutorial/s1-02
+      chapters/03_logcontrast_models/03_classification/00_index: tutorial/s1-02
+      chapters/03_logcontrast_models/03_classification/01_logcontrast: tutorial/s1-02
+      chapters/03_logcontrast_models/03_classification/02_trac: tutorial/s1-02
+      chapters/03_logcontrast_models/04_advanced/01_concomitant_formulation: tutorial/s1-02
+      chapters/03_logcontrast_models/05_interpretation: tutorial/s1-02
+      chapters/03_logcontrast_models/06_highdim_classo: tutorial/s2-02
+      chapters/04_appendix/01_math: tutorial/s1
+      chapters/05_metagenomics/00_index: tutorial/s2-02
+      chapters/05_metagenomics/01_gut_to_soil/00_index: tutorial/s2-02
+      chapters/05_metagenomics/01_gut_to_soil/01_data: tutorial/s2-02
+      chapters/05_metagenomics/01_gut_to_soil/02_network: tutorial/s2-02
+      chapters/05_metagenomics/01_gut_to_soil/03_regression: tutorial/s2-02
+    mathjax3_config:
+      tex:
+        macros:
+          argmin: \operatorname*{arg\,min}
+          argmax: \operatorname*{arg\,max}
+          diag: \operatorname{diag}
+          rank: \operatorname{rank}
+          supp: \operatorname{supp}
   extra_extensions:
-    - sphinxcontrib.bibtex
-    - sphinxext.rediraffe
-
-# Enable LaTeX math ($...$ and $$...$$) in Markdown chapters
+  - sphinxcontrib.bibtex
+  - sphinxext.rediraffe
 parse:
   myst_enable_extensions:
-    - dollarmath
-    - amsmath
-
-# Force re-execution of notebooks on each build.
-# See https://jupyterbook.org/content/execute.html
+  - dollarmath
+  - amsmath
 execute:
   execute_notebooks: 'off'
-
-# Define the name of the latex output file for PDF builds
 latex:
   latex_documents:
     targetname: book.tex
-
-# Add a bibtex file so that we can create citations
 bibtex_bibfiles:
-  - references.bib
-
-# Information about where the book exists on the web
+- supplementary.bib
 repository:
-  url: https://github.com/Vlasovets/q2-hdstats-docs  
-  path_to_book: docs  # Optional path to your book, relative to the repository root
-  branch: main  # Which branch of the repository should be used when creating links (optional)
-
-# Add GitHub buttons to your book
-# See https://jupyterbook.org/customize/config.html#add-a-link-to-your-repository
+  url: https://github.com/bio-datascience/q2-hdstats-docs
+  path_to_book: docs
+  branch: main
 html:
   use_issues_button: true
   use_repository_button: true
+only_build_toc_files: true
+exclude_patterns:
+- _build
+- Thumbs.db
+- .DS_Store
+- chapters/**

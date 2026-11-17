@@ -1,0 +1,66 @@
+[
+  {
+    "figure": "atacama-top15-elevation-r3-cv-two-asv-three-panel-coefficients-in-oos",
+    "same_dimensions": true,
+    "shape": [
+      933,
+      2450,
+      4
+    ],
+    "new_shape": [
+      933,
+      2450,
+      4
+    ],
+    "pixels_equal": true,
+    "mean_pixel_difference": 0.0
+  },
+  {
+    "figure": "atacama-top15-r3-stabsel-threshold-third-three-panel-coefficients-in-oos",
+    "same_dimensions": true,
+    "shape": [
+      977,
+      2450,
+      4
+    ],
+    "new_shape": [
+      977,
+      2450,
+      4
+    ],
+    "pixels_equal": true,
+    "mean_pixel_difference": 0.0
+  },
+  {
+    "figure": "atacama-top15-vegetation-classification-cv-curve",
+    "same_dimensions": true,
+    "shape": [
+      807,
+      1249,
+      4
+    ],
+    "new_shape": [
+      807,
+      1249,
+      4
+    ],
+    "pixels_equal": true,
+    "mean_pixel_difference": 0.0
+  },
+  {
+    "figure": "atacama-top15-vegetation-classification-cv-three-panel-coefficients-in-oos",
+    "same_dimensions": true,
+    "shape": [
+      1019,
+      2363,
+      4
+    ],
+    "new_shape": [
+      1019,
+      2363,
+      4
+    ],
+    "pixels_equal": true,
+    "mean_pixel_difference": 0.0
+  }
+]

@@ -1,0 +1,111 @@
+{
+  "include": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/_Application_Note__High_dimensional_regression_and_network_inference_in_QIIME_2_with_q2_classo_and_q2_gglasso/03_supplement/figs/motus_age_slc_r3_cv_refit.pdf",
+  "source": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/figures/motus-age-slc-r3-cv-refit.pdf",
+  "generator": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/scripts/plot_motus_slc_trac_tutorial_figures.py",
+  "source_provenance": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/provenance/motus-age-slc-r3-figures.json",
+  "source_file": {
+    "path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/figures/motus-age-slc-r3-cv-refit.pdf",
+    "exists": true,
+    "sha256": "b688704d6d34d7139b40b448cd4653b8fd3289318b296bc4ae22e64bc47734e5",
+    "size_bytes": 20231
+  },
+  "included_before": {
+    "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/_Application_Note__High_dimensional_regression_and_network_inference_in_QIIME_2_with_q2_classo_and_q2_gglasso/03_supplement/figs/motus_age_slc_r3_cv_refit.pdf",
+    "exists": true,
+    "sha256": "06e92d038ac4be8a6fd6681a3804e12dd386d36d860c5cf27a415e937f61bb2e",
+    "size_bytes": 20231
+  },
+  "generator_file": {
+    "path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/scripts/plot_motus_slc_trac_tutorial_figures.py",
+    "exists": true,
+    "sha256": "e90a5894bb710d294fa05e0489808a4b553631fe7d427dbe2cc520eaa040ab9c",
+    "size_bytes": 10487
+  },
+  "inputs": [
+    {
+      "path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/artifacts/motus-age-slc-r3.qza",
+      "exists": true,
+      "sha256": "37734f521ade4d5dd1daff4f138cbcb3bb53cda66fe9c90b3f156a6be0478438",
+      "size_bytes": 76982,
+      "recorded_sha256": "37734f521ade4d5dd1daff4f138cbcb3bb53cda66fe9c90b3f156a6be0478438",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/artifacts/motus-age-slc-r3-train-predictions.qza",
+      "exists": true,
+      "sha256": "b90da0a5575b6c3a98f7991c5e910b239340ad17268b4b2cb7ea96d3a7c725e6",
+      "size_bytes": 58305,
+      "recorded_sha256": "b90da0a5575b6c3a98f7991c5e910b239340ad17268b4b2cb7ea96d3a7c725e6",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/artifacts/motus-age-slc-r3-test-predictions.qza",
+      "exists": true,
+      "sha256": "31f5f5d5a0e75373a23d6eae016eb2dab334969468be0c796054729f1caf95a7",
+      "size_bytes": 64664,
+      "recorded_sha256": "31f5f5d5a0e75373a23d6eae016eb2dab334969468be0c796054729f1caf95a7",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/exports/motus-outcomes-all36.tsv",
+      "exists": true,
+      "sha256": "10ee4e0bac464eff0584596df7f0f34fae2a6b85709e672a305cf6eae96c6511",
+      "size_bytes": 1174,
+      "recorded_sha256": "10ee4e0bac464eff0584596df7f0f34fae2a6b85709e672a305cf6eae96c6511",
+      "hash_matches": true
+    },
+    {
+      "path": "/Users/cmueller/Documents/GitHub/q2-hdstats-docs/analysis/results/motus-merged/taxonomy-378.tsv",
+      "exists": true,
+      "sha256": "88bdbbe6cdbc32dd54ec4c200f0348300ba0a2bcf0de74ad8e109eead4b432ff",
+      "size_bytes": 52639,
+      "recorded_sha256": "88bdbbe6cdbc32dd54ec4c200f0348300ba0a2bcf0de74ad8e109eead4b432ff",
+      "hash_matches": true
+    }
+  ],
+  "scripts": [
+    {
+      "path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/scripts/plot_motus_slc_trac_tutorial_figures.py",
+      "exists": true,
+      "sha256": "e90a5894bb710d294fa05e0489808a4b553631fe7d427dbe2cc520eaa040ab9c",
+      "size_bytes": 10487
+    },
+    {
+      "path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/tutorial-figure-generation/tutorial_plotting.py",
+      "exists": true,
+      "sha256": "580cf110a78dceb02143da3f8de81ef50bb9300c6a6e7c8a588bfc603bb45bf4",
+      "size_bytes": 2833
+    }
+  ],
+  "script_dependencies": [
+    {
+      "importer": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/scripts/plot_motus_slc_trac_tutorial_figures.py",
+      "module": "tutorial_plotting",
+      "path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/tutorial-figure-generation/tutorial_plotting.py",
+      "exists": true,
+      "sha256": "580cf110a78dceb02143da3f8de81ef50bb9300c6a6e7c8a588bfc603bb45bf4",
+      "size_bytes": 2833
+    }
+  ],
+  "provenance": [
+    {
+      "path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/provenance/motus-age-slc-r3-figures.json",
+      "exists": true,
+      "sha256": "0da30a71a15dc6ccac6a13cb08684d59d3dc282b3fb38496225852b3619a5df2",
+      "size_bytes": 3161
+    }
+  ],
+  "flags": [],
+  "matches_before": false,
+  "installed_at_utc": "2026-11-12T11:04:21.188790+00:00",
+  "installer": {
+    "path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/finalize_tutorial_figure_registry.py",
+    "exists": true,
+    "sha256": "984ecd52129dfd12e4f04c66751b91905af36bf395d7cf8a50c90f67434af5ec",
+    "size_bytes": 18147
+  },
+  "backups": [
+    "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/reproducibility-audit-2026-11-12/previous-included-figures/motus_age_slc_r3_cv_refit.06e92d038ac4be8a6fd6681a3804e12dd386d36d860c5cf27a415e937f61bb2e.pdf",
+    "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/reproducibility-audit-2026-11-12/previous-included-figures/motus_age_slc_r3_cv_refit.provenance.a10855b638167d4ae4a1417cb5a4ea7e0f550511f1c62a78bee1fd4af0e6a2a6.json"
+  ]
+}

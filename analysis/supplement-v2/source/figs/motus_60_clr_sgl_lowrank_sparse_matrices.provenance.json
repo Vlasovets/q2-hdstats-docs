@@ -1,0 +1,79 @@
+{
+  "include": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/_Application_Note__High_dimensional_regression_and_network_inference_in_QIIME_2_with_q2_classo_and_q2_gglasso/03_supplement/figs/motus_60_clr_sgl_lowrank_sparse_matrices.pdf",
+  "source": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/figures/motus-60-clr-sgl-lowrank-sparse-matrices.pdf",
+  "generator": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/scripts/plot_motus_gglasso_tutorial_figures.py",
+  "source_provenance": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/provenance/motus-60-clr-sgl-lowrank-sparse-matrices.json",
+  "source_file": {
+    "path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/figures/motus-60-clr-sgl-lowrank-sparse-matrices.pdf",
+    "exists": true,
+    "sha256": "8167390b5805f7c90ec249a417add96f2b59b22752de4af6c9a45fea5e3fe3b5",
+    "size_bytes": 74284
+  },
+  "included_before": {
+    "path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/_Application_Note__High_dimensional_regression_and_network_inference_in_QIIME_2_with_q2_classo_and_q2_gglasso/03_supplement/figs/motus_60_clr_sgl_lowrank_sparse_matrices.pdf",
+    "exists": true,
+    "sha256": "8167390b5805f7c90ec249a417add96f2b59b22752de4af6c9a45fea5e3fe3b5",
+    "size_bytes": 74284
+  },
+  "generator_file": {
+    "path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/scripts/plot_motus_gglasso_tutorial_figures.py",
+    "exists": true,
+    "sha256": "1be34a0b7a958d49cfea609a127d919e963b1b3fe94de72a205cc22b18bea167",
+    "size_bytes": 11856
+  },
+  "inputs": [
+    {
+      "path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/artifacts/motus-60-clr-pseudocount1-correlation.qza",
+      "exists": true,
+      "sha256": "bf134d2f5e0761fb09df9d4e592a5b2485e5b03f239b9e60e7dbca6d5ab4ba41",
+      "size_bytes": 55671
+    },
+    {
+      "path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/artifacts/motus-60-mclr-sgl-ebic-gamma010.qza",
+      "exists": true,
+      "sha256": "1209402e44b2f18054ad83cb23d60cf50c8e50e1ef1da81eb90657602354a244",
+      "size_bytes": 117255
+    },
+    {
+      "path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/artifacts/motus-60-clr-slr-ebic-gamma010.qza",
+      "exists": true,
+      "sha256": "9785ae775d2e6584580929bd41be82875c56ea3c8284e07342f7b5fa3e2648d4",
+      "size_bytes": 142045
+    },
+    {
+      "path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/exports/motus-60-gglasso-motu-order.tsv",
+      "exists": true,
+      "sha256": "5d2850ee345c0f635629c61b2c23ef882c98d5e8dd996621b60857746c0b2d38",
+      "size_bytes": 2007
+    }
+  ],
+  "scripts": [
+    {
+      "path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/scripts/plot_motus_gglasso_tutorial_figures.py",
+      "exists": true,
+      "sha256": "1be34a0b7a958d49cfea609a127d919e963b1b3fe94de72a205cc22b18bea167",
+      "size_bytes": 11856
+    }
+  ],
+  "script_dependencies": [],
+  "provenance": [
+    {
+      "path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/provenance/motus-60-clr-sgl-lowrank-sparse-matrices.json",
+      "exists": true,
+      "sha256": "a6e53a18e61e40c7d27514352dbc719830bcbe9457ad05aff9401084561eaeb0",
+      "size_bytes": 584
+    }
+  ],
+  "flags": [],
+  "matches_before": true,
+  "installed_at_utc": "2026-11-12T11:04:21.188790+00:00",
+  "installer": {
+    "path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/finalize_tutorial_figure_registry.py",
+    "exists": true,
+    "sha256": "984ecd52129dfd12e4f04c66751b91905af36bf395d7cf8a50c90f67434af5ec",
+    "size_bytes": 18147
+  },
+  "backups": [
+    "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/reproducibility-audit-2026-11-12/previous-included-figures/motus_60_clr_sgl_lowrank_sparse_matrices.8167390b5805f7c90ec249a417add96f2b59b22752de4af6c9a45fea5e3fe3b5.pdf"
+  ]
+}

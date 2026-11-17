@@ -1,0 +1,164 @@
+{
+  "description": "Existing Supplement inputs; no fitted model artifacts included.",
+  "dimensions": {
+    "samples": 53,
+    "network_features": 300,
+    "prediction_features": 285,
+    "train": 39,
+    "test": 14
+  },
+  "files": [
+    {
+      "file": "atacama-top300-53-curated-metadata-for-gglasso.tsv",
+      "source_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top300/atacama-top300-53-curated-metadata-for-gglasso.tsv",
+      "sha256": "1c3c3a1c5e552417d0bb22f1fa9ae36e58f80235895e57c204fbffadd5406e61",
+      "bytes": 3120
+    },
+    {
+      "file": "atacama-top300-53-robust-pca-metadata-q2.tsv",
+      "source_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-gglasso-top300/atacama-top300-53-robust-pca-metadata-q2.tsv",
+      "sha256": "313f84395d25f86af3bfb9fca8b2ae9554458fd0701d5d7097b77f8651441c1d",
+      "bytes": 3809
+    },
+    {
+      "file": "atacama-top300-prevalence-53-table.qza",
+      "source_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/atacama-top300-prevalence-53-table.qza",
+      "sha256": "566fa1b7a0ff59273154fb65801b38f31f2db51ad4b5c2ef25f9b0b144f7a265",
+      "bytes": 24290
+    },
+    {
+      "file": "elevation-train-53-metadata-q2.tsv",
+      "source_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/elevation-train-53-metadata-q2.tsv",
+      "sha256": "dc533092a72feaa18f10add3cbe82068ac2580616740b4f5d1439c6ec3ceab78",
+      "bytes": 649
+    },
+    {
+      "file": "taxonomy.qza",
+      "source_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/work/atacama-full/top-300-taxonomy.qza",
+      "sha256": "f015c7e962f1905553f3e5aac9de589748732f9670d5529621386186e58d2435",
+      "bytes": 21699
+    },
+    {
+      "file": "top300-elevation-augmented-covariates-normalized-from-train.tsv",
+      "source_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/top300-elevation-augmented-covariates-normalized-from-train.tsv",
+      "sha256": "55138f1804b97a94adec74f423cd241f15cd34559f6e880594ff38b29d44be6c",
+      "bytes": 6040
+    },
+    {
+      "file": "top300-training-supported-feature-ids.tsv",
+      "source_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/top300-training-supported-feature-ids.tsv",
+      "sha256": "439762abcc7ff387bfb4c6c941d0c34eab59df59c436a9231a612e00870bd507",
+      "bytes": 9416
+    },
+    {
+      "file": "top300-unit-weights.zip",
+      "source_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/top300-unit-weights.zip",
+      "sha256": "cff027ea6394526e2d0601d890f9db44356cdee2ba057c47c43f6f61a4c30f8e",
+      "bytes": 653
+    },
+    {
+      "file": "top300-zero-sum-constraint.zip",
+      "source_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/top300-zero-sum-constraint.zip",
+      "sha256": "cf2d3da7794d5096b6b4226d4058995e55a3ca677b6799e77aacd14679d4d9fa",
+      "bytes": 679
+    },
+    {
+      "file": "train-test-split-53-q2.tsv",
+      "source_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/train-test-split-53-q2.tsv",
+      "sha256": "78c96ecb1b6f18f6f4d68c87014d51a9c7db5af506e89cbf3c64bde6c6b52b0c",
+      "bytes": 2557
+    },
+    {
+      "file": "vegetation-train-53-metadata-q2.tsv",
+      "source_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/vegetation-train-53-metadata-q2.tsv",
+      "sha256": "fdc84719fc897340ffc933a399668c573d858106b4e962e5620df32d51ee79b3",
+      "bytes": 602
+    },
+    {
+      "file": "train-test-split-53-samples.tsv",
+      "source_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top15/train-test-split-53-samples.tsv",
+      "sha256": "77c5cefb9244cf944a64c15f5e0a48ab4887511e52c4a9081fadebbcda8f1ed2",
+      "bytes": 2487
+    },
+    {
+      "file": "top300-asv-label-map.tsv",
+      "source_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/top300-asv-label-map.tsv",
+      "sha256": "b72acfecef75b3178d60041d1aacdbe765ab21e35b0af019a01ca6303a932d41",
+      "bytes": 29351
+    },
+    {
+      "file": "top300-workflow-manifest.json",
+      "source_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/top300-workflow-manifest.json",
+      "sha256": "155435c1f77145135333a13e634a1b47eedce3d4b8e90e4123b85a0553a3da24",
+      "bytes": 1299
+    },
+    {
+      "file": "top300-covariate-normalization-summary.tsv",
+      "source_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/top300-covariate-normalization-summary.tsv",
+      "sha256": "af2f0dc58e379ebcce3bbfa74cbf6ce0ccff8d98bcb9bd1d43dd8ad03118870b",
+      "bytes": 833
+    },
+    {
+      "file": "top300-training-absent-features.tsv",
+      "source_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/top300-training-absent-features.tsv",
+      "sha256": "37c92ec9e1591e8c9b4022e52315e0073cb3dd65c001535bbc1fbd5e023d3d7c",
+      "bytes": 1413
+    },
+    {
+      "file": "top300-prevalence-relative-abundance-ranking-from-53-samples.tsv",
+      "source_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/top300-prevalence-relative-abundance-ranking-from-53-samples.tsv",
+      "sha256": "428a234e4b16f0fd894a20fb1e60ca1a28ec8d69676f15a09c7b812b9b745105",
+      "bytes": 25882
+    },
+    {
+      "file": "elevation-test-53-metadata-q2.tsv",
+      "source_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/elevation-test-53-metadata-q2.tsv",
+      "sha256": "53bed34cb00131a40325b170850cfd6dfc8482cc60b1e32deb99ee66154e52b1",
+      "bytes": 252
+    },
+    {
+      "file": "vegetation-test-53-metadata-q2.tsv",
+      "source_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/vegetation-test-53-metadata-q2.tsv",
+      "sha256": "fb66ab62c53054c102ba5d12a928dcb7602619313251f99a6daba9d92a6e9a94",
+      "bytes": 238
+    },
+    {
+      "file": "source/table.tsv",
+      "source_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/work/atacama-full/table.tsv",
+      "sha256": "04f05844494a7e7558a3cf31d895f4212369892999e05b7663c80b1a14b25408",
+      "bytes": 278358
+    },
+    {
+      "file": "source/sample-metadata.tsv",
+      "source_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/work/atacama-full/sample-metadata.tsv",
+      "sha256": "7cff810ad86a621ebc78a16b690255d839ea58e2622ad45a11a838d0f8c5b3bd",
+      "bytes": 9433
+    },
+    {
+      "file": "prepare_top300_inputs.py",
+      "sha256": "fb1415d37ce17aff502f97607b4e57eb84aa6147ddfa1526bbb8ed8c0d678c23",
+      "bytes": 9760
+    },
+    {
+      "file": "create_classo_constraint_weights.py",
+      "sha256": "5ed6ce951a6370cb8a2820a484b457b2eeeb1bf13dd03be00b5090f12d4c95de",
+      "bytes": 508
+    }
+  ],
+  "adapters": [
+    {
+      "file": "prepare_top300_inputs.py",
+      "source_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/prepare_top300_inputs.py",
+      "source_sha256": "580950699f74d312e53abaac22f5b384679d8da4158399aa1c69c832b4b40411",
+      "sha256": "fb1415d37ce17aff502f97607b4e57eb84aa6147ddfa1526bbb8ed8c0d678c23",
+      "change": "Only ROOT/OUT/TOP15/FULL path assignments; other AST nodes identical."
+    },
+    {
+      "file": "create_classo_constraint_weights.py",
+      "source_path": "/Users/cmueller/Documents/ChatGPT/Atacama-q2-gglasso-q2-classo-tutorial/outputs/fresh-atacama-workflow/q2-classo-top300/create_classo_constraint_weights.py",
+      "source_sha256": "929e4fd50d6280d0317545068c3a41490a0d349d711b936082e9d98fba818095",
+      "sha256": "5ed6ce951a6370cb8a2820a484b457b2eeeb1bf13dd03be00b5090f12d4c95de",
+      "change": "Only ROOT/OUT/TOP15/FULL path assignments; other AST nodes identical."
+    }
+  ]
+}
