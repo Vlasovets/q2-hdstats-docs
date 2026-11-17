@@ -1,0 +1,73 @@
+{
+  "description": "Existing Supplement inputs; no fitted model artifacts included.",
+  "dimensions": {
+    "samples": 34,
+    "features": 60,
+    "train": 26,
+    "test": 8,
+    "split": "subject-disjoint"
+  },
+  "files": [
+    {
+      "file": "motus-train.qza",
+      "source_path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/artifacts/motus-prev10pct-train.qza",
+      "sha256": "d8f20210346e73a2462b1c1cd3f88a330dcd2339b156f26d647713b7229389fc",
+      "bytes": 31134
+    },
+    {
+      "file": "motus-test.qza",
+      "source_path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/artifacts/motus-prev10pct-test.qza",
+      "sha256": "ec0fbf78ef074b557cff00acde18d817318e4a4db2c7b4249cf2d77db396f92c",
+      "bytes": 29722
+    },
+    {
+      "file": "motus-taxonomy.qza",
+      "source_path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/artifacts/motus-complete-taxonomy.qza",
+      "sha256": "c7c77103c6e43e3d181211f08f28a20af5731c5628fce90da963ac12cd39306b",
+      "bytes": 11826
+    },
+    {
+      "file": "motus-complete-taxonomy.qza",
+      "source_path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/artifacts/motus-complete-taxonomy.qza",
+      "sha256": "c7c77103c6e43e3d181211f08f28a20af5731c5628fce90da963ac12cd39306b",
+      "bytes": 11826
+    },
+    {
+      "file": "motus-prev10pct.qza",
+      "source_path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/artifacts/motus-prev10pct.qza",
+      "sha256": "35e8172236af26740e815f723a2bd81e61942a9c54db103e9ece894c982ef4aa",
+      "bytes": 24596
+    },
+    {
+      "file": "motus-complete-profiled.qza",
+      "source_path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/artifacts/motus-complete-profiled.qza",
+      "sha256": "ee25a9259b97a28f004cc998693487e75caa227d0c5d7a432c6ef4e3180c6fe5",
+      "bytes": 16953
+    },
+    {
+      "file": "outcomes.tsv",
+      "source_path": "/Users/cmueller/Documents/Codex/2026-06-26/Atacama-q2-gglasso-q2-classo-tutorial/outputs/motus-merged/exports/motus-outcomes-all36.tsv",
+      "sha256": "10ee4e0bac464eff0584596df7f0f34fae2a6b85709e672a305cf6eae96c6511",
+      "bytes": 1174
+    },
+    {
+      "file": "source/table-raw-with-unassigned.tsv",
+      "source_path": "/Users/cmueller/Documents/GitHub/q2-hdstats-docs-biodatascience/analysis/results/motus-merged/table-raw-with-unassigned.tsv",
+      "sha256": "d7b26bc09c51f5081a1e72c1a960e169753c91288721e902deb3196767fed1fc",
+      "bytes": 62546
+    },
+    {
+      "file": "source/taxonomy-378.tsv",
+      "source_path": "/Users/cmueller/Documents/GitHub/q2-hdstats-docs-biodatascience/analysis/results/motus-merged/taxonomy-378.tsv",
+      "sha256": "88bdbbe6cdbc32dd54ec4c200f0348300ba0a2bcf0de74ad8e109eead4b432ff",
+      "bytes": 52639
+    },
+    {
+      "file": "source/map13241-fecal-wgs.tsv",
+      "source_path": "/Users/cmueller/Documents/GitHub/q2-hdstats-docs-biodatascience/analysis/config/map13241-fecal-wgs.tsv",
+      "sha256": "1c5f2308ccf08dcc3d4ea2d427ae37ce55944810cbe8744859d76edaa93ec72a",
+      "bytes": 12462
+    }
+  ],
+  "adapters": []
+}

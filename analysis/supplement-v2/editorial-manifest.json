@@ -18,5 +18,23 @@
       "Adds input bundle, sample splitting, in-sample predictions, QIIME summaries, and optional plotting.",
       "Restores 15 source feature IDs dropped by the initial LaTeX conversion."
     ]
+  },
+  "tutorial/s2-02": {
+    "baseline": "baselines/s2-02.md",
+    "published_sha256": "adba06d2a0984f5e735ffe049f6394964c4773d9a0422be55cc0066c6acbfeda",
+    "purpose": "Expose existing audited Supplement inputs under exact command filenames.",
+    "command_filename_replacements": {},
+    "notes": [
+      "Input download and working-directory guidance only; scientific commands and results unchanged."
+    ]
+  },
+  "tutorial/s3": {
+    "baseline": "baselines/s3.md",
+    "published_sha256": "f22c026ee1f5c6ce949079d6b9c6d2a239cfb0b120049601dac141cb4bc3c9cc",
+    "purpose": "Expose existing audited Supplement inputs under exact command filenames.",
+    "command_filename_replacements": {},
+    "notes": [
+      "Input download and working-directory guidance only; scientific commands and results unchanged."
+    ]
   }
 }

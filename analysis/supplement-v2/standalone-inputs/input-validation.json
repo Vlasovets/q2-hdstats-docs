@@ -1,0 +1,26 @@
+[
+  {
+    "check": "portable preparation matches audited top300-training-supported-feature-ids.tsv",
+    "passed": true
+  },
+  {
+    "check": "portable preparation matches audited top300-elevation-augmented-covariates-normalized-from-train.tsv",
+    "passed": true
+  },
+  {
+    "check": "portable preparation matches audited top300-covariate-normalization-summary.tsv",
+    "passed": true
+  },
+  {
+    "check": "portable preparation matches audited top300-prevalence-relative-abundance-ranking-from-53-samples.tsv",
+    "passed": true
+  },
+  {
+    "check": "300 network features, 285 prediction weights and constraint; no globally empty features",
+    "passed": true
+  },
+  {
+    "check": "mOTU 34x60; 26/8 subject-disjoint split; training-supported features and full-table agreement",
+    "passed": true
+  }
+]

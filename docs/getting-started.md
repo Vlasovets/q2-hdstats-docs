@@ -13,17 +13,18 @@ Check [Reproducibility and source versions](reproducibility.md) for the package
 revisions used to generate the results shown here.
 
 ```{important}
-This tutorial revision is still being prepared for release. Prepared inputs are
-available for the 15-ASV walkthrough; other downloads and a portable installation
-workflow are not yet complete. Do not use the older
-Zenodo placeholder links or substitute older feature tables. You can review the
-worked examples and results now; the complete download instructions will follow.
+Prepared inputs are available for the Atacama 15-ASV and top-300 examples and
+the MAP mOTU example. Download the bundle linked on the relevant data page;
+do not substitute older feature tables. These inputs and the scientific
+workflows were checked in the established, pinned environment. A fresh-machine
+installation test and portable entry points for all optional figures remain
+to be completed. Cocoa input redistribution is not yet confirmed.
 ```
 
 ## Follow a Worked Example
 
 1. [Inspect the Atacama data and metadata](tutorial/s2.md).
-2. [Work with 15 ASVs](tutorial/s2-01.md) to predict elevation, classify vegetation,
+2. [Get started with the Atacama top-15 ASV data](tutorial/s2-01.md) to predict elevation, classify vegetation,
    and compare graphical models.
 3. [Use the larger Atacama table](tutorial/s2-02.md) and include sample covariates
    in the prediction and network models.

@@ -58,6 +58,9 @@ jobs:
     - name: Check minimal command equivalence
       run: python analysis/scripts/test_minimal_commands.py
 
+    - name: Check standalone input bundles
+      run: python analysis/scripts/check_standalone_inputs.py .
+
     - name: Build the book
       run: jupyter-book build docs --warningiserror
 

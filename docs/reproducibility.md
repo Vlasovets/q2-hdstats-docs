@@ -66,7 +66,7 @@ baselines, then review the tutorial adaptations.
 ## Optional Python Figures
 
 For the 15-ASV regression and classification examples, download the plotting ZIP
-linked in [Work with 15 ASVs](tutorial/s2-01.md). Extract it in your working
+linked in [Atacama top-15 ASV analysis](tutorial/s2-01.md). Extract it in your working
 directory and follow the collapsed **Reproduce the figures with Python** steps.
 The script reads the model and prediction artifacts created by the QIIME commands;
 it does not refit any model. It writes result tables, matched-style figures, and
@@ -78,12 +78,19 @@ data heatmap, and network figures are not yet included in that download.
 
 ## Input Distribution
 
-The 15-ASV walkthrough now supplies a prepared-input ZIP with hashes. This
-revision is not ready for public release until all other required tutorial inputs
-have stable download locations and the workflows have been checked with portable
-paths. The supplied Bracken artifacts also require confirmation of permission for
-public distribution. Local paths in historical provenance identify the audited
-sources; they are not public download URLs.
+Prepared input bundles are available for [Atacama top-15](tutorial/s2-01.md),
+[Atacama top-300](tutorial/s2-02.md), and [MAP mOTUs](tutorial/s3.md).
+Each contains a source/hash manifest, with no fitted models. The top-300
+preparation helpers were tested in a clean working directory and retain the
+original scientific calculations. mOTU inputs were checked for consistent
+feature order, training support, and subject-disjoint splitting.
+
+These checks reuse the established QIIME environment; they are not a
+fresh-installation test. The historical Linux environment lock in `analysis/envs`
+predates the audited q2-classo backend and must not be used as a substitute for
+the source pins above. Public redistribution of the supplied Cocoa/Bracken
+artifacts still needs confirmation. Historical provenance paths identify audited
+sources, not download locations.
 
 The statistical-background command examples are schematic, as in the supplement.
 Case-study commands require the matching prepared inputs and helper scripts;
