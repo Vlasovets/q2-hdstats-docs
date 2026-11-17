@@ -1,7 +1,7 @@
 {
   "tutorial/s2": {
     "baseline": "baselines/s2.md",
-    "published_sha256": "f54900b5bb30d77f8c0013c5f47e461e831e77bc087d794436a73f718e36e0c5",
+    "published_sha256": "72c3e2c97cd7104747faa78dd36b5d1107bc0e59e883df09cd1e4831b23ed5ab",
     "purpose": "Step-by-step QIIME tutorial with optional artifact-derived plotting",
     "command_filename_replacements": {},
     "notes": [
@@ -10,7 +10,7 @@
   },
   "tutorial/s2-01": {
     "baseline": "baselines/s2-01.md",
-    "published_sha256": "9ff20b7f0433d94c9cf58967febd94cec7cb07090bb63fb5b8e1c79d51463979",
+    "published_sha256": "9fb4fbfa549e0ed1705428c85276a5fd55e0f99a6b0c4a94941a70a963893e4a",
     "purpose": "Step-by-step QIIME tutorial with optional artifact-derived plotting",
     "command_filename_replacements": {},
     "notes": [
